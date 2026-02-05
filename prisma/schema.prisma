@@ -1,0 +1,527 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+/////////////////////////////
+// 🔓 PUBLIC / SYSTEM LEVEL
+/////////////////////////////
+
+model School {
+  id     Int          @id @default(autoincrement())
+  name   String
+  email  String       @unique
+  phone  String?
+  status SchoolStatus @default(PENDING)
+  sections  Section[] 
+  subscriptions SchoolSubscription[]
+  users         User[]
+   teachers      Teacher[]   
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum SchoolStatus {
+  PENDING
+  ACTIVE
+  BLOCKED
+}
+
+model Plan {
+  id       Int    @id @default(autoincrement())
+  name     String @unique
+  price    Float
+  duration Int // days
+  features Json // ["ATTENDANCE","FEES","EXAMS"]
+
+  subscriptions SchoolSubscription[]
+}
+
+model SchoolSubscription {
+  id        Int                @id @default(autoincrement())
+  schoolId  Int
+  planId    Int
+  startDate DateTime
+  endDate   DateTime
+  status    SubscriptionStatus
+
+  school School @relation(fields: [schoolId], references: [id])
+  plan   Plan   @relation(fields: [planId], references: [id])
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+}
+
+model SchoolRequest {
+  id         Int           @id @default(autoincrement())
+  schoolName String
+  email      String
+  phone      String
+  status     RequestStatus @default(PENDING)
+}
+
+enum RequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model Transaction {
+  id        Int           @id @default(autoincrement())
+  schoolId  Int
+  amount    Float
+  gateway   String
+  reference String
+  status    PaymentStatus
+  createdAt DateTime      @default(now())
+}
+
+enum PaymentStatus {
+  SUCCESS
+  FAILED
+  PENDING
+}
+
+/////////////////////////////
+// 🔐 AUTH & RBAC
+/////////////////////////////
+
+model User {
+  id            Int     @id @default(autoincrement())
+  name          String
+  email         String  @unique
+  password      String
+  isActive      Boolean @default(true)
+  emailVerified Boolean @default(false)
+
+  schoolId Int
+  school   School @relation(fields: [schoolId], references: [id])
+
+  roles  UserRole[]
+  tokens Token[]
+  teacher Teacher?   
+  createdAt DateTime @default(now())
+}
+
+model Teacher {
+  id       Int @id @default(autoincrement())
+  userId   Int
+  schoolId Int
+
+  user     User   @relation(fields: [userId], references: [id])
+  school   School @relation(fields: [schoolId], references: [id])
+
+  // classAssignments   ClassTeacher[]
+  // subjectAssignments TeacherSubject[]
+  timetables         Timetable[]
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId])
+}
+
+model Role {
+  id       Int    @id @default(autoincrement())
+  name     String
+  schoolId Int?
+
+  users       UserRole[]
+  permissions RolePermission[]
+
+  @@unique([name, schoolId])
+}
+
+model Permission {
+  id          Int              @id @default(autoincrement())
+  key         String           @unique
+  description String?
+  roles       RolePermission[]
+}
+
+model UserRole {
+  userId Int
+  roleId Int
+
+  user User @relation(fields: [userId], references: [id])
+  role Role @relation(fields: [roleId], references: [id])
+
+  @@id([userId, roleId])
+}
+
+model RolePermission {
+  roleId       Int
+  permissionId Int
+
+  role       Role       @relation(fields: [roleId], references: [id])
+  permission Permission @relation(fields: [permissionId], references: [id])
+
+  @@id([roleId, permissionId])
+}
+
+model Token {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  tokenHash String   @unique
+  type      TokenType
+  expiresAt DateTime
+  isUsed    Boolean  @default(false)
+  isRevoked Boolean  @default(false)
+  userAgent String?
+  ipAddress String?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, type])
+}
+
+
+
+enum TokenType {
+  ACCESS
+  REFRESH
+  RESET_PASSWORD
+  VERIFY_EMAIL
+  SET_PASSWORD  
+}
+
+/////////////////////////////
+// 🎓 ACADEMIC
+/////////////////////////////
+model Class {
+  id        Int       @id @default(autoincrement())
+  name      String
+  schoolId  Int
+  gradeId   Int
+  grade     Grade   @relation(fields: [gradeId], references: [id])
+  sections  Section[]
+  subjects  Subject[]
+  classTeachers ClassTeacher[]
+  isActive  Boolean  @default(true)
+  isDeleted Boolean  @default(false) 
+   maxStudents Int? 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([name, schoolId])
+}
+
+model Section {
+  id        Int    @id @default(autoincrement())
+  name      String
+  classId   Int
+  schoolId  Int
+  capacity    Int?  
+  isActive  Boolean @default(true)
+  class     Class  @relation(fields: [classId], references: [id])
+  school    School   @relation(fields: [schoolId], references: [id]) 
+  students  Student[] 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([name, classId])
+}
+
+model Grade {
+  id      Int @id @default(autoincrement())
+  name    String
+  level   String
+  order   Int
+  schoolId Int
+  classes Class[]
+  subjects Subject[]
+  masterSubjects MasterSubject[]
+
+  @@unique([name, schoolId])     // same grade name not repeat in same school
+  @@unique([order, schoolId])    // display order also unique per school
+}
+model MasterSubject {
+  id          Int    @id @default(autoincrement())
+  name        String
+  description String?
+  gradeId     Int
+  schoolId    Int
+
+  grade       Grade  @relation(fields: [gradeId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// model Subject {
+//   id          Int     @id @default(autoincrement())
+//   name        String
+//   code        String  @unique
+//   description String?
+//   classId     Int
+//   schoolId    Int
+//   type        SubjectType @default(CORE) 
+//   class       Class   @relation(fields: [classId], references: [id])
+  
+//   teachers    TeacherSubject[] 
+//   createdAt   DateTime @default(now())
+//   updatedAt   DateTime @updatedAt
+
+//   @@unique([name, classId]) // same class me duplicate subject name not allowed
+// }
+
+model Subject {
+  id          Int     @id @default(autoincrement())
+  name        String
+  code        String  @unique
+  description String?
+
+  schoolId    Int
+  classId     Int?
+  gradeId     Int?      // ⭐ NEW
+
+  type        SubjectType @default(CORE)
+  isActive    Boolean  @default(true)
+
+  maxMarks    Int?
+  passMarks   Int?
+
+  class       Class?   @relation(fields: [classId], references: [id])
+  grade       Grade?    @relation(fields: [gradeId], references: [id])
+  teachers    TeacherSubject[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([name, gradeId])
+}
+
+
+enum SubjectType {
+  CORE
+  EXTRA
+}
+
+model ClassTeacher {
+  id        Int  @id @default(autoincrement())
+  teacherId Int
+  classId   Int
+  isClassTeacher Boolean @default(false)
+
+  class     Class @relation(fields: [classId], references: [id])
+
+  @@unique([teacherId, classId])
+}
+
+model TeacherSubject {
+  id        Int @id @default(autoincrement())
+  teacherId Int
+  subjectId Int
+  classId   Int
+
+  subject   Subject @relation(fields: [subjectId], references: [id])
+
+  @@unique([teacherId, subjectId, classId])
+}
+
+model Timetable {
+  id        Int    @id @default(autoincrement())
+  schoolId  Int
+  classId   Int
+  sectionId Int
+  subjectId Int
+  teacherId Int
+
+  day       String
+  period    Int
+   teacher Teacher @relation(fields: [teacherId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([sectionId, day, period]) // no double class
+  @@unique([teacherId, day, period]) // teacher can't be in 2 places
+}
+
+
+/////////////////////////////
+// 👨‍🎓 STUDENTS & PARENTS
+/////////////////////////////
+
+model Student {
+  id        Int @id @default(autoincrement())
+  userId    Int
+  schoolId  Int
+  classId   Int
+  sectionId Int?
+  section   Section? @relation(fields: [sectionId], references: [id])
+  
+}
+
+model Parent {
+  id       Int @id @default(autoincrement())
+  userId   Int
+  schoolId Int
+}
+
+model StudentParent {
+  studentId Int
+  parentId  Int
+
+  @@id([studentId, parentId])
+}
+
+model Admission {
+  id           Int    @id @default(autoincrement())
+  studentId    Int
+  schoolId     Int
+  classId      Int
+  sectionId    Int?
+  academicYear String
+
+  status    AdmissionStatus
+  startDate DateTime        @default(now())
+  endDate   DateTime?
+
+  reason      String? // cancel / transfer reason
+  cancelledBy Int? // userId (admin)
+
+  createdAt DateTime @default(now())
+}
+
+enum AdmissionStatus {
+  ACTIVE
+  CANCELLED
+  TRANSFERRED
+  COMPLETED
+}
+
+/////////////////////////////
+// 📋 ATTENDANCE (ADVANCED)
+/////////////////////////////
+
+model AttendanceSession {
+  id        Int      @id @default(autoincrement())
+  schoolId  Int
+  classId   Int
+  sectionId Int?
+  teacherId Int
+  date      DateTime
+
+  records AttendanceRecord[]
+
+  @@unique([classId, sectionId, date])
+}
+
+model AttendanceRecord {
+  id        Int              @id @default(autoincrement())
+  sessionId Int
+  studentId Int
+  status    AttendanceStatus
+
+  session AttendanceSession @relation(fields: [sessionId], references: [id])
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+  HALF_DAY
+}
+
+/////////////////////////////
+// 👩‍🏫 TEACHERS & STAFF
+/////////////////////////////
+model Staff {
+  id            Int @id @default(autoincrement())
+  userId        Int
+  schoolId      Int
+  designationId Int
+}
+
+model Designation {
+  id   Int    @id @default(autoincrement())
+  name String
+}
+
+model Payroll {
+  id      Int    @id @default(autoincrement())
+  staffId Int
+  salary  Float
+  month   String
+}
+
+/////////////////////////////
+// 💰 FEES & PAYMENTS
+/////////////////////////////
+
+model FeeStructure {
+  id      Int   @id @default(autoincrement())
+  classId Int
+  amount  Float
+}
+
+model StudentFee {
+  id        Int   @id @default(autoincrement())
+  studentId Int
+  dueAmount Float
+}
+
+model Invoice {
+  id     Int           @id @default(autoincrement())
+  amount Float
+  status InvoiceStatus
+}
+
+enum InvoiceStatus {
+  PAID
+  UNPAID
+}
+
+model PaymentReceipt {
+  id        Int   @id @default(autoincrement())
+  invoiceId Int
+  amount    Float
+}
+
+/////////////////////////////
+// 📝 EXAMS & RESULTS
+/////////////////////////////
+
+model Exam {
+  id      Int    @id @default(autoincrement())
+  name    String
+  classId Int
+}
+
+model ExamSchedule {
+  id     Int      @id @default(autoincrement())
+  examId Int
+  date   DateTime
+}
+
+model Mark {
+  id        Int   @id @default(autoincrement())
+  examId    Int
+  studentId Int
+  marks     Float
+}
+
+model Result {
+  id        Int   @id @default(autoincrement())
+  studentId Int
+  total     Float
+}
+
+/////////////////////////////
+// 🧾 AUDIT LOG (ENTERPRISE)
+/////////////////////////////
+
+model AuditLog {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  action    String
+  entity    String
+  entityId  Int?
+  createdAt DateTime @default(now())
+}
