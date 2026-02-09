@@ -5,111 +5,69 @@ const service = new SubjectService();
 
 export class SubjectController {
 
-  // async create(req: Request, res: Response) {
-  //   const { name, classId, schoolId } = req.body;
-
-  //   const data = await service.createSubject(
-  //     name,
-  //     Number(classId),
-  //     Number(schoolId)
-  //   );
-
-  //   res.status(201).json({
-  //     message: "Subject created successfully",
-  //     data,
-  //   });
-  // }
+  
+  async delete(req: Request, res: Response) {
+    try {
+      const { role } = req.user;
+      await service.deleteSubject(Number(req.params.id), role);
+      res.json({ message: "Subject deleted" });
+    } catch (err: any) {
+      res.status(403).json({ message: err.message });
+    }
+  }
 
   async create(req: Request, res: Response) {
-  try {
-    const { name, classId, description } = req.body;
-    const schoolId = req.user.schoolId;   // 🔥 FROM TOKEN
+    try {
+      const { name } = req.body;
+      const { role, schoolId } = req.user;
 
-    const data = await service.createSubject(
-      name,
-      Number(classId),
-      schoolId,
-      description
-    );
-
-    res.status(201).json({
-      message: "Subject created successfully",
-      data,
-    });
-  } catch (error: any) {
-    res.status(400).json({ message: error.message });
+      const subject = await service.createSubject(name, role, schoolId);
+      res.status(201).json({ message: "Subject created", data: subject });
+    } catch (err: any) {
+      res.status(403).json({ message: err.message });
+    }
   }
-}
 
-// async getAll(req: Request, res: Response) {
-//   const schoolId = req.user.schoolId;  // 🏫 only own school
-//   const data = await service.getAllSubjects(schoolId);
-//   res.json({ data });
-// }
+  async getAll(req: Request, res: Response) {
+    const { role, schoolId } = req.user;
+    const data = await service.getAllSubjects(role, schoolId);
+    res.json({ data });
+  }
 
-async getAll(req: Request, res: Response) {
-  const { role, schoolId } = req.user;
+  async update(req: Request, res: Response) {
+    try {
+      const { role, schoolId } = req.user;
+      const data = await service.updateSubject(
+        Number(req.params.id),
+        req.body,
+        role,
+        schoolId
+      );
+      res.json({ message: "Subject updated", data });
+    } catch (err: any) {
+      res.status(403).json({ message: err.message });
+    }
+  }
 
-  const data =
-    role === "SUPER_ADMIN"
-      ? await service.getAllSubjects()
-      : await service.getAllSubjects(schoolId);
-
-  res.json({ data });
-}
-
-async update(req: Request, res: Response) {
+  async toggle(req: Request, res: Response) {
+    try {
+      const { role } = req.user;
+      const data = await service.toggleSubject(Number(req.params.id), role);
+      res.json({ message: "Subject status updated", data });
+    } catch (err: any) {
+      res.status(403).json({ message: err.message });
+    }
+  }
+  async getById(req: Request, res: Response) {
   try {
+    const { role, schoolId } = req.user;
     const id = Number(req.params.id);
-    const { name, description } = req.body;
-    const schoolId = req.user.schoolId;
 
-    const data = await service.updateSubject(id, schoolId, name, description);
-
-    res.json({ message: "Subject updated", data });
+    const data = await service.getSubjectById(id, role, schoolId);
+    res.json({ data });
   } catch (err: any) {
-    res.status(400).json({ message: err.message });
+    res.status(403).json({ message: err.message });
   }
 }
 
-async getByClass(req: Request, res: Response) {
-  const classId = Number(req.query.classId);
-  const schoolId = req.user.schoolId;   // 🔥 TOKEN
-
-  if (!classId) {
-    return res.status(400).json({ message: "classId query param required" });
-  }
-
-  const data = await service.getSubjects(classId, schoolId);
-
-  res.json({ data });
-}
-
-
-
-
-
-
-  // async getByClass(req: Request, res: Response) {
-  //   const classId = Number(req.query.classId);
-  //   const data = await service.getSubjects(classId);
-
-  //   res.json({ data });
-  // }
-//   async getByClass(req: Request, res: Response) {
-//   const classId = Number(req.query.classId);
-
-//   if (!classId) {
-//     return res.status(400).json({ message: "classId query param required" });
-//   }
-
-//   const data = await service.getSubjects(classId);
-//   res.json({ data });
-// }
-
-
-  async delete(req: Request, res: Response) {
-    await service.deleteSubject(Number(req.params.id));
-    res.json({ message: "Subject deleted" });
-  }
 }

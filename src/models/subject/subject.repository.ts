@@ -1,85 +1,51 @@
+// subject.repository.ts
 import prisma from "../../config/prisma";
 
 export class SubjectRepository {
 
-  // create(data: { name: string; classId: number; schoolId: number }) {
-  //   return prisma.subject.create({ data });
-  // }
-
-   create(data: {
-    name: string;
-    code: string;
-    description?: string;
-    classId: number;
-    schoolId: number;
-    type: "CORE" | "EXTRA";
-  }) {
-    return prisma.subject.create({ data });
+  create(name: string, code: string, schoolId: number) {
+    return prisma.subject.create({
+      data: {
+        name,
+        code,
+        schoolId
+      }
+    });
   }
 
-  // findByClass(classId: number) {
-  //   return prisma.subject.findMany({ where: { classId } });
-  // }
-
-
-  // findByClass(classId: number) {
-  //   return prisma.subject.findMany({
-  //     where: { classId },
-  //     orderBy: { name: "asc" },
-  //   });
-  // }
-
-  findByClass(classId: number, schoolId: number) {
-  return prisma.subject.findMany({
-    where: { classId, schoolId },
-    orderBy: { name: "asc" },
-    select: {
-      id: true,
-      name: true,
-      code: true,
-      description: true
-    }
-  });
-}
-
-  delete(id: number) {
-    return prisma.subject.delete({ where: { id } });
+  existsByName(name: string, schoolId: number) {
+    return prisma.subject.findFirst({
+      where: { name, schoolId, isActive: true }
+    });
   }
-// findAll() {
-//   return prisma.subject.findMany({
-//     include: { class: true },
-//     orderBy: { createdAt: "desc" },
-//   });
-// }
 
-findAll(schoolId?: number) {
-  return prisma.subject.findMany({
-    where: {
-      ...(schoolId && { schoolId })
-    },
-    include: { class: { select: { name: true } } }
-  });
-}
+  findAll() {
+    return prisma.subject.findMany({
+      where: { isActive: true },
+      orderBy: { name: "asc" }
+    });
+  }
 
-findById(id: number) {
-  return prisma.subject.findUnique({ where: { id } });
-}
+  findBySchool(schoolId: number) {
+    return prisma.subject.findMany({
+      where: { schoolId },
+      orderBy: { name: "asc" }
+    });
+  }
 
-update(id: number, data: { name?: string; description?: string; code?: string }) {
-  return prisma.subject.update({
-    where: { id },
-    data
-  });
-}
-
-
-deleteByClass(classId: number) {
-  return prisma.subject.deleteMany({
-    where: { classId }
-  });
-}
-
-  exists(name: string, classId: number) {
-    return prisma.subject.findFirst({ where: { name, classId } });
+   update(id: number, data: { name?: string; description?: string }) {
+    return prisma.subject.update({
+      where: { id },
+      data
+    });
+  }
+ findById(id: number) {
+    return prisma.subject.findUnique({ where: { id } });
+  }
+  toggle(id: number, isActive: boolean) {
+    return prisma.subject.update({
+      where: { id },
+      data: { isActive }
+    });
   }
 }

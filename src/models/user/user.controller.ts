@@ -152,6 +152,29 @@ export class UserController {
       res.status(e.statusCode || 500).json({ success: false, message: e.message });
     }
   }
+
+  async getUserPermissions(req: Request, res: Response) {
+  const userId = Number(req.params.id);
+  const permissions = await this.service.getUserPermissions(userId);
+  res.json({ success: true, data: permissions });
+}
+
+async grantPermission(req: Request, res: Response) {
+  const userId = Number(req.params.id);
+  const { permissionId } = req.body;
+
+  await this.service.grantPermission(userId, permissionId);
+  res.json({ success: true, message: "Permission granted" });
+}
+
+async revokePermission(req: Request, res: Response) {
+  const userId = Number(req.params.id);
+  const { permissionId } = req.body;
+
+  await this.service.revokePermission(userId, permissionId);
+  res.json({ success: true, message: "Permission revoked" });
+}
+
 }
 
 export default new UserController();

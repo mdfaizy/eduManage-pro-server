@@ -1,64 +1,59 @@
+// subject.service.ts
 import { SubjectRepository } from "./subject.repository";
+import { generateSubjectCode } from "../../utils/subjectCode";
 
 export class SubjectService {
   private repo = new SubjectRepository();
-async createSubject(name: string, classId: number, schoolId: number, description?: string) {
-  const cleanName = name.trim();
 
-  const exists = await this.repo.exists(cleanName, classId);
-  if (exists) throw new Error("Subject already exists in this class");
+  async createSubject(name: string, role: string, schoolId: number) {
+    
 
-  const code = `${cleanName.substring(0,3).toUpperCase()}-${classId}-${Date.now().toString().slice(-3)}`;
+    if (!schoolId) {
+      throw new Error("SchoolId is required");
+    }
 
-  return this.repo.create({
-    name: cleanName,
-    code,
-    description,
-    classId,
-    schoolId,
-    type: "EXTRA"  // 🔥 DIFFERENCE
-  });
-}
+    const exists = await this.repo.existsByName(name, schoolId);
+    if (exists) {
+      throw new Error("Subject already exists");
+    }
 
+    const code = generateSubjectCode(name, schoolId);
 
-async getAllSubjects() {
-  return this.repo.findAll();
-}
-async getSubjects(classId: number, schoolId: number) {
-  return this.repo.findByClass(classId, schoolId);
-}
-async updateSubject(id: number, schoolId: number, name?: string, description?: string) {
+    return this.repo.create(name, code, schoolId);
+  }
 
+  async getAllSubjects(role: string, schoolId: number) {
+    if (role === "SUPER_ADMIN") {
+      return this.repo.findAll();
+    }
+    return this.repo.findBySchool(schoolId);
+  }
+
+  async updateSubject(
+    id: number,
+    payload: { name?: string; description?: string },
+    role: string
+  ) {
+    // if (role !== "SCHOOL_ADMIN") {
+    //   throw new Error("Only school admin can edit subject");
+    // }
+
+    // ❌ code update not allowed (payload me hai hi nahi)
+    return this.repo.update(id, payload);
+  }
+
+  async toggleSubject(id: number, role: string) {
+
+    const subject = await this.repo.findById(id);
+    if (!subject) throw new Error("Subject not found");
+
+    return this.repo.toggle(id, !subject.isActive);
+  }
+  async getSubjectById(id: number, role: string, schoolId: number) {
   const subject = await this.repo.findById(id);
   if (!subject) throw new Error("Subject not found");
 
-  if (subject.schoolId !== schoolId) throw new Error("Unauthorized");
-
-  let newCode = subject.code;
-
-  if (name && name.trim() !== subject.name) {
-    const cleanName = name.trim();
-
-    const exists = await this.repo.exists(cleanName, subject.classId);
-    if (exists) throw new Error("Subject name already exists in this class");
-
-    // 🔥 NEW CODE GENERATION
-    newCode = `${cleanName.substring(0,3).toUpperCase()}-${subject.classId}-${Date.now().toString().slice(-3)}`;
-  }
-
-  return this.repo.update(id, {
-    name,
-    description,
-    code: newCode
-  });
+  return subject;
 }
 
-
-  // async getSubjects(classId: number) {
-  //   return this.repo.findByClass(classId);
-  // }
-
-  async deleteSubject(id: number) {
-    return this.repo.delete(id);
-  }
 }

@@ -50,4 +50,25 @@ router.delete(
   (req, res) => UserController.deleteUser(req, res)
 );
 
+
+router.get(
+  "/:id/permissions",
+  authMiddleware,
+  (req, res) => UserController.getUserPermissions(req, res)
+);
+
+router.post(
+  "/:id/permissions/grant",
+  authMiddleware,
+  // authorizePermissions(["ASSIGN_PERMISSION"]),
+  (req, res) => UserController.grantPermission(req, res)
+);
+
+router.post(
+  "/:id/permissions/revoke",
+  authMiddleware,
+  // authorizePermissions(["ASSIGN_PERMISSION"]),
+  (req, res) => UserController.revokePermission(req, res)
+);
+
 export default router;

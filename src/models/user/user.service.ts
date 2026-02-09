@@ -1,9 +1,13 @@
 import bcrypt from "bcryptjs";
+import { UserPermissionRepository } from "./user-permission.repository.js";
+
 import { UserRepository } from "./user.repository.js";
 import { TokenUtil } from "../../utils/token.util.js";
 import { sendEmail } from "../../utils/sendEmail.js";
 export class UserService {
   private repo = new UserRepository();
+  private userPermissionRepo = new UserPermissionRepository();
+
 
 //  async createUser(payload: any, schoolId: number) {
 //   const hashed = await bcrypt.hash(payload.password, 10);
@@ -103,6 +107,21 @@ async getUsers(schoolId: number, role?: string) {
     return await this.repo.updateStatus(userId, isActive);
 
   }
+
+  async grantPermission(userId: number, permissionId: number) {
+  return this.userPermissionRepo.grant(userId, permissionId);
+}
+
+async revokePermission(userId: number, permissionId: number) {
+  return this.userPermissionRepo.revoke(userId, permissionId);
+}
+
+async getUserPermissions(userId: number) {
+  return this.userPermissionRepo.findByUser(userId);
+}
+
+
+
 }
 
 

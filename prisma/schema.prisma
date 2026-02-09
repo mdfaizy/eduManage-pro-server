@@ -38,6 +38,9 @@ model Plan {
   features Json // ["ATTENDANCE","FEES","EXAMS"]
 
   subscriptions SchoolSubscription[]
+  createdAt DateTime @default(now())
+updatedAt DateTime @updatedAt
+
 }
 
 model SchoolSubscription {
@@ -50,6 +53,9 @@ model SchoolSubscription {
 
   school School @relation(fields: [schoolId], references: [id])
   plan   Plan   @relation(fields: [planId], references: [id])
+  createdAt DateTime @default(now())
+updatedAt DateTime @updatedAt
+
 }
 
 enum SubscriptionStatus {
@@ -64,6 +70,9 @@ model SchoolRequest {
   email      String
   phone      String
   status     RequestStatus @default(PENDING)
+  createdAt DateTime @default(now())
+updatedAt DateTime @updatedAt
+
 }
 
 enum RequestStatus {
@@ -100,13 +109,16 @@ model User {
   isActive      Boolean @default(true)
   emailVerified Boolean @default(false)
 
-  schoolId Int
-  school   School @relation(fields: [schoolId], references: [id])
+  schoolId Int?
+  school   School? @relation(fields: [schoolId], references: [id])
 
   roles  UserRole[]
   tokens Token[]
-  teacher Teacher?   
+  teacher Teacher?  
+  userPermissions UserPermission[]   
   createdAt DateTime @default(now())
+updatedAt DateTime @updatedAt
+
 }
 
 model Teacher {
@@ -122,17 +134,21 @@ model Teacher {
   timetables         Timetable[]
 
   createdAt DateTime @default(now())
+updatedAt DateTime @updatedAt
 
   @@unique([userId])
+  
 }
 
 model Role {
   id       Int    @id @default(autoincrement())
   name     String
   schoolId Int?
-
+  profileType String? 
   users       UserRole[]
   permissions RolePermission[]
+  createdAt DateTime @default(now())
+updatedAt DateTime @updatedAt
 
   @@unique([name, schoolId])
 }
@@ -142,6 +158,10 @@ model Permission {
   key         String           @unique
   description String?
   roles       RolePermission[]
+  userPermissions  UserPermission[]
+  createdAt DateTime @default(now())
+updatedAt DateTime @updatedAt
+ 
 }
 
 model UserRole {
@@ -152,6 +172,17 @@ model UserRole {
   role Role @relation(fields: [roleId], references: [id])
 
   @@id([userId, roleId])
+}
+model UserPermission {
+  id           Int        @id @default(autoincrement())
+  userId       Int
+  permissionId Int
+  granted      Boolean    @default(true)
+
+  user         User       @relation(fields: [userId], references: [id])
+  permission   Permission @relation(fields: [permissionId], references: [id])
+
+  @@unique([userId, permissionId])
 }
 
 model RolePermission {
@@ -194,23 +225,47 @@ enum TokenType {
 /////////////////////////////
 // 🎓 ACADEMIC
 /////////////////////////////
+// model Class {
+//   id        Int       @id @default(autoincrement())
+//   name      String
+//   schoolId  Int
+//   gradeId   Int
+//   grade     Grade   @relation(fields: [gradeId], references: [id])
+//   sections  Section[]
+//   subjects  Subject[]
+//   classTeachers ClassTeacher[]
+//   isActive  Boolean  @default(true)
+//   isDeleted Boolean  @default(false) 
+//    maxStudents Int? 
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+
+//   @@unique([name, schoolId])
+// }
+
 model Class {
-  id        Int       @id @default(autoincrement())
-  name      String
-  schoolId  Int
-  gradeId   Int
-  grade     Grade   @relation(fields: [gradeId], references: [id])
-  sections  Section[]
-  subjects  Subject[]
+  id          Int    @id @default(autoincrement())
+  name        String
+  gradeId     Int
+  schoolId    Int
+  description String?
+  maxStudents Int?
+
+  isActive    Boolean @default(true)
+  isDeleted   Boolean @default(false)
+
+  grade       Grade @relation(fields: [gradeId], references: [id])
+  sections    Section[]
+  syllabi     Syllabus[]
   classTeachers ClassTeacher[]
-  isActive  Boolean  @default(true)
-  isDeleted Boolean  @default(false) 
-   maxStudents Int? 
+  teacherSubjects TeacherSubject[] 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@unique([name, schoolId])
 }
+
+
 
 model Section {
   id        Int    @id @default(autoincrement())
@@ -218,6 +273,7 @@ model Section {
   classId   Int
   schoolId  Int
   capacity    Int?  
+  description String?
   isActive  Boolean @default(true)
   class     Class  @relation(fields: [classId], references: [id])
   school    School   @relation(fields: [schoolId], references: [id]) 
@@ -229,30 +285,38 @@ model Section {
 }
 
 model Grade {
-  id      Int @id @default(autoincrement())
-  name    String
-  level   String
-  order   Int
-  schoolId Int
-  classes Class[]
-  subjects Subject[]
-  masterSubjects MasterSubject[]
-
-  @@unique([name, schoolId])     // same grade name not repeat in same school
-  @@unique([order, schoolId])    // display order also unique per school
-}
-model MasterSubject {
-  id          Int    @id @default(autoincrement())
-  name        String
+  id        Int    @id @default(autoincrement())
+  name      String
+  schoolId  Int
   description String?
-  gradeId     Int
-  schoolId    Int
+  isActive  Boolean @default(true)
+  isDeleted Boolean @default(false)
 
-  grade       Grade  @relation(fields: [gradeId], references: [id])
+  classes   Class[]
+  syllabi   Syllabus[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  // createdAt DateTime @default(now())
+  // updatedAt DateTime @updatedAt
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+
+  @@unique([name, schoolId])
 }
+
+
+// model MasterSubject {
+//   id          Int    @id @default(autoincrement())
+//   name        String
+//   description String?
+//   gradeId     Int
+//   schoolId    Int
+
+//   grade       Grade  @relation(fields: [gradeId], references: [id])
+
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }
 
 // model Subject {
 //   id          Int     @id @default(autoincrement())
@@ -271,30 +335,70 @@ model MasterSubject {
 //   @@unique([name, classId]) // same class me duplicate subject name not allowed
 // }
 
+// model Subject {
+//   id          Int     @id @default(autoincrement())
+//   name        String
+//   code        String  @unique
+//   description String?
+
+//   schoolId    Int
+//   classId     Int?
+//   gradeId     Int?      // ⭐ NEW
+
+//   type        SubjectType @default(CORE)
+//   isActive    Boolean  @default(true)
+
+//   maxMarks    Int?
+//   passMarks   Int?
+
+//   class       Class?   @relation(fields: [classId], references: [id])
+//   grade       Grade?    @relation(fields: [gradeId], references: [id])
+//   teachers    TeacherSubject[]
+
+//   createdAt   DateTime @default(now())
+//   updatedAt   DateTime @updatedAt
+
+//   @@unique([name, gradeId])
+// }
+
 model Subject {
-  id          Int     @id @default(autoincrement())
-  name        String
-  code        String  @unique
+  id        Int    @id @default(autoincrement())
+  name      String
   description String?
+  isActive  Boolean @default(true)
+  schoolId  Int
+  code      String  @unique
+  syllabi   Syllabus[] 
+  teacherSubjects TeacherSubject[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
 
-  schoolId    Int
-  classId     Int?
-  gradeId     Int?      // ⭐ NEW
+model Syllabus {
+  id        Int @id @default(autoincrement())
 
-  type        SubjectType @default(CORE)
-  isActive    Boolean  @default(true)
+  subjectId Int
+  gradeId   Int?
+  classId   Int?
+  schoolId  Int
+ description String?
+  type      SubjectType @default(CORE)
 
-  maxMarks    Int?
-  passMarks   Int?
+  chapters  Json
+  maxMarks  Int?
+  passMarks Int?
 
-  class       Class?   @relation(fields: [classId], references: [id])
-  grade       Grade?    @relation(fields: [gradeId], references: [id])
-  teachers    TeacherSubject[]
+  isActive  Boolean @default(true)
+  isDeleted Boolean @default(false)
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  subject   Subject @relation(fields: [subjectId], references: [id])
+  grade     Grade?  @relation(fields: [gradeId], references: [id])
+  class     Class?  @relation(fields: [classId], references: [id])
 
-  @@unique([name, gradeId])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([subjectId, gradeId, classId, schoolId])
 }
 
 
@@ -314,6 +418,16 @@ model ClassTeacher {
   @@unique([teacherId, classId])
 }
 
+// model TeacherSubject {
+//   id        Int @id @default(autoincrement())
+//   teacherId Int
+//   subjectId Int
+//   classId   Int
+
+//   subject   Subject @relation(fields: [subjectId], references: [id])
+
+//   @@unique([teacherId, subjectId, classId])
+// }
 model TeacherSubject {
   id        Int @id @default(autoincrement())
   teacherId Int
@@ -321,9 +435,11 @@ model TeacherSubject {
   classId   Int
 
   subject   Subject @relation(fields: [subjectId], references: [id])
+  class     Class   @relation(fields: [classId], references: [id])
 
   @@unique([teacherId, subjectId, classId])
 }
+
 
 model Timetable {
   id        Int    @id @default(autoincrement())

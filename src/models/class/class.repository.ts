@@ -23,8 +23,19 @@ export class ClassRepository {
 
   findById(id: number) {
     return prisma.class.findFirst({
-      where: { id, isDeleted: false },
-      include: { sections: true, subjects: true, grade: true }
+      where: {
+        id,
+        isDeleted: false
+      },
+      include: {
+        grade: true,
+        sections: true,
+        syllabi: {
+          include: {
+            subject: true
+          }
+        }
+      }
     });
   }
 

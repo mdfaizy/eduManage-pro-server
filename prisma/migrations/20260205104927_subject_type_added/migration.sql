@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE `subject` ADD COLUMN `type` ENUM('CORE', 'EXTRA') NOT NULL DEFAULT 'CORE';
