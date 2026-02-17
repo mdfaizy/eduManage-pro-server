@@ -177,15 +177,36 @@ export class UserRepository {
     });
   }
 
-  async findByRole(schoolId: number, roleName: string) {
-    return prisma.user.findMany({
-      where: {
-        schoolId,
-        roles: { some: { role: { name: roleName } } },
+  // async findByRole(schoolId: number, roleName: string) {
+  //   return prisma.user.findMany({
+  //     where: {
+  //       schoolId,
+  //       roles: { some: { role: { name: roleName } } },
+  //     },
+  //     include: { roles: { include: { role: true } } },
+  //   });
+  // }
+
+async findByRole(schoolId: number, roleName: string) {
+  return prisma.user.findMany({
+    where: {
+      schoolId,
+      roles: {
+        some: {
+          role: {
+            name: roleName.toUpperCase(), // 👈 normalize
+          },
+        },
       },
-      include: { roles: { include: { role: true } } },
-    });
-  }
+    },
+    include: {
+      roles: { include: { role: true } },
+    },
+  });
+}
+
+
+
 
   async assignRole(userId: number, roleId: number) {
     return prisma.userRole.upsert({

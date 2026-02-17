@@ -2,17 +2,52 @@ import { Request, Response } from "express";
 import { SectionService } from "./section.service";
 const service = new SectionService();
 export class SectionController {
- async create(req: Request, res: Response) {
+//  async create(req: Request, res: Response) {
+//     const schoolId = req.user.schoolId;
+//     const { name, classId, capacity } = req.body;
+//     const data = await service.createSection(
+//       name,
+//       Number(classId),
+//       schoolId,
+//       Number(capacity)
+//     );
+//     res.status(201).json({ message: "Section created", data });
+//   }
+async create(req: Request, res: Response) {
+  try {
     const schoolId = req.user.schoolId;
     const { name, classId, capacity } = req.body;
+
+    const parsedCapacity = Number(capacity);
+
+    // ✅ strong validation
+    if (isNaN(parsedCapacity) || parsedCapacity <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Section capacity must be greater than 0",
+      });
+    }
+
     const data = await service.createSection(
       name,
       Number(classId),
       schoolId,
-      Number(capacity)
+      parsedCapacity
     );
-    res.status(201).json({ message: "Section created", data });
+
+    res.status(201).json({
+      success: true,
+      message: "Section created",
+      data,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
   }
+}
+
 async getByClass(req: Request, res: Response) {
   const schoolId = req.user.schoolId;
   const classId = req.query.classId ? Number(req.query.classId) : undefined;

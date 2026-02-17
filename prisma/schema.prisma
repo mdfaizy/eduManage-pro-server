@@ -19,7 +19,13 @@ model School {
   sections  Section[] 
   subscriptions SchoolSubscription[]
   users         User[]
-   teachers      Teacher[]   
+   teachers      Teacher[]      
+   timetables Timetable[]
+     timings SchoolTiming[]
+     periods       Period[]
+     days Day[]
+     academicYears AcademicYear[]
+ 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -125,16 +131,19 @@ model Teacher {
   id       Int @id @default(autoincrement())
   userId   Int
   schoolId Int
-
+  teacherCode   String   @unique
+  phone         String?
+  gender        String?
+  joiningDate   DateTime?
+  qualification String?
   user     User   @relation(fields: [userId], references: [id])
   school   School @relation(fields: [schoolId], references: [id])
+  classTeachers   ClassTeacher[]
+  teacherSubjects TeacherSubject[]
 
-  // classAssignments   ClassTeacher[]
-  // subjectAssignments TeacherSubject[]
-  timetables         Timetable[]
-
+  timetables         Timetable[]  
   createdAt DateTime @default(now())
-updatedAt DateTime @updatedAt
+  updatedAt DateTime @updatedAt
 
   @@unique([userId])
   
@@ -225,24 +234,6 @@ enum TokenType {
 /////////////////////////////
 // 🎓 ACADEMIC
 /////////////////////////////
-// model Class {
-//   id        Int       @id @default(autoincrement())
-//   name      String
-//   schoolId  Int
-//   gradeId   Int
-//   grade     Grade   @relation(fields: [gradeId], references: [id])
-//   sections  Section[]
-//   subjects  Subject[]
-//   classTeachers ClassTeacher[]
-//   isActive  Boolean  @default(true)
-//   isDeleted Boolean  @default(false) 
-//    maxStudents Int? 
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-
-//   @@unique([name, schoolId])
-// }
-
 model Class {
   id          Int    @id @default(autoincrement())
   name        String
@@ -259,14 +250,12 @@ model Class {
   syllabi     Syllabus[]
   classTeachers ClassTeacher[]
   teacherSubjects TeacherSubject[] 
+  timetables Timetable[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@unique([name, schoolId])
 }
-
-
-
 model Section {
   id        Int    @id @default(autoincrement())
   name      String
@@ -278,12 +267,16 @@ model Section {
   class     Class  @relation(fields: [classId], references: [id])
   school    School   @relation(fields: [schoolId], references: [id]) 
   students  Student[] 
+  classTeachers ClassTeacher[]
+  teacherSubjects TeacherSubject[]
+  timetables Timetable[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([name, classId])
-}
+  // @@unique([name, classId])
+  @@unique([schoolId, name, classId])
 
+}
 model Grade {
   id        Int    @id @default(autoincrement())
   name      String
@@ -291,76 +284,12 @@ model Grade {
   description String?
   isActive  Boolean @default(true)
   isDeleted Boolean @default(false)
-
   classes   Class[]
   syllabi   Syllabus[]
-
-  // createdAt DateTime @default(now())
-  // updatedAt DateTime @updatedAt
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-
-
   @@unique([name, schoolId])
 }
-
-
-// model MasterSubject {
-//   id          Int    @id @default(autoincrement())
-//   name        String
-//   description String?
-//   gradeId     Int
-//   schoolId    Int
-
-//   grade       Grade  @relation(fields: [gradeId], references: [id])
-
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-// }
-
-// model Subject {
-//   id          Int     @id @default(autoincrement())
-//   name        String
-//   code        String  @unique
-//   description String?
-//   classId     Int
-//   schoolId    Int
-//   type        SubjectType @default(CORE) 
-//   class       Class   @relation(fields: [classId], references: [id])
-  
-//   teachers    TeacherSubject[] 
-//   createdAt   DateTime @default(now())
-//   updatedAt   DateTime @updatedAt
-
-//   @@unique([name, classId]) // same class me duplicate subject name not allowed
-// }
-
-// model Subject {
-//   id          Int     @id @default(autoincrement())
-//   name        String
-//   code        String  @unique
-//   description String?
-
-//   schoolId    Int
-//   classId     Int?
-//   gradeId     Int?      // ⭐ NEW
-
-//   type        SubjectType @default(CORE)
-//   isActive    Boolean  @default(true)
-
-//   maxMarks    Int?
-//   passMarks   Int?
-
-//   class       Class?   @relation(fields: [classId], references: [id])
-//   grade       Grade?    @relation(fields: [gradeId], references: [id])
-//   teachers    TeacherSubject[]
-
-//   createdAt   DateTime @default(now())
-//   updatedAt   DateTime @updatedAt
-
-//   @@unique([name, gradeId])
-// }
-
 model Subject {
   id        Int    @id @default(autoincrement())
   name      String
@@ -370,31 +299,27 @@ model Subject {
   code      String  @unique
   syllabi   Syllabus[] 
   teacherSubjects TeacherSubject[]
+  timetables Timetable[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Syllabus {
   id        Int @id @default(autoincrement())
-
   subjectId Int
   gradeId   Int?
   classId   Int?
   schoolId  Int
- description String?
+  description String?
   type      SubjectType @default(CORE)
-
   chapters  Json
   maxMarks  Int?
   passMarks Int?
-
   isActive  Boolean @default(true)
   isDeleted Boolean @default(false)
-
   subject   Subject @relation(fields: [subjectId], references: [id])
   grade     Grade?  @relation(fields: [gradeId], references: [id])
   class     Class?  @relation(fields: [classId], references: [id])
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -406,58 +331,177 @@ enum SubjectType {
   CORE
   EXTRA
 }
-
 model ClassTeacher {
-  id        Int  @id @default(autoincrement())
-  teacherId Int
-  classId   Int
-  isClassTeacher Boolean @default(false)
-
-  class     Class @relation(fields: [classId], references: [id])
-
-  @@unique([teacherId, classId])
-}
-
-// model TeacherSubject {
-//   id        Int @id @default(autoincrement())
-//   teacherId Int
-//   subjectId Int
-//   classId   Int
-
-//   subject   Subject @relation(fields: [subjectId], references: [id])
-
-//   @@unique([teacherId, subjectId, classId])
-// }
-model TeacherSubject {
   id        Int @id @default(autoincrement())
+
   teacherId Int
-  subjectId Int
-  classId   Int
-
-  subject   Subject @relation(fields: [subjectId], references: [id])
-  class     Class   @relation(fields: [classId], references: [id])
-
-  @@unique([teacherId, subjectId, classId])
-}
-
-
-model Timetable {
-  id        Int    @id @default(autoincrement())
-  schoolId  Int
   classId   Int
   sectionId Int
-  subjectId Int
-  teacherId Int
 
-  day       String
-  period    Int
-   teacher Teacher @relation(fields: [teacherId], references: [id])
+  teacher Teacher @relation(fields: [teacherId], references: [id])
+  class   Class   @relation(fields: [classId], references: [id])
+  section Section @relation(fields: [sectionId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  // ⭐ ek class + section ka sirf 1 class teacher
+  @@unique([classId, sectionId])
+}
+model Day {
+  id         Int @id @default(autoincrement())
+  schoolId   Int
+  name       String
+  shortName  String
+  order      Int
+  maxPeriods Int
+  isActive   Boolean @default(true)
+  isHalfDay  Boolean @default(false)
+  timetables Timetable[]
+
+  school School @relation(fields:[schoolId], references:[id])
+  periods Period[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([sectionId, day, period]) // no double class
-  @@unique([teacherId, day, period]) // teacher can't be in 2 places
+  @@unique([schoolId, name])
 }
+
+
+model TeacherSubject {
+  id        Int @id @default(autoincrement())
+
+  teacherId Int
+  subjectId Int
+  classId   Int
+  sectionId Int
+  // schoolId Int
+
+  teacher Teacher @relation(fields: [teacherId], references: [id])
+  subject Subject @relation(fields: [subjectId], references: [id])
+  class   Class   @relation(fields: [classId], references: [id])
+  section Section @relation(fields: [sectionId], references: [id])
+
+  // ⭐ same subject same class same section duplicate nahi
+  // @@unique([teacherId, subjectId, classId, sectionId])
+  // @@unique([schoolId, teacherId, subjectId, classId, sectionId])
+
+}
+model SchoolTiming {
+  id           Int      @id @default(autoincrement())
+  schoolId     Int
+  academicYear String
+
+  type         TimingType @default(REGULAR)
+
+  school       School   @relation(fields: [schoolId], references: [id])
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([schoolId, academicYear, type])
+}
+
+enum TimingType {
+  REGULAR
+  WINTER
+  RAMADAN
+  EXAM
+}
+
+model Period {
+  id           Int      @id @default(autoincrement())
+  schoolId     Int
+  academicYearId Int
+ timingType TimingType @default(REGULAR)
+
+  dayId        Int
+  periodNumber Int
+
+  startTime    String
+  endTime      String
+
+  isBreak      Boolean  @default(false)
+  isActive     Boolean  @default(true)
+
+  school       School   @relation(fields: [schoolId], references: [id])
+  day          Day      @relation(fields: [dayId], references: [id])
+  timetables   Timetable[]
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([schoolId, academicYearId, dayId, periodNumber])
+@@index([schoolId, academicYearId])
+
+}
+
+model AcademicYear {
+  id        Int      @id @default(autoincrement())
+  schoolId  Int
+  name      String
+  startDate DateTime
+  endDate   DateTime
+  isActive  Boolean  @default(false)
+
+  school    School @relation(fields: [schoolId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([schoolId, name])
+}
+
+model Timetable {
+  id             Int      @id @default(autoincrement())
+
+  schoolId       Int
+  classId        Int
+  sectionId      Int
+  subjectId      Int
+  teacherId      Int
+
+  dayId          Int
+  periodId       Int
+  academicYearId Int
+
+ startTime String
+  endTime   String
+//   effectiveFrom DateTime
+// effectiveTo   DateTime?
+
+  school   School   @relation(fields: [schoolId], references: [id])
+  class    Class    @relation(fields: [classId], references: [id])
+  section  Section  @relation(fields: [sectionId], references: [id])
+  subject  Subject  @relation(fields: [subjectId], references: [id])
+  teacher  Teacher  @relation(fields: [teacherId], references: [id])
+  period   Period   @relation(fields: [periodId], references: [id])
+  day      Day      @relation(fields: [dayId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([sectionId, dayId, periodId, academicYearId])
+  @@unique([teacherId, dayId, periodId, academicYearId])
+//   @@unique([schoolId, sectionId, dayId, periodId, academicYearId, effectiveFrom])
+// @@unique([schoolId, teacherId, dayId, periodId, academicYearId, effectiveFrom])
+
+ 
+  @@index([schoolId, academicYearId])
+}
+
+
+
+
+// enum DayOfWeek {
+//   MONDAY
+//   TUESDAY
+//   WEDNESDAY
+//   THURSDAY
+//   FRIDAY
+//   SATURDAY
+// }
+
 
 
 /////////////////////////////

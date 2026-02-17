@@ -1,18 +1,24 @@
-import { Request, Response } from "express";
-import { TimetableService } from "./timetable.service";
+import { Router } from "express";
+import { TimetableController } from "./timetable.controller";
+import { authMiddleware } from "../../middlewares/auth";
 
-const service = new TimetableService();
+const router = Router();
+const controller = new TimetableController();
 
-export class TimetableController {
+// router.post("/", authMiddleware, controller.create);
+router.post("/bulk", authMiddleware, controller.bulkCreate);
 
-  async create(req: Request, res: Response) {
-    const data = await service.createEntry(req.body);
-    res.status(201).json({ message: "Timetable entry created", data });
-  }
+router.get("/", authMiddleware, controller.getAll);
+router.get(
+  "/admin-view",
+  authMiddleware,
+  controller.getAdminTimetable
+);
+router.get(
+  "/my-timetable",
+  authMiddleware,
+  controller.getMyTimetable
+);
+router.delete("/:id", authMiddleware, controller.remove);
 
-  async getBySection(req: Request, res: Response) {
-    const sectionId = Number(req.params.sectionId);
-    const data = await service.getSectionTimetable(sectionId);
-    res.json({ data });
-  }
-}
+export default router;

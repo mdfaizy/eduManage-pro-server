@@ -101,16 +101,36 @@ export class UserController {
     }
   }
 
+  // async getUsers(req: Request, res: Response) {
+  //   try {
+  //     const schoolId = (req as any).user.schoolId;
+  //     const role = req.query.role as string | undefined;
+  //     console.log("ROLE FROM QUERY 👉", role);
+  //     const users = await this.service.getUsers(schoolId, role);
+  //     res.json({ success: true, data: users });
+  //   } catch (e: any) {
+  //     res.status(500).json({ success: false, message: e.message });
+  //   }
+  // }
+
   async getUsers(req: Request, res: Response) {
-    try {
-      const schoolId = (req as any).user.schoolId;
-      const role = req.query.role as string | undefined;
-      const users = await this.service.getUsers(schoolId, role);
-      res.json({ success: true, data: users });
-    } catch (e: any) {
-      res.status(500).json({ success: false, message: e.message });
-    }
+  try {
+    console.log("REQ.USER 👉", (req as any).user);
+
+    const schoolId = (req as any).user?.schoolId;
+    console.log("SCHOOL ID 👉", schoolId);
+
+    const role = req.query.role as string | undefined;
+    console.log("ROLE FROM QUERY 👉", role);
+
+    const users = await this.service.getUsers(schoolId, role);
+    res.json({ success: true, data: users });
+  } catch (e: any) {
+    console.error("GET USERS ERROR 👉", e);
+    res.status(500).json({ success: false, message: e.message });
   }
+}
+
 
   async getUser(req: Request, res: Response) {
     try {
