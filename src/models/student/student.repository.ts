@@ -1,22 +1,34 @@
-import prisma from "../../config/prisma";
+import prisma from "../../config/prisma.js";
 
 export class StudentRepository {
-
-  createStudent(data: any) {
+  async create(data: any) {
     return prisma.student.create({ data });
   }
 
-  createParent(data: any) {
-    return prisma.parent.create({ data });
-  }
-
-  linkStudentParent(studentId: number, parentId: number) {
-    return prisma.studentParent.create({
-      data: { studentId, parentId }
+  async findAll(schoolId: number) {
+    return prisma.student.findMany({
+      where: { schoolId, isDeleted: false },
+      orderBy: { createdAt: "desc" },
     });
   }
 
-  createAdmission(data: any) {
-    return prisma.admission.create({ data });
+  async findById(id: number, schoolId: number) {
+    return prisma.student.findFirst({
+      where: { id, schoolId, isDeleted: false },
+    });
+  }
+
+  async update(id: number, data: any) {
+    return prisma.student.update({
+      where: { id },
+      data,
+    });
+  }
+
+  async softDelete(id: number) {
+    return prisma.student.update({
+      where: { id },
+      data: { isDeleted: true },
+    });
   }
 }

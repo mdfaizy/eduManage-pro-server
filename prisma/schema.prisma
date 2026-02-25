@@ -24,8 +24,10 @@ model School {
      timings SchoolTiming[]
      periods       Period[]
      days Day[]
+     parents Parent[]
      academicYears AcademicYear[]
- 
+     students Student[]
+     admissions Admission[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -121,6 +123,8 @@ model User {
   roles  UserRole[]
   tokens Token[]
   teacher Teacher?  
+  student Student?
+  parent Parent? 
   userPermissions UserPermission[]   
   createdAt DateTime @default(now())
 updatedAt DateTime @updatedAt
@@ -251,6 +255,8 @@ model Class {
   classTeachers ClassTeacher[]
   teacherSubjects TeacherSubject[] 
   timetables Timetable[]
+  // students Student[]
+  admissions Admission[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -266,10 +272,11 @@ model Section {
   isActive  Boolean @default(true)
   class     Class  @relation(fields: [classId], references: [id])
   school    School   @relation(fields: [schoolId], references: [id]) 
-  students  Student[] 
+  // students  Student[] 
   classTeachers ClassTeacher[]
   teacherSubjects TeacherSubject[]
   timetables Timetable[]
+  admissions Admission[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -508,45 +515,156 @@ model Timetable {
 // 👨‍🎓 STUDENTS & PARENTS
 /////////////////////////////
 
+// model Student {
+//   id        Int @id @default(autoincrement())
+//   userId    Int
+//   schoolId  Int
+//   classId   Int
+//   sectionId Int?
+//   section   Section? @relation(fields: [sectionId], references: [id])
+  
+// }
+
+// model Student {
+//   id        Int @id @default(autoincrement())
+//   userId    Int? @unique   // ✅ make optional
+//   schoolId  Int
+//   classId   Int
+//   sectionId Int?
+
+//   admissionNo String? @unique
+//   rollNumber  Int?
+//   dob         DateTime?
+//   gender      String?
+//   address     String?
+
+//   user     User?    @relation(fields: [userId], references: [id])
+//   school   School   @relation(fields: [schoolId], references: [id])
+//   class    Class    @relation(fields: [classId], references: [id])
+//   section  Section? @relation(fields: [sectionId], references: [id])
+
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }
+
 model Student {
   id        Int @id @default(autoincrement())
-  userId    Int
+  userId    Int? @unique
   schoolId  Int
-  classId   Int
-  sectionId Int?
-  section   Section? @relation(fields: [sectionId], references: [id])
-  
+  name      String
+  studentCode String? @unique
+  dob       DateTime?
+  gender    Gender?
+  address   String?
+
+  isActive  Boolean @default(true)
+  isDeleted Boolean @default(false)
+
+  user     User?    @relation(fields: [userId], references: [id])
+  school   School   @relation(fields: [schoolId], references: [id])
+
+  admissions Admission[]
+  parents    StudentParent[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([schoolId])
 }
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+// model Parent {
+//   id       Int @id @default(autoincrement())
+//   userId   Int
+//   schoolId Int
+// }
 
 model Parent {
   id       Int @id @default(autoincrement())
-  userId   Int
+  userId   Int @unique
   schoolId Int
+
+  // ✅ Relations
+  user     User   @relation(fields: [userId], references: [id])
+  school   School @relation(fields: [schoolId], references: [id])
+
+  students StudentParent[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([schoolId])
 }
+
+// model StudentParent {
+//   studentId Int
+//   parentId  Int
+
+//   @@id([studentId, parentId])
+// }
 
 model StudentParent {
   studentId Int
   parentId  Int
 
+  // ✅ Relations
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  parent  Parent  @relation(fields: [parentId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
   @@id([studentId, parentId])
+  @@index([parentId])
 }
 
+// model Admission {
+//   id           Int    @id @default(autoincrement())
+//   studentId    Int
+//   schoolId     Int
+//   classId      Int
+//   sectionId    Int?
+//   academicYear String
+
+//   status    AdmissionStatus
+//   startDate DateTime        @default(now())
+//   endDate   DateTime?
+
+//   reason      String? // cancel / transfer reason
+//   cancelledBy Int? // userId (admin)
+
+//   createdAt DateTime @default(now())
+// }
 model Admission {
-  id           Int    @id @default(autoincrement())
+  id           Int @id @default(autoincrement())
   studentId    Int
   schoolId     Int
+
   classId      Int
   sectionId    Int?
+  rollNumber   Int?
+  admissionNo  String?
   academicYear String
 
   status    AdmissionStatus
-  startDate DateTime        @default(now())
+  startDate DateTime @default(now())
   endDate   DateTime?
 
-  reason      String? // cancel / transfer reason
-  cancelledBy Int? // userId (admin)
+  // relations
+  student Student @relation(fields: [studentId], references: [id])
+  school  School  @relation(fields: [schoolId], references: [id])
+  class   Class   @relation(fields: [classId], references: [id])
+  section Section? @relation(fields: [sectionId], references: [id])
 
   createdAt DateTime @default(now())
+
+  // ⭐ real constraints
+  @@unique([schoolId, academicYear, classId, sectionId, rollNumber])
+  @@unique([schoolId, admissionNo])
+  @@index([studentId, academicYear])
 }
 
 enum AdmissionStatus {
@@ -685,3 +803,4 @@ model AuditLog {
   entityId  Int?
   createdAt DateTime @default(now())
 }
+
