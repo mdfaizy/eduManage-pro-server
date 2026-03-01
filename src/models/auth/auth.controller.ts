@@ -48,22 +48,29 @@ async login(req: Request, res: Response) {
 
   const isProd = process.env.NODE_ENV === "production";
 
+// res.cookie("accessToken", result.accessToken, {
+//   httpOnly: true,
+//   secure: isProd,          // prod=true, dev=false
+//   sameSite: "lax",         // ⭐ DEV ke liye BEST
+//   path: "/",
+//   maxAge: 15 * 60 * 1000,
+// });
 res.cookie("accessToken", result.accessToken, {
   httpOnly: true,
-  secure: isProd,              // prod me true, dev me false
-  sameSite: isProd ? "none" : "lax",
+  secure: false,        // 👈 force false in dev
+  sameSite: "lax",
   path: "/",
-  maxAge: 15 * 60 * 1000,
 });
 
 res.cookie("refreshToken", result.refreshToken, {
   httpOnly: true,
   secure: isProd,
-  sameSite: isProd ? "none" : "lax",
+  sameSite: "lax",         // ⭐ IMPORTANT
   path: "/",
   maxAge: 7 * 24 * 60 * 60 * 1000,
 });
-
+console.log("SETTING ACCESS COOKIE");
+console.log(result.accessToken);
 
     res.json({ user: result.user });
   },
@@ -91,25 +98,25 @@ res.cookie("refreshToken", result.refreshToken, {
     // });
 
 
-    const isProd = process.env.NODE_ENV === "production";
+   const isProd = process.env.NODE_ENV === "production";
 
 res.cookie("accessToken", result.accessToken, {
   httpOnly: true,
-  secure: isProd,              // prod me true, dev me false
-  sameSite: isProd ? "none" : "lax",
+  secure: false,        // 👈 force false in dev
+  sameSite: "lax",
   path: "/",
-  maxAge: 15 * 60 * 1000,
 });
 
 res.cookie("refreshToken", result.refreshToken, {
   httpOnly: true,
   secure: isProd,
-  sameSite: isProd ? "none" : "lax",
+  sameSite: "lax",         // ⭐ IMPORTANT
   path: "/",
   maxAge: 7 * 24 * 60 * 60 * 1000,
 });
 
-
+console.log("SETTING ACCESS COOKIE");
+console.log(result.accessToken);
     res.json({ message: "Refreshed" });
   },
 

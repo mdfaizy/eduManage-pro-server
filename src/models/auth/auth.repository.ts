@@ -19,7 +19,24 @@ export const AuthRepository = {
 async create(tx: any, data: any) {
     return tx.token.create({ data });
   },
-
+// auth.repository.ts
+findUserWithRoles(email: string) {
+  return prisma.user.findUnique({
+    where: { email },
+    include: {
+      school: true,
+      roles: {
+        include: {
+          role: {
+            include: {
+              permissions: { include: { permission: true } },
+            },
+          },
+        },
+      },
+    },
+  });
+},
  async findValid(token: string, type: TokenType) {
   return prisma.token.findFirst({
     where: {

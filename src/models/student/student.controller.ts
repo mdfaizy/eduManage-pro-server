@@ -1,4 +1,4 @@
-  import { Request, Response } from "express";
+import { Request, Response } from "express";
 import { StudentService } from "./student.service.js";
 
 export class StudentController {
@@ -29,60 +29,15 @@ export class StudentController {
     }
   }
 
-  async getMyChildren(req: Request, res: Response) {
+  async getStudent(req: Request, res: Response) {
     try {
-      const userId = (req as any).user.userId;
-      const schoolId = (req as any).user.schoolId;
+      const id = Number(req.params.id);
+      const user = (req as any).user;
 
-      const data = await this.service.getMyChildren(userId, schoolId);
+      const data = await this.service.getStudent(id, user);
       res.json({ success: true, data });
     } catch (e: any) {
-      res.status(400).json({ success: false, message: e.message });
-    }
-  }
-
-  // async getStudent(req: Request, res: Response) {
-  //   try {
-  //     const id = Number(req.params.id);
-  //     const schoolId = (req as any).user.schoolId;
-
-  //     const data = await this.service.getStudent(id, schoolId);
-  //     res.json({ success: true, data });
-  //   } catch (e: any) {
-  //     res.status(404).json({ success: false, message: e.message });
-  //   }
-  // }
-
-  async getStudent(req: Request, res: Response) {
-  try {
-    const id = Number(req.params.id);
-    const user = (req as any).user;
-
-    const data = await this.service.getStudent(id, user);
-
-    res.json({ success: true, data });
-  } catch (e: any) {
-    res.status(403).json({ success: false, message: e.message });
-  }
-}
-
-  async updateStudent(req: Request, res: Response) {
-    try {
-      const id = Number(req.params.id);
-      const data = await this.service.updateStudent(id, req.body);
-      res.json({ success: true, message: "Student updated", data });
-    } catch (e: any) {
-      res.status(400).json({ success: false, message: e.message });
-    }
-  }
-
-  async toggleStatus(req: Request, res: Response) {
-    try {
-      const id = Number(req.params.id);
-      await this.service.toggleStatus(id, req.body.isActive);
-      res.json({ success: true, message: "Status updated" });
-    } catch (e: any) {
-      res.status(400).json({ success: false, message: e.message });
+      res.status(403).json({ success: false, message: e.message });
     }
   }
 

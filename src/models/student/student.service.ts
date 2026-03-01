@@ -1,6 +1,7 @@
 import prisma from "../../config/prisma.js";
 import { StudentRepository } from "./student.repository.js";
 import { generateStudentCode } from "../../utils/studentCode.utils.js";
+
 function toDate(value?: string | Date | null) {
   if (!value) return null;
   const d = new Date(value);
@@ -11,7 +12,9 @@ function toDate(value?: string | Date | null) {
 export class StudentService {
   private repo = new StudentRepository();
 
-  // ✅ CREATE STUDENT
+  // =====================================================
+  // ✅ CREATE STUDENT (manual)
+  // =====================================================
   async createStudent(payload: any, schoolId: number) {
     return prisma.$transaction(async (tx) => {
       const studentCode = await generateStudentCode(tx, schoolId);
@@ -39,93 +42,93 @@ export class StudentService {
         userId = user.id;
       }
 
-      return tx.student.create({
-        data: {
-          name: payload.name,
-          schoolId,
-          studentCode, // ⭐ AUTO
-          dob: toDate(payload.dob),
-          gender: payload.gender,
-          address: payload.address,
-          userId,
-        },
+      return this.repo.create(tx, {
+        name: payload.name,
+        schoolId,
+        studentCode,
+        dob: toDate(payload.dob),
+        gender: payload.gender,
+        address: payload.address,
+        userId,
       });
     });
   }
 
+  // =====================================================
+  // ✅ CREATE FROM ADMISSION (🔥 IMPORTANT)
+  // =====================================================
+  async createFromAdmission(
+    tx: any,
+    admission: any,
+    schoolId: number
+  ) {
+    const studentCode = await generateStudentCode(tx, schoolId);
+
+    return this.repo.create(tx, {
+      name: admission.studentName,
+      schoolId,
+      studentCode,
+      dob: admission.dob,
+      gender: admission.gender,
+      address: admission.address,
+    });
+  }
+
+  // =====================================================
+  // ✅ LIST
+  // =====================================================
   async getStudents(schoolId: number) {
     return this.repo.findAll(schoolId);
   }
-  // async getStudent(id: number, user: any) {
-  //   const { userId, schoolId, roles } = user;
-  //   // ⭐ PARENT restriction
-  //   // if (roles.includes("PARENT")) {
-  //     const parent = await prisma.parent.findUnique({
-  //       where: { userId },
-  //     });
 
-  //     const student = await prisma.student.findFirst({
-  //       where: {
-  //         id,
-  //         schoolId,
-  //         isDeleted: false,
-  //         parents: {
-  //           some: { parentId: parent?.id },
-  //         },
-  //       },
-  //     });
+  // =====================================================
+  // ✅ GET SINGLE (ROLE SAFE)
+  // =====================================================
+  async getStudent(id: number, user: any) {
+    const { userId, schoolId, roles } = user;
 
-  //     if (!student) throw new Error("Access denied");
-  //     return student;
-  //   }
+    const isAdmin =
+      roles.includes("ADMIN") || roles.includes("SCHOOL_ADMIN");
 
-  // //   throw new Error("Access denied");
-  // // }
+    const isTeacher = roles.includes("TEACHER");
+
+    // ✅ ADMIN / TEACHER
+    if (isAdmin || isTeacher) {
+      const student = await prisma.student.findFirst({
+        where: { id, schoolId, isDeleted: false },
+      });
+
+      if (!student) throw new Error("Student not found");
+      return student;
+    }
+
+    // ✅ PARENT
+    if (roles.includes("PARENT")) {
+      const parent = await prisma.parent.findUnique({
+        where: { userId },
+      });
+
+      const student = await prisma.student.findFirst({
+        where: {
+          id,
+          schoolId,
+          isDeleted: false,
+          parents: {
+            some: { parentId: parent?.id },
+          },
+        },
+      });
+
+      if (!student) throw new Error("Access denied");
+      return student;
+    }
+
+    throw new Error("Access denied");
+  }
 
   // =====================================================
   // ✅ LINK PARENT
   // =====================================================
-  
-  async getStudent(id: number, user: any) {
-  const { userId, schoolId, roles } = user;
-
-  // ✅ ADMIN / TEACHER can view any student of school
-  if (roles.includes("ADMIN") || roles.includes("TEACHER")) {
-    const student = await prisma.student.findFirst({
-      where: {
-        id,
-        schoolId,
-        isDeleted: false,
-      },
-    });
-
-    if (!student) throw new Error("Student not found");
-    return student;
-  }
-
-  // ✅ PARENT can view only own child
-  if (roles.includes("PARENT")) {
-    const parent = await prisma.parent.findUnique({
-      where: { userId },
-    });
-
-    const student = await prisma.student.findFirst({
-      where: {
-        id,
-        schoolId,
-        isDeleted: false,
-        parents: {
-          some: { parentId: parent?.id },
-        },
-      },
-    });
-
-    if (!student) throw new Error("Access denied");
-    return student;
-  }
-
-  throw new Error("Access denied");
-}
   async linkParent(
     studentId: number,
     parentEmail: string,
@@ -179,10 +182,7 @@ export class StudentService {
 
       if (!parent) {
         parent = await tx.parent.create({
-          data: {
-            userId: user.id,
-            schoolId,
-          },
+          data: { userId: user.id, schoolId },
         });
       }
 
@@ -220,9 +220,7 @@ export class StudentService {
         schoolId,
         isDeleted: false,
         parents: {
-          some: {
-            parentId: parent.id,
-          },
+          some: { parentId: parent.id },
         },
       },
       orderBy: { createdAt: "desc" },

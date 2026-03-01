@@ -29,9 +29,9 @@ router.post(
  * ✅ UPDATE ROLE
  */
 router.put(
-  `roles/:id`, // /roles/:id
+  `/:id`, // /roles/:id
   authMiddleware,
-  authorizePermissions(["UPDATE_ROLE"]),
+  // authorizePermissions(["UPDATE_ROLE"]),
 
   (req: Request, res: Response) =>
     RoleController.updateRole(req, res)

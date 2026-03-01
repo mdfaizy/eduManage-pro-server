@@ -5,69 +5,77 @@ import { authorizePermissions } from "../../middlewares/permission.middleware.js
 
 const router = Router();
 
-router.post(
-  "/users",
-  authMiddleware,
-  // authorizePermissions(["CREATE_USER"]),
-  (req, res) => UserController.createUser(req, res)
-);
-router.post("/set-password", (req, res) =>
-  UserController.setPassword(req, res)
-);
+// ✅ CREATE USER
+router.post("/", authMiddleware, (req, res) => UserController.createUser(req, res));
 
+// ✅ SET PASSWORD
+router.post("/set-password", UserController.setPassword);
 
+// ✅ ⭐⭐⭐ MAIN LIST (PAGINATED — IMPORTANT)
 router.get(
   "/",
   authMiddleware,
-  // authorizePermissions(["VIEW_USER"]),
-  (req, res) => UserController.getUsers(req, res)
+  (req, res) =>
+  UserController.getUsersPaginated(req, res)
 );
 
-router.get(
-  "/:id",
-  authMiddleware,
-  // authorizePermissions(["VIEW_USER"]),
-  (req, res) => UserController.getUser(req, res)
-);
-
-router.post(
-  "/users/assign-role",
-  authMiddleware,
-  authorizePermissions(["ASSIGN_ROLE"]),
-  (req, res) => UserController.assignRole(req, res)
-);
-router.patch(
-  "/:id/status",
-  authMiddleware,
-  // authorizePermissions(["UPDATE_USER"]),
-  (req, res) => UserController.updateUserStatus(req, res)
-);
-
-router.delete(
-  "/:id",
-  authMiddleware,
-  // authorizePermissions(["DELETE_USER"]),
-  (req, res) => UserController.deleteUser(req, res)
-);
-
-
+// ✅ USER PERMISSIONS (specific first)
 router.get(
   "/:id/permissions",
   authMiddleware,
-  (req, res) => UserController.getUserPermissions(req, res)
+  UserController.getUserPermissions
 );
 
+// ✅ SINGLE USER
+router.get(
+  "/:id",
+  authMiddleware,
+  
+  (req, res) => UserController.getUser(req, res)
+);
+router.patch(
+  "/:id",
+  authMiddleware,
+  (req, res) => UserController.updateUser(req, res)
+);
+
+// ✅ STATUS UPDATE
+router.patch(
+  "/:id/status",
+  authMiddleware,
+  (req, res) => UserController.updateUserStatus(req, res)
+  // UserController.updateUserStatus
+);
+
+// ✅ DELETE
+router.delete(
+  "/:id",
+  authMiddleware,
+  (req, res) => UserController.deleteUser(req, res)
+  
+);
+
+// ✅ ASSIGN ROLE
+router.post(
+  "/assign-role",
+  authMiddleware,
+  authorizePermissions(["ASSIGN_ROLE"]),
+  
+  (req, res) => UserController.assignRole(req, res)
+);
+
+// ✅ PERMISSION GRANT
 router.post(
   "/:id/permissions/grant",
   authMiddleware,
-  // authorizePermissions(["ASSIGN_PERMISSION"]),
   (req, res) => UserController.grantPermission(req, res)
+  
 );
 
+// ✅ PERMISSION REVOKE
 router.post(
   "/:id/permissions/revoke",
   authMiddleware,
-  // authorizePermissions(["ASSIGN_PERMISSION"]),
   (req, res) => UserController.revokePermission(req, res)
 );
 

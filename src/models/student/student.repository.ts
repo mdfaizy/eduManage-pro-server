@@ -1,8 +1,8 @@
 import prisma from "../../config/prisma.js";
 
 export class StudentRepository {
-  async create(data: any) {
-    return prisma.student.create({ data });
+  async create(tx: any, data: any) {
+    return tx.student.create({ data });
   }
 
   async findAll(schoolId: number) {

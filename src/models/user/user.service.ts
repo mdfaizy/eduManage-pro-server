@@ -80,6 +80,32 @@ async getUsers(schoolId: number, role?: string) {
   return this.repo.findAllBySchool(schoolId);
 }
 
+async getUsersPaginated(
+  schoolId: number,
+  page = 1,
+  limit = 10,
+  search?: string,
+  role?: string
+) {
+  return this.repo.findAllBySchool(
+    schoolId,
+    page,
+    limit,
+    search,
+    role
+  );
+}
+
+// ✅ ADD THIS METHOD
+async updateUser(id: number, payload: any) {
+  const user = await this.repo.findById(id);
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  return this.repo.updateUser(id, payload);
+}
   async getUser(id: number) {
     const user = await this.repo.findById(id);
     if (!user) throw new Error("User not found");
@@ -93,6 +119,17 @@ async getUsers(schoolId: number, role?: string) {
   async deleteUser(id: number) {
     return this.repo.deleteUser(id);
   }
+
+  // user.service.ts
+async softDeleteUser(id: number) {
+  const user = await this.repo.findById(id);
+
+  if (!user) {
+    throw { statusCode: 404, message: "User not found" };
+  }
+
+  return this.repo.softDelete(id);
+}
   async updateUserStatus(userId: number, isActive: boolean) {
     if (typeof isActive !== "boolean") {
       throw { statusCode: 400, message: "Invalid status value" };

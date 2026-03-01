@@ -1,5 +1,3 @@
-
-
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import prisma from "../../config/prisma.js";
@@ -126,55 +124,132 @@ await tx.token.create({
   },
 
 // ✅ LOGIN (FINAL)
+// async login(email: string, password: string, ua?: string, ip?: string) {
+//     const user = await prisma.user.findUnique({
+//       where: { email: email.toLowerCase() },
+//       include: {
+//         school: true,
+//         roles: {
+//           include: {
+//             role: {
+//               include: {
+//                 permissions: { include: { permission: true } },
+//               },
+//             },
+//           },
+//         },
+//       },
+//     });
+
+//     if (!user || !(await bcrypt.compare(password, user.password)))
+//       throw new Error("Invalid credentials");
+
+//     if (!user.isActive) throw new Error("User disabled");
+//     if (user.school.status !== "ACTIVE") throw new Error("School inactive");
+
+//     const roles = user.roles.map((ur) => ur.role.name);
+//     const permissions = user.roles.flatMap((ur) =>
+//       ur.role.permissions.map((rp) => rp.permission.key)
+//     );
+
+//     const accessToken = JWTService.generateAccessToken({
+//       userId: user.id,
+//       schoolId: user.schoolId,
+//       roles,
+//       permissions,
+//     });
+
+//     const refreshToken = TokenUtil.generate();
+
+//     await prisma.token.create({
+//       data: {
+//         userId: user.id,
+//         tokenHash: TokenUtil.hash(refreshToken),
+//         type: "REFRESH",
+//         expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+//         userAgent: ua,
+//         ipAddress: ip,
+//       },
+//     });
+
+//     return { accessToken, refreshToken, user };
+// },
+
 async login(email: string, password: string, ua?: string, ip?: string) {
-    const user = await prisma.user.findUnique({
-      where: { email: email.toLowerCase() },
-      include: {
-        school: true,
-        roles: {
-          include: {
-            role: {
-              include: {
-                permissions: { include: { permission: true } },
-              },
+  const user = await prisma.user.findUnique({
+    where: { email: email.toLowerCase() },
+    include: {  
+      school: true,
+      roles: {
+        include: {
+          role: {
+            include: {
+              permissions: { include: { permission: true } },
             },
           },
         },
       },
-    });
+    },
+  });
 
-    if (!user || !(await bcrypt.compare(password, user.password)))
-      throw new Error("Invalid credentials");
+  // ❌ user not found
+  if (!user) {
+    throw new Error("Invalid credentials");
+  }
 
-    if (!user.isActive) throw new Error("User disabled");
-    if (user.school.status !== "ACTIVE") throw new Error("School inactive");
+  // ❌ soft deleted (VERY IMPORTANT)
+  if (user.isDeleted) {
+    throw new Error("Account deleted. Contact admin.");
+  }
 
-    const roles = user.roles.map((ur) => ur.role.name);
-    const permissions = user.roles.flatMap((ur) =>
-      ur.role.permissions.map((rp) => rp.permission.key)
-    );
+  // ❌ inactive
+  if (!user.isActive) {
+    throw new Error("Account inactive. Contact admin.");
+  }
 
-    const accessToken = JWTService.generateAccessToken({
+  // ❌ email not verified (recommended)
+  if (!user.emailVerified) {
+    throw new Error("Please verify your email first.");
+  }
+
+  // ❌ school inactive
+  if (!user.school || user.school.status !== "ACTIVE") {
+    throw new Error("School inactive");
+  }
+
+  // ❌ password check LAST
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    throw new Error("Invalid credentials");
+  }
+
+  // ✅ roles & permissions
+  const roles = user.roles.map((ur) => ur.role.name);
+  const permissions = user.roles.flatMap((ur) =>
+    ur.role.permissions.map((rp) => rp.permission.key)
+  );
+
+  const accessToken = JWTService.generateAccessToken({
+    userId: user.id,
+    schoolId: user.schoolId,
+    roles,
+    permissions,
+  });
+
+  const refreshToken = TokenUtil.generate();
+
+  await prisma.token.create({
+    data: {
       userId: user.id,
-      schoolId: user.schoolId,
-      roles,
-      permissions,
-    });
+      tokenHash: TokenUtil.hash(refreshToken),
+      type: "REFRESH",
+      expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      userAgent: ua,
+      ipAddress: ip,
+    },
+  });
 
-    const refreshToken = TokenUtil.generate();
-
-    await prisma.token.create({
-      data: {
-        userId: user.id,
-        tokenHash: TokenUtil.hash(refreshToken),
-        type: "REFRESH",
-        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-        userAgent: ua,
-        ipAddress: ip,
-      },
-    });
-
-    return { accessToken, refreshToken, user };
+  return { accessToken, refreshToken, user };
 },
 // ✅ REFRESH (FINAL)
 async refresh(oldToken: string, ua?: string, ip?: string) {
