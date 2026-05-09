@@ -79,4 +79,6 @@ async getOne(req: Request, res: Response) {
   res.json({ message: "Section updated", data: updated });
 }
 
+
+getSectionsByClass = async ( req: Request, res: Response ) => { try { const classId = Number( req.params.classId ); const schoolId = req.user.schoolId; const data = await service .getSectionsByClass( classId, schoolId ); res.json({ success: true, data, }); } catch (e: any) { res.status(400).json({ success: false, message: e.message, }); } };
 }

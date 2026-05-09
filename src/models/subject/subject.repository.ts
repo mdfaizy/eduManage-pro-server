@@ -3,15 +3,18 @@ import prisma from "../../config/prisma";
 
 export class SubjectRepository {
 
-  create(name: string, code: string, schoolId: number) {
-    return prisma.subject.create({
-      data: {
-        name,
-        code,
-        schoolId
-      }
-    });
-  }
+create(data: {
+  name: string;
+  code: string;
+  schoolId: number;
+  description?: string;
+  maxMarks?: number;
+  passMarks?: number;
+}) {
+  return prisma.subject.create({
+    data
+  });
+}
 
   existsByName(name: string, schoolId: number) {
     return prisma.subject.findFirst({
@@ -33,12 +36,20 @@ export class SubjectRepository {
     });
   }
 
-   update(id: number, data: { name?: string; description?: string }) {
-    return prisma.subject.update({
-      where: { id },
-      data
-    });
+ update(
+  id: number,
+  data: {
+    name?: string;
+    description?: string;
+    maxMarks?: number;
+    passMarks?: number;
   }
+) {
+  return prisma.subject.update({
+    where: { id },
+    data,
+  });
+}
  findById(id: number) {
     return prisma.subject.findUnique({ where: { id } });
   }

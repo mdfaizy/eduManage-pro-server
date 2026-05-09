@@ -8,13 +8,13 @@ export class ClassController {
   async create(req: Request, res: Response) {
     try {
       const schoolId = req.user.schoolId;
-      const { name, maxStudents, gradeId } = req.body;
+      const { name, maxStudents } = req.body;
 
       const data = await service.createClass(
         name,
         schoolId,
         Number(maxStudents),
-        Number(gradeId)
+        // Number(gradeId)
       );
 
       res.status(201).json({ message: "Class created", data });
@@ -25,8 +25,8 @@ export class ClassController {
 
   async getAll(req: Request, res: Response) {
     const schoolId = req.user.schoolId;
-    const gradeId = req.query.gradeId ? Number(req.query.gradeId) : undefined;
-    const data = await service.getClasses(schoolId, gradeId);
+    // const gradeId = req.query.gradeId ? Number(req.query.gradeId) : undefined;
+    const data = await service.getClasses(schoolId);
     res.json(data);
   }
 
@@ -37,13 +37,13 @@ export class ClassController {
 
   async update(req: Request, res: Response) {
     try {
-      const { name, isActive, maxStudents, gradeId } = req.body;
+      const { name, isActive, maxStudents } = req.body;
 
       const data = await service.updateClass(Number(req.params.id), {
         name,
         isActive,
         maxStudents: maxStudents ? Number(maxStudents) : undefined,
-        gradeId: gradeId ? Number(gradeId) : undefined,
+        // gradeId: gradeId ? Number(gradeId) : undefined,
       });
 
       res.json({ message: "Class updated", data });

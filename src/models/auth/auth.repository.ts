@@ -1,6 +1,6 @@
 import prisma from "../../config/prisma.js";
 import { TokenUtil } from "../../utils/token.util.js";
-import { TokenType } from "@prisma/client";
+import { TokenType } from "../../generated/prisma"
 export const AuthRepository = {
   createSchool(tx: any, data: any) {
     return tx.school.create({ data });

@@ -97,6 +97,16 @@ async getUsersPaginated(
 }
 
 // ✅ ADD THIS METHOD
+// async updateUser(id: number, payload: any) {
+//   const user = await this.repo.findById(id);
+
+//   if (!user) {
+//     throw new Error("User not found");
+//   }
+
+//   return this.repo.updateUser(id, payload);
+// }
+
 async updateUser(id: number, payload: any) {
   const user = await this.repo.findById(id);
 
@@ -104,7 +114,18 @@ async updateUser(id: number, payload: any) {
     throw new Error("User not found");
   }
 
-  return this.repo.updateUser(id, payload);
+  // 1. Update normal fields
+  await this.repo.updateUser(id, {
+    name: payload.name,
+    isActive: payload.isActive,
+  });
+
+  // 2. Update role separately
+  if (payload.roleId) {
+    await this.repo.assignRole(id, Number(payload.roleId));
+  }
+
+  return await this.repo.findById(id);
 }
   async getUser(id: number) {
     const user = await this.repo.findById(id);

@@ -15,18 +15,22 @@ export class SubjectController {
       res.status(403).json({ message: err.message });
     }
   }
+async create(req: Request, res: Response) {
+  try {
+    const { name, description, maxMarks, passMarks } = req.body;
+    const { role, schoolId } = req.user;
+console.log("BODY 👉", req.body);
+    const subject = await service.createSubject(
+      { name, description, maxMarks, passMarks },
+      role,
+      schoolId
+    );
 
-  async create(req: Request, res: Response) {
-    try {
-      const { name } = req.body;
-      const { role, schoolId } = req.user;
-
-      const subject = await service.createSubject(name, role, schoolId);
-      res.status(201).json({ message: "Subject created", data: subject });
-    } catch (err: any) {
-      res.status(403).json({ message: err.message });
-    }
+    res.status(201).json({ message: "Subject created", data: subject });
+  } catch (err: any) {
+    res.status(403).json({ message: err.message });
   }
+}
 
   async getAll(req: Request, res: Response) {
     const { role, schoolId } = req.user;
@@ -37,6 +41,7 @@ export class SubjectController {
   async update(req: Request, res: Response) {
     try {
       const { role, schoolId } = req.user;
+      console.log("UPDATE BODY 👉", req.body);
       const data = await service.updateSubject(
         Number(req.params.id),
         req.body,

@@ -2,20 +2,21 @@ import prisma from "../../config/prisma";
 
 export class ClassRepository {
 
-  create(data: { name: string; schoolId: number; maxStudents: number; gradeId: number }) {
+  create(data: { name: string; schoolId: number; maxStudents: number }) {
+     console.log("CREATE DATA 👉", data); 
     return prisma.class.create({ data });
   }
 
-  findAll(schoolId: number, gradeId?: number) {
+  findAll(schoolId: number) {
     return prisma.class.findMany({
       where: {
         schoolId,
         isDeleted: false,
-        ...(gradeId && { gradeId })
+        // ...(gradeId && { gradeId })
       },
       include: {
         sections: true,
-        grade: true
+        // grade: true
       },
       orderBy: { id: "desc" }
     });
@@ -28,7 +29,7 @@ export class ClassRepository {
         isDeleted: false
       },
       include: {
-        grade: true,
+        // grade: true,
         sections: true,
         syllabi: {
           include: {
@@ -41,7 +42,7 @@ export class ClassRepository {
 
   update(
     id: number,
-    data: { name?: string; isActive?: boolean; maxStudents?: number; gradeId?: number }
+    data: { name?: string; isActive?: boolean; maxStudents?: number }
   ) {
     return prisma.class.update({
       where: { id },

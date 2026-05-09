@@ -12,7 +12,7 @@ findSections(classId?: number, schoolId?: number) {
     include: {
       class: {
         include: {
-          grade: true,   // ⭐ ADD THIS
+          // grade: true,   // ⭐ ADD THIS
         },
       },
       school: true,
@@ -27,7 +27,7 @@ findById(id: number) {
     include: {
       class: {
         include: {
-          grade: true,
+          // grade: true,
         },
       },
       school: true,
@@ -59,5 +59,6 @@ findById(id: number) {
     data,
   });
 }
+
 
 }

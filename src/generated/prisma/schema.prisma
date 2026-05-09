@@ -549,9 +549,9 @@ model Student {
   userId Int? @unique
 
   name String
-  
+
   profilePhoto String?
-  
+
   studentCode String @unique
 
   dob DateTime?
@@ -561,7 +561,7 @@ model Student {
   address String?
 
   phoneNumber String?
-   
+
   email String?
 
   isActive Boolean @default(true)
@@ -649,23 +649,23 @@ model Parent {
   id       Int @id @default(autoincrement())
   userId   Int @unique
   schoolId Int
-  
-  fatherName String?
-  fatherPhone String?
-  fatherEmail String? 
+
+  fatherName       String?
+  fatherPhone      String?
+  fatherEmail      String?
   fatherOccupation String?
 
-  motherName String? 
-  motherPhone String? 
-  motherEmail String? 
+  motherName       String?
+  motherPhone      String?
+  motherEmail      String?
   motherOccupation String?
 
-  guardianName String? 
-  guardianRelation String? 
-  guardianPhone String?
+  guardianName     String?
+  guardianRelation String?
+  guardianPhone    String?
   // ✅ Relations
-  user   User   @relation(fields: [userId], references: [id])
-  school School @relation(fields: [schoolId], references: [id])
+  user             User    @relation(fields: [userId], references: [id])
+  school           School  @relation(fields: [schoolId], references: [id])
 
   students StudentParent[]
 
@@ -700,69 +700,69 @@ model Admission {
 
   dob DateTime?
 
-  gender Gender?
-  address String?
-  phoneNumber String? 
-  email String?
+  gender      Gender?
+  address     String?
+  phoneNumber String?
+  email       String?
 
   classId Int
 
   sectionId Int?
 
-  academicYearId Int
-  previousSchool String? 
-  previousClass String? 
+  academicYearId     Int
+  previousSchool     String?
+  previousClass      String?
   previousPercentage Float?
 
   rollNumber Int?
 
   admissionNo String?
-  
+
   bloodGroup String?
 
-nationality String?
+  nationality String?
 
-religion String?
+  religion String?
 
-caste String?
+  caste String?
 
-aadharNumber String?
+  aadharNumber String?
 
-fatherName String?
+  fatherName String?
 
-fatherPhone String?
+  fatherPhone String?
 
-fatherEmail String?
+  fatherEmail String?
 
-fatherOccupation String?
+  fatherOccupation String?
 
-motherName String?
+  motherName String?
 
-motherPhone String?
+  motherPhone String?
 
-motherEmail String?
+  motherEmail String?
 
-motherOccupation String?
+  motherOccupation String?
 
-guardianName String?
+  guardianName String?
 
-guardianRelation String?
+  guardianRelation String?
 
-guardianPhone String?
+  guardianPhone String?
 
-guardianEmail String?
-  status AdmissionStatus @default(PENDING)
-  approvedAt DateTime?
+  guardianEmail String?
+  status        AdmissionStatus @default(PENDING)
+  approvedAt    DateTime?
 
   admissionType AdmissionType @default(NEW)
-  admissionDate DateTime?  @default(now())
+  admissionDate DateTime?     @default(now())
 
   medium String?
 
   previousBoard String?
 
   tcNumber String?
-  student Student? @relation(fields: [studentId], references: [id])
+  student  Student? @relation(fields: [studentId], references: [id])
 
   school School @relation(fields: [schoolId], references: [id])
 
@@ -782,6 +782,7 @@ enum AdmissionType {
   TRANSFER
   READMISSION
 }
+
 enum AdmissionStatus {
   PENDING // 🔥 new application
   APPROVED // 🔥 admin verified

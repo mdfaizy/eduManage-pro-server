@@ -10,17 +10,17 @@ export class ClassService {
   name: string,
   schoolId: number,
   maxStudents: number,
-  gradeId: number
+  // gradeId: number
 ) {
   if (!name) throw new Error("Class name required");
-  if (!gradeId) throw new Error("Grade required");
+  // if (!gradeId) throw new Error("Grade required");
 
-  return this.repo.create({ name, schoolId, maxStudents, gradeId });
+  return this.repo.create({ name, schoolId, maxStudents });
 }
 
 
-  async getClasses(schoolId: number, gradeId?: number) {
-    return this.repo.findAll(schoolId, gradeId);
+  async getClasses(schoolId: number) {
+    return this.repo.findAll(schoolId);
   }
 
   async getClassById(id: number) {
@@ -31,7 +31,6 @@ export class ClassService {
   name?: string;
   isActive?: boolean;
   maxStudents?: number;
-  gradeId?: number;
 }) {
   const existing = await this.repo.findById(id);
   if (!existing) throw new Error("Class not found");

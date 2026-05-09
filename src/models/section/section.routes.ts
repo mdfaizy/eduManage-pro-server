@@ -7,6 +7,11 @@ const controller = new SectionController();
 
 router.post("/", authMiddleware,controller.create);
 router.get("/",authMiddleware, controller.getByClass);
+router.get(
+  "/class/:classId",
+  authMiddleware,
+  controller.getSectionsByClass
+);
 router.get("/:id", authMiddleware, controller.getOne);
 router.patch("/:id", authMiddleware, controller.update);
 router.delete("/:id", controller.delete);

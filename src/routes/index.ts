@@ -19,6 +19,7 @@ import academicYearRoutes from "../models/academicYear/academicYear.route.js"
 import dayRoutes from "../models/day/day.routes.js"
 import periodRoutes from "../models/period/period.routes.js"
 import admissionRoutes from "../models/admission/admission.routes.js";
+import studentAcademicRecordRoutes from '../models/studentAcademicRecord/studentAcademicRecord.routes.js'
 const router = express.Router();
 
 router.use("/auth", authRoutes);
@@ -40,10 +41,9 @@ router.use("/academic-year", academicYearRoutes);
 router.use("/day", dayRoutes);
 router.use("/period", periodRoutes);
 
-
 router.use("/students", studentRoutes);
 router.use("/admissions", admissionRoutes);
-
 router.use("/timetable", timetableRoutes);
+router.use("/student-academic-record",studentAcademicRecordRoutes);
 
 export default router;

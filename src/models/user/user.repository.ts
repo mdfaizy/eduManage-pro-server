@@ -1,4 +1,4 @@
-import { TokenType } from "@prisma/client";
+import { TokenType } from "../../generated/prisma"
 import prisma from "../../config/prisma.js";
 
 export class UserRepository {

@@ -66,4 +66,25 @@ async getSectionById(id: number) {
   return this.repo.update(id, updateData);
 }
 
+async getSectionsByClass(
+  classId: number,
+  schoolId: number
+) {
+
+  const classData =
+    await this.repo.getClassWithSections(
+      classId,
+    );
+
+  if (!classData) {
+    throw new Error(
+      "Class not found"
+    );
+  }
+
+  return classData.sections || [];
+}
+
+
+
 }
