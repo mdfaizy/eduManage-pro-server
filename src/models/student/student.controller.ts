@@ -253,47 +253,49 @@ export class StudentController {
   // LINK PARENT
   // =====================================================
 
-  async linkParent(
-    req: Request,
-    res: Response
-  ) {
+async enableParentLogin(
+  req: Request,
+  res: Response
+) {
 
-    try {
+  try {
 
-      const schoolId =
-        (req as any).user.schoolId;
+    const schoolId =
+      (req as any).user.schoolId;
 
-      const {
-        studentId,
-        parentEmail,
-        parentName,
-      } = req.body;
+    const {
+      parentId,
+      email,
+    } = req.body;
 
-      const data =
-        await this.service.linkParent(
-          studentId,
-          parentEmail,
-          parentName,
+    const data =
+      await this.service
+        .enableParentLogin(
+
+          parentId,
+
+          email,
+
           schoolId
         );
 
-      res.json({
+    res.json({
 
-        success: true,
+      success: true,
 
-        data,
-      });
+      data,
+    });
 
-    } catch (e: any) {
+  } catch (e: any) {
 
-      res.status(400).json({
+    res.status(400).json({
 
-        success: false,
+      success: false,
 
-        message: e.message,
-      });
-    }
+      message: e.message,
+    });
   }
+}
 
   // =====================================================
   // UPDATE

@@ -252,4 +252,67 @@ async findById(
       },
     });
   }
+
+  /* =========================================
+   PARENT
+========================================= */
+
+async findParentByUserId(
+  tx: any,
+  userId: number
+) {
+
+  return tx.parent.findFirst({
+
+    where: {
+      userId,
+    },
+  });
+}
+
+/* ========================================= */
+
+async createParent(
+  tx: any,
+  data: any
+) {
+
+  return tx.parent.create({
+    data,
+  });
+}
+
+/* ========================================= */
+
+async findStudentParentLink(
+  tx: any,
+  studentId: number,
+  parentId: number
+) {
+
+  return tx.studentParent.findUnique({
+
+    where: {
+
+      studentId_parentId: {
+
+        studentId,
+
+        parentId,
+      },
+    },
+  });
+}
+
+/* ========================================= */
+
+async createStudentParentLink(
+  tx: any,
+  data: any
+) {
+
+  return tx.studentParent.create({
+    data,
+  });
+}
 }

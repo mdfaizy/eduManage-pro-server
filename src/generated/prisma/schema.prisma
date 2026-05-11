@@ -12,26 +12,29 @@ datasource db {
 /////////////////////////////
 
 model School {
-  id              Int                     @id @default(autoincrement())
-  name            String
-  email           String                  @unique
-  phone           String?
-  status          SchoolStatus            @default(PENDING)
-  sections        Section[]
-  subscriptions   SchoolSubscription[]
-  users           User[]
-  teachers        Teacher[]
-  timetables      Timetable[]
-  timings         SchoolTiming[]
-  periods         Period[]
-  days            Day[]
-  parents         Parent[]
-  academicYears   AcademicYear[]
-  students        Student[]
-  admissions      Admission[]
-  academicRecords StudentAcademicRecord[]
-  createdAt       DateTime                @default(now())
-  updatedAt       DateTime                @updatedAt
+  id                        Int                        @id @default(autoincrement())
+  name                      String
+  email                     String                     @unique
+  phone                     String?
+  status                    SchoolStatus               @default(PENDING)
+  sections                  Section[]
+  subscriptions             SchoolSubscription[]
+  users                     User[]
+  teachers                  Teacher[]
+  timetables                Timetable[]
+  timings                   SchoolTiming[]
+  periods                   Period[]
+  days                      Day[]
+  parents                   Parent[]
+  academicYears             AcademicYear[]
+  students                  Student[]
+  admissions                Admission[]
+  academicRecords           StudentAcademicRecord[]
+  studentAttendanceSessions StudentAttendanceSession[] @relation("SchoolStudentAttendanceSessions")
+
+  employeeAttendances EmployeeAttendance[] @relation("SchoolEmployeeAttendances")
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
 }
 
 enum SchoolStatus {
@@ -117,17 +120,18 @@ model User {
   isDeleted     Boolean @default(false)
   emailVerified Boolean @default(false)
 
-  schoolId Int?
-  school   School? @relation(fields: [schoolId], references: [id])
-
-  roles           UserRole[]
-  tokens          Token[]
-  teacher         Teacher?
-  student         Student?
-  parent          Parent?
-  userPermissions UserPermission[]
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
+  schoolId                  Int?
+  school                    School?                    @relation(fields: [schoolId], references: [id])
+  markedAttendances         StudentAttendanceSession[]
+  employeeAttendanceRecords EmployeeAttendance[]
+  roles                     UserRole[]
+  tokens                    Token[]
+  teacher                   Teacher?
+  student                   Student?
+  parent                    Parent?
+  userPermissions           UserPermission[]
+  createdAt                 DateTime                   @default(now())
+  updatedAt                 DateTime                   @updatedAt
 }
 
 model Teacher {
@@ -261,9 +265,9 @@ model Class {
 
   admissions Admission[]
 
-  academicRecords StudentAcademicRecord[]
-
-  createdAt DateTime @default(now())
+  academicRecords           StudentAcademicRecord[]
+  studentAttendanceSessions StudentAttendanceSession[]
+  createdAt                 DateTime                   @default(now())
 
   updatedAt DateTime @updatedAt
 
@@ -287,9 +291,9 @@ model Section {
 
   class Class @relation(fields: [classId], references: [id])
 
-  school School @relation(fields: [schoolId], references: [id])
-
-  classTeachers ClassTeacher[]
+  school                    School                     @relation(fields: [schoolId], references: [id])
+  studentAttendanceSessions StudentAttendanceSession[]
+  classTeachers             ClassTeacher[]
 
   teacherSubjects TeacherSubject[]
 
@@ -574,9 +578,9 @@ model Student {
 
   admissions Admission[]
 
-  academicRecords StudentAcademicRecord[]
-
-  parents StudentParent[]
+  academicRecords   StudentAcademicRecord[]
+  attendanceRecords StudentAttendanceRecord[]
+  parents           StudentParent[]
 
   createdAt DateTime @default(now())
 
@@ -634,6 +638,7 @@ model StudentAcademicRecord {
 enum AcademicRecordStatus {
   ACTIVE
   PROMOTED
+  REVERTED
   TRANSFERRED
   COMPLETED
   DROPPED
@@ -796,26 +801,111 @@ enum AdmissionStatus {
 // 📋 ATTENDANCE (ADVANCED)
 /////////////////////////////
 
-model AttendanceSession {
-  id        Int      @id @default(autoincrement())
-  schoolId  Int
-  classId   Int
-  sectionId Int?
-  teacherId Int
-  date      DateTime
+model StudentAttendanceSession {
+  id             Int      @id @default(autoincrement())
+  schoolId       Int
+  classId        Int
+  sectionId      Int?
+  markedById     Int
+  attendanceDate DateTime @db.Date
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
-  records AttendanceRecord[]
+  // =====================================
+  // RELATIONS
+  // =====================================
 
-  @@unique([classId, sectionId, date])
+  school School @relation("SchoolStudentAttendanceSessions", fields: [schoolId], references: [id])
+
+  class Class @relation(fields: [classId], references: [id])
+
+  section Section? @relation(fields: [sectionId], references: [id])
+
+  markedBy User                      @relation(fields: [markedById], references: [id])
+  records  StudentAttendanceRecord[]
+
+  // =====================================
+  // UNIQUE
+  // =====================================
+  @@unique([schoolId, classId, sectionId, attendanceDate])
+  // ====================================
+  // INDEXES
+  // =====================================
+  @@index([schoolId, attendanceDate])
 }
 
-model AttendanceRecord {
-  id        Int              @id @default(autoincrement())
-  sessionId Int
-  studentId Int
-  status    AttendanceStatus
+model StudentAttendanceRecord {
+  id Int @id @default(autoincrement())
 
-  session AttendanceSession @relation(fields: [sessionId], references: [id])
+  sessionId Int
+
+  studentId Int
+
+  status AttendanceStatus
+
+  remarks String?
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  // =====================================
+  // RELATIONS
+  // =====================================
+
+  session StudentAttendanceSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  // =====================================
+  // INDEXES
+  // =====================================
+
+  // =====================================
+  // UNIQUE
+  // =====================================
+
+  @@unique([sessionId, studentId])
+  @@index([studentId])
+}
+
+model EmployeeAttendance {
+  id Int @id @default(autoincrement())
+
+  schoolId Int
+
+  employeeId Int
+
+  attendanceDate DateTime @db.Date
+
+  checkInTime DateTime?
+
+  checkOutTime DateTime?
+
+  status EmployeeAttendanceStatus
+
+  remarks String?
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  // =====================================
+  // RELATIONS
+  // =====================================
+
+  school School @relation("SchoolEmployeeAttendances", fields: [schoolId], references: [id])
+
+  employee User @relation(fields: [employeeId], references: [id])
+
+  // =====================================
+  // UNIQUE
+  // =====================================
+  @@unique([employeeId, attendanceDate])
+  // =====================================
+  // INDEXES
+  // =====================================
+  @@index([schoolId, attendanceDate])
 }
 
 enum AttendanceStatus {
@@ -823,6 +913,16 @@ enum AttendanceStatus {
   ABSENT
   LATE
   HALF_DAY
+  LEAVE
+}
+
+enum EmployeeAttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+  HALF_DAY
+  LEAVE
+  HOLIDAY
 }
 
 /////////////////////////////

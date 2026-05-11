@@ -96,7 +96,7 @@ router.post(
   "/link-parent",
   authMiddleware,
   (req, res) =>
-    StudentController.linkParent(
+    StudentController.enableParentLogin(
       req,
       res
     )

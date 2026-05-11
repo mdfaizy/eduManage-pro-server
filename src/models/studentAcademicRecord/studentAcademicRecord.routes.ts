@@ -134,6 +134,7 @@ router.get(
     StudentAcademicRecordController
       .getAllRecords(req, res)
 );
-
+router.post("/revert-promotion",authMiddleware,(req, res) =>StudentAcademicRecordController.revertPromotion(
+        req,res));
 export default router;
 

@@ -138,7 +138,48 @@ async bulkPromote(
   }
 }
 
+async revertPromotion(
+  req: Request,
+  res: Response
+) {
 
+  try {
+
+    const schoolId =
+      (req as any).user.schoolId;
+
+    const {
+      recordId,
+    } = req.body;
+
+    const data =
+      await this.service
+        .revertPromotion(
+          recordId,
+          schoolId
+        );
+
+    res.json({
+
+      success: true,
+
+      message:
+        "Promotion reverted successfully",
+
+      data,
+    });
+
+  } catch (e: any) {
+
+    res.status(400).json({
+
+      success: false,
+
+      message:
+        e.message,
+    });
+  }
+}
   // =====================================================
   // HISTORY
   // =====================================================
@@ -248,6 +289,148 @@ async bulkPromote(
     });
   }
 }
+
+// =====================================================
+// COMPLETE STUDENT
+// =====================================================
+
+async completeStudent(
+  req: Request,
+  res: Response
+) {
+
+  try {
+
+    const schoolId =
+      (req as any).user.schoolId;
+
+    const {
+      recordId,
+    } = req.body;
+
+    const data =
+      await this.service
+        .completeStudent(
+          recordId,
+          schoolId
+        );
+
+    res.json({
+
+      success: true,
+
+      message:
+        "Student marked as completed",
+
+      data,
+    });
+
+  } catch (e: any) {
+
+    res.status(400).json({
+
+      success: false,
+
+      message:
+        e.message,
+    });
+  }
+}
+
+// =====================================================
+// DROP STUDENT
+// =====================================================
+
+async dropStudent(
+  req: Request,
+  res: Response
+) {
+
+  try {
+
+    const schoolId =
+      (req as any).user.schoolId;
+
+    const {
+      recordId,
+    } = req.body;
+
+    const data =
+      await this.service
+        .dropStudent(
+          recordId,
+          schoolId
+        );
+
+    res.json({
+
+      success: true,
+
+      message:
+        "Student dropped successfully",
+
+      data,
+    });
+
+  } catch (e: any) {
+
+    res.status(400).json({
+
+      success: false,
+
+      message:
+        e.message,
+    });
+  }
+}
+
+// =====================================================
+// TRANSFER STUDENT
+// =====================================================
+
+async transferStudent(
+  req: Request,
+  res: Response
+) {
+
+  try {
+
+    const schoolId =
+      (req as any).user.schoolId;
+
+    const {
+      recordId,
+    } = req.body;
+
+    const data =
+      await this.service
+        .transferStudent(
+          recordId,
+          schoolId
+        );
+
+    res.json({
+
+      success: true,
+
+      message:
+        "Student transferred successfully",
+
+      data,
+    });
+
+  } catch (e: any) {
+
+    res.status(400).json({
+
+      success: false,
+
+      message:
+        e.message,
+    });
+  }
+}
+
 }
 
 export default new StudentAcademicRecordController();

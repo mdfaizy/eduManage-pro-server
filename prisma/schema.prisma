@@ -12,26 +12,29 @@ datasource db {
 /////////////////////////////
 
 model School {
-  id              Int                     @id @default(autoincrement())
-  name            String
-  email           String                  @unique
-  phone           String?
-  status          SchoolStatus            @default(PENDING)
-  sections        Section[]
-  subscriptions   SchoolSubscription[]
-  users           User[]
-  teachers        Teacher[]
-  timetables      Timetable[]
-  timings         SchoolTiming[]
-  periods         Period[]
-  days            Day[]
-  parents         Parent[]
-  academicYears   AcademicYear[]
-  students        Student[]
-  admissions      Admission[]
-  academicRecords StudentAcademicRecord[]
-  createdAt       DateTime                @default(now())
-  updatedAt       DateTime                @updatedAt
+  id                        Int                        @id @default(autoincrement())
+  name                      String
+  email                     String                     @unique
+  phone                     String?
+  status                    SchoolStatus               @default(PENDING)
+  sections                  Section[]
+  subscriptions             SchoolSubscription[]
+  users                     User[]
+  teachers                  Teacher[]
+  timetables                Timetable[]
+  timings                   SchoolTiming[]
+  periods                   Period[]
+  days                      Day[]
+  parents                   Parent[]
+  academicYears             AcademicYear[]
+  students                  Student[]
+  admissions                Admission[]
+  academicRecords           StudentAcademicRecord[]
+  studentAttendanceSessions StudentAttendanceSession[] @relation("SchoolStudentAttendanceSessions")
+
+  employeeAttendances EmployeeAttendance[] @relation("SchoolEmployeeAttendances")
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
 }
 
 enum SchoolStatus {
@@ -117,17 +120,18 @@ model User {
   isDeleted     Boolean @default(false)
   emailVerified Boolean @default(false)
 
-  schoolId Int?
-  school   School? @relation(fields: [schoolId], references: [id])
-
-  roles           UserRole[]
-  tokens          Token[]
-  teacher         Teacher?
-  student         Student?
-  parent          Parent?
-  userPermissions UserPermission[]
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
+  schoolId                  Int?
+  school                    School?                    @relation(fields: [schoolId], references: [id])
+  markedAttendances         StudentAttendanceSession[]
+  employeeAttendanceRecords EmployeeAttendance[]
+  roles                     UserRole[]
+  tokens                    Token[]
+  teacher                   Teacher?
+  student                   Student?
+  parent                    Parent?
+  userPermissions           UserPermission[]
+  createdAt                 DateTime                   @default(now())
+  updatedAt                 DateTime                   @updatedAt
 }
 
 model Teacher {
@@ -261,9 +265,9 @@ model Class {
 
   admissions Admission[]
 
-  academicRecords StudentAcademicRecord[]
-
-  createdAt DateTime @default(now())
+  academicRecords           StudentAcademicRecord[]
+  studentAttendanceSessions StudentAttendanceSession[]
+  createdAt                 DateTime                   @default(now())
 
   updatedAt DateTime @updatedAt
 
@@ -287,9 +291,9 @@ model Section {
 
   class Class @relation(fields: [classId], references: [id])
 
-  school School @relation(fields: [schoolId], references: [id])
-
-  classTeachers ClassTeacher[]
+  school                    School                     @relation(fields: [schoolId], references: [id])
+  studentAttendanceSessions StudentAttendanceSession[]
+  classTeachers             ClassTeacher[]
 
   teacherSubjects TeacherSubject[]
 
@@ -331,6 +335,7 @@ model Subject {
   passMarks       Int?
   syllabi         Syllabus[]
   teacherSubjects TeacherSubject[]
+   examSubjects ExamSubject[]
   timetables      Timetable[]
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
@@ -549,9 +554,9 @@ model Student {
   userId Int? @unique
 
   name String
-  
+
   profilePhoto String?
-  
+
   studentCode String @unique
 
   dob DateTime?
@@ -561,7 +566,7 @@ model Student {
   address String?
 
   phoneNumber String?
-   
+
   email String?
 
   isActive Boolean @default(true)
@@ -574,9 +579,9 @@ model Student {
 
   admissions Admission[]
 
-  academicRecords StudentAcademicRecord[]
-
-  parents StudentParent[]
+  academicRecords   StudentAcademicRecord[]
+  attendanceRecords StudentAttendanceRecord[]
+  parents           StudentParent[]
 
   createdAt DateTime @default(now())
 
@@ -634,6 +639,7 @@ model StudentAcademicRecord {
 enum AcademicRecordStatus {
   ACTIVE
   PROMOTED
+  REVERTED
   TRANSFERRED
   COMPLETED
   DROPPED
@@ -649,23 +655,23 @@ model Parent {
   id       Int @id @default(autoincrement())
   userId   Int @unique
   schoolId Int
-  
-  fatherName String?
-  fatherPhone String?
-  fatherEmail String? 
+
+  fatherName       String?
+  fatherPhone      String?
+  fatherEmail      String?
   fatherOccupation String?
 
-  motherName String? 
-  motherPhone String? 
-  motherEmail String? 
+  motherName       String?
+  motherPhone      String?
+  motherEmail      String?
   motherOccupation String?
 
-  guardianName String? 
-  guardianRelation String? 
-  guardianPhone String?
+  guardianName     String?
+  guardianRelation String?
+  guardianPhone    String?
   // ✅ Relations
-  user   User   @relation(fields: [userId], references: [id])
-  school School @relation(fields: [schoolId], references: [id])
+  user             User    @relation(fields: [userId], references: [id])
+  school           School  @relation(fields: [schoolId], references: [id])
 
   students StudentParent[]
 
@@ -700,69 +706,69 @@ model Admission {
 
   dob DateTime?
 
-  gender Gender?
-  address String?
-  phoneNumber String? 
-  email String?
+  gender      Gender?
+  address     String?
+  phoneNumber String?
+  email       String?
 
   classId Int
 
   sectionId Int?
 
-  academicYearId Int
-  previousSchool String? 
-  previousClass String? 
+  academicYearId     Int
+  previousSchool     String?
+  previousClass      String?
   previousPercentage Float?
 
   rollNumber Int?
 
   admissionNo String?
-  
+
   bloodGroup String?
 
-nationality String?
+  nationality String?
 
-religion String?
+  religion String?
 
-caste String?
+  caste String?
 
-aadharNumber String?
+  aadharNumber String?
 
-fatherName String?
+  fatherName String?
 
-fatherPhone String?
+  fatherPhone String?
 
-fatherEmail String?
+  fatherEmail String?
 
-fatherOccupation String?
+  fatherOccupation String?
 
-motherName String?
+  motherName String?
 
-motherPhone String?
+  motherPhone String?
 
-motherEmail String?
+  motherEmail String?
 
-motherOccupation String?
+  motherOccupation String?
 
-guardianName String?
+  guardianName String?
 
-guardianRelation String?
+  guardianRelation String?
 
-guardianPhone String?
+  guardianPhone String?
 
-guardianEmail String?
-  status AdmissionStatus @default(PENDING)
-  approvedAt DateTime?
+  guardianEmail String?
+  status        AdmissionStatus @default(PENDING)
+  approvedAt    DateTime?
 
   admissionType AdmissionType @default(NEW)
-  admissionDate DateTime?  @default(now())
+  admissionDate DateTime?     @default(now())
 
   medium String?
 
   previousBoard String?
 
   tcNumber String?
-  student Student? @relation(fields: [studentId], references: [id])
+  student  Student? @relation(fields: [studentId], references: [id])
 
   school School @relation(fields: [schoolId], references: [id])
 
@@ -782,6 +788,7 @@ enum AdmissionType {
   TRANSFER
   READMISSION
 }
+
 enum AdmissionStatus {
   PENDING // 🔥 new application
   APPROVED // 🔥 admin verified
@@ -795,26 +802,111 @@ enum AdmissionStatus {
 // 📋 ATTENDANCE (ADVANCED)
 /////////////////////////////
 
-model AttendanceSession {
-  id        Int      @id @default(autoincrement())
-  schoolId  Int
-  classId   Int
-  sectionId Int?
-  teacherId Int
-  date      DateTime
+model StudentAttendanceSession {
+  id             Int      @id @default(autoincrement())
+  schoolId       Int
+  classId        Int
+  sectionId      Int?
+  markedById     Int
+  attendanceDate DateTime @db.Date
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
-  records AttendanceRecord[]
+  // =====================================
+  // RELATIONS
+  // =====================================
 
-  @@unique([classId, sectionId, date])
+  school School @relation("SchoolStudentAttendanceSessions", fields: [schoolId], references: [id])
+
+  class Class @relation(fields: [classId], references: [id])
+
+  section Section? @relation(fields: [sectionId], references: [id])
+
+  markedBy User                      @relation(fields: [markedById], references: [id])
+  records  StudentAttendanceRecord[]
+
+  // =====================================
+  // UNIQUE
+  // =====================================
+  @@unique([schoolId, classId, sectionId, attendanceDate])
+  // ====================================
+  // INDEXES
+  // =====================================
+  @@index([schoolId, attendanceDate])
 }
 
-model AttendanceRecord {
-  id        Int              @id @default(autoincrement())
-  sessionId Int
-  studentId Int
-  status    AttendanceStatus
+model StudentAttendanceRecord {
+  id Int @id @default(autoincrement())
 
-  session AttendanceSession @relation(fields: [sessionId], references: [id])
+  sessionId Int
+
+  studentId Int
+
+  status AttendanceStatus
+
+  remarks String?
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  // =====================================
+  // RELATIONS
+  // =====================================
+
+  session StudentAttendanceSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  // =====================================
+  // INDEXES
+  // =====================================
+
+  // =====================================
+  // UNIQUE
+  // =====================================
+
+  @@unique([sessionId, studentId])
+  @@index([studentId])
+}
+
+model EmployeeAttendance {
+  id Int @id @default(autoincrement())
+
+  schoolId Int
+
+  employeeId Int
+
+  attendanceDate DateTime @db.Date
+
+  checkInTime DateTime?
+
+  checkOutTime DateTime?
+
+  status EmployeeAttendanceStatus
+
+  remarks String?
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  // =====================================
+  // RELATIONS
+  // =====================================
+
+  school School @relation("SchoolEmployeeAttendances", fields: [schoolId], references: [id])
+
+  employee User @relation(fields: [employeeId], references: [id])
+
+  // =====================================
+  // UNIQUE
+  // =====================================
+  @@unique([employeeId, attendanceDate])
+  // =====================================
+  // INDEXES
+  // =====================================
+  @@index([schoolId, attendanceDate])
 }
 
 enum AttendanceStatus {
@@ -822,6 +914,16 @@ enum AttendanceStatus {
   ABSENT
   LATE
   HALF_DAY
+  LEAVE
+}
+
+enum EmployeeAttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+  HALF_DAY
+  LEAVE
+  HOLIDAY
 }
 
 /////////////////////////////
@@ -883,29 +985,197 @@ model PaymentReceipt {
 // 📝 EXAMS & RESULTS
 /////////////////////////////
 
+/////////////////////////////
+// 📝 EXAM
+/////////////////////////////
+
 model Exam {
-  id      Int    @id @default(autoincrement())
-  name    String
+
+  id Int
+    @id
+    @default(
+      autoincrement()
+    )
+
+  schoolId Int
+
+  academicYearId Int
+
   classId Int
+
+  sectionId Int?
+
+  name String
+
+  examType ExamType
+
+  startDate DateTime
+
+  endDate DateTime
+
+  isPublished Boolean
+    @default(false)
+
+  createdAt DateTime
+    @default(now())
+
+  updatedAt DateTime
+    @updatedAt
+
+  // =====================================
+  // RELATIONS
+  // =====================================
+
+  school School
+    @relation(
+      fields: [schoolId],
+      references: [id]
+    )
+
+  academicYear AcademicYear
+    @relation(
+      fields: [academicYearId],
+      references: [id]
+    )
+
+  class Class
+    @relation(
+      fields: [classId],
+      references: [id]
+    )
+
+  section Section?
+    @relation(
+      fields: [sectionId],
+      references: [id]
+    )
+
+  subjects ExamSubject[]
 }
 
-model ExamSchedule {
-  id     Int      @id @default(autoincrement())
+/////////////////////////////
+// 📝 EXAM SUBJECTS
+/////////////////////////////
+
+model ExamSubject {
+
+  id Int
+    @id
+    @default(
+      autoincrement()
+    )
+
   examId Int
-  date   DateTime
+
+  subjectId Int
+
+  examDate DateTime
+
+  totalMarks Float
+
+  passingMarks Float
+
+  createdAt DateTime
+    @default(now())
+
+  updatedAt DateTime
+    @updatedAt
+
+  // =====================================
+  // RELATIONS
+  // =====================================
+
+  exam Exam
+    @relation(
+      fields: [examId],
+      references: [id],
+      onDelete: Cascade
+    )
+
+  subject Subject
+    @relation(
+      fields: [subjectId],
+      references: [id]
+    )
+
+  marks ExamMark[]
+
+  // =====================================
+  // UNIQUE
+  // =====================================
+
+  @@unique([
+    examId,
+    subjectId
+  ])
 }
 
-model Mark {
-  id        Int   @id @default(autoincrement())
-  examId    Int
+/////////////////////////////
+// 📝 EXAM MARKS
+/////////////////////////////
+
+model ExamMark {
+
+  id Int
+    @id
+    @default(
+      autoincrement()
+    )
+
+  examSubjectId Int
+
   studentId Int
-  marks     Float
+
+  obtainedMarks Float
+
+  remarks String?
+
+  createdAt DateTime
+    @default(now())
+
+  updatedAt DateTime
+    @updatedAt
+
+  // =====================================
+  // RELATIONS
+  // =====================================
+
+  examSubject ExamSubject
+    @relation(
+      fields: [examSubjectId],
+      references: [id],
+      onDelete: Cascade
+    )
+
+  student Student
+    @relation(
+      fields: [studentId],
+      references: [id]
+    )
+
+  // =====================================
+  // UNIQUE
+  // =====================================
+
+  @@unique([
+    examSubjectId,
+    studentId
+  ])
 }
 
-model Result {
-  id        Int   @id @default(autoincrement())
-  studentId Int
-  total     Float
+/////////////////////////////
+// 📝 EXAM TYPE
+/////////////////////////////
+
+enum ExamType {
+
+  UNIT_TEST
+
+  MID_TERM
+
+  FINAL_EXAM
+
+  PRACTICAL
 }
 
 /////////////////////////////

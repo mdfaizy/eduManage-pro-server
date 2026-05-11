@@ -493,20 +493,38 @@ exports.Prisma.AdmissionScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
-exports.Prisma.AttendanceSessionScalarFieldEnum = {
+exports.Prisma.StudentAttendanceSessionScalarFieldEnum = {
   id: 'id',
   schoolId: 'schoolId',
   classId: 'classId',
   sectionId: 'sectionId',
-  teacherId: 'teacherId',
-  date: 'date'
+  markedById: 'markedById',
+  attendanceDate: 'attendanceDate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
-exports.Prisma.AttendanceRecordScalarFieldEnum = {
+exports.Prisma.StudentAttendanceRecordScalarFieldEnum = {
   id: 'id',
   sessionId: 'sessionId',
   studentId: 'studentId',
-  status: 'status'
+  status: 'status',
+  remarks: 'remarks',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.EmployeeAttendanceScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  employeeId: 'employeeId',
+  attendanceDate: 'attendanceDate',
+  checkInTime: 'checkInTime',
+  checkOutTime: 'checkOutTime',
+  status: 'status',
+  remarks: 'remarks',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.StaffScalarFieldEnum = {
@@ -766,6 +784,14 @@ exports.Prisma.AdmissionOrderByRelevanceFieldEnum = {
   tcNumber: 'tcNumber'
 };
 
+exports.Prisma.StudentAttendanceRecordOrderByRelevanceFieldEnum = {
+  remarks: 'remarks'
+};
+
+exports.Prisma.EmployeeAttendanceOrderByRelevanceFieldEnum = {
+  remarks: 'remarks'
+};
+
 exports.Prisma.DesignationOrderByRelevanceFieldEnum = {
   name: 'name'
 };
@@ -835,6 +861,7 @@ exports.Gender = exports.$Enums.Gender = {
 exports.AcademicRecordStatus = exports.$Enums.AcademicRecordStatus = {
   ACTIVE: 'ACTIVE',
   PROMOTED: 'PROMOTED',
+  REVERTED: 'REVERTED',
   TRANSFERRED: 'TRANSFERRED',
   COMPLETED: 'COMPLETED',
   DROPPED: 'DROPPED'
@@ -859,7 +886,17 @@ exports.AttendanceStatus = exports.$Enums.AttendanceStatus = {
   PRESENT: 'PRESENT',
   ABSENT: 'ABSENT',
   LATE: 'LATE',
-  HALF_DAY: 'HALF_DAY'
+  HALF_DAY: 'HALF_DAY',
+  LEAVE: 'LEAVE'
+};
+
+exports.EmployeeAttendanceStatus = exports.$Enums.EmployeeAttendanceStatus = {
+  PRESENT: 'PRESENT',
+  ABSENT: 'ABSENT',
+  LATE: 'LATE',
+  HALF_DAY: 'HALF_DAY',
+  LEAVE: 'LEAVE',
+  HOLIDAY: 'HOLIDAY'
 };
 
 exports.InvoiceStatus = exports.$Enums.InvoiceStatus = {
@@ -898,8 +935,9 @@ exports.Prisma.ModelName = {
   Parent: 'Parent',
   StudentParent: 'StudentParent',
   Admission: 'Admission',
-  AttendanceSession: 'AttendanceSession',
-  AttendanceRecord: 'AttendanceRecord',
+  StudentAttendanceSession: 'StudentAttendanceSession',
+  StudentAttendanceRecord: 'StudentAttendanceRecord',
+  EmployeeAttendance: 'EmployeeAttendance',
   Staff: 'Staff',
   Designation: 'Designation',
   Payroll: 'Payroll',

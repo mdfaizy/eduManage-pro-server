@@ -432,16 +432,464 @@
 // }
 
 
-import prisma from "../../config/prisma.js";
+// import prisma from "../../config/prisma.js";
 
+// import { StudentRepository }
+// from "./student.repository.js";
+
+// export class StudentService {
+
+//   private repo =
+//     new StudentRepository();
+
+//   // =====================================================
+//   // CREATE FROM ADMISSION
+//   // =====================================================
+
+//   async createFromAdmission(
+//     tx: any,
+//     admission: any,
+//     schoolId: number
+//   ) {
+
+//     const studentCode =
+//       await this.generateStudentCode(
+//         tx,
+//         schoolId
+//       );
+
+//     return this.repo.create(tx, {
+
+//       schoolId,
+
+//       name:
+//         admission.studentName,
+
+//       studentCode,
+
+//       dob: admission.dob,
+
+//       address:
+//         admission.address,
+//     });
+//   }
+
+//   // =====================================================
+//   // GENERATE CODE
+//   // =====================================================
+
+//   async generateStudentCode(
+//     tx: any,
+//     schoolId: number
+//   ) {
+
+//     const count =
+//       await tx.student.count({
+
+//         where: {
+//           schoolId,
+//         },
+//       });
+
+//     return `STU-${String(
+//       count + 1
+//     ).padStart(5, "0")}`;
+//   }
+
+//   // =====================================================
+//   // LIST
+//   // =====================================================
+
+//   async getStudents(
+//     schoolId: number
+//   ) {
+
+//     return this.repo.findAll(
+//       schoolId
+//     );
+//   }
+
+//   // =====================================================
+//   // GET SINGLE
+//   // =====================================================
+
+//   // async getStudent(
+//   //   id: number,
+//   //   user: any
+//   // ) {
+
+//   //   const student =
+//   //     await prisma.student.findFirst({
+
+//   //       where: {
+
+//   //         id,
+
+//   //         schoolId:
+//   //           user.schoolId,
+
+//   //         isDeleted: false,
+//   //       },
+//   //     });
+
+//   //   if (!student) {
+//   //     throw new Error(
+//   //       "Student not found"
+//   //     );
+//   //   }
+
+//   //   return student;
+//   // }
+
+//   async getStudent(
+//   id: number,
+//   user: any
+// ) {
+
+//   const student =
+//     await this.repo.findById(
+//       id,
+//       user.schoolId
+//     );
+
+//   if (!student) {
+
+//     throw new Error(
+//       "Student not found"
+//     );
+//   }
+
+//   return student;
+// }
+//   // =====================================================
+//   // ENABLE LOGIN
+//   // =====================================================
+
+//   async enableStudentLogin(
+//     studentId: number,
+//     email: string,
+//     schoolId: number
+//   ) {
+
+//     return prisma.$transaction(
+//       async (tx) => {
+
+//         const student =
+//           await this.repo.findById(
+//             studentId,
+//             schoolId
+//           );
+
+//         if (!student) {
+//           throw new Error(
+//             "Student not found"
+//           );
+//         }
+
+//         if (student.userId) {
+//           throw new Error(
+//             "Login already enabled"
+//           );
+//         }
+
+//         const existingUser =
+//           await tx.user.findUnique({
+
+//             where: {
+//               email:
+//                 email.toLowerCase(),
+//             },
+//           });
+
+//         if (existingUser) {
+//           throw new Error(
+//             "Email already exists"
+//           );
+//         }
+
+//         const role =
+//           await tx.role.findFirst({
+
+//             where: {
+//               name: "STUDENT",
+//             },
+//           });
+
+//         if (!role) {
+//           throw new Error(
+//             "STUDENT role not found"
+//           );
+//         }
+
+//         const user =
+//           await tx.user.create({
+
+//             data: {
+
+//               name:
+//                 student.name,
+
+//               email:
+//                 email.toLowerCase(),
+
+//               password:
+//                 "123456",
+
+//               schoolId,
+
+//               isActive: true,
+//             },
+//           });
+
+//         await tx.userRole.create({
+
+//           data: {
+
+//             userId: user.id,
+
+//             roleId: role.id,
+//           },
+//         });
+
+//         await tx.student.update({
+
+//           where: {
+//             id: studentId,
+//           },
+
+//           data: {
+//             userId: user.id,
+//           },
+//         });
+
+//         return {
+
+//           message:
+//             "Student login enabled",
+//         };
+//       }
+//     );
+//   }
+
+//   // =====================================================
+//   // LINK PARENT
+//   // =====================================================
+
+//   async linkParent(
+//     studentId: number,
+//     parentEmail: string,
+//     parentName: string,
+//     schoolId: number
+//   ) {
+
+//     return prisma.$transaction(
+//       async (tx) => {
+
+//         let user =
+//           await tx.user.findUnique({
+
+//             where: {
+//               email:
+//                 parentEmail.toLowerCase(),
+//             },
+//           });
+
+//         const role =
+//           await tx.role.findFirst({
+
+//             where: {
+//               name: "PARENT",
+//             },
+//           });
+
+//         if (!role) {
+//           throw new Error(
+//             "PARENT role not found"
+//           );
+//         }
+
+//         if (!user) {
+
+//           user =
+//             await tx.user.create({
+
+//               data: {
+
+//                 name: parentName,
+
+//                 email:
+//                   parentEmail.toLowerCase(),
+
+//                 password:
+//                   "123456",
+
+//                 schoolId,
+
+//                 isActive: true,
+//               },
+//             });
+
+//           await tx.userRole.create({
+
+//             data: {
+
+//               userId: user.id,
+
+//               roleId: role.id,
+//             },
+//           });
+//         }
+
+//         let parent =
+//           await tx.parent.findFirst({
+
+//             where: {
+//               userId: user.id,
+//             },
+//           });
+
+//         if (!parent) {
+
+//           parent =
+//             await tx.parent.create({
+
+//               data: {
+
+//                 userId: user.id,
+
+//                 schoolId,
+//               },
+//             });
+//         }
+
+//         const existing =
+//           await tx.studentParent.findUnique({
+
+//             where: {
+
+//               studentId_parentId: {
+
+//                 studentId,
+
+//                 parentId:
+//                   parent.id,
+//               },
+//             },
+//           });
+
+//         if (existing) {
+//           throw new Error(
+//             "Parent already linked"
+//           );
+//         }
+
+//         await tx.studentParent.create({
+
+//           data: {
+
+//             studentId,
+
+//             parentId:
+//               parent.id,
+//           },
+//         });
+
+//         return {
+
+//           message:
+//             "Parent linked successfully",
+//         };
+//       }
+//     );
+//   }
+
+//   // =====================================================
+//   // UPDATE
+//   // =====================================================
+
+//   async updateStudent(
+//     id: number,
+//     payload: any,
+//     schoolId: number
+//   ) {
+
+//     const student =
+//       await this.repo.findById(
+//         id,
+//         schoolId
+//       );
+
+//     if (!student) {
+//       throw new Error(
+//         "Student not found"
+//       );
+//     }
+
+//     return this.repo.update(
+//       id,
+//       payload
+//     );
+//   }
+
+//   // =====================================================
+//   // STATUS
+//   // =====================================================
+
+//   async updateStudentStatus(
+//     studentId: number,
+//     isActive: boolean,
+//     schoolId: number
+//   ) {
+
+//     const student =
+//       await this.repo.findById(
+//         studentId,
+//         schoolId
+//       );
+
+//     if (!student) {
+//       throw new Error(
+//         "Student not found"
+//       );
+//     }
+
+//     return this.repo.updateStatus(
+//       studentId,
+//       isActive
+//     );
+//   }
+
+//   // =====================================================
+//   // DELETE
+//   // =====================================================
+
+//   async deleteStudent(id: number) {
+
+//     return this.repo.softDelete(id);
+//   }
+// }
+
+
+import prisma from "../../config/prisma.js";
+import { UserRepository }
+from "../user/user.repository.js";
+
+import { RoleRepository }
+from "../role/role.repository.js";
 import { StudentRepository }
 from "./student.repository.js";
-
+import {
+  hashPassword,
+} from "../../utils/password.js";
 export class StudentService {
 
   private repo =
     new StudentRepository();
+private userRepo =
+  new UserRepository();
 
+private roleRepo =
+  new RoleRepository();
   // =====================================================
   // CREATE FROM ADMISSION
   // =====================================================
@@ -467,15 +915,43 @@ export class StudentService {
 
       studentCode,
 
-      dob: admission.dob,
+      dob:
+        admission.dob,
+
+      gender:
+        admission.gender,
+
+      bloodGroup:
+        admission.bloodGroup,
+
+      nationality:
+        admission.nationality,
+
+      religion:
+        admission.religion,
+
+      caste:
+        admission.caste,
+
+      aadharNumber:
+        admission.aadharNumber,
 
       address:
         admission.address,
+
+      phoneNumber:
+        admission.phoneNumber,
+
+      email:
+        admission.email,
+
+      profilePhoto:
+        admission.profilePhoto,
     });
   }
 
   // =====================================================
-  // GENERATE CODE
+  // GENERATE STUDENT CODE
   // =====================================================
 
   async generateStudentCode(
@@ -497,7 +973,7 @@ export class StudentService {
   }
 
   // =====================================================
-  // LIST
+  // GET ALL STUDENTS
   // =====================================================
 
   async getStudents(
@@ -510,59 +986,32 @@ export class StudentService {
   }
 
   // =====================================================
-  // GET SINGLE
+  // GET SINGLE STUDENT
   // =====================================================
-
-  // async getStudent(
-  //   id: number,
-  //   user: any
-  // ) {
-
-  //   const student =
-  //     await prisma.student.findFirst({
-
-  //       where: {
-
-  //         id,
-
-  //         schoolId:
-  //           user.schoolId,
-
-  //         isDeleted: false,
-  //       },
-  //     });
-
-  //   if (!student) {
-  //     throw new Error(
-  //       "Student not found"
-  //     );
-  //   }
-
-  //   return student;
-  // }
 
   async getStudent(
-  id: number,
-  user: any
-) {
+    id: number,
+    user: any
+  ) {
 
-  const student =
-    await this.repo.findById(
-      id,
-      user.schoolId
-    );
+    const student =
+      await this.repo.findById(
+        id,
+        user.schoolId
+      );
 
-  if (!student) {
+    if (!student) {
 
-    throw new Error(
-      "Student not found"
-    );
+      throw new Error(
+        "Student not found"
+      );
+    }
+
+    return student;
   }
 
-  return student;
-}
   // =====================================================
-  // ENABLE LOGIN
+  // ENABLE STUDENT LOGIN
   // =====================================================
 
   async enableStudentLogin(
@@ -572,7 +1021,12 @@ export class StudentService {
   ) {
 
     return prisma.$transaction(
+
       async (tx) => {
+
+        /* =====================================
+           STUDENT
+        ===================================== */
 
         const student =
           await this.repo.findById(
@@ -581,91 +1035,121 @@ export class StudentService {
           );
 
         if (!student) {
+
           throw new Error(
             "Student not found"
           );
         }
 
         if (student.userId) {
+
           throw new Error(
             "Login already enabled"
           );
         }
 
-        const existingUser =
-          await tx.user.findUnique({
+        /* =====================================
+           EMAIL EXISTS
+        ===================================== */
 
-            where: {
-              email:
-                email.toLowerCase(),
-            },
-          });
+        const existingUser =
+          await this.repo
+            .findUserByEmail(
+              tx,
+              email
+            );
 
         if (existingUser) {
+
           throw new Error(
             "Email already exists"
           );
         }
 
-        const role =
-          await tx.role.findFirst({
+        /* =====================================
+           ROLE
+        ===================================== */
 
-            where: {
-              name: "STUDENT",
-            },
-          });
+        const role =
+          await this.repo
+            .findRoleByName(
+              tx,
+              "STUDENT"
+            );
 
         if (!role) {
+
           throw new Error(
             "STUDENT role not found"
           );
         }
 
+        /* =====================================
+           CREATE USER
+        ===================================== */
+
         const user =
-          await tx.user.create({
+          await this.repo
+            .createUser(
+              tx,
+              {
 
-            data: {
+                name:
+                  student.name,
 
-              name:
-                student.name,
+                email:
+                  email.toLowerCase(),
 
-              email:
-                email.toLowerCase(),
+                password:
+                  "123456",
 
-              password:
-                "123456",
+                schoolId,
 
-              schoolId,
+                isActive: true,
 
-              isActive: true,
-            },
-          });
+              }
+            );
 
-        await tx.userRole.create({
+        /* =====================================
+           ASSIGN ROLE
+        ===================================== */
 
-          data: {
+        await this.repo
+          .createUserRole(
+            tx,
+            {
 
-            userId: user.id,
+              userId:
+                user.id,
 
-            roleId: role.id,
-          },
-        });
+              roleId:
+                role.id,
 
-        await tx.student.update({
+            }
+          );
 
-          where: {
-            id: studentId,
-          },
+        /* =====================================
+           UPDATE STUDENT
+        ===================================== */
 
-          data: {
-            userId: user.id,
-          },
-        });
+        await this.repo.update(
+          student.id,
+          {
+
+            userId:
+              user.id,
+
+            email:
+              email.toLowerCase(),
+
+          }
+        );
 
         return {
 
           message:
             "Student login enabled",
+
         };
       }
     );
@@ -675,136 +1159,215 @@ export class StudentService {
   // LINK PARENT
   // =====================================================
 
-  async linkParent(
-    studentId: number,
-    parentEmail: string,
-    parentName: string,
-    schoolId: number
-  ) {
+ async enableParentLogin(
 
-    return prisma.$transaction(
-      async (tx) => {
+  parentId: number,
 
-        let user =
-          await tx.user.findUnique({
+  email: string,
 
-            where: {
-              email:
-                parentEmail.toLowerCase(),
-            },
-          });
+  schoolId: number
 
-        const role =
-          await tx.role.findFirst({
+) {
 
-            where: {
-              name: "PARENT",
-            },
-          });
+  return prisma.$transaction(
 
-        if (!role) {
-          throw new Error(
-            "PARENT role not found"
-          );
-        }
+    async (tx) => {
 
-        if (!user) {
+      /* =====================================
+         EMAIL VALIDATION
+      ===================================== */
 
-          user =
-            await tx.user.create({
+      if (!email) {
 
-              data: {
+        throw new Error(
+          "Parent email is required"
+        );
+      }
 
-                name: parentName,
+      /* =====================================
+         FIND PARENT
+      ===================================== */
 
-                email:
-                  parentEmail.toLowerCase(),
+      const parent =
+        await tx.parent.findFirst({
 
-                password:
-                  "123456",
+          where: {
 
-                schoolId,
+            id: parentId,
 
-                isActive: true,
-              },
-            });
+            schoolId,
 
-          await tx.userRole.create({
-
-            data: {
-
-              userId: user.id,
-
-              roleId: role.id,
-            },
-          });
-        }
-
-        let parent =
-          await tx.parent.findFirst({
-
-            where: {
-              userId: user.id,
-            },
-          });
-
-        if (!parent) {
-
-          parent =
-            await tx.parent.create({
-
-              data: {
-
-                userId: user.id,
-
-                schoolId,
-              },
-            });
-        }
-
-        const existing =
-          await tx.studentParent.findUnique({
-
-            where: {
-
-              studentId_parentId: {
-
-                studentId,
-
-                parentId:
-                  parent.id,
-              },
-            },
-          });
-
-        if (existing) {
-          throw new Error(
-            "Parent already linked"
-          );
-        }
-
-        await tx.studentParent.create({
-
-          data: {
-
-            studentId,
-
-            parentId:
-              parent.id,
           },
         });
 
-        return {
+      if (!parent) {
 
-          message:
-            "Parent linked successfully",
-        };
+        throw new Error(
+          "Parent not found"
+        );
       }
-    );
-  }
+
+      /* =====================================
+         ALREADY ENABLED
+      ===================================== */
+
+      if (parent.userId) {
+
+        throw new Error(
+          "Parent login already enabled"
+        );
+      }
+
+      /* =====================================
+         EXISTING USER
+      ===================================== */
+
+      const existingUser =
+        await this.userRepo.findByEmail(
+
+          email.toLowerCase()
+
+        );
+
+      if (existingUser) {
+
+        throw new Error(
+          "Email already exists"
+        );
+      }
+
+      /* =====================================
+         ROLE
+      ===================================== */
+
+      const role =
+        await this.roleRepo.findByName(
+          "PARENT",
+          schoolId
+        );
+
+      if (!role) {
+
+        throw new Error(
+          "PARENT role not found"
+        );
+      }
+
+      /* =====================================
+         TEMP PASSWORD
+      ===================================== */
+
+      const tempPassword =
+
+        Math.random()
+
+          .toString(36)
+
+          .slice(-8);
+
+      const hashedPassword =
+        await hashPassword(
+          tempPassword
+        );
+
+      /* =====================================
+         CREATE USER
+      ===================================== */
+
+      const user =
+        await tx.user.create({
+
+          data: {
+
+            schoolId,
+
+            name:
+
+              parent.fatherName ||
+
+              parent.guardianName ||
+
+              "Parent",
+
+            email:
+              email.toLowerCase(),
+
+            password:
+              hashedPassword,
+
+            isActive: true,
+
+          },
+        });
+
+      /* =====================================
+         ASSIGN ROLE
+      ===================================== */
+
+      await tx.userRole.create({
+
+        data: {
+
+          userId:
+            user.id,
+
+          roleId:
+            role.id,
+
+        },
+      });
+
+      /* =====================================
+         UPDATE PARENT
+      ===================================== */
+
+      await tx.parent.update({
+
+        where: {
+          id: parent.id,
+        },
+
+        data: {
+
+          userId:
+            user.id,
+        },
+      });
+
+      console.log({
+
+        email,
+
+        tempPassword,
+
+      });
+
+      /* =====================================
+         RESPONSE
+      ===================================== */
+
+      return {
+
+        success: true,
+
+        message:
+          "Parent login enabled",
+
+        credentials: {
+
+          email,
+
+          password:
+            tempPassword,
+
+        },
+      };
+    }
+  );
+}
 
   // =====================================================
-  // UPDATE
+  // UPDATE STUDENT
   // =====================================================
 
   async updateStudent(
@@ -820,6 +1383,7 @@ export class StudentService {
       );
 
     if (!student) {
+
       throw new Error(
         "Student not found"
       );
@@ -832,7 +1396,7 @@ export class StudentService {
   }
 
   // =====================================================
-  // STATUS
+  // UPDATE STATUS
   // =====================================================
 
   async updateStudentStatus(
@@ -848,6 +1412,7 @@ export class StudentService {
       );
 
     if (!student) {
+
       throw new Error(
         "Student not found"
       );
@@ -860,11 +1425,15 @@ export class StudentService {
   }
 
   // =====================================================
-  // DELETE
+  // DELETE STUDENT
   // =====================================================
 
-  async deleteStudent(id: number) {
+  async deleteStudent(
+    id: number
+  ) {
 
-    return this.repo.softDelete(id);
+    return this.repo.softDelete(
+      id
+    );
   }
 }
