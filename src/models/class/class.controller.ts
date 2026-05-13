@@ -5,55 +5,209 @@ const service = new ClassService();
 
 export class ClassController {
 
-  async create(req: Request, res: Response) {
+  // =========================================
+  // CREATE CLASS
+  // =========================================
+
+  async create(
+    req: Request,
+    res: Response
+  ) {
+
     try {
-      const schoolId = req.user.schoolId;
-      const { name, maxStudents } = req.body;
 
-      const data = await service.createClass(
+      const schoolId =
+        req.user.schoolId;
+
+      const {
         name,
-        schoolId,
-        Number(maxStudents),
-        // Number(gradeId)
-      );
+        maxStudents,
+        description,
+      } = req.body;
 
-      res.status(201).json({ message: "Class created", data });
-    } catch (err: any) {
-      res.status(400).json({ message: err.message });
-    }
-  }
+      const data =
+        await service.createClass(
+          name,
+          schoolId,
 
-  async getAll(req: Request, res: Response) {
-    const schoolId = req.user.schoolId;
-    // const gradeId = req.query.gradeId ? Number(req.query.gradeId) : undefined;
-    const data = await service.getClasses(schoolId);
-    res.json(data);
-  }
+          maxStudents
+            ? Number(maxStudents)
+            : undefined,
 
-  async getOne(req: Request, res: Response) {
-    const data = await service.getClassById(Number(req.params.id));
-    res.json(data);
-  }
+          description
+        );
 
-  async update(req: Request, res: Response) {
-    try {
-      const { name, isActive, maxStudents } = req.body;
-
-      const data = await service.updateClass(Number(req.params.id), {
-        name,
-        isActive,
-        maxStudents: maxStudents ? Number(maxStudents) : undefined,
-        // gradeId: gradeId ? Number(gradeId) : undefined,
+      res.status(201).json({
+        message: "Class created",
+        data,
       });
 
-      res.json({ message: "Class updated", data });
     } catch (err: any) {
-      res.status(400).json({ message: err.message });
+
+      res.status(400).json({
+        message: err.message,
+      });
     }
   }
 
-  async delete(req: Request, res: Response) {
-    await service.deleteClass(Number(req.params.id));
-    res.json({ message: "Class deleted" });
+  // =========================================
+  // GET ALL CLASSES
+  // =========================================
+
+async getAll(
+  req: Request,
+  res: Response
+) {
+
+  try {
+
+    const schoolId =
+      req.user.schoolId;
+
+    console.log(
+      "SCHOOL ID =>",
+      schoolId
+    );
+
+    const activeOnly =
+      req.query.active === "true";
+
+    const data =
+      await service.getClasses(
+        schoolId,
+        activeOnly
+      );
+
+    console.log(
+      "CLASS DATA =>",
+      data
+    );
+
+    res.json(data);
+
+  } catch (err: any) {
+
+    console.log(
+      "CLASS ERROR =>",
+      err
+    );
+
+    res.status(400).json({
+      message: err.message,
+    });
+  }
+}
+
+  // =========================================
+  // GET SINGLE CLASS
+  // =========================================
+
+  async getOne(
+    req: Request,
+    res: Response
+  ) {
+
+    try {
+
+      const schoolId =
+        req.user.schoolId;
+
+      const data =
+        await service.getClassById(
+          Number(req.params.id),
+          schoolId
+        );
+
+      res.json(data);
+
+    } catch (err: any) {
+
+      res.status(400).json({
+        message: err.message,
+      });
+    }
+  }
+
+  // =========================================
+  // UPDATE CLASS
+  // =========================================
+
+  async update(
+    req: Request,
+    res: Response
+  ) {
+
+    try {
+
+      const schoolId =
+        req.user.schoolId;
+
+      const {
+        name,
+        description,
+        maxStudents,
+        isActive,
+      } = req.body;
+
+      const data =
+        await service.updateClass(
+          Number(req.params.id),
+          schoolId,
+          {
+            name,
+
+            description,
+
+            maxStudents:
+              maxStudents
+                ? Number(maxStudents)
+                : undefined,
+
+            isActive,
+          }
+        );
+
+      res.json({
+        message: "Class updated",
+        data,
+      });
+
+    } catch (err: any) {
+
+      res.status(400).json({
+        message: err.message,
+      });
+    }
+  }
+
+  // =========================================
+  // DELETE CLASS
+  // =========================================
+
+  async delete(
+    req: Request,
+    res: Response
+  ) {
+
+    try {
+
+      const schoolId =
+        req.user.schoolId;
+
+      await service.deleteClass(
+        Number(req.params.id),
+        schoolId
+      );
+
+      res.json({
+        message: "Class deleted",
+      });
+
+    } catch (err: any) {
+
+      res.status(400).json({
+        message: err.message,
+      });
+    }
   }
 }

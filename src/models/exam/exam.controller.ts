@@ -29,7 +29,9 @@ export class ExamController {
           .create({
 
             ...req.body,
+    startDate: new Date(req.body.startDate),
 
+      endDate: new Date(req.body.endDate),
             schoolId,
           });
 

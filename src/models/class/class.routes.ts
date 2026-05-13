@@ -1,16 +1,79 @@
 import { Router } from "express";
-import { ClassController } from "./class.controller";
-import { authMiddleware } from "../../middlewares/auth";
+
+import { ClassController }
+from "./class.controller";
+
+import { authMiddleware }
+from "../../middlewares/auth";
 
 const router = Router();
-const controller = new ClassController();
 
-router.post("/", authMiddleware,controller.create);
-router.get("/",  authMiddleware, controller.getAll);
-router.get("/:id", authMiddleware, controller.getOne);
+const controller =
+  new ClassController();
 
-router.patch("/:id", authMiddleware, controller.update);
+// =========================================
+// CREATE
+// =========================================
 
-router.delete("/:id", authMiddleware,controller.delete);
+router.post(
+  "/",
+  authMiddleware,
+  controller.create
+);
+
+// =========================================
+// GET ALL
+// =========================================
+
+router.get(
+  "/",
+  authMiddleware,
+  controller.getAll
+);
+
+// =========================================
+// ACTIVE CLASSES
+// =========================================
+
+router.get(
+  "/active",
+  authMiddleware,
+  async (req, res) => {
+
+    req.query.active = "true";
+
+    return controller.getAll(req, res);
+  }
+);
+
+// =========================================
+// GET ONE
+// =========================================
+
+router.get(
+  "/:id",
+  authMiddleware,
+  controller.getOne
+);
+
+// =========================================
+// UPDATE
+// =========================================
+
+router.patch(
+  "/:id",
+  authMiddleware,
+  controller.update
+);
+
+// =========================================
+// DELETE
+// =========================================
+
+router.delete(
+  "/:id",
+  authMiddleware,
+  controller.delete
+);
 
 export default router;

@@ -28,9 +28,13 @@ export class StudentAttendanceRepository {
 
           classId,
 
-          ...(sectionId
-            ? { sectionId }
-            : {}),
+          // ...(sectionId
+          //   ? { sectionId }
+          //   : {}),
+          ...(sectionId !== undefined &&
+  sectionId !== null && {
+    sectionId,
+  }),
 
           isCurrent: true,
         },

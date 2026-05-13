@@ -372,9 +372,11 @@ async monthlyReport(
             ? Number(classId)
             : undefined,
 
-          sectionId
-            ? Number(sectionId)
-            : undefined
+        sectionId !== undefined &&
+sectionId !== null &&
+sectionId !== ""
+  ? Number(sectionId)
+  : undefined
         );
 
     // =====================================

@@ -12,8 +12,13 @@ router.get(
   authMiddleware,
   controller.getSectionsByClass
 );
+router.patch(
+  "/toggle-status/:id",
+  authMiddleware,
+  controller.toggleStatus
+);
 router.get("/:id", authMiddleware, controller.getOne);
 router.patch("/:id", authMiddleware, controller.update);
-router.delete("/:id", controller.delete);
+router.delete("/:id", authMiddleware,controller.delete);
 
 export default router;

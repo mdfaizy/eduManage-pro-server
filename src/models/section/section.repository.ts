@@ -21,9 +21,9 @@ findSections(classId?: number, schoolId?: number) {
   });
 }
 
-findById(id: number) {
-  return prisma.section.findUnique({
-    where: { id },
+findById(id: number,  schoolId: number) {
+  return prisma.section.findFirst({
+    where: { id ,schoolId,},
     include: {
       class: {
         include: {
@@ -34,28 +34,68 @@ findById(id: number) {
 
       _count: {
         select: {
-          students: true,  // ⭐ COUNT STUDENTS
+          // students: true,  // ⭐ COUNT STUDENTS
+          admissions: true,
         },
       },
     },
   });
 }
 
-  delete(id: number) {
-    return prisma.section.delete({ where: { id } });
-  }
-  exists(name: string, classId: number) {
-    return prisma.section.findFirst({ where: { name, classId } });
-  }
+delete(
+  id: number,
+  schoolId: number
+) {
+
+  return prisma.section.deleteMany({
+    where: {
+      id,
+      schoolId,
+    },
+  });
+}
+  // exists(name: string, classId: number) {
+  //   return prisma.section.findFirst({ where: { name, classId } });
+  // }
+  exists(
+  name: string,
+  classId: number,
+  schoolId: number
+) {
+
+  return prisma.section.findFirst({
+    where: {
+      name,
+      classId,
+      schoolId,
+    },
+  });
+}
   getClassWithSections(classId: number) {
     return prisma.class.findUnique({
       where: { id: classId },
       include: { sections: true },
     });
   }
-  update(id: number, data: any) {
-  return prisma.section.update({
-    where: { id },
+//   update(id: number, data: any) {
+//   return prisma.section.update({
+//     where: { id },
+//     data,
+//   });
+// }
+
+update(
+  id: number,
+  schoolId: number,
+  data: any
+) {
+
+  return prisma.section.updateMany({
+    where: {
+      id,
+      schoolId,
+    },
+
     data,
   });
 }

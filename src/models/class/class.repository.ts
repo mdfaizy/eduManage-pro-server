@@ -1,60 +1,177 @@
 import prisma from "../../config/prisma";
-
 export class ClassRepository {
+  // =========================================
+  // CREATE
+  // =========================================
+  async create(data: {
+    name: string;
+    schoolId: number;
+    maxStudents?: number;
+    description?: string;
+  }) {
+    try {
+      return await prisma.class.create({
+        data,
+      });
 
-  create(data: { name: string; schoolId: number; maxStudents: number }) {
-     console.log("CREATE DATA 👉", data); 
-    return prisma.class.create({ data });
+    } catch (error: any) {
+
+      // =========================================
+      // DUPLICATE CLASS
+      // =========================================
+      if (
+        error?.code === "P2002"
+      ) {
+
+        throw new Error(
+          "Class already exists"
+        );
+      }
+      throw error;
+    }
   }
 
-  findAll(schoolId: number) {
+  // =========================================
+  // GET ALL
+  // =========================================
+  findAll(
+    schoolId: number,
+    activeOnly?: boolean
+  ) {
     return prisma.class.findMany({
       where: {
         schoolId,
+
         isDeleted: false,
-        // ...(gradeId && { gradeId })
+
+        ...(activeOnly
+          ? { isActive: true }
+          : {}),
       },
+
       include: {
         sections: true,
-        // grade: true
       },
-      orderBy: { id: "desc" }
+
+      orderBy: {
+        id: "desc",
+      },
     });
   }
 
-  findById(id: number) {
+  // =========================================
+  // GET BY ID
+  // =========================================
+
+  findById(
+    id: number,
+    schoolId: number
+  ) {
+
     return prisma.class.findFirst({
       where: {
         id,
-        isDeleted: false
+        schoolId,
+        isDeleted: false,
       },
+
       include: {
-        // grade: true,
         sections: true,
+
         syllabi: {
           include: {
-            subject: true
-          }
-        }
-      }
+            subject: true,
+          },
+        },
+      },
     });
   }
 
+  // =========================================
+  // UPDATE
+  // =========================================
+
   update(
     id: number,
-    data: { name?: string; isActive?: boolean; maxStudents?: number }
+    schoolId: number,
+    data: {
+      name?: string;
+      description?: string;
+      maxStudents?: number;
+      isActive?: boolean;
+    }
   ) {
-    return prisma.class.update({
-      where: { id },
+
+    return prisma.class.updateMany({
+      where: {
+        id,
+        schoolId,
+      },
+
       data,
     });
   }
 
-  // 🔥 SOFT DELETE
-  delete(id: number) {
-    return prisma.class.update({
-      where: { id },
-      data: { isDeleted: true, isActive: false }
-    });
-  }
+
+  findByName(
+  name: string,
+  schoolId: number
+) {
+
+  return prisma.class.findFirst({
+    where: {
+      name,
+      schoolId,
+      isDeleted: false,
+    },
+  });
+}
+findDeleted(
+  schoolId: number
+) {
+
+  return prisma.class.findMany({
+    where: {
+      schoolId,
+      isDeleted: true,
+    },
+
+    orderBy: {
+      id: "desc",
+    },
+  });
+}
+  // =========================================
+  // SOFT DELETE
+  // =========================================
+
+  // delete(
+  //   id: number,
+  //   schoolId: number
+  // ) {
+
+  //   return prisma.class.updateMany({
+  //     where: {
+  //       id,
+  //       schoolId,
+  //     },
+
+  //     data: {
+  //       isDeleted: true,
+  //       isActive: false,
+  //     },
+  //   });
+  // }
+  delete(
+  id: number,
+  schoolId: number
+) {
+
+  return prisma.class.deleteMany({
+    where: {
+      id,
+      schoolId,
+    },
+  });
+}
 }

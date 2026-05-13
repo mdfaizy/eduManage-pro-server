@@ -1,56 +1,127 @@
-import { z } from "zod";
+  // import { z } from "zod";
+
+  // /* ================= CREATE ================= */
+  // // export const createSubjectSchema = z.object({
+  // //   body: z.object({
+  // //     name: z.string().min(2, "Name must be at least 2 characters"),
+  // //     description: z.string().optional(),
+  // //     maxMarks: z.coerce.number().optional(),   // ✅ FIX
+  // //     passMarks: z.coerce.number().optional(),
+  // //   })
+  // // });
+
+
+  // export const createSubjectSchema = z.object({
+  //   name: z
+  //     .string()
+  //     .trim()
+  //     .min(2, "Name must be at least 2 characters"),
+
+  //   description: z
+  //     .string()
+  //     .optional(),
+  // });
+
+  // /* ================= UPDATE ================= */
+  // export const updateSubjectSchema = z.object({
+  //   params: z.object({
+  //     id: z.string().regex(/^\d+$/, "Invalid subject id"),
+  //   }),
+
+  //   body: createSubjectSchema
+  //     .partial() // 🔥 MAIN CHEEZ
+  //     .refine(
+  //       (data) => Object.keys(data).length > 0,
+  //       { message: "At least one field required" }
+  //     )
+  //     // .refine(
+  //     //   (data) =>
+  //     //     data.passMarks === undefined ||
+  //     //     data.maxMarks === undefined ||
+  //     //     data.passMarks <= data.maxMarks,
+  //     //   {
+  //     //     message: "Pass marks cannot exceed max marks",
+  //     //     path: ["passMarks"],
+  //     //   }
+  //     // ),
+  // });
+  // /* ================= TOGGLE ================= */
+  // export const toggleSubjectSchema = z.object({
+  //   params: z.object({
+  //     id: z.string().regex(/^\d+$/, "Invalid subject id")
+  //   })
+  // });
+
+  // /* ================= GET BY ID ================= */
+  // export const getSubjectByIdSchema = z.object({
+  //   params: z.object({
+  //     id: z.string().regex(/^\d+$/, "Invalid subject id")
+  //   })
+  // });
+
+
+  import { z } from "zod";
 
 /* ================= CREATE ================= */
-// export const createSubjectSchema = z.object({
-//   body: z.object({
-//     name: z.string().min(2, "Name must be at least 2 characters"),
-//     description: z.string().optional(),
-//     maxMarks: z.coerce.number().optional(),   // ✅ FIX
-//     passMarks: z.coerce.number().optional(),
-//   })
-// });
 
 export const createSubjectSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  description: z.string().optional(),
+  body: z.object({
+    name: z
+      .string()
+      .trim()
+      .min(2, "Name must be at least 2 characters"),
 
-  maxMarks: z.coerce.number().optional(),
-  passMarks: z.coerce.number().optional(),
+    description: z
+      .string()
+      .optional(),
+  }),
 });
 
 /* ================= UPDATE ================= */
+
 export const updateSubjectSchema = z.object({
   params: z.object({
     id: z.string().regex(/^\d+$/, "Invalid subject id"),
   }),
 
-  body: createSubjectSchema
-    .partial() // 🔥 MAIN CHEEZ
-    .refine(
-      (data) => Object.keys(data).length > 0,
-      { message: "At least one field required" }
-    )
+  body: z
+    .object({
+      name: z
+        .string()
+        .trim()
+        .min(2, "Name must be at least 2 characters")
+        .optional(),
+
+      description: z
+        .string()
+        .optional(),
+    })
     .refine(
       (data) =>
-        data.passMarks === undefined ||
-        data.maxMarks === undefined ||
-        data.passMarks <= data.maxMarks,
+        Object.keys(data).length > 0,
       {
-        message: "Pass marks cannot exceed max marks",
-        path: ["passMarks"],
+        message:
+          "At least one field required",
       }
     ),
 });
+
 /* ================= TOGGLE ================= */
+
 export const toggleSubjectSchema = z.object({
   params: z.object({
-    id: z.string().regex(/^\d+$/, "Invalid subject id")
-  })
+    id: z
+      .string()
+      .regex(/^\d+$/, "Invalid subject id"),
+  }),
 });
 
 /* ================= GET BY ID ================= */
+
 export const getSubjectByIdSchema = z.object({
   params: z.object({
-    id: z.string().regex(/^\d+$/, "Invalid subject id")
-  })
+    id: z
+      .string()
+      .regex(/^\d+$/, "Invalid subject id"),
+  }),
 });
