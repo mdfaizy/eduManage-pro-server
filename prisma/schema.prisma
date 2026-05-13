@@ -12,29 +12,38 @@ datasource db {
 /////////////////////////////
 
 model School {
-  id                        Int                        @id @default(autoincrement())
-  name                      String
-  email                     String                     @unique
-  phone                     String?
-  status                    SchoolStatus               @default(PENDING)
-  sections                  Section[]
-  subscriptions             SchoolSubscription[]
-  users                     User[]
-  teachers                  Teacher[]
-  timetables                Timetable[]
-  timings                   SchoolTiming[]
-  periods                   Period[]
-  days                      Day[]
-  parents                   Parent[]
-  academicYears             AcademicYear[]
-  students                  Student[]
-  admissions                Admission[]
-  exams Exam[]
-  classes Class[]
-  academicRecords           StudentAcademicRecord[]
+  id            Int                  @id @default(autoincrement())
+  name          String
+  email         String               @unique
+  phone         String?
+  status        SchoolStatus         @default(PENDING)
+  sections      Section[]
+  subscriptions SchoolSubscription[]
+  users         User[]
+  teachers      Teacher[]
+  timetables    Timetable[]
+  timings       SchoolTiming[]
+  periods       Period[]
+  days          Day[]
+  parents       Parent[]
+  academicYears AcademicYear[]
+  students      Student[]
+  admissions    Admission[]
+  exams         Exam[]
+  classes       Class[]
+  feeHeads      FeeHead[]
+
+  transportRoutes TransportRoute[]
+
+  bookPackages BookPackage[]
+
   feeStructures FeeStructure[]
+
   studentFees StudentFee[]
+
   paymentReceipts PaymentReceipt[]
+  academicRecords StudentAcademicRecord[]
+
   studentAttendanceSessions StudentAttendanceSession[] @relation("SchoolStudentAttendanceSessions")
 
   employeeAttendances EmployeeAttendance[] @relation("SchoolEmployeeAttendances")
@@ -135,6 +144,7 @@ model User {
   student                   Student?
   parent                    Parent?
   userPermissions           UserPermission[]
+  paymentReceipts           PaymentReceipt[]
   createdAt                 DateTime                   @default(now())
   updatedAt                 DateTime                   @updatedAt
 }
@@ -264,13 +274,9 @@ model Class {
 
   maxStudents Int?
 
-  
-
   isActive Boolean @default(true)
 
   isDeleted Boolean @default(false)
-
-
 
   // =========================================
   // RELATIONS
@@ -295,6 +301,7 @@ model Class {
   academicRecords StudentAcademicRecord[]
 
   studentAttendanceSessions StudentAttendanceSession[]
+  bookPackages              BookPackage[]
 
   // =========================================
   // AUDIT
@@ -309,13 +316,11 @@ model Class {
   // =========================================
 
   @@unique([name, schoolId])
-
   @@index([schoolId])
-
   @@index([isActive])
-
   @@index([isDeleted])
 }
+
 model Section {
   id Int @id @default(autoincrement())
 
@@ -341,8 +346,8 @@ model Section {
 
   timetables Timetable[]
 
-  admissions Admission[]
-  exams Exam[]
+  admissions      Admission[]
+  exams           Exam[]
   academicRecords StudentAcademicRecord[]
 
   createdAt DateTime @default(now())
@@ -377,7 +382,7 @@ model Subject {
   passMarks       Int?
   syllabi         Syllabus[]
   teacherSubjects TeacherSubject[]
-   examSubjects ExamSubject[]
+  examSubjects    ExamSubject[]
   timetables      Timetable[]
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
@@ -534,11 +539,11 @@ model AcademicYear {
 
   school School @relation(fields: [schoolId], references: [id])
 
-  admissions Admission[]
-  exams Exam[]
+  admissions      Admission[]
+  exams           Exam[]
   academicRecords StudentAcademicRecord[]
-  feeStructures FeeStructure[]
-  createdAt DateTime @default(now())
+  feeStructures   FeeStructure[]
+  createdAt       DateTime                @default(now())
 
   updatedAt DateTime @updatedAt
 }
@@ -622,13 +627,13 @@ model Student {
 
   user User? @relation(fields: [userId], references: [id])
 
-  admissions Admission[]
-  examMarks ExamMark[]
+  admissions        Admission[]
+  examMarks         ExamMark[]
   academicRecords   StudentAcademicRecord[]
   attendanceRecords StudentAttendanceRecord[]
   parents           StudentParent[]
-  studentFees StudentFee[]
-  createdAt DateTime @default(now())
+  studentFees       StudentFee[]
+  createdAt         DateTime                  @default(now())
 
   updatedAt DateTime @updatedAt
 
@@ -664,9 +669,11 @@ model StudentAcademicRecord {
 
   academicYear AcademicYear @relation(fields: [academicYearId], references: [id])
 
-  class Class @relation(fields: [classId], references: [id])
+  class            Class @relation(fields: [classId], references: [id])
+  transportRouteId Int?
 
-  section Section? @relation(fields: [sectionId], references: [id])
+  transportRoute TransportRoute? @relation(fields: [transportRouteId], references: [id])
+  section        Section?        @relation(fields: [sectionId], references: [id])
 
   promotedFrom StudentAcademicRecord? @relation("PromotionHistory", fields: [promotedFromId], references: [id])
 
@@ -997,9 +1004,44 @@ model Payroll {
 // 💰 FEES & PAYMENTS
 /////////////////////////////
 
-model FeeStructure {
+////////////////////////////////////////////////////////
+// 💰 FEE HEAD MASTER
+////////////////////////////////////////////////////////
 
-  id Int  @id  @default(autoincrement())
+model FeeHead {
+  id Int @id @default(autoincrement())
+
+  schoolId Int
+
+  name String
+
+  description String?
+
+  isOptional Boolean @default(false)
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  // =====================================
+  // RELATIONS
+  // =====================================
+
+  school School @relation(fields: [schoolId], references: [id])
+
+  feeStructureItems FeeStructureItem[]
+
+  @@unique([schoolId, name])
+}
+
+////////////////////////////////////////////////////////
+// 💰 FEE STRUCTURE
+////////////////////////////////////////////////////////
+
+model FeeStructure {
+  id Int @id @default(autoincrement())
 
   schoolId Int
 
@@ -1009,42 +1051,137 @@ model FeeStructure {
 
   name String
 
-  tuitionFee Float   @default(0)
+  dueDay    Int
+  frequency FeeFrequency @default(MONTHLY)
+  totalFee  Float        @default(0)
 
-  transportFee Float  @default(0)
+  isActive Boolean @default(true)
 
-  examFee Float   @default(0)
+  createdAt DateTime @default(now())
 
-  admissionFee Float  @default(0)
-
-  otherFee Float   @default(0)
-
-  dueDay Int
-
-  isActive Boolean   @default(true)
-
-  createdAt DateTime   @default(now())
-
-  updatedAt DateTime  @updatedAt
+  updatedAt DateTime @updatedAt
 
   // =====================================
   // RELATIONS
   // =====================================
 
-  school School   @relation(fields: [schoolId],references: [id])
+  school School @relation(fields: [schoolId], references: [id])
 
-  academicYear AcademicYear  @relation(fields: [academicYearId],references: [id])
+  academicYear AcademicYear @relation(fields: [academicYearId], references: [id])
 
-  class Class   @relation(fields: [classId],references: [id])
+  class Class @relation(fields: [classId], references: [id])
+
+  items FeeStructureItem[]
 
   studentFees StudentFee[]
+
+  // =====================================
+  // UNIQUE
+  // =====================================
+
+  @@unique([schoolId, academicYearId, classId])
+  @@index([schoolId])
+  @@index([classId])
 }
 
 ////////////////////////////////////////////////////////
+// 💰 FEE STRUCTURE ITEMS
+////////////////////////////////////////////////////////
+
+model FeeStructureItem {
+  id Int @id @default(autoincrement())
+
+  feeStructureId Int
+
+  feeHeadId Int
+
+  amount Float
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  // =====================================
+  // RELATIONS
+  // =====================================
+
+  feeStructure FeeStructure @relation(fields: [feeStructureId], references: [id], onDelete: Cascade)
+
+  feeHead FeeHead @relation(fields: [feeHeadId], references: [id])
+
+  @@unique([feeStructureId, feeHeadId])
+}
+
+////////////////////////////////////////////////////////
+// 🚌 TRANSPORT ROUTES
+////////////////////////////////////////////////////////
+
+model TransportRoute {
+  id Int @id @default(autoincrement())
+
+  schoolId Int
+
+  name String
+
+  pickupPoint String?
+
+  amount Float
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  // =====================================
+  // RELATIONS
+  // =====================================
+
+  school School @relation(fields: [schoolId], references: [id])
+
+  studentAcademicRecords StudentAcademicRecord[]
+
+  @@unique([schoolId, name])
+}
+
+////////////////////////////////////////////////////////
+// 📚 BOOK PACKAGE
+////////////////////////////////////////////////////////
+
+model BookPackage {
+  id Int @id @default(autoincrement())
+
+  schoolId Int
+
+  classId Int
+
+  name String
+
+  amount Float
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  // =====================================
+  // RELATIONS
+  // =====================================
+
+  school School @relation(fields: [schoolId], references: [id])
+
+  class Class @relation(fields: [classId], references: [id])
+}
+
+////////////////////////////////////////////////////////
+// 🧾 STUDENT FEES / INVOICES
+////////////////////////////////////////////////////////
 
 model StudentFee {
+  id Int @id @default(autoincrement())
 
-  id Int   @id   @default(autoincrement())
+  invoiceNo String? @unique
 
   schoolId Int
 
@@ -1052,58 +1189,66 @@ model StudentFee {
 
   feeStructureId Int
 
-  month Int
+  month Int?
 
-  year Int
+  year Int?
 
   totalAmount Float
 
-  paidAmount Float   @default(0)
+  paidAmount Float @default(0)
 
   dueAmount Float
 
-  lateFee Float   @default(0)
+  lateFee Float @default(0)
 
-  discount Float   @default(0)
+  discount Float @default(0)
 
-  status FeeStatus   @default(PENDING)
+  isAdmissionFee Boolean @default(false)
+
+  status FeeStatus @default(PENDING)
 
   dueDate DateTime
 
   remarks String?
 
-  createdAt DateTime   @default(now())
+  createdAt DateTime @default(now())
 
-  updatedAt DateTime   @updatedAt
+  updatedAt DateTime @updatedAt
 
   // =====================================
   // RELATIONS
   // =====================================
 
-  school School   @relation(fields: [schoolId],references: [id])
+  school School @relation(fields: [schoolId], references: [id])
 
-  student Student   @relation(fields: [studentId],references: [id])
+  student Student @relation(fields: [studentId], references: [id])
 
-  feeStructure FeeStructure   @relation(fields: [feeStructureId],references: [id])
+  feeStructure FeeStructure @relation(fields: [feeStructureId], references: [id])
 
   receipts PaymentReceipt[]
+
+  @@unique([studentId, feeStructureId, month, year])
+  @@index([studentId])
+  @@index([schoolId])
+  @@index([status])
 }
 
 ////////////////////////////////////////////////////////
+// 🧾 PAYMENT RECEIPTS
+////////////////////////////////////////////////////////
 
 model PaymentReceipt {
-
-  id Int   @id  @default(autoincrement())
+  id Int @id @default(autoincrement())
 
   schoolId Int
 
   studentFeeId Int
 
-  receiptNo String   @unique
+  receiptNo String @unique
 
   amount Float
 
-  paymentDate DateTime  @default(now())
+  paymentDate DateTime @default(now())
 
   paymentMethod PaymentMethod
 
@@ -1111,15 +1256,21 @@ model PaymentReceipt {
 
   remarks String?
 
-  createdAt DateTime   @default(now())
+  receivedById Int?
+
+  status PaymentTransactionStatus @default(SUCCESS)
+
+  createdAt DateTime @default(now())
 
   // =====================================
   // RELATIONS
   // =====================================
 
-  school School    @relation(fields: [schoolId],references: [id])
+  school School @relation(fields: [schoolId], references: [id])
 
-  studentFee StudentFee  @relation(fields: [studentFeeId],references: [id])
+  studentFee StudentFee @relation(fields: [studentFeeId], references: [id])
+
+  receivedBy User? @relation(fields: [receivedById], references: [id])
 }
 
 ////////////////////////////////////////////////////////
@@ -1128,18 +1279,50 @@ model PaymentReceipt {
 
 enum FeeStatus {
   PAID
+
   PARTIAL
+
   PENDING
+
   OVERDUE
 }
+
 ////////////////////////////////////////////////////////
+
 enum PaymentMethod {
   CASH
+
   ONLINE
+
   UPI
+
   CARD
+
   BANK_TRANSFER
 }
+
+////////////////////////////////////////////////////////
+
+enum PaymentTransactionStatus {
+  SUCCESS
+
+  FAILED
+
+  PENDING
+}
+
+enum FeeFrequency {
+  MONTHLY
+
+  QUARTERLY
+
+  HALF_YEARLY
+
+  YEARLY
+
+  ONE_TIME
+}
+
 /////////////////////////////
 // 📝 EXAMS & RESULTS
 /////////////////////////////
@@ -1149,8 +1332,7 @@ enum PaymentMethod {
 /////////////////////////////
 
 model Exam {
-
-  id Int   @id  @default(autoincrement())
+  id Int @id @default(autoincrement())
 
   schoolId Int
 
@@ -1168,23 +1350,23 @@ model Exam {
 
   endDate DateTime
 
-  isPublished Boolean  @default(false)
+  isPublished Boolean @default(false)
 
-  createdAt DateTime   @default(now())
+  createdAt DateTime @default(now())
 
-  updatedAt DateTime   @updatedAt
+  updatedAt DateTime @updatedAt
 
   // =====================================
   // RELATIONS
   // =====================================
 
-  school School   @relation( fields: [schoolId], references: [id])
+  school School @relation(fields: [schoolId], references: [id])
 
-  academicYear AcademicYear @relation(fields: [academicYearId],references: [id])
+  academicYear AcademicYear @relation(fields: [academicYearId], references: [id])
 
-  class Class    @relation(fields: [classId],references: [id])
+  class Class @relation(fields: [classId], references: [id])
 
-  section Section?   @relation(fields: [sectionId],references: [id])
+  section Section? @relation(fields: [sectionId], references: [id])
 
   subjects ExamSubject[]
 }
@@ -1194,8 +1376,7 @@ model Exam {
 /////////////////////////////
 
 model ExamSubject {
-
-  id Int   @id  @default(autoincrement())
+  id Int @id @default(autoincrement())
 
   examId Int
 
@@ -1207,17 +1388,17 @@ model ExamSubject {
 
   passingMarks Float
 
-  createdAt DateTime   @default(now())
+  createdAt DateTime @default(now())
 
-  updatedAt DateTime   @updatedAt
+  updatedAt DateTime @updatedAt
 
   // =====================================
   // RELATIONS
   // =====================================
 
-  exam Exam   @relation(fields: [examId],references: [id],onDelete: Cascade)
+  exam Exam @relation(fields: [examId], references: [id], onDelete: Cascade)
 
-  subject Subject  @relation(fields: [subjectId],references: [id])
+  subject Subject @relation(fields: [subjectId], references: [id])
 
   marks ExamMark[]
 
@@ -1225,7 +1406,7 @@ model ExamSubject {
   // UNIQUE
   // =====================================
 
-  @@unique([examId,subjectId])
+  @@unique([examId, subjectId])
 }
 
 /////////////////////////////
@@ -1233,8 +1414,7 @@ model ExamSubject {
 /////////////////////////////
 
 model ExamMark {
-
-  id Int  @id  @default(autoincrement())
+  id Int @id @default(autoincrement())
 
   examSubjectId Int
 
@@ -1244,23 +1424,23 @@ model ExamMark {
 
   remarks String?
 
-  createdAt DateTime   @default(now())
+  createdAt DateTime @default(now())
 
-  updatedAt DateTime   @updatedAt
+  updatedAt DateTime @updatedAt
 
   // =====================================
   // RELATIONS
   // =====================================
 
-  examSubject ExamSubject   @relation(fields: [examSubjectId],references: [id],onDelete: Cascade)
+  examSubject ExamSubject @relation(fields: [examSubjectId], references: [id], onDelete: Cascade)
 
-  student Student    @relation(fields: [studentId],references: [id])
+  student Student @relation(fields: [studentId], references: [id])
 
   // =====================================
   // UNIQUE
   // =====================================
 
-  @@unique([examSubjectId,studentId])
+  @@unique([examSubjectId, studentId])
 }
 
 /////////////////////////////
@@ -1268,7 +1448,6 @@ model ExamMark {
 /////////////////////////////
 
 enum ExamType {
-
   UNIT_TEST
 
   MID_TERM
@@ -1277,11 +1456,6 @@ enum ExamType {
 
   PRACTICAL
 }
-
-
-
-
-
 
 /////////////////////////////
 // 🧾 AUDIT LOG (ENTERPRISE)

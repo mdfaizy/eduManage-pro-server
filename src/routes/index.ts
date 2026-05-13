@@ -22,11 +22,13 @@ import admissionRoutes from "../models/admission/admission.routes.js";
 import studentAcademicRecordRoutes from '../models/studentAcademicRecord/studentAcademicRecord.routes.js'
 import studentAttendanceRouter from '../models/studentAttendance/studentAttendance.routes.js'
 import exameRouter from "../models/exam/exam.routes.js"
+
+import feeHeadRoutes
+from "../models/feeHead/feeHead.routes.js";
 import feeStructureRoutes
 from "../models/feeStructure/feeStructure.routes.js";
-
-// import studentFeeRoutes
-// from "../models/studentFee/studentFee.routes.js";
+import studentFeeRoutes
+from "../models/studentFee/studentFee.routes.js";
 const router = express.Router();
 
 router.use("/auth", authRoutes);
@@ -55,13 +57,19 @@ router.use("/student-academic-record",studentAcademicRecordRoutes);
 router.use("/attendance-router",studentAttendanceRouter)
 router.use("/exams",exameRouter)
 router.use(
-  "/fee-structure",
+  "/fee-structures",
   feeStructureRoutes
 );
 
-// router.use(
-//   "/student-fee",
-//   studentFeeRoutes
-// );
+
+
+router.use(
+  "/fee-heads",
+  feeHeadRoutes
+);
+router.use(
+  "/student-fee",
+  studentFeeRoutes
+);
 
 export default router;

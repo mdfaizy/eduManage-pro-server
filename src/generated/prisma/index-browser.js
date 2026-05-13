@@ -419,6 +419,7 @@ exports.Prisma.StudentAcademicRecordScalarFieldEnum = {
   isCurrent: 'isCurrent',
   status: 'status',
   promotedFromId: 'promotedFromId',
+  transportRouteId: 'transportRouteId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -546,18 +547,57 @@ exports.Prisma.PayrollScalarFieldEnum = {
   month: 'month'
 };
 
+exports.Prisma.FeeHeadScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  name: 'name',
+  description: 'description',
+  isOptional: 'isOptional',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.FeeStructureScalarFieldEnum = {
   id: 'id',
   schoolId: 'schoolId',
   academicYearId: 'academicYearId',
   classId: 'classId',
   name: 'name',
-  tuitionFee: 'tuitionFee',
-  transportFee: 'transportFee',
-  examFee: 'examFee',
-  admissionFee: 'admissionFee',
-  otherFee: 'otherFee',
   dueDay: 'dueDay',
+  frequency: 'frequency',
+  totalFee: 'totalFee',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.FeeStructureItemScalarFieldEnum = {
+  id: 'id',
+  feeStructureId: 'feeStructureId',
+  feeHeadId: 'feeHeadId',
+  amount: 'amount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TransportRouteScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  name: 'name',
+  pickupPoint: 'pickupPoint',
+  amount: 'amount',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.BookPackageScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  classId: 'classId',
+  name: 'name',
+  amount: 'amount',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -565,6 +605,7 @@ exports.Prisma.FeeStructureScalarFieldEnum = {
 
 exports.Prisma.StudentFeeScalarFieldEnum = {
   id: 'id',
+  invoiceNo: 'invoiceNo',
   schoolId: 'schoolId',
   studentId: 'studentId',
   feeStructureId: 'feeStructureId',
@@ -575,6 +616,7 @@ exports.Prisma.StudentFeeScalarFieldEnum = {
   dueAmount: 'dueAmount',
   lateFee: 'lateFee',
   discount: 'discount',
+  isAdmissionFee: 'isAdmissionFee',
   status: 'status',
   dueDate: 'dueDate',
   remarks: 'remarks',
@@ -592,6 +634,8 @@ exports.Prisma.PaymentReceiptScalarFieldEnum = {
   paymentMethod: 'paymentMethod',
   transactionId: 'transactionId',
   remarks: 'remarks',
+  receivedById: 'receivedById',
+  status: 'status',
   createdAt: 'createdAt'
 };
 
@@ -836,11 +880,26 @@ exports.Prisma.PayrollOrderByRelevanceFieldEnum = {
   month: 'month'
 };
 
+exports.Prisma.FeeHeadOrderByRelevanceFieldEnum = {
+  name: 'name',
+  description: 'description'
+};
+
 exports.Prisma.FeeStructureOrderByRelevanceFieldEnum = {
   name: 'name'
 };
 
+exports.Prisma.TransportRouteOrderByRelevanceFieldEnum = {
+  name: 'name',
+  pickupPoint: 'pickupPoint'
+};
+
+exports.Prisma.BookPackageOrderByRelevanceFieldEnum = {
+  name: 'name'
+};
+
 exports.Prisma.StudentFeeOrderByRelevanceFieldEnum = {
+  invoiceNo: 'invoiceNo',
   remarks: 'remarks'
 };
 
@@ -896,7 +955,10 @@ exports.TokenType = exports.$Enums.TokenType = {
 
 exports.SubjectType = exports.$Enums.SubjectType = {
   CORE: 'CORE',
-  EXTRA: 'EXTRA'
+  EXTRA: 'EXTRA',
+  THEORY: 'THEORY',
+  PRACTICAL: 'PRACTICAL',
+  BOTH: 'BOTH'
 };
 
 exports.TimingType = exports.$Enums.TimingType = {
@@ -953,6 +1015,14 @@ exports.EmployeeAttendanceStatus = exports.$Enums.EmployeeAttendanceStatus = {
   HOLIDAY: 'HOLIDAY'
 };
 
+exports.FeeFrequency = exports.$Enums.FeeFrequency = {
+  MONTHLY: 'MONTHLY',
+  QUARTERLY: 'QUARTERLY',
+  HALF_YEARLY: 'HALF_YEARLY',
+  YEARLY: 'YEARLY',
+  ONE_TIME: 'ONE_TIME'
+};
+
 exports.FeeStatus = exports.$Enums.FeeStatus = {
   PAID: 'PAID',
   PARTIAL: 'PARTIAL',
@@ -966,6 +1036,12 @@ exports.PaymentMethod = exports.$Enums.PaymentMethod = {
   UPI: 'UPI',
   CARD: 'CARD',
   BANK_TRANSFER: 'BANK_TRANSFER'
+};
+
+exports.PaymentTransactionStatus = exports.$Enums.PaymentTransactionStatus = {
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED',
+  PENDING: 'PENDING'
 };
 
 exports.ExamType = exports.$Enums.ExamType = {
@@ -1012,7 +1088,11 @@ exports.Prisma.ModelName = {
   Staff: 'Staff',
   Designation: 'Designation',
   Payroll: 'Payroll',
+  FeeHead: 'FeeHead',
   FeeStructure: 'FeeStructure',
+  FeeStructureItem: 'FeeStructureItem',
+  TransportRoute: 'TransportRoute',
+  BookPackage: 'BookPackage',
   StudentFee: 'StudentFee',
   PaymentReceipt: 'PaymentReceipt',
   Exam: 'Exam',

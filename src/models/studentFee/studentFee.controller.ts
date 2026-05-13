@@ -1,8 +1,3 @@
-// =====================================================
-// studentFee.controller.ts
-// models/studentFee/studentFee.controller.ts
-// =====================================================
-
 import {
   Request,
   Response,
@@ -14,7 +9,7 @@ from "./studentFee.service";
 class StudentFeeController {
 
   // =====================================
-  // GENERATE
+  // GENERATE FEE
   // =====================================
 
   async generate(
@@ -50,7 +45,7 @@ class StudentFeeController {
           success: true,
 
           message:
-            "Student fee generated",
+            "Fee generated successfully",
 
           data,
         });
@@ -84,6 +79,11 @@ class StudentFeeController {
           .user
           .schoolId;
 
+      const receivedById =
+        (req as any)
+          .user
+          .id;
+
       const data =
         await service
           .payFee({
@@ -91,17 +91,20 @@ class StudentFeeController {
             ...req.body,
 
             schoolId,
+
+            receivedById,
           });
 
-      res.json({
+      res.status(200)
+        .json({
 
-        success: true,
+          success: true,
 
-        message:
-          "Fee paid successfully",
+          message:
+            "Fee paid successfully",
 
-        data,
-      });
+          data,
+        });
 
     } catch (e: any) {
 
@@ -117,7 +120,7 @@ class StudentFeeController {
   }
 
   // =====================================
-  // GET ALL
+  // GET ALL FEES
   // =====================================
 
   async getAll(
@@ -138,12 +141,13 @@ class StudentFeeController {
             schoolId
           );
 
-      res.json({
+      res.status(200)
+        .json({
 
-        success: true,
+          success: true,
 
-        data,
-      });
+          data,
+        });
 
     } catch (e: any) {
 
@@ -159,7 +163,7 @@ class StudentFeeController {
   }
 
   // =====================================
-  // STUDENT HISTORY
+  // GET STUDENT HISTORY
   // =====================================
 
   async getStudentHistory(
@@ -181,12 +185,13 @@ class StudentFeeController {
             studentId
           );
 
-      res.json({
+      res.status(200)
+        .json({
 
-        success: true,
+          success: true,
 
-        data,
-      });
+          data,
+        });
 
     } catch (e: any) {
 
@@ -202,7 +207,7 @@ class StudentFeeController {
   }
 
   // =====================================
-  // DUE FEES
+  // GET DUE FEES
   // =====================================
 
   async getDueFees(
@@ -223,12 +228,13 @@ class StudentFeeController {
             schoolId
           );
 
-      res.json({
+      res.status(200)
+        .json({
 
-        success: true,
+          success: true,
 
-        data,
-      });
+          data,
+        });
 
     } catch (e: any) {
 

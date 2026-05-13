@@ -12,29 +12,38 @@ datasource db {
 /////////////////////////////
 
 model School {
-  id                        Int                        @id @default(autoincrement())
-  name                      String
-  email                     String                     @unique
-  phone                     String?
-  status                    SchoolStatus               @default(PENDING)
-  sections                  Section[]
-  subscriptions             SchoolSubscription[]
-  users                     User[]
-  teachers                  Teacher[]
-  timetables                Timetable[]
-  timings                   SchoolTiming[]
-  periods                   Period[]
-  days                      Day[]
-  parents                   Parent[]
-  academicYears             AcademicYear[]
-  students                  Student[]
-  admissions                Admission[]
-  exams                     Exam[]
-  classes                   Class[]
-  academicRecords           StudentAcademicRecord[]
-  feeStructures             FeeStructure[]
-  studentFees               StudentFee[]
-  paymentReceipts           PaymentReceipt[]
+  id            Int                  @id @default(autoincrement())
+  name          String
+  email         String               @unique
+  phone         String?
+  status        SchoolStatus         @default(PENDING)
+  sections      Section[]
+  subscriptions SchoolSubscription[]
+  users         User[]
+  teachers      Teacher[]
+  timetables    Timetable[]
+  timings       SchoolTiming[]
+  periods       Period[]
+  days          Day[]
+  parents       Parent[]
+  academicYears AcademicYear[]
+  students      Student[]
+  admissions    Admission[]
+  exams         Exam[]
+  classes       Class[]
+  feeHeads      FeeHead[]
+
+  transportRoutes TransportRoute[]
+
+  bookPackages BookPackage[]
+
+  feeStructures FeeStructure[]
+
+  studentFees StudentFee[]
+
+  paymentReceipts PaymentReceipt[]
+  academicRecords StudentAcademicRecord[]
+
   studentAttendanceSessions StudentAttendanceSession[] @relation("SchoolStudentAttendanceSessions")
 
   employeeAttendances EmployeeAttendance[] @relation("SchoolEmployeeAttendances")
@@ -135,6 +144,7 @@ model User {
   student                   Student?
   parent                    Parent?
   userPermissions           UserPermission[]
+  paymentReceipts           PaymentReceipt[]
   createdAt                 DateTime                   @default(now())
   updatedAt                 DateTime                   @updatedAt
 }
@@ -291,6 +301,7 @@ model Class {
   academicRecords StudentAcademicRecord[]
 
   studentAttendanceSessions StudentAttendanceSession[]
+  bookPackages              BookPackage[]
 
   // =========================================
   // AUDIT
@@ -404,6 +415,9 @@ model Syllabus {
 enum SubjectType {
   CORE
   EXTRA
+  THEORY
+  PRACTICAL
+  BOTH
 }
 
 model ClassTeacher {
@@ -655,9 +669,11 @@ model StudentAcademicRecord {
 
   academicYear AcademicYear @relation(fields: [academicYearId], references: [id])
 
-  class Class @relation(fields: [classId], references: [id])
+  class            Class @relation(fields: [classId], references: [id])
+  transportRouteId Int?
 
-  section Section? @relation(fields: [sectionId], references: [id])
+  transportRoute TransportRoute? @relation(fields: [transportRouteId], references: [id])
+  section        Section?        @relation(fields: [sectionId], references: [id])
 
   promotedFrom StudentAcademicRecord? @relation("PromotionHistory", fields: [promotedFromId], references: [id])
 
@@ -988,6 +1004,42 @@ model Payroll {
 // 💰 FEES & PAYMENTS
 /////////////////////////////
 
+////////////////////////////////////////////////////////
+// 💰 FEE HEAD MASTER
+////////////////////////////////////////////////////////
+
+model FeeHead {
+  id Int @id @default(autoincrement())
+
+  schoolId Int
+
+  name String
+
+  description String?
+
+  isOptional Boolean @default(false)
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  // =====================================
+  // RELATIONS
+  // =====================================
+
+  school School @relation(fields: [schoolId], references: [id])
+
+  feeStructureItems FeeStructureItem[]
+
+  @@unique([schoolId, name])
+}
+
+////////////////////////////////////////////////////////
+// 💰 FEE STRUCTURE
+////////////////////////////////////////////////////////
+
 model FeeStructure {
   id Int @id @default(autoincrement())
 
@@ -999,17 +1051,9 @@ model FeeStructure {
 
   name String
 
-  tuitionFee Float @default(0)
-
-  transportFee Float @default(0)
-
-  examFee Float @default(0)
-
-  admissionFee Float @default(0)
-
-  otherFee Float @default(0)
-
-  dueDay Int
+  dueDay    Int
+  frequency FeeFrequency @default(MONTHLY)
+  totalFee  Float        @default(0)
 
   isActive Boolean @default(true)
 
@@ -1027,13 +1071,117 @@ model FeeStructure {
 
   class Class @relation(fields: [classId], references: [id])
 
+  items FeeStructureItem[]
+
   studentFees StudentFee[]
+
+  // =====================================
+  // UNIQUE
+  // =====================================
+
+  @@unique([schoolId, academicYearId, classId])
+  @@index([schoolId])
+  @@index([classId])
 }
 
+////////////////////////////////////////////////////////
+// 💰 FEE STRUCTURE ITEMS
+////////////////////////////////////////////////////////
+
+model FeeStructureItem {
+  id Int @id @default(autoincrement())
+
+  feeStructureId Int
+
+  feeHeadId Int
+
+  amount Float
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  // =====================================
+  // RELATIONS
+  // =====================================
+
+  feeStructure FeeStructure @relation(fields: [feeStructureId], references: [id], onDelete: Cascade)
+
+  feeHead FeeHead @relation(fields: [feeHeadId], references: [id])
+
+  @@unique([feeStructureId, feeHeadId])
+}
+
+////////////////////////////////////////////////////////
+// 🚌 TRANSPORT ROUTES
+////////////////////////////////////////////////////////
+
+model TransportRoute {
+  id Int @id @default(autoincrement())
+
+  schoolId Int
+
+  name String
+
+  pickupPoint String?
+
+  amount Float
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  // =====================================
+  // RELATIONS
+  // =====================================
+
+  school School @relation(fields: [schoolId], references: [id])
+
+  studentAcademicRecords StudentAcademicRecord[]
+
+  @@unique([schoolId, name])
+}
+
+////////////////////////////////////////////////////////
+// 📚 BOOK PACKAGE
+////////////////////////////////////////////////////////
+
+model BookPackage {
+  id Int @id @default(autoincrement())
+
+  schoolId Int
+
+  classId Int
+
+  name String
+
+  amount Float
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  // =====================================
+  // RELATIONS
+  // =====================================
+
+  school School @relation(fields: [schoolId], references: [id])
+
+  class Class @relation(fields: [classId], references: [id])
+}
+
+////////////////////////////////////////////////////////
+// 🧾 STUDENT FEES / INVOICES
 ////////////////////////////////////////////////////////
 
 model StudentFee {
   id Int @id @default(autoincrement())
+
+  invoiceNo String? @unique
 
   schoolId Int
 
@@ -1041,9 +1189,9 @@ model StudentFee {
 
   feeStructureId Int
 
-  month Int
+  month Int?
 
-  year Int
+  year Int?
 
   totalAmount Float
 
@@ -1054,6 +1202,8 @@ model StudentFee {
   lateFee Float @default(0)
 
   discount Float @default(0)
+
+  isAdmissionFee Boolean @default(false)
 
   status FeeStatus @default(PENDING)
 
@@ -1076,8 +1226,15 @@ model StudentFee {
   feeStructure FeeStructure @relation(fields: [feeStructureId], references: [id])
 
   receipts PaymentReceipt[]
+
+  @@unique([studentId, feeStructureId, month, year])
+  @@index([studentId])
+  @@index([schoolId])
+  @@index([status])
 }
 
+////////////////////////////////////////////////////////
+// 🧾 PAYMENT RECEIPTS
 ////////////////////////////////////////////////////////
 
 model PaymentReceipt {
@@ -1099,6 +1256,10 @@ model PaymentReceipt {
 
   remarks String?
 
+  receivedById Int?
+
+  status PaymentTransactionStatus @default(SUCCESS)
+
   createdAt DateTime @default(now())
 
   // =====================================
@@ -1108,6 +1269,8 @@ model PaymentReceipt {
   school School @relation(fields: [schoolId], references: [id])
 
   studentFee StudentFee @relation(fields: [studentFeeId], references: [id])
+
+  receivedBy User? @relation(fields: [receivedById], references: [id])
 }
 
 ////////////////////////////////////////////////////////
@@ -1116,18 +1279,48 @@ model PaymentReceipt {
 
 enum FeeStatus {
   PAID
+
   PARTIAL
+
   PENDING
+
   OVERDUE
 }
 
 ////////////////////////////////////////////////////////
+
 enum PaymentMethod {
   CASH
+
   ONLINE
+
   UPI
+
   CARD
+
   BANK_TRANSFER
+}
+
+////////////////////////////////////////////////////////
+
+enum PaymentTransactionStatus {
+  SUCCESS
+
+  FAILED
+
+  PENDING
+}
+
+enum FeeFrequency {
+  MONTHLY
+
+  QUARTERLY
+
+  HALF_YEARLY
+
+  YEARLY
+
+  ONE_TIME
 }
 
 /////////////////////////////

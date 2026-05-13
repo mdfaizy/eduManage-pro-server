@@ -1,11 +1,11 @@
-// =====================================================
-// studentFee.service.ts
-// =====================================================
-
 import repo
 from "./studentFee.repository";
 
 class StudentFeeService {
+
+  // =====================================
+  // GENERATE FEE
+  // =====================================
 
   async generate(
     data: any
@@ -16,6 +16,10 @@ class StudentFeeService {
     );
   }
 
+  // =====================================
+  // PAY FEE
+  // =====================================
+
   async payFee(
     data: any
   ) {
@@ -24,6 +28,10 @@ class StudentFeeService {
       data
     );
   }
+
+  // =====================================
+  // GET ALL FEES
+  // =====================================
 
   async getAll(
     schoolId: number
@@ -34,6 +42,10 @@ class StudentFeeService {
     );
   }
 
+  // =====================================
+  // GET STUDENT HISTORY
+  // =====================================
+
   async getStudentHistory(
     studentId: number
   ) {
@@ -43,6 +55,10 @@ class StudentFeeService {
         studentId
       );
   }
+
+  // =====================================
+  // GET DUE FEES
+  // =====================================
 
   async getDueFees(
     schoolId: number

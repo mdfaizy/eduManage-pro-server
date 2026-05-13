@@ -1,9 +1,241 @@
-// =====================================================
-// studentFee.repository.ts
-// =====================================================
+// // =====================================================
+// // studentFee.repository.ts
+// // =====================================================
 
-import prisma
-from "../../config/prisma.js";
+// import prisma
+// from "../../config/prisma.js";
+
+// class StudentFeeRepository {
+
+//   // =====================================
+//   // GENERATE
+//   // =====================================
+
+//   async generate(
+//     data: any
+//   ) {
+
+//     return prisma
+//       .studentFee
+//       .create({
+
+//         data,
+
+//         include: {
+
+//           student: true,
+
+//           feeStructure: true,
+
+//           receipts: true,
+//         },
+//       });
+//   }
+
+//   // =====================================
+//   // PAY FEE
+//   // =====================================
+
+//   async payFee(
+//     data: any
+//   ) {
+
+//     const fee =
+//       await prisma
+//         .studentFee
+//         .findUnique({
+
+//           where: {
+//             id:
+//               data.studentFeeId,
+//           },
+//         });
+
+//     if (!fee) {
+
+//       throw new Error(
+//         "Fee not found"
+//       );
+//     }
+
+//     const newPaid =
+
+//       fee.paidAmount +
+//       data.amount;
+
+//     const newDue =
+
+//       fee.totalAmount -
+//       newPaid;
+
+//     const status =
+
+//       newDue <= 0
+
+//         ? "PAID"
+
+//         : "PARTIAL";
+
+//     // UPDATE FEE
+
+//     const updatedFee =
+//       await prisma
+//         .studentFee
+//         .update({
+
+//           where: {
+//             id: fee.id,
+//           },
+
+//           data: {
+
+//             paidAmount:
+//               newPaid,
+
+//             dueAmount:
+//               newDue,
+
+//             status,
+//           },
+//         });
+
+//     // RECEIPT
+
+//     await prisma
+//       .paymentReceipt
+//       .create({
+
+//         data: {
+
+//           schoolId:
+//             fee.schoolId,
+
+//           studentFeeId:
+//             fee.id,
+
+//           amount:
+//             data.amount,
+
+//           paymentMethod:
+//             data.paymentMethod,
+
+//           transactionId:
+//             data.transactionId,
+
+//           remarks:
+//             data.remarks,
+
+//           paymentDate:
+//             new Date(),
+
+//           receiptNo:
+//             `REC-${Date.now()}`
+//         },
+//       });
+
+//     return updatedFee;
+//   }
+
+//   // =====================================
+//   // GET ALL
+//   // =====================================
+
+//   async getAll(
+//     schoolId: number
+//   ) {
+
+//     return prisma
+//       .studentFee
+//       .findMany({
+
+//         where: {
+//           schoolId,
+//         },
+
+//         include: {
+
+//           student: true,
+
+//           feeStructure: true,
+
+//           receipts: true,
+//         },
+
+//         orderBy: {
+
+//           createdAt:
+//             "desc",
+//         },
+//       });
+//   }
+
+//   // =====================================
+//   // STUDENT HISTORY
+//   // =====================================
+
+//   async getStudentHistory(
+//     studentId: number
+//   ) {
+
+//     return prisma
+//       .studentFee
+//       .findMany({
+
+//         where: {
+//           studentId,
+//         },
+
+//         include: {
+
+//           receipts: true,
+
+//           feeStructure: true,
+//         },
+
+//         orderBy: {
+
+//           createdAt:
+//             "desc",
+//         },
+//       });
+//   }
+
+//   // =====================================
+//   // DUE FEES
+//   // =====================================
+
+//   async getDueFees(
+//     schoolId: number
+//   ) {
+
+//     return prisma
+//       .studentFee
+//       .findMany({
+
+//         where: {
+
+//           schoolId,
+
+//           dueAmount: {
+
+//             gt: 0,
+//           },
+//         },
+
+//         include: {
+
+//           student: true,
+
+//           feeStructure: true,
+//         },
+//       });
+//   }
+// }
+
+// export default
+// new StudentFeeRepository();
+
+import prisma from "../../config/prisma.js";
 
 class StudentFeeRepository {
 
@@ -11,129 +243,203 @@ class StudentFeeRepository {
   // GENERATE
   // =====================================
 
-  async generate(
-    data: any
-  ) {
+  async generate(data: any) {
 
-    return prisma
+  const existing =
+
+    await prisma
       .studentFee
-      .create({
+      .findFirst({
 
-        data,
+        where: {
 
-        include: {
+          studentId:
+            data.studentId,
 
-          student: true,
+          feeStructureId:
+            data.feeStructureId,
 
-          feeStructure: true,
+          month:
+            data.month,
 
-          receipts: true,
+          year:
+            data.year,
         },
       });
+
+  if (existing) {
+
+    throw new Error(
+      "Fee already generated"
+    );
   }
+
+  return prisma
+    .studentFee
+    .create({
+
+      data: {
+
+        ...data,
+       
+  dueAmount:
+    data.totalAmount,
+
+  paidAmount:
+    0,
+
+  status:
+    "PENDING",  
+        invoiceNo:
+          `INV-${Date.now()}`
+      },
+
+      include: {
+
+        student: true,
+
+        feeStructure: true,
+
+        receipts: true,
+      },
+    });
+}
 
   // =====================================
   // PAY FEE
   // =====================================
 
-  async payFee(
-    data: any
-  ) {
+  async payFee(data: any) {
 
-    const fee =
-      await prisma
-        .studentFee
-        .findUnique({
+    return prisma.$transaction(
+      async (tx) => {
 
-          where: {
-            id:
-              data.studentFeeId,
-          },
-        });
+        const fee =
+          await tx.studentFee.findUnique({
 
-    if (!fee) {
+            where: {
+              id:
+                data.studentFeeId,
+            },
+          });
 
-      throw new Error(
-        "Fee not found"
-      );
-    }
+        if (!fee) {
 
-    const newPaid =
+          throw new Error(
+            "Fee not found"
+          );
+        }
 
-      fee.paidAmount +
-      data.amount;
+        // SCHOOL SECURITY
 
-    const newDue =
+        if (
+          fee.schoolId !==
+          data.schoolId
+        ) {
 
-      fee.totalAmount -
-      newPaid;
+          throw new Error(
+            "Unauthorized access"
+          );
+        }
 
-    const status =
+        // OVERPAYMENT BLOCK
 
-      newDue <= 0
+        if (
 
-        ? "PAID"
+          data.amount >
 
-        : "PARTIAL";
+          fee.dueAmount
 
-    // UPDATE FEE
+        ) {
 
-    const updatedFee =
-      await prisma
-        .studentFee
-        .update({
+          throw new Error(
+            "Amount exceeds due amount"
+          );
+        }
 
-          where: {
-            id: fee.id,
-          },
+        const newPaid =
+
+          fee.paidAmount +
+          data.amount;
+
+        const newDue =
+
+          fee.totalAmount -
+          newPaid;
+
+        let status: any =
+          "PENDING";
+
+        if (newDue <= 0) {
+
+          status = "PAID";
+
+        } else if (
+          newPaid > 0
+        ) {
+
+          status = "PARTIAL";
+        }
+
+        // UPDATE FEE
+
+        const updatedFee =
+          await tx.studentFee.update({
+
+            where: {
+              id: fee.id,
+            },
+
+            data: {
+
+              paidAmount:
+                newPaid,
+
+              dueAmount:
+                newDue,
+
+              status,
+            },
+          });
+
+        // CREATE RECEIPT
+
+        await tx.paymentReceipt.create({
 
           data: {
 
-            paidAmount:
-              newPaid,
+            schoolId:
+              fee.schoolId,
 
-            dueAmount:
-              newDue,
+            studentFeeId:
+              fee.id,
 
-            status,
+            amount:
+              data.amount,
+
+            paymentMethod:
+              data.paymentMethod,
+
+            transactionId:
+              data.transactionId,
+
+            remarks:
+              data.remarks,
+
+            paymentDate:
+              new Date(),
+
+            receiptNo:
+              `REC-${Date.now()}`,
+
+            receivedById:
+              data.receivedById,
           },
         });
 
-    // RECEIPT
-
-    await prisma
-      .paymentReceipt
-      .create({
-
-        data: {
-
-          schoolId:
-            fee.schoolId,
-
-          studentFeeId:
-            fee.id,
-
-          amount:
-            data.amount,
-
-          paymentMethod:
-            data.paymentMethod,
-
-          transactionId:
-            data.transactionId,
-
-          remarks:
-            data.remarks,
-
-          paymentDate:
-            new Date(),
-
-          receiptNo:
-            `REC-${Date.now()}`
-        },
-      });
-
-    return updatedFee;
+        return updatedFee;
+      }
+    );
   }
 
   // =====================================
@@ -144,29 +450,27 @@ class StudentFeeRepository {
     schoolId: number
   ) {
 
-    return prisma
-      .studentFee
-      .findMany({
+    return prisma.studentFee.findMany({
 
-        where: {
-          schoolId,
-        },
+      where: {
+        schoolId,
+      },
 
-        include: {
+      include: {
 
-          student: true,
+        student: true,
 
-          feeStructure: true,
+        feeStructure: true,
 
-          receipts: true,
-        },
+        receipts: true,
+      },
 
-        orderBy: {
+      orderBy: {
 
-          createdAt:
-            "desc",
-        },
-      });
+        createdAt:
+          "desc",
+      },
+    });
   }
 
   // =====================================
@@ -177,59 +481,50 @@ class StudentFeeRepository {
     studentId: number
   ) {
 
-    return prisma
-      .studentFee
-      .findMany({
+    return prisma.studentFee.findMany({
 
-        where: {
-          studentId,
-        },
+      where: {
+        studentId,
+      },
 
-        include: {
+      include: {
 
-          receipts: true,
+        receipts: true,
 
-          feeStructure: true,
-        },
+        feeStructure: true,
+      },
 
-        orderBy: {
+      orderBy: {
 
-          createdAt:
-            "desc",
-        },
-      });
+        createdAt:
+          "desc",
+      },
+    });
   }
 
   // =====================================
   // DUE FEES
   // =====================================
-
   async getDueFees(
     schoolId: number
   ) {
-
-    return prisma
-      .studentFee
-      .findMany({
-
-        where: {
-
-          schoolId,
-
-          dueAmount: {
-
-            gt: 0,
-          },
+    return prisma.studentFee.findMany({
+      where: {
+        schoolId,
+        dueAmount: {
+          gt: 0,
         },
-
-        include: {
-
-          student: true,
-
-          feeStructure: true,
-        },
-      });
+      },
+      include: {
+        student: true,
+        feeStructure: true,
+      },
+    });
   }
+
+
+
+
 }
 
 export default

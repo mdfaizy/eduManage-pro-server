@@ -1,23 +1,36 @@
 import { Router }
 from "express";
 
+import controller
+from "./feeHead.controller.js";
+
 import {
   authMiddleware,
 } from "../../middlewares/auth.js";
 
-import controller
-from "./feeStructure.controller.js";
+import {
+  validate,
+} from "../../middlewares/validate.js";
+
+import {
+  createFeeHeadSchema,
+} from "./feeHead.validation.js";
 
 const router = Router();
 
 ////////////////////////////////////////////////////////
-// CREATE FEE STRUCTURE
+// CREATE
 ////////////////////////////////////////////////////////
 
 router.post(
+
   "/",
 
   authMiddleware,
+
+  validate(
+    createFeeHeadSchema
+  ),
 
   (req, res) =>
     controller.create(
@@ -31,6 +44,7 @@ router.post(
 ////////////////////////////////////////////////////////
 
 router.get(
+
   "/",
 
   authMiddleware,

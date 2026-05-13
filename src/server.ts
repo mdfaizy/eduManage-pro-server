@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 import "dotenv/config";
-
+import "./utils/feeCron";
 import "./utils/cron.js"; 
 import app from "./app.js";
 
