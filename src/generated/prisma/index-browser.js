@@ -564,10 +564,11 @@ exports.Prisma.FeeStructureScalarFieldEnum = {
   academicYearId: 'academicYearId',
   classId: 'classId',
   name: 'name',
-  dueDay: 'dueDay',
-  frequency: 'frequency',
-  totalFee: 'totalFee',
   isActive: 'isActive',
+  dueDay: 'dueDay',
+  monthlyFee: 'monthlyFee',
+  yearlyFee: 'yearlyFee',
+  oneTimeFee: 'oneTimeFee',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -577,6 +578,7 @@ exports.Prisma.FeeStructureItemScalarFieldEnum = {
   feeStructureId: 'feeStructureId',
   feeHeadId: 'feeHeadId',
   amount: 'amount',
+  frequency: 'frequency',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -624,6 +626,15 @@ exports.Prisma.StudentFeeScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.StudentFeeItemScalarFieldEnum = {
+  id: 'id',
+  studentFeeId: 'studentFeeId',
+  feeHeadId: 'feeHeadId',
+  amount: 'amount',
+  frequency: 'frequency',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.PaymentReceiptScalarFieldEnum = {
   id: 'id',
   schoolId: 'schoolId',
@@ -637,6 +648,28 @@ exports.Prisma.PaymentReceiptScalarFieldEnum = {
   receivedById: 'receivedById',
   status: 'status',
   createdAt: 'createdAt'
+};
+
+exports.Prisma.StudentScholarshipScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  studentId: 'studentId',
+  scholarshipId: 'scholarshipId',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ScholarshipScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  name: 'name',
+  type: 'type',
+  amount: 'amount',
+  description: 'description',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.ExamScalarFieldEnum = {
@@ -909,6 +942,11 @@ exports.Prisma.PaymentReceiptOrderByRelevanceFieldEnum = {
   remarks: 'remarks'
 };
 
+exports.Prisma.ScholarshipOrderByRelevanceFieldEnum = {
+  name: 'name',
+  description: 'description'
+};
+
 exports.Prisma.ExamOrderByRelevanceFieldEnum = {
   name: 'name'
 };
@@ -1044,6 +1082,11 @@ exports.PaymentTransactionStatus = exports.$Enums.PaymentTransactionStatus = {
   PENDING: 'PENDING'
 };
 
+exports.ScholarshipType = exports.$Enums.ScholarshipType = {
+  FIXED: 'FIXED',
+  PERCENTAGE: 'PERCENTAGE'
+};
+
 exports.ExamType = exports.$Enums.ExamType = {
   UNIT_TEST: 'UNIT_TEST',
   MID_TERM: 'MID_TERM',
@@ -1094,7 +1137,10 @@ exports.Prisma.ModelName = {
   TransportRoute: 'TransportRoute',
   BookPackage: 'BookPackage',
   StudentFee: 'StudentFee',
+  StudentFeeItem: 'StudentFeeItem',
   PaymentReceipt: 'PaymentReceipt',
+  StudentScholarship: 'StudentScholarship',
+  Scholarship: 'Scholarship',
   Exam: 'Exam',
   ExamSubject: 'ExamSubject',
   ExamMark: 'ExamMark',

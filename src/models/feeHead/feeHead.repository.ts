@@ -1,78 +1,160 @@
-import prisma
-from "../../config/prisma.js";
+// =====================================================
+// feeHead.repository.ts
+// =====================================================
 
+import prisma from "../../config/prisma.js";
+import {CreateFeeHeadDTO,UpdateFeeHeadDTO} from "./feeHead.types.js";
 class FeeHeadRepository {
 
-  // =====================================
+  // =====================================================
   // CREATE
-  // =====================================
+  // =====================================================
 
-  async create(data: any) {
+  async create({ schoolId, name, description }: CreateFeeHeadDTO) {
 
-    return prisma
-      .feeHead
-      .create({
-
-        data,
-      });
+    return prisma.feeHead.create({
+      data: {
+        schoolId,
+        name,
+        description,
+      },
+    });
   }
 
-  // =====================================
+  // =====================================================
   // FIND BY NAME
-  // =====================================
+  // =====================================================
 
   async findByName(
-
     schoolId: number,
-
     name: string
   ) {
 
-    return prisma
-      .feeHead
-      .findFirst({
+    return prisma.feeHead.findFirst({
 
-        where: {
+      where: {
 
-          schoolId,
+        schoolId,
 
-          isActive: true,
-
-          name: {
-
-            equals: name,
-          },
+        name: {
+          equals: name,
+          mode: "insensitive",
         },
-      });
+      },
+    });
   }
 
-  // =====================================
+  // =====================================================
   // GET ALL
-  // =====================================
+  // =====================================================
 
   async getAll(
     schoolId: number
   ) {
 
-    return prisma
-      .feeHead
-      .findMany({
+    return prisma.feeHead.findMany({
 
-        where: {
+      where: {
+        schoolId,
+      },
 
-          schoolId,
-
-          isActive: true,
-        },
-
-        orderBy: {
-
-          createdAt:
-            "desc",
-        },
-      });
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
   }
+
+  // =====================================================
+  // GET ONE
+  // =====================================================
+
+  async getOne(
+    id: number,
+    schoolId: number
+  ) {
+
+    return prisma.feeHead.findFirst({
+
+      where: {
+        id,
+        schoolId,
+      },
+    });
+  }
+
+  // =====================================================
+  // UPDATE
+  // =====================================================
+
+async update(
+  id: number,
+  schoolId: number,
+  data: UpdateFeeHeadDTO
+) {
+
+  return prisma.feeHead.updateMany({
+
+    where: {
+      id,
+      schoolId,
+    },
+
+    data,
+  });
 }
 
-export default
-new FeeHeadRepository();
+  // =====================================================
+  // DELETE
+  // =====================================================
+
+  async delete(id: number) {
+
+    return prisma.feeHead.delete({
+
+      where: {
+        id,
+      },
+    });
+  }
+
+  // =====================================================
+  // TOGGLE
+  // =====================================================
+
+  // async toggle(
+  //   id: number,
+  //   isActive: boolean
+  // ) {
+
+  //   return prisma.feeHead.update({
+
+  //     where: {
+  //       id,
+  //     },
+
+  //     data: {
+  //       isActive,
+  //     },
+  //   });
+  // }
+  async toggle(
+  id: number,
+  schoolId: number,
+  isActive: boolean
+) {
+
+  return prisma.feeHead.updateMany({
+
+    where: {
+      id,
+      schoolId,
+    },
+
+    data: {
+      isActive,
+    },
+  });
+}
+}
+
+export default new FeeHeadRepository();

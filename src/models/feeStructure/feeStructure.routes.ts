@@ -1,45 +1,65 @@
-import { Router }
-from "express";
-
 import {
-  authMiddleware,
-} from "../../middlewares/auth.js";
+  Router,
+} from "express";
 
 import controller
 from "./feeStructure.controller.js";
 
-const router = Router();
+import {authMiddleware}
+from "../../middlewares/auth.js";
 
-////////////////////////////////////////////////////////
-// CREATE FEE STRUCTURE
-////////////////////////////////////////////////////////
+const router =
+  Router();
+
+// =====================================
+// CREATE
+// =====================================
 
 router.post(
   "/",
-
   authMiddleware,
-
-  (req, res) =>
-    controller.create(
-      req,
-      res
-    )
+  controller.create
 );
 
-////////////////////////////////////////////////////////
+// =====================================
 // GET ALL
-////////////////////////////////////////////////////////
+// =====================================
 
 router.get(
   "/",
-
   authMiddleware,
-
-  (req, res) =>
-    controller.getAll(
-      req,
-      res
-    )
+  controller.getAll
 );
 
-export default router;
+// =====================================
+// UPDATE
+// =====================================
+
+router.put(
+  "/:id",
+  authMiddleware,
+  controller.update
+);
+
+// =====================================
+// DELETE
+// =====================================
+
+router.delete(
+  "/:id",
+  authMiddleware,
+  controller.delete
+);
+router.get(
+  "/:id",
+  authMiddleware,
+  controller.getOne
+);
+router.patch(
+  "/toggle/:id",
+  authMiddleware,
+  controller.toggle
+);
+
+export default
+router;

@@ -1,27 +1,46 @@
-import { z }
-from "zod";
+// import { z }
+// from "zod";
 
-export const createFeeHeadSchema =
-  z.object({
+// export const createFeeHeadSchema =
+//   z.object({
 
-    body: z.object({
+//     body: z.object({
 
-      name:
-        z.string()
+//       name:
+//         z.string()
 
-          .trim()
+//           .trim()
 
-          .min(
-            2,
-            "Name is required"
-          ),
+//           .min(
+//             2,
+//             "Name is required"
+//           ),
 
-      description:
-        z.string()
-          .optional(),
+//       description:
+//         z.string()
+//           .optional(),
 
-      isOptional:
-        z.boolean()
-          .optional(),
-    }),
-  });
+//       isOptional:
+//         z.boolean()
+//           .optional(),
+//     }),
+//   });
+
+import { z } from "zod";
+
+export const createFeeHeadSchema = z.object({
+
+  name: z
+    .string()
+    .trim()
+    .min(2, "Name required")
+    .max(100),
+
+  description:
+    z.string()
+    .max(500)
+    .optional(),
+});
+
+export const updateFeeHeadSchema =
+  createFeeHeadSchema.partial();

@@ -1,5 +1,5 @@
-import { ZodError, ZodTypeAny } from "zod";
-import { Request, Response, NextFunction } from "express";
+// import { ZodError, ZodTypeAny } from "zod";
+// import { Request, Response, NextFunction } from "express";
 
 // export const validate =
 //   (schema: ZodTypeAny) =>
@@ -25,24 +25,57 @@ import { Request, Response, NextFunction } from "express";
 //     }
 //   };
 
+// export const validate =
+//   (schema: any) =>
+//   (req, res, next) => {
+//     try {
+//       const parsed = schema.parse({
+//         body: req.body,
+//         params: req.params,
+//         query: req.query,
+//       });
+
+//       req.body = parsed.body || req.body;
+//       req.params = parsed.params || req.params;
+
+//       next();
+//     } catch (err: any) {
+//       return res.status(400).json({
+//         message: "Validation error",
+//         errors: err.errors,
+//       });
+//     }
+//   };
+
+
+import { Request, Response, NextFunction } from "express";
+
 export const validate =
   (schema: any) =>
-  (req, res, next) => {
-    try {
-      const parsed = schema.parse({
-        body: req.body,
-        params: req.params,
-        query: req.query,
-      });
+  async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
 
-      req.body = parsed.body || req.body;
-      req.params = parsed.params || req.params;
+    try {
+
+      req.body =
+        await schema.parseAsync(
+          req.body
+        );
 
       next();
-    } catch (err: any) {
+
+    } catch (e: any) {
+
       return res.status(400).json({
-        message: "Validation error",
-        errors: err.errors,
+
+        success: false,
+
+        message:
+          e.errors?.[0]?.message ||
+          "Validation failed",
       });
     }
   };

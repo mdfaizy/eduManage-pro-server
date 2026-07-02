@@ -499,38 +499,92 @@ sectionId !== ""
   // STATS
   // =====================================================
 
+  // async stats(
+  //   req: Request,
+  //   res: Response
+  // ) {
+
+  //   try {
+
+  //     const schoolId =
+  //       (req as any).user.schoolId;
+
+  //     const data =
+  //       await this.service
+  //         .stats(schoolId);
+
+  //     res.json({
+
+  //       success: true,
+
+  //       data,
+  //     });
+
+  //   } catch (e: any) {
+
+  //     res.status(400).json({
+
+  //       success: false,
+
+  //       message:
+  //         e.message,
+  //     });
+  //   }
+  // }
+
   async stats(
-    req: Request,
-    res: Response
-  ) {
+  req: Request,
+  res: Response
+) {
 
-    try {
+  try {
 
-      const schoolId =
-        (req as any).user.schoolId;
+    const schoolId =
+      (req as any).user.schoolId;
 
-      const data =
-        await this.service
-          .stats(schoolId);
+    const {
+      startDate,
+      endDate,
+      classId,
+      sectionId,
+    } = req.query;
 
-      res.json({
+    const data =
+      await this.service.stats(
 
-        success: true,
+        schoolId,
 
-        data,
-      });
+        startDate
+          ? String(startDate)
+          : undefined,
 
-    } catch (e: any) {
+        endDate
+          ? String(endDate)
+          : undefined,
 
-      res.status(400).json({
+        classId
+          ? Number(classId)
+          : undefined,
 
-        success: false,
+        sectionId
+          ? Number(sectionId)
+          : undefined
+      );
 
-        message:
-          e.message,
-      });
-    }
+    res.json({
+      success: true,
+      data,
+    });
+
+  } catch (e: any) {
+
+    res.status(400).json({
+      success: false,
+      message: e.message,
+    });
+
   }
+}
 
   // =====================================================
   // LOCK ATTENDANCE

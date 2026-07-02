@@ -36,107 +36,176 @@ export class StudentAttendanceService {
   // MARK ATTENDANCE
   // =====================================================
 
+  // async markAttendance(
+  //   payload: any,
+  //   schoolId: number,
+  //   markedById: number
+  // ) {
+
+  //   const {
+
+  //     classId,
+
+  //     sectionId,
+
+  //     attendanceDate,
+
+  //     records,
+
+  //   } = payload;
+
+  //   // =========================================
+  //   // CHECK EXISTING
+  //   // =========================================
+
+  //   const existing =
+  //     await this.repo
+  //       .findSession(
+
+  //         schoolId,
+
+  //         classId,
+
+  //         sectionId,
+
+  //         new Date(
+  //           attendanceDate
+  //         )
+  //       );
+
+  //   if (existing) {
+
+  //     throw new Error(
+  //       "Attendance already marked"
+  //     );
+  //   }
+
+  //   // =========================================
+  //   // CREATE SESSION
+  //   // =========================================
+
+  //   const session =
+  //     await this.repo
+  //       .createSession({
+
+  //         schoolId,
+
+  //         classId,
+
+  //         sectionId,
+
+  //         markedById,
+
+  //         attendanceDate:
+  //           new Date(
+  //             attendanceDate
+  //           ),
+  //       });
+
+  //   // =========================================
+  //   // CREATE RECORDS
+  //   // =========================================
+
+  //   const attendanceRecords =
+  //     records.map(
+  //       (item: any) => ({
+
+  //         sessionId:
+  //           session.id,
+
+  //         studentId:
+  //           item.studentId,
+
+  //         status:
+  //           item.status,
+
+  //         remarks:
+  //           item.remarks,
+  //       })
+  //     );
+
+  //   await this.repo
+  //     .createRecords(
+  //       attendanceRecords
+  //     );
+
+  //   return {
+
+  //     success: true,
+
+  //     message:
+  //       "Attendance marked successfully",
+  //   };
+  // }
+
   async markAttendance(
-    payload: any,
-    schoolId: number,
-    markedById: number
-  ) {
+  payload: any,
+  schoolId: number,
+  markedById: number
+) {
 
-    const {
+  const {
+    classId,
+    sectionId,
+    attendanceDate,
+    records,
+  } = payload;
 
-      classId,
+  console.log("========== MARK ATTENDANCE ==========");
+  console.log("Payload:", payload);
+  console.log("Records:", records);
 
-      sectionId,
+  // =========================================
+  // CHECK EXISTING
+  // =========================================
 
-      attendanceDate,
+  const existing = await this.repo.findSession(
+    schoolId,
+    classId,
+    sectionId,
+    new Date(attendanceDate)
+  );
 
-      records,
-
-    } = payload;
-
-    // =========================================
-    // CHECK EXISTING
-    // =========================================
-
-    const existing =
-      await this.repo
-        .findSession(
-
-          schoolId,
-
-          classId,
-
-          sectionId,
-
-          new Date(
-            attendanceDate
-          )
-        );
-
-    if (existing) {
-
-      throw new Error(
-        "Attendance already marked"
-      );
-    }
-
-    // =========================================
-    // CREATE SESSION
-    // =========================================
-
-    const session =
-      await this.repo
-        .createSession({
-
-          schoolId,
-
-          classId,
-
-          sectionId,
-
-          markedById,
-
-          attendanceDate:
-            new Date(
-              attendanceDate
-            ),
-        });
-
-    // =========================================
-    // CREATE RECORDS
-    // =========================================
-
-    const attendanceRecords =
-      records.map(
-        (item: any) => ({
-
-          sessionId:
-            session.id,
-
-          studentId:
-            item.studentId,
-
-          status:
-            item.status,
-
-          remarks:
-            item.remarks,
-        })
-      );
-
-    await this.repo
-      .createRecords(
-        attendanceRecords
-      );
-
-    return {
-
-      success: true,
-
-      message:
-        "Attendance marked successfully",
-    };
+  if (existing) {
+    throw new Error("Attendance already marked");
   }
+
+  // =========================================
+  // CREATE SESSION
+  // =========================================
+
+  const session = await this.repo.createSession({
+    schoolId,
+    classId,
+    sectionId,
+    markedById,
+    attendanceDate: new Date(attendanceDate),
+  });
+
+  console.log("Session Created:", session);
+
+  // =========================================
+  // CREATE RECORDS
+  // =========================================
+
+  const attendanceRecords = records.map((item: any) => ({
+    sessionId: session.id,
+    studentId: item.studentId,
+    status: item.status,
+    remarks: item.remarks,
+  }));
+
+  console.log("Attendance Records:", attendanceRecords);
+
+  const result = await this.repo.createRecords(attendanceRecords);
+
+  console.log("CreateMany Result:", result);
+
+  return {
+    success: true,
+    message: "Attendance marked successfully",
+  };
+}
 
   // =====================================================
   // DAILY ATTENDANCE
@@ -264,13 +333,42 @@ async monthlyReport(
   // STATS
   // =====================================================
 
-  async stats(
-    schoolId: number
-  ) {
+  // async stats(
+  //   schoolId: number
+  // ) {
 
-    return this.repo
-      .stats(schoolId);
-  }
+  //   return this.repo
+  //     .stats(schoolId);
+  // }
+  async stats(
+
+  schoolId: number,
+
+  startDate?: string,
+
+  endDate?: string,
+
+  classId?: number,
+
+  sectionId?: number
+
+) {
+
+  return this.repo.stats(
+
+    schoolId,
+
+    startDate,
+
+    endDate,
+
+    classId,
+
+    sectionId
+
+  );
+
+}
 
   // =====================================================
   // LOCK ATTENDANCE

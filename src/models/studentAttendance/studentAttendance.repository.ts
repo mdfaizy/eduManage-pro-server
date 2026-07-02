@@ -54,34 +54,38 @@ export class StudentAttendanceRepository {
   // =====================================================
   // FIND SESSION
   // =====================================================
-
   async findSession(
+  schoolId: number,
+  classId: number,
+  sectionId: number | undefined,
+  attendanceDate: Date
+) {
 
-    schoolId: number,
+  const start = new Date(attendanceDate);
+  start.setHours(0, 0, 0, 0);
 
-    classId: number,
+  const end = new Date(attendanceDate);
+  end.setHours(23, 59, 59, 999);
 
-    sectionId: number | undefined,
+  return prisma.studentAttendanceSession.findFirst({
 
-    attendanceDate: Date
-  ) {
+    where: {
 
-    return prisma
-      .studentAttendanceSession
-      .findFirst({
+      schoolId,
 
-        where: {
+      classId,
 
-          schoolId,
+      ...(sectionId !== undefined && {
+        sectionId,
+      }),
 
-          classId,
-
-          sectionId,
-
-          attendanceDate,
-        },
-      });
-  }
+      attendanceDate: {
+        gte: start,
+        lte: end,
+      },
+    },
+  });
+}
 
   // =====================================================
   // CREATE SESSION
@@ -117,6 +121,61 @@ export class StudentAttendanceRepository {
   // DAILY ATTENDANCE
   // =====================================================
 
+// async getDailyAttendance(
+
+//   schoolId: number,
+
+//   attendanceDate: Date,
+
+//   classId?: number,
+
+//   sectionId?: number
+
+// ) {
+
+//   return prisma
+//     .studentAttendanceSession
+//     .findMany({
+
+//       where: {
+
+//         schoolId,
+
+//         attendanceDate,
+
+//         ...(classId && {
+//           classId,
+//         }),
+
+//         ...(sectionId && {
+//           sectionId,
+//         }),
+//       },
+
+//       include: {
+
+//         class: true,
+
+//         section: true,
+
+//         markedBy: true,
+
+//         records: {
+
+//           include: {
+
+//             student: true,
+//           },
+//         },
+//       },
+
+//       orderBy: {
+
+//         createdAt: "desc",
+//       },
+//     });
+// }
+
 async getDailyAttendance(
 
   schoolId: number,
@@ -129,47 +188,62 @@ async getDailyAttendance(
 
 ) {
 
-  return prisma
-    .studentAttendanceSession
-    .findMany({
+  // =====================================
+  // START & END OF DAY
+  // =====================================
 
-      where: {
+  const start = new Date(attendanceDate);
+  start.setHours(0, 0, 0, 0);
 
-        schoolId,
+  const end = new Date(attendanceDate);
+  end.setHours(23, 59, 59, 999);
 
-        attendanceDate,
+  // =====================================
+  // GET DAILY ATTENDANCE
+  // =====================================
 
-        ...(classId && {
-          classId,
-        }),
+  return prisma.studentAttendanceSession.findMany({
 
-        ...(sectionId && {
-          sectionId,
-        }),
+    where: {
+
+      schoolId,
+
+      attendanceDate: {
+        gte: start,
+        lte: end,
       },
 
-      include: {
+      ...(classId !== undefined && {
+        classId,
+      }),
 
-        class: true,
+      ...(sectionId !== undefined && {
+        sectionId,
+      }),
+    },
 
-        section: true,
+    include: {
 
-        markedBy: true,
+      class: true,
 
-        records: {
+      section: true,
 
-          include: {
+      markedBy: true,
 
-            student: true,
-          },
+      records: {
+
+        include: {
+
+          student: true,
         },
       },
+    },
 
-      orderBy: {
+    orderBy: {
 
-        createdAt: "desc",
-      },
-    });
+      attendanceDate: "desc",
+    },
+  });
 }
 
   async updateAttendance(
@@ -191,139 +265,378 @@ async getDailyAttendance(
     });
 }
 
-async monthlyReport(
+// async monthlyReport(
 
-  schoolId: number,
+//   schoolId: number,
 
-  startDate: string,
+//   startDate: string,
 
-  endDate: string,
+//   endDate: string,
 
-  classId?: number,
+//   classId?: number,
 
-  sectionId?: number
+//   sectionId?: number
 
-) {
+// ) {
 
-  // =====================================
-  // DATE CONVERSION
-  // =====================================
+//   // =====================================
+//   // DATE CONVERSION
+//   // =====================================
 
-  const start =
-    new Date(startDate);
+//   const start =
+//     new Date(startDate);
 
-  const end =
-    new Date(endDate);
+//   const end =
+//     new Date(endDate);
 
-  // =====================================
-  // GET RECORDS
-  // =====================================
+//   // =====================================
+//   // GET RECORDS
+//   // =====================================
 
-  const records =
-    await prisma
-      .studentAttendanceRecord
-      .findMany({
+//   const records =
+//     await prisma
+//       .studentAttendanceRecord
+//       .findMany({
 
-        where: {
+//         where: {
 
-          session: {
+//           session: {
 
-            schoolId,
+//             schoolId,
 
-            attendanceDate: {
+//             attendanceDate: {
 
-              gte: start,
+//               gte: start,
 
-              lte: end,
-            },
+//               lte: end,
+//             },
 
-            ...(classId && {
-              classId,
-            }),
+//             ...(classId && {
+//               classId,
+//             }),
 
-            ...(sectionId && {
-              sectionId,
-            }),
-          },
-        },
+//             ...(sectionId && {
+//               sectionId,
+//             }),
+//           },
+//         },
 
-        include: {
+//         include: {
 
-          student: true,
-        },
-      });
+//   student: true,
 
-  // =====================================
-  // GROUP BY STUDENT
-  // =====================================
+//   session: {
+//     include: {
+//       class: true,
+//       section: true,
+//     },
+//   },
 
-  const grouped: any = {};
+//   student: {
+//     include: {
+//       academicRecords: {
+//         where: {
+//           isCurrent: true,
+//         },
+//         select: {
+//           rollNumber: true,
+//           admissionNo: true,
+//           classId: true,
+//           sectionId: true,
+//         },
+//       },
+//     },
+//   },
+// },
+//       });
 
-  records.forEach(
-    (record: any) => {
+//   // =====================================
+//   // GROUP BY STUDENT
+//   // =====================================
 
-      const id =
-        record.student.id;
+//   const grouped: any = {};
 
-      if (!grouped[id]) {
+//   records.forEach(
+//     (record: any) => {
 
-        grouped[id] = {
+//       const id =
+//         record.student.id;
 
-          student:
-            record.student,
+//       if (!grouped[id]) {
 
-          present: 0,
+//         grouped[id] = {
 
-          absent: 0,
+//           student:
+//             record.student,
 
-          total: 0,
-        };
-      }
+//           present: 0,
 
-      grouped[id].total++;
+//           absent: 0,
 
-      if (
-        record.status ===
-        "PRESENT"
-      ) {
+//           total: 0,
+//         };
+//       }
 
-        grouped[id].present++;
+//       grouped[id].total++;
 
-      } else {
+//       if (
+//         record.status ===
+//         "PRESENT"
+//       ) {
 
-        grouped[id].absent++;
-      }
-    }
-  );
+//         grouped[id].present++;
 
-  // =====================================
-  // FINAL DATA
-  // =====================================
+//       } else {
 
-  return Object.values(
-    grouped
-  ).map((item: any) => ({
+//         grouped[id].absent++;
+//       }
+//     }
+//   );
 
-    ...item,
+//   // =====================================
+//   // FINAL DATA
+//   // =====================================
 
-    percentage:
-      item.total
+//   return Object.values(
+//     grouped
+//   ).map((item: any) => ({
 
-        ? Math.round(
+//     ...item,
 
-            (
-              item.present /
-              item.total
-            ) * 100
-          )
+//     percentage:
+//       item.total
 
-        : 0,
-  }));
-}
+//         ? Math.round(
+
+//             (
+//               item.present /
+//               item.total
+//             ) * 100
+//           )
+
+//         : 0,
+//   }));
+// }
 
   // =====================================================
   // STUDENT REPORT
   // =====================================================
+
+
+async monthlyReport(
+  schoolId: number,
+  startDate: string,
+  endDate: string,
+  classId?: number,
+  sectionId?: number
+) {
+
+  // =====================================
+  // DATE RANGE
+  // =====================================
+
+  const start = new Date(startDate);
+  start.setHours(0, 0, 0, 0);
+
+  const end = new Date(endDate);
+  end.setHours(23, 59, 59, 999);
+
+  // =====================================
+  // TOTAL WORKING DAYS
+  // =====================================
+
+  const workingDays = await prisma.studentAttendanceSession.count({
+    where: {
+      schoolId,
+
+      attendanceDate: {
+        gte: start,
+        lte: end,
+      },
+
+      ...(classId !== undefined && { classId }),
+
+      ...(sectionId !== undefined && { sectionId }),
+    },
+  });
+
+  // =====================================
+  // GET ATTENDANCE RECORDS
+  // =====================================
+
+  const records = await prisma.studentAttendanceRecord.findMany({
+
+    where: {
+
+      session: {
+
+        schoolId,
+
+        attendanceDate: {
+          gte: start,
+          lte: end,
+        },
+
+        ...(classId !== undefined && { classId }),
+
+        ...(sectionId !== undefined && { sectionId }),
+      },
+    },
+
+    include: {
+
+      // session: {
+      //   include: {
+      //     class: true,
+      //     section: true,
+      //   },
+      // },
+      session: {
+  include: {
+    class: true,
+    section: true,
+    markedBy: {
+      select: {
+        id: true,
+        name: true,
+      },
+    },
+  },
+},
+
+      student: {
+        include: {
+          academicRecords: {
+            where: {
+              isCurrent: true,
+            },
+            select: {
+              rollNumber: true,
+              admissionNo: true,
+              classId: true,
+              sectionId: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  // =====================================
+  // GROUP STUDENT DATA
+  // =====================================
+
+  const grouped: any = {};
+
+  records.forEach((record: any) => {
+
+    const id = record.student.id;
+
+    const academic = record.student.academicRecords?.[0];
+
+    if (!grouped[id]) {
+
+      grouped[id] = {
+
+        student: record.student,
+
+        rollNumber: academic?.rollNumber ?? "-",
+
+        admissionNo: academic?.admissionNo ?? "-",
+
+        className: record.session.class?.name ?? "-",
+
+        sectionName: record.session.section?.name ?? "-",
+        markedBy: record.session.markedBy?.name ?? "-",
+markedAt: record.session.createdAt,
+isLocked: record.session.isLocked,
+        workingDays,
+
+        present: 0,
+
+        absent: 0,
+
+        late: 0,
+
+        halfDay: 0,
+
+        leave: 0,
+
+        total: 0,
+      };
+    }
+
+    grouped[id].total++;
+
+    switch (record.status) {
+
+      case "PRESENT":
+        grouped[id].present++;
+        break;
+
+      case "ABSENT":
+        grouped[id].absent++;
+        break;
+
+      case "LATE":
+        grouped[id].late++;
+        break;
+
+      case "HALF_DAY":
+        grouped[id].halfDay++;
+        break;
+
+      case "LEAVE":
+        grouped[id].leave++;
+        break;
+    }
+  });
+
+  // =====================================
+  // FINAL RESPONSE
+  // =====================================
+
+  return Object.values(grouped).map((item: any) => ({
+
+    student: item.student,
+
+    rollNumber: item.rollNumber,
+
+    admissionNo: item.admissionNo,
+
+    className: item.className,
+
+    sectionName: item.sectionName,
+     markedBy: item.markedBy,
+
+  markedAt: item.markedAt,
+
+  isLocked: item.isLocked,
+    workingDays: item.workingDays,
+
+    present: item.present,
+
+    absent: item.absent,
+
+    late: item.late,
+
+    halfDay: item.halfDay,
+
+    leave: item.leave,
+
+    total: item.total,
+
+    percentage:
+      item.workingDays > 0
+        ? Number(
+            (
+              (item.present / item.workingDays) *
+              100
+            ).toFixed(2)
+          )
+        : 0,
+  }));
+}
 
   async studentReport(
 
@@ -414,75 +727,171 @@ async monthlyReport(
   // STATS
   // =====================================================
 
+  // async stats(
+  //   schoolId: number
+  // ) {
+
+  //   const today =
+  //     new Date();
+
+  //   const sessions =
+  //     await prisma
+  //       .studentAttendanceSession
+  //       .findMany({
+
+  //         where: {
+
+  //           schoolId,
+
+  //           attendanceDate: {
+
+  //             gte: new Date(
+  //               today.setHours(
+  //                 0, 0, 0, 0
+  //               )
+  //             ),
+  //           },
+  //         },
+
+  //         include: {
+
+  //           records: true,
+  //         },
+  //       });
+
+  //   let present = 0;
+  //   let absent = 0;
+  //   let late = 0;
+
+  //   sessions.forEach(
+  //     (session) => {
+
+  //       session.records
+  //         .forEach((record) => {
+
+  //           if (
+  //             record.status ===
+  //             "PRESENT"
+  //           ) present++;
+
+  //           if (
+  //             record.status ===
+  //             "ABSENT"
+  //           ) absent++;
+
+  //           if (
+  //             record.status ===
+  //             "LATE"
+  //           ) late++;
+  //         });
+  //     }
+  //   );
+
+  //   return {
+
+  //     present,
+
+  //     absent,
+
+  //     late,
+  //   };
+  // }
+
   async stats(
-    schoolId: number
-  ) {
+  schoolId: number,
+  startDate?: string,
+  endDate?: string,
+  classId?: number,
+  sectionId?: number
+) {
 
-    const today =
-      new Date();
+  const start = startDate
+    ? new Date(startDate)
+    : new Date();
 
-    const sessions =
-      await prisma
-        .studentAttendanceSession
-        .findMany({
+  start.setHours(0, 0, 0, 0);
 
-          where: {
+  const end = endDate
+    ? new Date(endDate)
+    : new Date();
 
-            schoolId,
+  end.setHours(23, 59, 59, 999);
 
-            attendanceDate: {
+  const sessions =
+    await prisma.studentAttendanceSession.findMany({
 
-              gte: new Date(
-                today.setHours(
-                  0, 0, 0, 0
-                )
-              ),
-            },
-          },
+      where: {
 
-          include: {
+        schoolId,
 
-            records: true,
-          },
-        });
+        attendanceDate: {
+          gte: start,
+          lte: end,
+        },
 
-    let present = 0;
-    let absent = 0;
-    let late = 0;
+        ...(classId !== undefined && {
+          classId,
+        }),
 
-    sessions.forEach(
-      (session) => {
+        ...(sectionId !== undefined && {
+          sectionId,
+        }),
+      },
 
-        session.records
-          .forEach((record) => {
+      include: {
+        records: true,
+      },
+    });
 
-            if (
-              record.status ===
-              "PRESENT"
-            ) present++;
+  let present = 0;
+  let absent = 0;
+  let late = 0;
+  let halfDay = 0;
+  let leave = 0;
 
-            if (
-              record.status ===
-              "ABSENT"
-            ) absent++;
+  sessions.forEach((session) => {
 
-            if (
-              record.status ===
-              "LATE"
-            ) late++;
-          });
+    session.records.forEach((record) => {
+
+      switch (record.status) {
+
+        case "PRESENT":
+          present++;
+          break;
+
+        case "ABSENT":
+          absent++;
+          break;
+
+        case "LATE":
+          late++;
+          break;
+
+        case "HALF_DAY":
+          halfDay++;
+          break;
+
+        case "LEAVE":
+          leave++;
+          break;
       }
-    );
+    });
 
-    return {
+  });
 
-      present,
+  return {
 
-      absent,
+    present,
 
-      late,
-    };
-  }
+    absent,
+
+    late,
+
+    halfDay,
+
+    leave,
+  };
+}
 
   // =====================================================
   // LOCK ATTENDANCE

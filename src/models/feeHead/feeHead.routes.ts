@@ -1,59 +1,92 @@
-import { Router }
-from "express";
+// import { Router }
+// from "express";
 
-import controller
-from "./feeHead.controller.js";
+// import controller
+// from "./feeHead.controller.js";
 
-import {
-  authMiddleware,
-} from "../../middlewares/auth.js";
+// import {
+//   authMiddleware,
+// } from "../../middlewares/auth.js";
 
-import {
-  validate,
-} from "../../middlewares/validate.js";
+// import {
+//   validate,
+// } from "../../middlewares/validate.js";
 
-import {
-  createFeeHeadSchema,
-} from "./feeHead.validation.js";
+// import {
+//   createFeeHeadSchema,
+// } from "./feeHead.validation.js";
 
+// const router = Router();
+
+// ////////////////////////////////////////////////////////
+// // CREATE
+// ////////////////////////////////////////////////////////
+
+// router.post(
+//   "/",
+//   authMiddleware,
+//   validate(
+//     createFeeHeadSchema
+//   ),
+//   (req, res) =>
+//     controller.create(
+//       req,
+//       res
+//     )
+// );
+
+// ////////////////////////////////////////////////////////
+// // GET ALL
+// ////////////////////////////////////////////////////////
+// router.get(
+//   "/",
+//   authMiddleware,
+//   (req, res) =>
+//     controller.getAll(
+//       req,
+//       res
+//     )
+// );
+// export default router;
+
+// =====================================================
+// feeHead.routes.ts
+// =====================================================
+
+import { Router } from "express";
+import controller from "./feeHead.controller.js";
+import {authMiddleware,} from "../../middlewares/auth.js";
+import {validate,} from "../../middlewares/validate.js";
+import { createFeeHeadSchema,} from "./feeHead.validation.js";
 const router = Router();
-
 ////////////////////////////////////////////////////////
 // CREATE
 ////////////////////////////////////////////////////////
-
-router.post(
-
-  "/",
-
-  authMiddleware,
-
-  validate(
-    createFeeHeadSchema
-  ),
-
-  (req, res) =>
-    controller.create(
-      req,
-      res
-    )
-);
+router.post("/",authMiddleware,validate(createFeeHeadSchema),
+  (req, res) =>controller.create(req,res));
 
 ////////////////////////////////////////////////////////
 // GET ALL
 ////////////////////////////////////////////////////////
 
-router.get(
+router.get("/",authMiddleware,(req, res) =>controller.getAll(req,res));
+////////////////////////////////////////////////////////
+// GET ONE
+////////////////////////////////////////////////////////
 
-  "/",
+router.get("/:id",authMiddleware,(req, res) =>controller.getOne(req,res));
 
-  authMiddleware,
-
-  (req, res) =>
-    controller.getAll(
-      req,
-      res
-    )
-);
+////////////////////////////////////////////////////////
+// UPDATE
+////////////////////////////////////////////////////////
+router.put("/:id",authMiddleware,(req, res) => controller.update(req,res));
+////////////////////////////////////////////////////////
+// DELETE
+////////////////////////////////////////////////////////
+router.delete("/:id",authMiddleware,(req, res) =>controller.delete(req,res));
+////////////////////////////////////////////////////////
+// TOGGLE
+////////////////////////////////////////////////////////
+router.patch("/toggle/:id",authMiddleware,(req, res) =>controller.toggle(req,res));
 
 export default router;

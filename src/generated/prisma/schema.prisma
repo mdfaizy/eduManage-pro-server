@@ -12,26 +12,27 @@ datasource db {
 /////////////////////////////
 
 model School {
-  id            Int                  @id @default(autoincrement())
-  name          String
-  email         String               @unique
-  phone         String?
-  status        SchoolStatus         @default(PENDING)
-  sections      Section[]
-  subscriptions SchoolSubscription[]
-  users         User[]
-  teachers      Teacher[]
-  timetables    Timetable[]
-  timings       SchoolTiming[]
-  periods       Period[]
-  days          Day[]
-  parents       Parent[]
-  academicYears AcademicYear[]
-  students      Student[]
-  admissions    Admission[]
-  exams         Exam[]
-  classes       Class[]
-  feeHeads      FeeHead[]
+  id                  Int                  @id @default(autoincrement())
+  name                String
+  email               String               @unique
+  phone               String?
+  status              SchoolStatus         @default(PENDING)
+  sections            Section[]
+  subscriptions       SchoolSubscription[]
+  users               User[]
+  teachers            Teacher[]
+  timetables          Timetable[]
+  timings             SchoolTiming[]
+  periods             Period[]
+  days                Day[]
+  parents             Parent[]
+  academicYears       AcademicYear[]
+  students            Student[]
+  admissions          Admission[]
+  exams               Exam[]
+  classes             Class[]
+  feeHeads            FeeHead[]
+  studentScholarships StudentScholarship[]
 
   transportRoutes TransportRoute[]
 
@@ -49,6 +50,7 @@ model School {
   employeeAttendances EmployeeAttendance[] @relation("SchoolEmployeeAttendances")
   createdAt           DateTime             @default(now())
   updatedAt           DateTime             @updatedAt
+  scholarships        Scholarship[]
 }
 
 enum SchoolStatus {
@@ -627,13 +629,14 @@ model Student {
 
   user User? @relation(fields: [userId], references: [id])
 
-  admissions        Admission[]
-  examMarks         ExamMark[]
-  academicRecords   StudentAcademicRecord[]
-  attendanceRecords StudentAttendanceRecord[]
-  parents           StudentParent[]
-  studentFees       StudentFee[]
-  createdAt         DateTime                  @default(now())
+  admissions          Admission[]
+  examMarks           ExamMark[]
+  academicRecords     StudentAcademicRecord[]
+  attendanceRecords   StudentAttendanceRecord[]
+  parents             StudentParent[]
+  studentFees         StudentFee[]
+  studentScholarships StudentScholarship[]
+  createdAt           DateTime                  @default(now())
 
   updatedAt DateTime @updatedAt
 
@@ -1033,6 +1036,8 @@ model FeeHead {
 
   feeStructureItems FeeStructureItem[]
 
+  studentFeeItems StudentFeeItem[]
+
   @@unique([schoolId, name])
 }
 
@@ -1049,13 +1054,14 @@ model FeeStructure {
 
   classId Int
 
-  name String
+  name       String
+  isActive   Boolean @default(true)
+  dueDay     Int
+  monthlyFee Float   @default(0)
 
-  dueDay    Int
-  frequency FeeFrequency @default(MONTHLY)
-  totalFee  Float        @default(0)
+  yearlyFee Float @default(0)
 
-  isActive Boolean @default(true)
+  oneTimeFee Float @default(0)
 
   createdAt DateTime @default(now())
 
@@ -1084,10 +1090,6 @@ model FeeStructure {
   @@index([classId])
 }
 
-////////////////////////////////////////////////////////
-// 💰 FEE STRUCTURE ITEMS
-////////////////////////////////////////////////////////
-
 model FeeStructureItem {
   id Int @id @default(autoincrement())
 
@@ -1095,7 +1097,9 @@ model FeeStructureItem {
 
   feeHeadId Int
 
-  amount Float
+  amount Decimal @db.Decimal(10, 2)
+
+  frequency FeeFrequency
 
   createdAt DateTime @default(now())
 
@@ -1111,6 +1115,10 @@ model FeeStructureItem {
 
   @@unique([feeStructureId, feeHeadId])
 }
+
+////////////////////////////////////////////////////////
+// 💰 FEE STRUCTURE ITEMS
+////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////
 // 🚌 TRANSPORT ROUTES
@@ -1193,15 +1201,15 @@ model StudentFee {
 
   year Int?
 
-  totalAmount Float
+  totalAmount Decimal @db.Decimal(10, 2)
 
-  paidAmount Float @default(0)
+  paidAmount Decimal @default(0) @db.Decimal(10, 2)
 
-  dueAmount Float
+  dueAmount Decimal @db.Decimal(10, 2)
 
-  lateFee Float @default(0)
+  lateFee Decimal @default(0) @db.Decimal(10, 2)
 
-  discount Float @default(0)
+  discount Decimal @default(0) @db.Decimal(10, 2)
 
   isAdmissionFee Boolean @default(false)
 
@@ -1225,12 +1233,39 @@ model StudentFee {
 
   feeStructure FeeStructure @relation(fields: [feeStructureId], references: [id])
 
+  items StudentFeeItem[]
+
   receipts PaymentReceipt[]
 
   @@unique([studentId, feeStructureId, month, year])
   @@index([studentId])
   @@index([schoolId])
   @@index([status])
+}
+
+model StudentFeeItem {
+  id Int @id @default(autoincrement())
+
+  studentFeeId Int
+
+  feeHeadId Int
+
+  amount Decimal @db.Decimal(10, 2)
+
+  frequency FeeFrequency
+
+  createdAt DateTime @default(now())
+
+  // =====================================
+  // RELATIONS
+  // =====================================
+
+  studentFee StudentFee @relation(fields: [studentFeeId], references: [id], onDelete: Cascade)
+
+  feeHead FeeHead @relation(fields: [feeHeadId], references: [id])
+
+  @@index([studentFeeId])
+  @@index([feeHeadId])
 }
 
 ////////////////////////////////////////////////////////
@@ -1301,6 +1336,58 @@ enum PaymentMethod {
   BANK_TRANSFER
 }
 
+model StudentScholarship {
+  id Int @id @default(autoincrement())
+
+  schoolId Int
+
+  studentId Int
+
+  scholarshipId Int
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  // =====================================
+  // RELATIONS
+  // =====================================
+
+  school School @relation(fields: [schoolId], references: [id])
+
+  student Student @relation(fields: [studentId], references: [id])
+
+  scholarship Scholarship @relation(fields: [scholarshipId], references: [id])
+
+  @@unique([studentId, scholarshipId])
+}
+
+model Scholarship {
+  id Int @id @default(autoincrement())
+
+  schoolId Int
+
+  name String
+
+  type ScholarshipType
+
+  amount Float
+
+  description String?
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  school School @relation(fields: [schoolId], references: [id])
+
+  studentScholarships StudentScholarship[]
+}
+
 ////////////////////////////////////////////////////////
 
 enum PaymentTransactionStatus {
@@ -1321,6 +1408,12 @@ enum FeeFrequency {
   YEARLY
 
   ONE_TIME
+}
+
+enum ScholarshipType {
+  FIXED
+
+  PERCENTAGE
 }
 
 /////////////////////////////

@@ -1,29 +1,59 @@
-import {Request,Response,} from "express";
-import service from "./feeHead.service";
-class FeeHeadController {
-  // =====================================================
+import {
+  Request,
+  Response,
+} from "express";
+
+import service
+from "./transportRoute.service.js";
+
+class TransportRouteController {
+
   // CREATE
-  // =====================================================
-  async create(req: Request,res: Response){
+
+  async create(
+    req: Request,
+    res: Response
+  ) {
+
     try {
-      const schoolId =(req as any).user.schoolId;
-      const data =await service.create({
-          ...req.body,schoolId,});
+
+      const schoolId =
+        (req as any)
+          .user
+          .schoolId;
+
+      const data =
+        await service.create({
+
+          ...req.body,
+
+          schoolId,
+        });
+
       res.status(201).json({
+
         success: true,
-        message:"Fee head created successfully",
+
+        message:
+          "Route created successfully",
+
         data,
       });
+
     } catch (e: any) {
+
       res.status(400).json({
+
         success: false,
-        message:e.message,
+
+        message:
+          e.message,
       });
     }
   }
-  // =====================================================
+
   // GET ALL
-  // =====================================================
+
   async getAll(
     req: Request,
     res: Response
@@ -41,7 +71,7 @@ class FeeHeadController {
           schoolId
         );
 
-      res.status(200).json({
+      res.json({
 
         success: true,
 
@@ -60,9 +90,7 @@ class FeeHeadController {
     }
   }
 
-  // =====================================================
   // GET ONE
-  // =====================================================
 
   async getOne(
     req: Request,
@@ -71,18 +99,15 @@ class FeeHeadController {
 
     try {
 
-      const schoolId =
-        (req as any)
-          .user
-          .schoolId;
-
       const data =
         await service.getOne(
-          Number(req.params.id),
-          schoolId
+
+          Number(
+            req.params.id
+          )
         );
 
-      res.status(200).json({
+      res.json({
 
         success: true,
 
@@ -91,7 +116,7 @@ class FeeHeadController {
 
     } catch (e: any) {
 
-      res.status(404).json({
+      res.status(500).json({
 
         success: false,
 
@@ -101,9 +126,7 @@ class FeeHeadController {
     }
   }
 
-  // =====================================================
   // UPDATE
-  // =====================================================
 
   async update(
     req: Request,
@@ -112,27 +135,22 @@ class FeeHeadController {
 
     try {
 
-      const schoolId =
-        (req as any)
-          .user
-          .schoolId;
-
       const data =
         await service.update(
 
-          Number(req.params.id),
-
-          schoolId,
+          Number(
+            req.params.id
+          ),
 
           req.body
         );
 
-      res.status(200).json({
+      res.json({
 
         success: true,
 
         message:
-          "Fee head updated successfully",
+          "Route updated successfully",
 
         data,
       });
@@ -149,9 +167,7 @@ class FeeHeadController {
     }
   }
 
-  // =====================================================
   // DELETE
-  // =====================================================
 
   async delete(
     req: Request,
@@ -160,24 +176,19 @@ class FeeHeadController {
 
     try {
 
-      const schoolId =
-        (req as any)
-          .user
-          .schoolId;
-
       await service.delete(
 
-        Number(req.params.id),
-
-        schoolId
+        Number(
+          req.params.id
+        )
       );
 
-      res.status(200).json({
+      res.json({
 
         success: true,
 
         message:
-          "Fee head deleted successfully",
+          "Route deleted successfully",
       });
 
     } catch (e: any) {
@@ -192,9 +203,7 @@ class FeeHeadController {
     }
   }
 
-  // =====================================================
   // TOGGLE
-  // =====================================================
 
   async toggle(
     req: Request,
@@ -203,20 +212,17 @@ class FeeHeadController {
 
     try {
 
-      const schoolId =
-        (req as any)
-          .user
-          .schoolId;
-
       const data =
         await service.toggle(
 
-          Number(req.params.id),
+          Number(
+            req.params.id
+          ),
 
-          schoolId
+          req.body.isActive
         );
 
-      res.status(200).json({
+      res.json({
 
         success: true,
 
@@ -239,4 +245,5 @@ class FeeHeadController {
   }
 }
 
-export default new FeeHeadController();
+export default
+new TransportRouteController();

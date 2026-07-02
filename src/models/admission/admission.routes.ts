@@ -50,7 +50,12 @@ router.get(
   (req, res) =>
     AdmissionController.list(req, res)
 );
-
+router.get(
+  "/reports",
+  authMiddleware,
+  (req, res) =>
+    AdmissionController.reports(req, res)
+);
 router.get( "/:id", authMiddleware, (req, res) => AdmissionController.view(req, res) );
 router.patch( "/:id", authMiddleware, (req, res) => AdmissionController.update(req, res) );
 router.patch(

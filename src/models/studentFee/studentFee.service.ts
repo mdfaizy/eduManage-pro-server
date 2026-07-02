@@ -7,14 +7,19 @@ class StudentFeeService {
   // GENERATE FEE
   // =====================================
 
-  async generate(
-    data: any
-  ) {
+ async generate(
+  data: any
+) {
 
-    return repo.generate(
-      data
-    );
-  }
+  return repo.generate(
+    data
+  );
+}
+
+  // =====================================
+// GENERATE
+// =====================================
+
 
   // =====================================
   // PAY FEE
@@ -69,6 +74,22 @@ class StudentFeeService {
         schoolId
       );
   }
+// =====================================
+// GENERATE WITH TRANSACTION
+// =====================================
+
+async generateWithTransaction(
+  tx: any,
+  data: any
+) {
+
+  return repo
+    .generateWithTransaction(
+      tx,
+      data
+    );
+}
+  
 }
 
 export default

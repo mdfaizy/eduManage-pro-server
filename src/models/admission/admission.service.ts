@@ -1,337 +1,6 @@
-// import prisma from "../../config/prisma.js";
-// import AdmissionRepository from "./admission.repository.js";
-// import { StudentService } from "../student/student.service.js";
-// export class AdmissionService {
-//   private repo = new AdmissionRepository();
-// private studentService = new StudentService();
-//   // =============================
-//   // ✅ APPLY ADMISSION
-//   // =============================
-//   async applyAdmission(payload: any, schoolId: number) {
-//     return this.repo.create({
-//       school: { connect: { id: schoolId } },
-
-//       studentName: payload.studentName,
-//       dob: payload.dob ? new Date(payload.dob) : null,
-//       gender: payload.gender,
-//       address: payload.address,
-
-//       class: { connect: { id: payload.classId } },
-//       section: payload.sectionId
-//         ? { connect: { id: payload.sectionId } }
-//         : undefined,
-
-//       academicYear: { connect: { id: payload.academicYearId } },
-
-//       status: "PENDING",
-//     });
-//   }
-
-//   // =============================
-//   // 🔢 student code
-//   // =============================
-//   private async generateStudentCode(tx: any, schoolId: number) {
-//     const count = await tx.student.count({
-//       where: { schoolId },
-//     });
-
-//     return `STU-${String(count + 1).padStart(5, "0")}`;
-//   }
-
-//   // =============================
-//   // 🔢 roll generator
-//   // =============================
-//   private async generateRollNumber(
-//     tx: any,
-//     schoolId: number,
-//     academicYearId: number,
-//     classId: number,
-//     sectionId?: number | null
-//   ) {
-//     const count = await tx.admission.count({
-//       where: {
-//         schoolId,
-//         academicYearId,
-//         classId,
-//         sectionId: sectionId ?? null,
-//         status: "ACTIVE",
-//       },
-//     });
-
-//     return count + 1;
-//   }
-
-//   // =============================
-//   // 🔢 admission number
-//   // =============================
-//   private async generateAdmissionNo(tx: any, schoolId: number) {
-//     const year = new Date().getFullYear();
-
-//     const count = await tx.admission.count({
-//       where: { schoolId },
-//     });
-
-//     return `ADM-${year}-${String(count + 1).padStart(4, "0")}`;
-//   }
-
-//   // =============================
-//   // ✅ APPROVE ADMISSION
-//   // =============================
-//   // async approveAdmission(admissionId: number, schoolId: number) {
-//   //   return prisma.$transaction(async (tx) => {
-//   //     const admission = await tx.admission.findFirst({
-//   //       where: { id: admissionId, schoolId },
-//   //     });
-
-//   //     if (!admission) throw new Error("Admission not found");
-//   //     if (admission.status !== "PENDING")
-//   //       throw new Error("Already processed");
-
-//   //     // 🔥 generate student code
-//   //     const studentCode = await this.generateStudentCode(tx, schoolId);
-
-//   //     // 🔥 CREATE STUDENT
-//   //     const student = await tx.student.create({
-//   //       data: {
-//   //         name: admission.studentName,
-//   //         schoolId,
-//   //         studentCode,
-//   //         dob: admission.dob,
-//   //         gender: admission.gender,
-//   //         address: admission.address,
-//   //       },
-//   //     });
-
-//   //     // 🔥 generate numbers
-//   //     const rollNumber = await this.generateRollNumber(
-//   //       tx,
-//   //       schoolId,
-//   //       admission.academicYearId,
-//   //       admission.classId,
-//   //       admission.sectionId
-//   //     );
-
-//   //     const admissionNo = await this.generateAdmissionNo(tx, schoolId);
-
-//   //     // 🔥 update admission
-//   //     await tx.admission.update({
-//   //       where: { id: admissionId },
-//   //       data: {
-//   //         studentId: student.id,
-//   //         rollNumber,
-//   //         admissionNo,
-//   //         status: "ACTIVE",
-//   //       },
-//   //     });
-
-//   //     return {
-//   //       message: "Admission approved successfully",
-//   //       studentId: student.id,
-//   //     };
-//   //   });
-//   // }
-
-//   async approveAdmission(admissionId: number, schoolId: number) {
-//     return prisma.$transaction(async (tx) => {
-//       /* ============================= */
-//       /* 1️⃣ FETCH ADMISSION (SECURE) */
-//       /* ============================= */
-//       const admission = await tx.admission.findFirst({
-//         where: { id: admissionId, schoolId },
-//       });
-
-//       if (!admission) {
-//         throw new Error("Admission not found");
-//       }
-
-//       if (admission.status !== "PENDING") {
-//         throw new Error("Admission already processed");
-//       }
-
-//       /* ============================= */
-//       /* 2️⃣ ACADEMIC YEAR CHECK */
-//       /* ============================= */
-//       const academicYear = await tx.academicYear.findUnique({
-//         where: { id: admission.academicYearId },
-//       });
-
-//       if (!academicYear?.isActive) {
-//         throw new Error("Academic year is not active");
-//       }
-
-//       /* ============================= */
-//       /* 3️⃣ SECTION CAPACITY CHECK */
-//       /* ============================= */
-//       if (admission.sectionId) {
-//         const section = await tx.section.findUnique({
-//           where: { id: admission.sectionId },
-//         });
-
-//         if (!section) {
-//           throw new Error("Section not found");
-//         }
-
-//         const activeStrength = await tx.admission.count({
-//           where: {
-//             schoolId,
-//             classId: admission.classId,
-//             sectionId: admission.sectionId,
-//             academicYearId: admission.academicYearId,
-//             status: "ACTIVE",
-//           },
-//         });
-
-//         if (activeStrength >= section.capacity) {
-//           throw new Error("Section is full");
-//         }
-//       }
-
-//       /* ============================= */
-//       /* 4️⃣ DUPLICATE ADMISSION GUARD */
-//       /* ============================= */
-//       const duplicate = await tx.admission.findFirst({
-//         where: {
-//           schoolId,
-//           academicYearId: admission.academicYearId,
-//           classId: admission.classId,
-//           sectionId: admission.sectionId,
-//           studentName: admission.studentName,
-//           status: "ACTIVE",
-//         },
-//       });
-
-//       if (duplicate) {
-//         throw new Error("Student already admitted in this class");
-//       }
-
-//       /* ============================= */
-//       /* 5️⃣ CREATE STUDENT (CLEAN) */
-//       /* ============================= */
-//       const student = await this.studentService.createFromAdmission(
-//         tx,
-//         admission,
-//         schoolId
-//       );
-
-//       /* ============================= */
-//       /* 6️⃣ GENERATE ROLL */
-//       /* ============================= */
-//       const rollNumber = await this.generateRollNumber(
-//         tx,
-//         schoolId,
-//         admission.academicYearId,
-//         admission.classId,
-//         admission.sectionId
-//       );
-
-//       /* ============================= */
-//       /* 7️⃣ GENERATE ADMISSION NO */
-//       /* ============================= */
-//       const admissionNo = await this.generateAdmissionNo(tx, schoolId);
-
-//       /* ============================= */
-//       /* 8️⃣ UPDATE ADMISSION */
-//       /* ============================= */
-//       await tx.admission.update({
-//         where: { id: admissionId },
-//         data: {
-//           studentId: student.id,
-//           rollNumber,
-//           admissionNo,
-//           status: "ACTIVE",
-//         },
-//       });
-
-//       /* ============================= */
-//       /* ✅ FINAL RESPONSE */
-//       /* ============================= */
-//       return {
-//         message: "Admission approved successfully",
-//         studentId: student.id,
-//       };
-//     });
-//   }
-
-//   // =============================
-//   // ❌ REJECT
-//   // =============================
-//   async rejectAdmission(admissionId: number, schoolId: number) {
-//     const admission = await this.repo.findById(admissionId, schoolId);
-
-//     if (!admission) throw new Error("Admission not found");
-
-//     return this.repo.update(admissionId, {
-//       status: "CANCELLED",
-//     });
-//   }
-
-//   // =============================
-// // ✏️ UPDATE ADMISSION
-// // =============================
-// async updateAdmission(
-//   admissionId: number,
-//   schoolId: number,
-//   payload: any
-// ) {
-//   const admission = await this.repo.findById(admissionId, schoolId);
-
-//   if (!admission) {
-//     throw new Error("Admission not found");
-//   }
-
-//   // 🔒 real-world rule
-//   if (admission.status !== "PENDING") {
-//     throw new Error("Only pending admission can be edited");
-//   }
-
-//   // ✅ optional validations
-//   if (payload.academicYearId) {
-//     const year = await prisma.academicYear.findUnique({
-//       where: { id: payload.academicYearId },
-//     });
-
-//     if (!year?.isActive) {
-//       throw new Error("Academic year is not active");
-//     }
-//   }
-
-//   return this.repo.update(admissionId, {
-//     studentName: payload.studentName,
-//     dob: payload.dob ? new Date(payload.dob) : null,
-//     gender: payload.gender,
-//     address: payload.address,
-
-//     classId: payload.classId,
-//     sectionId: payload.sectionId ?? null,
-//     academicYearId: payload.academicYearId,
-//   });
-// }
-//   // =============================
-//   // 📋 LIST
-//   // =============================
-//   async getAdmissions(schoolId: number) {
-//     return this.repo.findAll(schoolId);
-//   }
-//   // =============================
-// // 🔍 GET BY ID
-// // =============================
-// async getAdmissionById(admissionId: number, schoolId: number) {
-//   const admission = await this.repo.findById(admissionId, schoolId);
-
-//   if (!admission) {
-//     throw new Error("Admission not found");
-//   }
-
-//   return admission;
-// }
-// }
-
-
-// export default new AdmissionService();
-
-
 import prisma from "../../config/prisma.js";
-
+import studentFeeService
+from "../studentFee/studentFee.service.js";
 import StudentAcademicRecordRepository
 from "../student/student-academic-record.repository.js";
 
@@ -351,7 +20,8 @@ export class AdmissionService {
 
   private studentService =
     new StudentService();
-
+private studentFeeService =
+  studentFeeService;
   // =====================================================
   // APPLY ADMISSION
   // =====================================================
@@ -719,6 +389,106 @@ guardianEmail:
           }
         );
 
+        ///////////////////////////////////////////////////
+// 6️⃣ FIND FEE STRUCTURE
+///////////////////////////////////////////////////
+
+const feeStructure =
+  await tx.feeStructure.findFirst({
+
+    where: {
+
+      schoolId,
+
+      classId:
+        admission.classId,
+
+      academicYearId:
+        admission.academicYearId,
+
+      isActive: true,
+    },
+  });
+console.log("FEE STRUCTURE", feeStructure);
+///////////////////////////////////////////////////
+// 7️⃣ GENERATE BASIC FEE
+///////////////////////////////////////////////////
+
+// if (feeStructure) {
+
+//   await tx.studentFee.create({
+
+//     data: {
+
+//       schoolId,
+
+//       studentId:
+//         student.id,
+
+//       feeStructureId:
+//         feeStructure.id,
+
+//       month:
+//         new Date().getMonth() + 1,
+
+//       year:
+//         new Date().getFullYear(),
+
+//       totalAmount:
+//         Number(
+//           feeStructure.totalFee
+//         ),
+
+//       paidAmount: 0,
+
+//       dueAmount:
+//         Number(
+//           feeStructure.totalFee
+//         ),
+
+//       lateFee: 0,
+
+//       discount: 0,
+
+//       isAdmissionFee: false,
+
+//       status: "PENDING",
+
+//       dueDate: new Date(),
+//     },
+//   });
+// }
+if (feeStructure) {
+
+  await this
+    .studentFeeService
+    .generateWithTransaction(
+
+      tx,
+
+      {
+
+        schoolId,
+
+        studentId:
+          student.id,
+
+        feeStructureId:
+          feeStructure.id,
+
+        month:
+          new Date()
+            .getMonth() + 1,
+
+        year:
+          new Date()
+            .getFullYear(),
+
+        dueDate:
+          new Date(),
+      }
+    );
+}
         // 6️⃣ UPDATE ADMISSION
 
         await tx.admission.update({
@@ -756,14 +526,31 @@ guardianEmail:
   // LIST
   // =====================================================
 
-  async getAdmissions(
-    schoolId: number
-  ) {
+  // async getAdmissions(
+  //   schoolId: number
+  // ) {
 
-    return this.repo.findAll(
-      schoolId
-    );
-  }
+  //   return this.repo.findAll(
+  //     schoolId
+  //   );
+  // }
+  async getAdmissions(
+  schoolId: number,
+  classId?: number,
+  sectionId?: number,
+  academicYearId?: number,
+  status?: string
+) {
+
+  return this.repo.findAll(
+    schoolId,
+    classId,
+    sectionId,
+    academicYearId,
+    status
+  );
+
+}
 
   // =====================================================
   // SINGLE
@@ -812,12 +599,54 @@ async updateAdmission(
     );
   }
 
-  return this.repo.update(
-    id,
+ return this.repo.update(
+
+  id,
+
+  schoolId,
+
+  // {
+  //   status: "CANCELLED",
+  // }
     payload
-  );
+);
 }
 
+
+
+async getReports(
+  schoolId: number,
+  classId?: number,
+  sectionId?: number,
+  academicYearId?: number,
+  startDate?: string,
+  endDate?: string
+) {
+
+  const data = await this.repo.reports(
+    schoolId,
+    classId,
+    sectionId,
+    academicYearId,
+    startDate,
+    endDate
+  );
+
+  return data.map((item: any) => ({
+    id: item.id,
+    admissionNo: item.admissionNo,
+    studentName: item.student?.name,
+    fatherName: item.fatherName,
+    className: item.class?.name,
+    sectionName: item.section?.name,
+    academicYear: item.academicYear?.name,
+    gender: item.student?.gender,
+    phone: item.student?.phoneNumber,
+    email: item.student?.email,
+    status: item.status,
+    createdAt: item.createdAt,
+  }));
+}
 
 // =====================================================
 // REJECT
@@ -842,6 +671,7 @@ async rejectAdmission(
 
   return this.repo.update(
     id,
+    schoolId,
     {
       status: "CANCELLED",
     }
