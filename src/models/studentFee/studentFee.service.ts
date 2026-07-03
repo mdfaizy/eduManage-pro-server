@@ -82,7 +82,7 @@ async generateWithTransaction(
   tx: any,
   data: any
 ) {
-
+console.log("StudentFeeService.generateWithTransaction()");
   return repo
     .generateWithTransaction(
       tx,

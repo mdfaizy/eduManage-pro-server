@@ -37,6 +37,7 @@ model School {
   transportRoutes TransportRoute[]
 
   bookPackages BookPackage[]
+  studentDiscounts StudentDiscount[]
 
   feeStructures FeeStructure[]
 
@@ -637,6 +638,7 @@ model Student {
   parents             StudentParent[]
   studentFees         StudentFee[]
   studentScholarships StudentScholarship[]
+  studentDiscounts StudentDiscount[]
   createdAt           DateTime                  @default(now())
 
   updatedAt DateTime @updatedAt
@@ -1038,6 +1040,7 @@ model FeeHead {
   feeStructureItems FeeStructureItem[]
 
   studentFeeItems StudentFeeItem[]
+  studentDiscounts StudentDiscount[]
 
   @@unique([schoolId, name])
 }
@@ -1399,6 +1402,40 @@ model Scholarship {
   studentScholarships StudentScholarship[]
 }
 
+
+model StudentDiscount {
+
+  id           Int      @id @default(autoincrement())
+
+  schoolId     Int
+  studentId    Int
+  feeHeadId    Int
+
+  type         DiscountType
+
+  amount       Decimal  @db.Decimal(10,2)
+
+  applyType    DiscountApplyType
+
+  startMonth   Int?
+  endMonth     Int?
+
+  remarks      String?
+
+  isActive     Boolean  @default(true)
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  school        School      @relation(fields: [schoolId], references: [id])
+  student       Student     @relation(fields: [studentId], references: [id])
+  feeHead       FeeHead     @relation(fields: [feeHeadId], references: [id])
+
+  @@index([schoolId])
+  @@index([studentId])
+  @@index([feeHeadId])
+
+}
 ////////////////////////////////////////////////////////
 
 enum PaymentTransactionStatus {
@@ -1421,6 +1458,22 @@ enum FeeFrequency {
   ONE_TIME
 }
 
+enum DiscountType {
+
+  FIXED
+
+  PERCENTAGE
+
+}
+enum DiscountApplyType {
+
+  ONE_TIME
+
+  MONTHLY
+
+  YEARLY
+
+}
 enum ScholarshipType {
   FIXED
 

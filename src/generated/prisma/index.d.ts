@@ -247,6 +247,11 @@ export type StudentScholarship = $Result.DefaultSelection<Prisma.$StudentScholar
  */
 export type Scholarship = $Result.DefaultSelection<Prisma.$ScholarshipPayload>
 /**
+ * Model StudentDiscount
+ * 
+ */
+export type StudentDiscount = $Result.DefaultSelection<Prisma.$StudentDiscountPayload>
+/**
  * Model Exam
  * 
  */
@@ -445,6 +450,23 @@ export const FeeFrequency: {
 export type FeeFrequency = (typeof FeeFrequency)[keyof typeof FeeFrequency]
 
 
+export const DiscountType: {
+  FIXED: 'FIXED',
+  PERCENTAGE: 'PERCENTAGE'
+};
+
+export type DiscountType = (typeof DiscountType)[keyof typeof DiscountType]
+
+
+export const DiscountApplyType: {
+  ONE_TIME: 'ONE_TIME',
+  MONTHLY: 'MONTHLY',
+  YEARLY: 'YEARLY'
+};
+
+export type DiscountApplyType = (typeof DiscountApplyType)[keyof typeof DiscountApplyType]
+
+
 export const ScholarshipType: {
   FIXED: 'FIXED',
   PERCENTAGE: 'PERCENTAGE'
@@ -531,6 +553,14 @@ export const PaymentTransactionStatus: typeof $Enums.PaymentTransactionStatus
 export type FeeFrequency = $Enums.FeeFrequency
 
 export const FeeFrequency: typeof $Enums.FeeFrequency
+
+export type DiscountType = $Enums.DiscountType
+
+export const DiscountType: typeof $Enums.DiscountType
+
+export type DiscountApplyType = $Enums.DiscountApplyType
+
+export const DiscountApplyType: typeof $Enums.DiscountApplyType
 
 export type ScholarshipType = $Enums.ScholarshipType
 
@@ -1122,6 +1152,16 @@ export class PrismaClient<
   get scholarship(): Prisma.ScholarshipDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.studentDiscount`: Exposes CRUD operations for the **StudentDiscount** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more StudentDiscounts
+    * const studentDiscounts = await prisma.studentDiscount.findMany()
+    * ```
+    */
+  get studentDiscount(): Prisma.StudentDiscountDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.exam`: Exposes CRUD operations for the **Exam** model.
     * Example usage:
     * ```ts
@@ -1640,6 +1680,7 @@ export namespace Prisma {
     PaymentReceipt: 'PaymentReceipt',
     StudentScholarship: 'StudentScholarship',
     Scholarship: 'Scholarship',
+    StudentDiscount: 'StudentDiscount',
     Exam: 'Exam',
     ExamSubject: 'ExamSubject',
     ExamMark: 'ExamMark',
@@ -1659,7 +1700,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "school" | "plan" | "schoolSubscription" | "schoolRequest" | "transaction" | "user" | "teacher" | "role" | "permission" | "userRole" | "userPermission" | "rolePermission" | "token" | "class" | "section" | "grade" | "subject" | "syllabus" | "classTeacher" | "day" | "teacherSubject" | "schoolTiming" | "period" | "academicYear" | "timetable" | "student" | "studentAcademicRecord" | "parent" | "studentParent" | "admission" | "studentAttendanceSession" | "studentAttendanceRecord" | "employeeAttendance" | "staff" | "designation" | "payroll" | "feeHead" | "feeStructure" | "feeStructureItem" | "transportRoute" | "bookPackage" | "studentFee" | "studentFeeItem" | "paymentReceipt" | "studentScholarship" | "scholarship" | "exam" | "examSubject" | "examMark" | "auditLog"
+      modelProps: "school" | "plan" | "schoolSubscription" | "schoolRequest" | "transaction" | "user" | "teacher" | "role" | "permission" | "userRole" | "userPermission" | "rolePermission" | "token" | "class" | "section" | "grade" | "subject" | "syllabus" | "classTeacher" | "day" | "teacherSubject" | "schoolTiming" | "period" | "academicYear" | "timetable" | "student" | "studentAcademicRecord" | "parent" | "studentParent" | "admission" | "studentAttendanceSession" | "studentAttendanceRecord" | "employeeAttendance" | "staff" | "designation" | "payroll" | "feeHead" | "feeStructure" | "feeStructureItem" | "transportRoute" | "bookPackage" | "studentFee" | "studentFeeItem" | "paymentReceipt" | "studentScholarship" | "scholarship" | "studentDiscount" | "exam" | "examSubject" | "examMark" | "auditLog"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -4699,6 +4740,72 @@ export namespace Prisma {
           }
         }
       }
+      StudentDiscount: {
+        payload: Prisma.$StudentDiscountPayload<ExtArgs>
+        fields: Prisma.StudentDiscountFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.StudentDiscountFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentDiscountPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.StudentDiscountFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentDiscountPayload>
+          }
+          findFirst: {
+            args: Prisma.StudentDiscountFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentDiscountPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.StudentDiscountFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentDiscountPayload>
+          }
+          findMany: {
+            args: Prisma.StudentDiscountFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentDiscountPayload>[]
+          }
+          create: {
+            args: Prisma.StudentDiscountCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentDiscountPayload>
+          }
+          createMany: {
+            args: Prisma.StudentDiscountCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.StudentDiscountDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentDiscountPayload>
+          }
+          update: {
+            args: Prisma.StudentDiscountUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentDiscountPayload>
+          }
+          deleteMany: {
+            args: Prisma.StudentDiscountDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.StudentDiscountUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.StudentDiscountUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentDiscountPayload>
+          }
+          aggregate: {
+            args: Prisma.StudentDiscountAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateStudentDiscount>
+          }
+          groupBy: {
+            args: Prisma.StudentDiscountGroupByArgs<ExtArgs>
+            result: $Utils.Optional<StudentDiscountGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.StudentDiscountCountArgs<ExtArgs>
+            result: $Utils.Optional<StudentDiscountCountAggregateOutputType> | number
+          }
+        }
+      }
       Exam: {
         payload: Prisma.$ExamPayload<ExtArgs>
         fields: Prisma.ExamFieldRefs
@@ -5117,6 +5224,7 @@ export namespace Prisma {
     paymentReceipt?: PaymentReceiptOmit
     studentScholarship?: StudentScholarshipOmit
     scholarship?: ScholarshipOmit
+    studentDiscount?: StudentDiscountOmit
     exam?: ExamOmit
     examSubject?: ExamSubjectOmit
     examMark?: ExamMarkOmit
@@ -5219,6 +5327,7 @@ export namespace Prisma {
     studentScholarships: number
     transportRoutes: number
     bookPackages: number
+    studentDiscounts: number
     feeStructures: number
     studentFees: number
     paymentReceipts: number
@@ -5247,6 +5356,7 @@ export namespace Prisma {
     studentScholarships?: boolean | SchoolCountOutputTypeCountStudentScholarshipsArgs
     transportRoutes?: boolean | SchoolCountOutputTypeCountTransportRoutesArgs
     bookPackages?: boolean | SchoolCountOutputTypeCountBookPackagesArgs
+    studentDiscounts?: boolean | SchoolCountOutputTypeCountStudentDiscountsArgs
     feeStructures?: boolean | SchoolCountOutputTypeCountFeeStructuresArgs
     studentFees?: boolean | SchoolCountOutputTypeCountStudentFeesArgs
     paymentReceipts?: boolean | SchoolCountOutputTypeCountPaymentReceiptsArgs
@@ -5391,6 +5501,13 @@ export namespace Prisma {
    */
   export type SchoolCountOutputTypeCountBookPackagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: BookPackageWhereInput
+  }
+
+  /**
+   * SchoolCountOutputType without action
+   */
+  export type SchoolCountOutputTypeCountStudentDiscountsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StudentDiscountWhereInput
   }
 
   /**
@@ -6115,6 +6232,7 @@ export namespace Prisma {
     parents: number
     studentFees: number
     studentScholarships: number
+    studentDiscounts: number
   }
 
   export type StudentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6125,6 +6243,7 @@ export namespace Prisma {
     parents?: boolean | StudentCountOutputTypeCountParentsArgs
     studentFees?: boolean | StudentCountOutputTypeCountStudentFeesArgs
     studentScholarships?: boolean | StudentCountOutputTypeCountStudentScholarshipsArgs
+    studentDiscounts?: boolean | StudentCountOutputTypeCountStudentDiscountsArgs
   }
 
   // Custom InputTypes
@@ -6185,6 +6304,13 @@ export namespace Prisma {
    */
   export type StudentCountOutputTypeCountStudentScholarshipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: StudentScholarshipWhereInput
+  }
+
+  /**
+   * StudentCountOutputType without action
+   */
+  export type StudentCountOutputTypeCountStudentDiscountsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StudentDiscountWhereInput
   }
 
 
@@ -6288,11 +6414,13 @@ export namespace Prisma {
   export type FeeHeadCountOutputType = {
     feeStructureItems: number
     studentFeeItems: number
+    studentDiscounts: number
   }
 
   export type FeeHeadCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     feeStructureItems?: boolean | FeeHeadCountOutputTypeCountFeeStructureItemsArgs
     studentFeeItems?: boolean | FeeHeadCountOutputTypeCountStudentFeeItemsArgs
+    studentDiscounts?: boolean | FeeHeadCountOutputTypeCountStudentDiscountsArgs
   }
 
   // Custom InputTypes
@@ -6318,6 +6446,13 @@ export namespace Prisma {
    */
   export type FeeHeadCountOutputTypeCountStudentFeeItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: StudentFeeItemWhereInput
+  }
+
+  /**
+   * FeeHeadCountOutputType without action
+   */
+  export type FeeHeadCountOutputTypeCountStudentDiscountsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StudentDiscountWhereInput
   }
 
 
@@ -6761,6 +6896,7 @@ export namespace Prisma {
     studentScholarships?: boolean | School$studentScholarshipsArgs<ExtArgs>
     transportRoutes?: boolean | School$transportRoutesArgs<ExtArgs>
     bookPackages?: boolean | School$bookPackagesArgs<ExtArgs>
+    studentDiscounts?: boolean | School$studentDiscountsArgs<ExtArgs>
     feeStructures?: boolean | School$feeStructuresArgs<ExtArgs>
     studentFees?: boolean | School$studentFeesArgs<ExtArgs>
     paymentReceipts?: boolean | School$paymentReceiptsArgs<ExtArgs>
@@ -6803,6 +6939,7 @@ export namespace Prisma {
     studentScholarships?: boolean | School$studentScholarshipsArgs<ExtArgs>
     transportRoutes?: boolean | School$transportRoutesArgs<ExtArgs>
     bookPackages?: boolean | School$bookPackagesArgs<ExtArgs>
+    studentDiscounts?: boolean | School$studentDiscountsArgs<ExtArgs>
     feeStructures?: boolean | School$feeStructuresArgs<ExtArgs>
     studentFees?: boolean | School$studentFeesArgs<ExtArgs>
     paymentReceipts?: boolean | School$paymentReceiptsArgs<ExtArgs>
@@ -6834,6 +6971,7 @@ export namespace Prisma {
       studentScholarships: Prisma.$StudentScholarshipPayload<ExtArgs>[]
       transportRoutes: Prisma.$TransportRoutePayload<ExtArgs>[]
       bookPackages: Prisma.$BookPackagePayload<ExtArgs>[]
+      studentDiscounts: Prisma.$StudentDiscountPayload<ExtArgs>[]
       feeStructures: Prisma.$FeeStructurePayload<ExtArgs>[]
       studentFees: Prisma.$StudentFeePayload<ExtArgs>[]
       paymentReceipts: Prisma.$PaymentReceiptPayload<ExtArgs>[]
@@ -7208,6 +7346,7 @@ export namespace Prisma {
     studentScholarships<T extends School$studentScholarshipsArgs<ExtArgs> = {}>(args?: Subset<T, School$studentScholarshipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentScholarshipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     transportRoutes<T extends School$transportRoutesArgs<ExtArgs> = {}>(args?: Subset<T, School$transportRoutesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransportRoutePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     bookPackages<T extends School$bookPackagesArgs<ExtArgs> = {}>(args?: Subset<T, School$bookPackagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookPackagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    studentDiscounts<T extends School$studentDiscountsArgs<ExtArgs> = {}>(args?: Subset<T, School$studentDiscountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentDiscountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     feeStructures<T extends School$feeStructuresArgs<ExtArgs> = {}>(args?: Subset<T, School$feeStructuresArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FeeStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     studentFees<T extends School$studentFeesArgs<ExtArgs> = {}>(args?: Subset<T, School$studentFeesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentFeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     paymentReceipts<T extends School$paymentReceiptsArgs<ExtArgs> = {}>(args?: Subset<T, School$paymentReceiptsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentReceiptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -8028,6 +8167,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: BookPackageScalarFieldEnum | BookPackageScalarFieldEnum[]
+  }
+
+  /**
+   * School.studentDiscounts
+   */
+  export type School$studentDiscountsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentDiscount
+     */
+    select?: StudentDiscountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentDiscount
+     */
+    omit?: StudentDiscountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentDiscountInclude<ExtArgs> | null
+    where?: StudentDiscountWhereInput
+    orderBy?: StudentDiscountOrderByWithRelationInput | StudentDiscountOrderByWithRelationInput[]
+    cursor?: StudentDiscountWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StudentDiscountScalarFieldEnum | StudentDiscountScalarFieldEnum[]
   }
 
   /**
@@ -34037,6 +34200,7 @@ export namespace Prisma {
     parents?: boolean | Student$parentsArgs<ExtArgs>
     studentFees?: boolean | Student$studentFeesArgs<ExtArgs>
     studentScholarships?: boolean | Student$studentScholarshipsArgs<ExtArgs>
+    studentDiscounts?: boolean | Student$studentDiscountsArgs<ExtArgs>
     _count?: boolean | StudentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["student"]>
 
@@ -34071,6 +34235,7 @@ export namespace Prisma {
     parents?: boolean | Student$parentsArgs<ExtArgs>
     studentFees?: boolean | Student$studentFeesArgs<ExtArgs>
     studentScholarships?: boolean | Student$studentScholarshipsArgs<ExtArgs>
+    studentDiscounts?: boolean | Student$studentDiscountsArgs<ExtArgs>
     _count?: boolean | StudentCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -34086,6 +34251,7 @@ export namespace Prisma {
       parents: Prisma.$StudentParentPayload<ExtArgs>[]
       studentFees: Prisma.$StudentFeePayload<ExtArgs>[]
       studentScholarships: Prisma.$StudentScholarshipPayload<ExtArgs>[]
+      studentDiscounts: Prisma.$StudentDiscountPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -34452,6 +34618,7 @@ export namespace Prisma {
     parents<T extends Student$parentsArgs<ExtArgs> = {}>(args?: Subset<T, Student$parentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentParentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     studentFees<T extends Student$studentFeesArgs<ExtArgs> = {}>(args?: Subset<T, Student$studentFeesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentFeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     studentScholarships<T extends Student$studentScholarshipsArgs<ExtArgs> = {}>(args?: Subset<T, Student$studentScholarshipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentScholarshipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    studentDiscounts<T extends Student$studentDiscountsArgs<ExtArgs> = {}>(args?: Subset<T, Student$studentDiscountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentDiscountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -35028,6 +35195,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: StudentScholarshipScalarFieldEnum | StudentScholarshipScalarFieldEnum[]
+  }
+
+  /**
+   * Student.studentDiscounts
+   */
+  export type Student$studentDiscountsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentDiscount
+     */
+    select?: StudentDiscountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentDiscount
+     */
+    omit?: StudentDiscountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentDiscountInclude<ExtArgs> | null
+    where?: StudentDiscountWhereInput
+    orderBy?: StudentDiscountOrderByWithRelationInput | StudentDiscountOrderByWithRelationInput[]
+    cursor?: StudentDiscountWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StudentDiscountScalarFieldEnum | StudentDiscountScalarFieldEnum[]
   }
 
   /**
@@ -45873,6 +46064,7 @@ export namespace Prisma {
     school?: boolean | SchoolDefaultArgs<ExtArgs>
     feeStructureItems?: boolean | FeeHead$feeStructureItemsArgs<ExtArgs>
     studentFeeItems?: boolean | FeeHead$studentFeeItemsArgs<ExtArgs>
+    studentDiscounts?: boolean | FeeHead$studentDiscountsArgs<ExtArgs>
     _count?: boolean | FeeHeadCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["feeHead"]>
 
@@ -45894,6 +46086,7 @@ export namespace Prisma {
     school?: boolean | SchoolDefaultArgs<ExtArgs>
     feeStructureItems?: boolean | FeeHead$feeStructureItemsArgs<ExtArgs>
     studentFeeItems?: boolean | FeeHead$studentFeeItemsArgs<ExtArgs>
+    studentDiscounts?: boolean | FeeHead$studentDiscountsArgs<ExtArgs>
     _count?: boolean | FeeHeadCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -45903,6 +46096,7 @@ export namespace Prisma {
       school: Prisma.$SchoolPayload<ExtArgs>
       feeStructureItems: Prisma.$FeeStructureItemPayload<ExtArgs>[]
       studentFeeItems: Prisma.$StudentFeeItemPayload<ExtArgs>[]
+      studentDiscounts: Prisma.$StudentDiscountPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -46256,6 +46450,7 @@ export namespace Prisma {
     school<T extends SchoolDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SchoolDefaultArgs<ExtArgs>>): Prisma__SchoolClient<$Result.GetResult<Prisma.$SchoolPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     feeStructureItems<T extends FeeHead$feeStructureItemsArgs<ExtArgs> = {}>(args?: Subset<T, FeeHead$feeStructureItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FeeStructureItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     studentFeeItems<T extends FeeHead$studentFeeItemsArgs<ExtArgs> = {}>(args?: Subset<T, FeeHead$studentFeeItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentFeeItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    studentDiscounts<T extends FeeHead$studentDiscountsArgs<ExtArgs> = {}>(args?: Subset<T, FeeHead$studentDiscountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentDiscountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -46686,6 +46881,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: StudentFeeItemScalarFieldEnum | StudentFeeItemScalarFieldEnum[]
+  }
+
+  /**
+   * FeeHead.studentDiscounts
+   */
+  export type FeeHead$studentDiscountsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentDiscount
+     */
+    select?: StudentDiscountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentDiscount
+     */
+    omit?: StudentDiscountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentDiscountInclude<ExtArgs> | null
+    where?: StudentDiscountWhereInput
+    orderBy?: StudentDiscountOrderByWithRelationInput | StudentDiscountOrderByWithRelationInput[]
+    cursor?: StudentDiscountWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StudentDiscountScalarFieldEnum | StudentDiscountScalarFieldEnum[]
   }
 
   /**
@@ -56269,6 +56488,1094 @@ export namespace Prisma {
 
 
   /**
+   * Model StudentDiscount
+   */
+
+  export type AggregateStudentDiscount = {
+    _count: StudentDiscountCountAggregateOutputType | null
+    _avg: StudentDiscountAvgAggregateOutputType | null
+    _sum: StudentDiscountSumAggregateOutputType | null
+    _min: StudentDiscountMinAggregateOutputType | null
+    _max: StudentDiscountMaxAggregateOutputType | null
+  }
+
+  export type StudentDiscountAvgAggregateOutputType = {
+    id: number | null
+    schoolId: number | null
+    studentId: number | null
+    feeHeadId: number | null
+    amount: Decimal | null
+    startMonth: number | null
+    endMonth: number | null
+  }
+
+  export type StudentDiscountSumAggregateOutputType = {
+    id: number | null
+    schoolId: number | null
+    studentId: number | null
+    feeHeadId: number | null
+    amount: Decimal | null
+    startMonth: number | null
+    endMonth: number | null
+  }
+
+  export type StudentDiscountMinAggregateOutputType = {
+    id: number | null
+    schoolId: number | null
+    studentId: number | null
+    feeHeadId: number | null
+    type: $Enums.DiscountType | null
+    amount: Decimal | null
+    applyType: $Enums.DiscountApplyType | null
+    startMonth: number | null
+    endMonth: number | null
+    remarks: string | null
+    isActive: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type StudentDiscountMaxAggregateOutputType = {
+    id: number | null
+    schoolId: number | null
+    studentId: number | null
+    feeHeadId: number | null
+    type: $Enums.DiscountType | null
+    amount: Decimal | null
+    applyType: $Enums.DiscountApplyType | null
+    startMonth: number | null
+    endMonth: number | null
+    remarks: string | null
+    isActive: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type StudentDiscountCountAggregateOutputType = {
+    id: number
+    schoolId: number
+    studentId: number
+    feeHeadId: number
+    type: number
+    amount: number
+    applyType: number
+    startMonth: number
+    endMonth: number
+    remarks: number
+    isActive: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type StudentDiscountAvgAggregateInputType = {
+    id?: true
+    schoolId?: true
+    studentId?: true
+    feeHeadId?: true
+    amount?: true
+    startMonth?: true
+    endMonth?: true
+  }
+
+  export type StudentDiscountSumAggregateInputType = {
+    id?: true
+    schoolId?: true
+    studentId?: true
+    feeHeadId?: true
+    amount?: true
+    startMonth?: true
+    endMonth?: true
+  }
+
+  export type StudentDiscountMinAggregateInputType = {
+    id?: true
+    schoolId?: true
+    studentId?: true
+    feeHeadId?: true
+    type?: true
+    amount?: true
+    applyType?: true
+    startMonth?: true
+    endMonth?: true
+    remarks?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type StudentDiscountMaxAggregateInputType = {
+    id?: true
+    schoolId?: true
+    studentId?: true
+    feeHeadId?: true
+    type?: true
+    amount?: true
+    applyType?: true
+    startMonth?: true
+    endMonth?: true
+    remarks?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type StudentDiscountCountAggregateInputType = {
+    id?: true
+    schoolId?: true
+    studentId?: true
+    feeHeadId?: true
+    type?: true
+    amount?: true
+    applyType?: true
+    startMonth?: true
+    endMonth?: true
+    remarks?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type StudentDiscountAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StudentDiscount to aggregate.
+     */
+    where?: StudentDiscountWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StudentDiscounts to fetch.
+     */
+    orderBy?: StudentDiscountOrderByWithRelationInput | StudentDiscountOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: StudentDiscountWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StudentDiscounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StudentDiscounts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned StudentDiscounts
+    **/
+    _count?: true | StudentDiscountCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: StudentDiscountAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: StudentDiscountSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: StudentDiscountMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: StudentDiscountMaxAggregateInputType
+  }
+
+  export type GetStudentDiscountAggregateType<T extends StudentDiscountAggregateArgs> = {
+        [P in keyof T & keyof AggregateStudentDiscount]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateStudentDiscount[P]>
+      : GetScalarType<T[P], AggregateStudentDiscount[P]>
+  }
+
+
+
+
+  export type StudentDiscountGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StudentDiscountWhereInput
+    orderBy?: StudentDiscountOrderByWithAggregationInput | StudentDiscountOrderByWithAggregationInput[]
+    by: StudentDiscountScalarFieldEnum[] | StudentDiscountScalarFieldEnum
+    having?: StudentDiscountScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: StudentDiscountCountAggregateInputType | true
+    _avg?: StudentDiscountAvgAggregateInputType
+    _sum?: StudentDiscountSumAggregateInputType
+    _min?: StudentDiscountMinAggregateInputType
+    _max?: StudentDiscountMaxAggregateInputType
+  }
+
+  export type StudentDiscountGroupByOutputType = {
+    id: number
+    schoolId: number
+    studentId: number
+    feeHeadId: number
+    type: $Enums.DiscountType
+    amount: Decimal
+    applyType: $Enums.DiscountApplyType
+    startMonth: number | null
+    endMonth: number | null
+    remarks: string | null
+    isActive: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: StudentDiscountCountAggregateOutputType | null
+    _avg: StudentDiscountAvgAggregateOutputType | null
+    _sum: StudentDiscountSumAggregateOutputType | null
+    _min: StudentDiscountMinAggregateOutputType | null
+    _max: StudentDiscountMaxAggregateOutputType | null
+  }
+
+  type GetStudentDiscountGroupByPayload<T extends StudentDiscountGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<StudentDiscountGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof StudentDiscountGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], StudentDiscountGroupByOutputType[P]>
+            : GetScalarType<T[P], StudentDiscountGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type StudentDiscountSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    schoolId?: boolean
+    studentId?: boolean
+    feeHeadId?: boolean
+    type?: boolean
+    amount?: boolean
+    applyType?: boolean
+    startMonth?: boolean
+    endMonth?: boolean
+    remarks?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    school?: boolean | SchoolDefaultArgs<ExtArgs>
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+    feeHead?: boolean | FeeHeadDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["studentDiscount"]>
+
+
+
+  export type StudentDiscountSelectScalar = {
+    id?: boolean
+    schoolId?: boolean
+    studentId?: boolean
+    feeHeadId?: boolean
+    type?: boolean
+    amount?: boolean
+    applyType?: boolean
+    startMonth?: boolean
+    endMonth?: boolean
+    remarks?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type StudentDiscountOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "schoolId" | "studentId" | "feeHeadId" | "type" | "amount" | "applyType" | "startMonth" | "endMonth" | "remarks" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["studentDiscount"]>
+  export type StudentDiscountInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    school?: boolean | SchoolDefaultArgs<ExtArgs>
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+    feeHead?: boolean | FeeHeadDefaultArgs<ExtArgs>
+  }
+
+  export type $StudentDiscountPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "StudentDiscount"
+    objects: {
+      school: Prisma.$SchoolPayload<ExtArgs>
+      student: Prisma.$StudentPayload<ExtArgs>
+      feeHead: Prisma.$FeeHeadPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      schoolId: number
+      studentId: number
+      feeHeadId: number
+      type: $Enums.DiscountType
+      amount: Prisma.Decimal
+      applyType: $Enums.DiscountApplyType
+      startMonth: number | null
+      endMonth: number | null
+      remarks: string | null
+      isActive: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["studentDiscount"]>
+    composites: {}
+  }
+
+  type StudentDiscountGetPayload<S extends boolean | null | undefined | StudentDiscountDefaultArgs> = $Result.GetResult<Prisma.$StudentDiscountPayload, S>
+
+  type StudentDiscountCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<StudentDiscountFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: StudentDiscountCountAggregateInputType | true
+    }
+
+  export interface StudentDiscountDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['StudentDiscount'], meta: { name: 'StudentDiscount' } }
+    /**
+     * Find zero or one StudentDiscount that matches the filter.
+     * @param {StudentDiscountFindUniqueArgs} args - Arguments to find a StudentDiscount
+     * @example
+     * // Get one StudentDiscount
+     * const studentDiscount = await prisma.studentDiscount.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends StudentDiscountFindUniqueArgs>(args: SelectSubset<T, StudentDiscountFindUniqueArgs<ExtArgs>>): Prisma__StudentDiscountClient<$Result.GetResult<Prisma.$StudentDiscountPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one StudentDiscount that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {StudentDiscountFindUniqueOrThrowArgs} args - Arguments to find a StudentDiscount
+     * @example
+     * // Get one StudentDiscount
+     * const studentDiscount = await prisma.studentDiscount.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends StudentDiscountFindUniqueOrThrowArgs>(args: SelectSubset<T, StudentDiscountFindUniqueOrThrowArgs<ExtArgs>>): Prisma__StudentDiscountClient<$Result.GetResult<Prisma.$StudentDiscountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StudentDiscount that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentDiscountFindFirstArgs} args - Arguments to find a StudentDiscount
+     * @example
+     * // Get one StudentDiscount
+     * const studentDiscount = await prisma.studentDiscount.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends StudentDiscountFindFirstArgs>(args?: SelectSubset<T, StudentDiscountFindFirstArgs<ExtArgs>>): Prisma__StudentDiscountClient<$Result.GetResult<Prisma.$StudentDiscountPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StudentDiscount that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentDiscountFindFirstOrThrowArgs} args - Arguments to find a StudentDiscount
+     * @example
+     * // Get one StudentDiscount
+     * const studentDiscount = await prisma.studentDiscount.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends StudentDiscountFindFirstOrThrowArgs>(args?: SelectSubset<T, StudentDiscountFindFirstOrThrowArgs<ExtArgs>>): Prisma__StudentDiscountClient<$Result.GetResult<Prisma.$StudentDiscountPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more StudentDiscounts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentDiscountFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all StudentDiscounts
+     * const studentDiscounts = await prisma.studentDiscount.findMany()
+     * 
+     * // Get first 10 StudentDiscounts
+     * const studentDiscounts = await prisma.studentDiscount.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const studentDiscountWithIdOnly = await prisma.studentDiscount.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends StudentDiscountFindManyArgs>(args?: SelectSubset<T, StudentDiscountFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentDiscountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a StudentDiscount.
+     * @param {StudentDiscountCreateArgs} args - Arguments to create a StudentDiscount.
+     * @example
+     * // Create one StudentDiscount
+     * const StudentDiscount = await prisma.studentDiscount.create({
+     *   data: {
+     *     // ... data to create a StudentDiscount
+     *   }
+     * })
+     * 
+     */
+    create<T extends StudentDiscountCreateArgs>(args: SelectSubset<T, StudentDiscountCreateArgs<ExtArgs>>): Prisma__StudentDiscountClient<$Result.GetResult<Prisma.$StudentDiscountPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many StudentDiscounts.
+     * @param {StudentDiscountCreateManyArgs} args - Arguments to create many StudentDiscounts.
+     * @example
+     * // Create many StudentDiscounts
+     * const studentDiscount = await prisma.studentDiscount.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends StudentDiscountCreateManyArgs>(args?: SelectSubset<T, StudentDiscountCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a StudentDiscount.
+     * @param {StudentDiscountDeleteArgs} args - Arguments to delete one StudentDiscount.
+     * @example
+     * // Delete one StudentDiscount
+     * const StudentDiscount = await prisma.studentDiscount.delete({
+     *   where: {
+     *     // ... filter to delete one StudentDiscount
+     *   }
+     * })
+     * 
+     */
+    delete<T extends StudentDiscountDeleteArgs>(args: SelectSubset<T, StudentDiscountDeleteArgs<ExtArgs>>): Prisma__StudentDiscountClient<$Result.GetResult<Prisma.$StudentDiscountPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one StudentDiscount.
+     * @param {StudentDiscountUpdateArgs} args - Arguments to update one StudentDiscount.
+     * @example
+     * // Update one StudentDiscount
+     * const studentDiscount = await prisma.studentDiscount.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends StudentDiscountUpdateArgs>(args: SelectSubset<T, StudentDiscountUpdateArgs<ExtArgs>>): Prisma__StudentDiscountClient<$Result.GetResult<Prisma.$StudentDiscountPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more StudentDiscounts.
+     * @param {StudentDiscountDeleteManyArgs} args - Arguments to filter StudentDiscounts to delete.
+     * @example
+     * // Delete a few StudentDiscounts
+     * const { count } = await prisma.studentDiscount.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends StudentDiscountDeleteManyArgs>(args?: SelectSubset<T, StudentDiscountDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more StudentDiscounts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentDiscountUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many StudentDiscounts
+     * const studentDiscount = await prisma.studentDiscount.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends StudentDiscountUpdateManyArgs>(args: SelectSubset<T, StudentDiscountUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one StudentDiscount.
+     * @param {StudentDiscountUpsertArgs} args - Arguments to update or create a StudentDiscount.
+     * @example
+     * // Update or create a StudentDiscount
+     * const studentDiscount = await prisma.studentDiscount.upsert({
+     *   create: {
+     *     // ... data to create a StudentDiscount
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the StudentDiscount we want to update
+     *   }
+     * })
+     */
+    upsert<T extends StudentDiscountUpsertArgs>(args: SelectSubset<T, StudentDiscountUpsertArgs<ExtArgs>>): Prisma__StudentDiscountClient<$Result.GetResult<Prisma.$StudentDiscountPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of StudentDiscounts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentDiscountCountArgs} args - Arguments to filter StudentDiscounts to count.
+     * @example
+     * // Count the number of StudentDiscounts
+     * const count = await prisma.studentDiscount.count({
+     *   where: {
+     *     // ... the filter for the StudentDiscounts we want to count
+     *   }
+     * })
+    **/
+    count<T extends StudentDiscountCountArgs>(
+      args?: Subset<T, StudentDiscountCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], StudentDiscountCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a StudentDiscount.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentDiscountAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends StudentDiscountAggregateArgs>(args: Subset<T, StudentDiscountAggregateArgs>): Prisma.PrismaPromise<GetStudentDiscountAggregateType<T>>
+
+    /**
+     * Group by StudentDiscount.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentDiscountGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends StudentDiscountGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: StudentDiscountGroupByArgs['orderBy'] }
+        : { orderBy?: StudentDiscountGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, StudentDiscountGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetStudentDiscountGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the StudentDiscount model
+   */
+  readonly fields: StudentDiscountFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for StudentDiscount.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__StudentDiscountClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    school<T extends SchoolDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SchoolDefaultArgs<ExtArgs>>): Prisma__SchoolClient<$Result.GetResult<Prisma.$SchoolPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    student<T extends StudentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StudentDefaultArgs<ExtArgs>>): Prisma__StudentClient<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    feeHead<T extends FeeHeadDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FeeHeadDefaultArgs<ExtArgs>>): Prisma__FeeHeadClient<$Result.GetResult<Prisma.$FeeHeadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the StudentDiscount model
+   */
+  interface StudentDiscountFieldRefs {
+    readonly id: FieldRef<"StudentDiscount", 'Int'>
+    readonly schoolId: FieldRef<"StudentDiscount", 'Int'>
+    readonly studentId: FieldRef<"StudentDiscount", 'Int'>
+    readonly feeHeadId: FieldRef<"StudentDiscount", 'Int'>
+    readonly type: FieldRef<"StudentDiscount", 'DiscountType'>
+    readonly amount: FieldRef<"StudentDiscount", 'Decimal'>
+    readonly applyType: FieldRef<"StudentDiscount", 'DiscountApplyType'>
+    readonly startMonth: FieldRef<"StudentDiscount", 'Int'>
+    readonly endMonth: FieldRef<"StudentDiscount", 'Int'>
+    readonly remarks: FieldRef<"StudentDiscount", 'String'>
+    readonly isActive: FieldRef<"StudentDiscount", 'Boolean'>
+    readonly createdAt: FieldRef<"StudentDiscount", 'DateTime'>
+    readonly updatedAt: FieldRef<"StudentDiscount", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * StudentDiscount findUnique
+   */
+  export type StudentDiscountFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentDiscount
+     */
+    select?: StudentDiscountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentDiscount
+     */
+    omit?: StudentDiscountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentDiscountInclude<ExtArgs> | null
+    /**
+     * Filter, which StudentDiscount to fetch.
+     */
+    where: StudentDiscountWhereUniqueInput
+  }
+
+  /**
+   * StudentDiscount findUniqueOrThrow
+   */
+  export type StudentDiscountFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentDiscount
+     */
+    select?: StudentDiscountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentDiscount
+     */
+    omit?: StudentDiscountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentDiscountInclude<ExtArgs> | null
+    /**
+     * Filter, which StudentDiscount to fetch.
+     */
+    where: StudentDiscountWhereUniqueInput
+  }
+
+  /**
+   * StudentDiscount findFirst
+   */
+  export type StudentDiscountFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentDiscount
+     */
+    select?: StudentDiscountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentDiscount
+     */
+    omit?: StudentDiscountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentDiscountInclude<ExtArgs> | null
+    /**
+     * Filter, which StudentDiscount to fetch.
+     */
+    where?: StudentDiscountWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StudentDiscounts to fetch.
+     */
+    orderBy?: StudentDiscountOrderByWithRelationInput | StudentDiscountOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StudentDiscounts.
+     */
+    cursor?: StudentDiscountWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StudentDiscounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StudentDiscounts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StudentDiscounts.
+     */
+    distinct?: StudentDiscountScalarFieldEnum | StudentDiscountScalarFieldEnum[]
+  }
+
+  /**
+   * StudentDiscount findFirstOrThrow
+   */
+  export type StudentDiscountFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentDiscount
+     */
+    select?: StudentDiscountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentDiscount
+     */
+    omit?: StudentDiscountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentDiscountInclude<ExtArgs> | null
+    /**
+     * Filter, which StudentDiscount to fetch.
+     */
+    where?: StudentDiscountWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StudentDiscounts to fetch.
+     */
+    orderBy?: StudentDiscountOrderByWithRelationInput | StudentDiscountOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StudentDiscounts.
+     */
+    cursor?: StudentDiscountWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StudentDiscounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StudentDiscounts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StudentDiscounts.
+     */
+    distinct?: StudentDiscountScalarFieldEnum | StudentDiscountScalarFieldEnum[]
+  }
+
+  /**
+   * StudentDiscount findMany
+   */
+  export type StudentDiscountFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentDiscount
+     */
+    select?: StudentDiscountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentDiscount
+     */
+    omit?: StudentDiscountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentDiscountInclude<ExtArgs> | null
+    /**
+     * Filter, which StudentDiscounts to fetch.
+     */
+    where?: StudentDiscountWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StudentDiscounts to fetch.
+     */
+    orderBy?: StudentDiscountOrderByWithRelationInput | StudentDiscountOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing StudentDiscounts.
+     */
+    cursor?: StudentDiscountWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StudentDiscounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StudentDiscounts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StudentDiscounts.
+     */
+    distinct?: StudentDiscountScalarFieldEnum | StudentDiscountScalarFieldEnum[]
+  }
+
+  /**
+   * StudentDiscount create
+   */
+  export type StudentDiscountCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentDiscount
+     */
+    select?: StudentDiscountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentDiscount
+     */
+    omit?: StudentDiscountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentDiscountInclude<ExtArgs> | null
+    /**
+     * The data needed to create a StudentDiscount.
+     */
+    data: XOR<StudentDiscountCreateInput, StudentDiscountUncheckedCreateInput>
+  }
+
+  /**
+   * StudentDiscount createMany
+   */
+  export type StudentDiscountCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many StudentDiscounts.
+     */
+    data: StudentDiscountCreateManyInput | StudentDiscountCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * StudentDiscount update
+   */
+  export type StudentDiscountUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentDiscount
+     */
+    select?: StudentDiscountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentDiscount
+     */
+    omit?: StudentDiscountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentDiscountInclude<ExtArgs> | null
+    /**
+     * The data needed to update a StudentDiscount.
+     */
+    data: XOR<StudentDiscountUpdateInput, StudentDiscountUncheckedUpdateInput>
+    /**
+     * Choose, which StudentDiscount to update.
+     */
+    where: StudentDiscountWhereUniqueInput
+  }
+
+  /**
+   * StudentDiscount updateMany
+   */
+  export type StudentDiscountUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update StudentDiscounts.
+     */
+    data: XOR<StudentDiscountUpdateManyMutationInput, StudentDiscountUncheckedUpdateManyInput>
+    /**
+     * Filter which StudentDiscounts to update
+     */
+    where?: StudentDiscountWhereInput
+    /**
+     * Limit how many StudentDiscounts to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * StudentDiscount upsert
+   */
+  export type StudentDiscountUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentDiscount
+     */
+    select?: StudentDiscountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentDiscount
+     */
+    omit?: StudentDiscountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentDiscountInclude<ExtArgs> | null
+    /**
+     * The filter to search for the StudentDiscount to update in case it exists.
+     */
+    where: StudentDiscountWhereUniqueInput
+    /**
+     * In case the StudentDiscount found by the `where` argument doesn't exist, create a new StudentDiscount with this data.
+     */
+    create: XOR<StudentDiscountCreateInput, StudentDiscountUncheckedCreateInput>
+    /**
+     * In case the StudentDiscount was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<StudentDiscountUpdateInput, StudentDiscountUncheckedUpdateInput>
+  }
+
+  /**
+   * StudentDiscount delete
+   */
+  export type StudentDiscountDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentDiscount
+     */
+    select?: StudentDiscountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentDiscount
+     */
+    omit?: StudentDiscountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentDiscountInclude<ExtArgs> | null
+    /**
+     * Filter which StudentDiscount to delete.
+     */
+    where: StudentDiscountWhereUniqueInput
+  }
+
+  /**
+   * StudentDiscount deleteMany
+   */
+  export type StudentDiscountDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StudentDiscounts to delete
+     */
+    where?: StudentDiscountWhereInput
+    /**
+     * Limit how many StudentDiscounts to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * StudentDiscount without action
+   */
+  export type StudentDiscountDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentDiscount
+     */
+    select?: StudentDiscountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentDiscount
+     */
+    omit?: StudentDiscountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentDiscountInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Exam
    */
 
@@ -61091,6 +62398,25 @@ export namespace Prisma {
   export type ScholarshipScalarFieldEnum = (typeof ScholarshipScalarFieldEnum)[keyof typeof ScholarshipScalarFieldEnum]
 
 
+  export const StudentDiscountScalarFieldEnum: {
+    id: 'id',
+    schoolId: 'schoolId',
+    studentId: 'studentId',
+    feeHeadId: 'feeHeadId',
+    type: 'type',
+    amount: 'amount',
+    applyType: 'applyType',
+    startMonth: 'startMonth',
+    endMonth: 'endMonth',
+    remarks: 'remarks',
+    isActive: 'isActive',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type StudentDiscountScalarFieldEnum = (typeof StudentDiscountScalarFieldEnum)[keyof typeof StudentDiscountScalarFieldEnum]
+
+
   export const ExamScalarFieldEnum: {
     id: 'id',
     schoolId: 'schoolId',
@@ -61495,6 +62821,13 @@ export namespace Prisma {
   export type ScholarshipOrderByRelevanceFieldEnum = (typeof ScholarshipOrderByRelevanceFieldEnum)[keyof typeof ScholarshipOrderByRelevanceFieldEnum]
 
 
+  export const StudentDiscountOrderByRelevanceFieldEnum: {
+    remarks: 'remarks'
+  };
+
+  export type StudentDiscountOrderByRelevanceFieldEnum = (typeof StudentDiscountOrderByRelevanceFieldEnum)[keyof typeof StudentDiscountOrderByRelevanceFieldEnum]
+
+
   export const ExamOrderByRelevanceFieldEnum: {
     name: 'name'
   };
@@ -61705,6 +63038,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'DiscountType'
+   */
+  export type EnumDiscountTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DiscountType'>
+    
+
+
+  /**
+   * Reference to a field of type 'DiscountApplyType'
+   */
+  export type EnumDiscountApplyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DiscountApplyType'>
+    
+
+
+  /**
    * Reference to a field of type 'ExamType'
    */
   export type EnumExamTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ExamType'>
@@ -61743,6 +63090,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipListRelationFilter
     transportRoutes?: TransportRouteListRelationFilter
     bookPackages?: BookPackageListRelationFilter
+    studentDiscounts?: StudentDiscountListRelationFilter
     feeStructures?: FeeStructureListRelationFilter
     studentFees?: StudentFeeListRelationFilter
     paymentReceipts?: PaymentReceiptListRelationFilter
@@ -61778,6 +63126,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipOrderByRelationAggregateInput
     transportRoutes?: TransportRouteOrderByRelationAggregateInput
     bookPackages?: BookPackageOrderByRelationAggregateInput
+    studentDiscounts?: StudentDiscountOrderByRelationAggregateInput
     feeStructures?: FeeStructureOrderByRelationAggregateInput
     studentFees?: StudentFeeOrderByRelationAggregateInput
     paymentReceipts?: PaymentReceiptOrderByRelationAggregateInput
@@ -61817,6 +63166,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipListRelationFilter
     transportRoutes?: TransportRouteListRelationFilter
     bookPackages?: BookPackageListRelationFilter
+    studentDiscounts?: StudentDiscountListRelationFilter
     feeStructures?: FeeStructureListRelationFilter
     studentFees?: StudentFeeListRelationFilter
     paymentReceipts?: PaymentReceiptListRelationFilter
@@ -63798,6 +65148,7 @@ export namespace Prisma {
     parents?: StudentParentListRelationFilter
     studentFees?: StudentFeeListRelationFilter
     studentScholarships?: StudentScholarshipListRelationFilter
+    studentDiscounts?: StudentDiscountListRelationFilter
   }
 
   export type StudentOrderByWithRelationInput = {
@@ -63825,6 +65176,7 @@ export namespace Prisma {
     parents?: StudentParentOrderByRelationAggregateInput
     studentFees?: StudentFeeOrderByRelationAggregateInput
     studentScholarships?: StudentScholarshipOrderByRelationAggregateInput
+    studentDiscounts?: StudentDiscountOrderByRelationAggregateInput
     _relevance?: StudentOrderByRelevanceInput
   }
 
@@ -63856,6 +65208,7 @@ export namespace Prisma {
     parents?: StudentParentListRelationFilter
     studentFees?: StudentFeeListRelationFilter
     studentScholarships?: StudentScholarshipListRelationFilter
+    studentDiscounts?: StudentDiscountListRelationFilter
   }, "id" | "userId" | "studentCode">
 
   export type StudentOrderByWithAggregationInput = {
@@ -64849,6 +66202,7 @@ export namespace Prisma {
     school?: XOR<SchoolScalarRelationFilter, SchoolWhereInput>
     feeStructureItems?: FeeStructureItemListRelationFilter
     studentFeeItems?: StudentFeeItemListRelationFilter
+    studentDiscounts?: StudentDiscountListRelationFilter
   }
 
   export type FeeHeadOrderByWithRelationInput = {
@@ -64863,6 +66217,7 @@ export namespace Prisma {
     school?: SchoolOrderByWithRelationInput
     feeStructureItems?: FeeStructureItemOrderByRelationAggregateInput
     studentFeeItems?: StudentFeeItemOrderByRelationAggregateInput
+    studentDiscounts?: StudentDiscountOrderByRelationAggregateInput
     _relevance?: FeeHeadOrderByRelevanceInput
   }
 
@@ -64882,6 +66237,7 @@ export namespace Prisma {
     school?: XOR<SchoolScalarRelationFilter, SchoolWhereInput>
     feeStructureItems?: FeeStructureItemListRelationFilter
     studentFeeItems?: StudentFeeItemListRelationFilter
+    studentDiscounts?: StudentDiscountListRelationFilter
   }, "id" | "schoolId_name">
 
   export type FeeHeadOrderByWithAggregationInput = {
@@ -65699,6 +67055,110 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Scholarship"> | Date | string
   }
 
+  export type StudentDiscountWhereInput = {
+    AND?: StudentDiscountWhereInput | StudentDiscountWhereInput[]
+    OR?: StudentDiscountWhereInput[]
+    NOT?: StudentDiscountWhereInput | StudentDiscountWhereInput[]
+    id?: IntFilter<"StudentDiscount"> | number
+    schoolId?: IntFilter<"StudentDiscount"> | number
+    studentId?: IntFilter<"StudentDiscount"> | number
+    feeHeadId?: IntFilter<"StudentDiscount"> | number
+    type?: EnumDiscountTypeFilter<"StudentDiscount"> | $Enums.DiscountType
+    amount?: DecimalFilter<"StudentDiscount"> | Decimal | DecimalJsLike | number | string
+    applyType?: EnumDiscountApplyTypeFilter<"StudentDiscount"> | $Enums.DiscountApplyType
+    startMonth?: IntNullableFilter<"StudentDiscount"> | number | null
+    endMonth?: IntNullableFilter<"StudentDiscount"> | number | null
+    remarks?: StringNullableFilter<"StudentDiscount"> | string | null
+    isActive?: BoolFilter<"StudentDiscount"> | boolean
+    createdAt?: DateTimeFilter<"StudentDiscount"> | Date | string
+    updatedAt?: DateTimeFilter<"StudentDiscount"> | Date | string
+    school?: XOR<SchoolScalarRelationFilter, SchoolWhereInput>
+    student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
+    feeHead?: XOR<FeeHeadScalarRelationFilter, FeeHeadWhereInput>
+  }
+
+  export type StudentDiscountOrderByWithRelationInput = {
+    id?: SortOrder
+    schoolId?: SortOrder
+    studentId?: SortOrder
+    feeHeadId?: SortOrder
+    type?: SortOrder
+    amount?: SortOrder
+    applyType?: SortOrder
+    startMonth?: SortOrderInput | SortOrder
+    endMonth?: SortOrderInput | SortOrder
+    remarks?: SortOrderInput | SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    school?: SchoolOrderByWithRelationInput
+    student?: StudentOrderByWithRelationInput
+    feeHead?: FeeHeadOrderByWithRelationInput
+    _relevance?: StudentDiscountOrderByRelevanceInput
+  }
+
+  export type StudentDiscountWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: StudentDiscountWhereInput | StudentDiscountWhereInput[]
+    OR?: StudentDiscountWhereInput[]
+    NOT?: StudentDiscountWhereInput | StudentDiscountWhereInput[]
+    schoolId?: IntFilter<"StudentDiscount"> | number
+    studentId?: IntFilter<"StudentDiscount"> | number
+    feeHeadId?: IntFilter<"StudentDiscount"> | number
+    type?: EnumDiscountTypeFilter<"StudentDiscount"> | $Enums.DiscountType
+    amount?: DecimalFilter<"StudentDiscount"> | Decimal | DecimalJsLike | number | string
+    applyType?: EnumDiscountApplyTypeFilter<"StudentDiscount"> | $Enums.DiscountApplyType
+    startMonth?: IntNullableFilter<"StudentDiscount"> | number | null
+    endMonth?: IntNullableFilter<"StudentDiscount"> | number | null
+    remarks?: StringNullableFilter<"StudentDiscount"> | string | null
+    isActive?: BoolFilter<"StudentDiscount"> | boolean
+    createdAt?: DateTimeFilter<"StudentDiscount"> | Date | string
+    updatedAt?: DateTimeFilter<"StudentDiscount"> | Date | string
+    school?: XOR<SchoolScalarRelationFilter, SchoolWhereInput>
+    student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
+    feeHead?: XOR<FeeHeadScalarRelationFilter, FeeHeadWhereInput>
+  }, "id">
+
+  export type StudentDiscountOrderByWithAggregationInput = {
+    id?: SortOrder
+    schoolId?: SortOrder
+    studentId?: SortOrder
+    feeHeadId?: SortOrder
+    type?: SortOrder
+    amount?: SortOrder
+    applyType?: SortOrder
+    startMonth?: SortOrderInput | SortOrder
+    endMonth?: SortOrderInput | SortOrder
+    remarks?: SortOrderInput | SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: StudentDiscountCountOrderByAggregateInput
+    _avg?: StudentDiscountAvgOrderByAggregateInput
+    _max?: StudentDiscountMaxOrderByAggregateInput
+    _min?: StudentDiscountMinOrderByAggregateInput
+    _sum?: StudentDiscountSumOrderByAggregateInput
+  }
+
+  export type StudentDiscountScalarWhereWithAggregatesInput = {
+    AND?: StudentDiscountScalarWhereWithAggregatesInput | StudentDiscountScalarWhereWithAggregatesInput[]
+    OR?: StudentDiscountScalarWhereWithAggregatesInput[]
+    NOT?: StudentDiscountScalarWhereWithAggregatesInput | StudentDiscountScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"StudentDiscount"> | number
+    schoolId?: IntWithAggregatesFilter<"StudentDiscount"> | number
+    studentId?: IntWithAggregatesFilter<"StudentDiscount"> | number
+    feeHeadId?: IntWithAggregatesFilter<"StudentDiscount"> | number
+    type?: EnumDiscountTypeWithAggregatesFilter<"StudentDiscount"> | $Enums.DiscountType
+    amount?: DecimalWithAggregatesFilter<"StudentDiscount"> | Decimal | DecimalJsLike | number | string
+    applyType?: EnumDiscountApplyTypeWithAggregatesFilter<"StudentDiscount"> | $Enums.DiscountApplyType
+    startMonth?: IntNullableWithAggregatesFilter<"StudentDiscount"> | number | null
+    endMonth?: IntNullableWithAggregatesFilter<"StudentDiscount"> | number | null
+    remarks?: StringNullableWithAggregatesFilter<"StudentDiscount"> | string | null
+    isActive?: BoolWithAggregatesFilter<"StudentDiscount"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"StudentDiscount"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"StudentDiscount"> | Date | string
+  }
+
   export type ExamWhereInput = {
     AND?: ExamWhereInput | ExamWhereInput[]
     OR?: ExamWhereInput[]
@@ -66040,6 +67500,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
@@ -66075,6 +67536,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
@@ -66109,6 +67571,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
@@ -66144,6 +67607,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
@@ -68105,6 +69569,7 @@ export namespace Prisma {
     parents?: StudentParentCreateNestedManyWithoutStudentInput
     studentFees?: StudentFeeCreateNestedManyWithoutStudentInput
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutStudentInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateInput = {
@@ -68130,6 +69595,7 @@ export namespace Prisma {
     parents?: StudentParentUncheckedCreateNestedManyWithoutStudentInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutStudentInput
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutStudentInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUpdateInput = {
@@ -68154,6 +69620,7 @@ export namespace Prisma {
     parents?: StudentParentUpdateManyWithoutStudentNestedInput
     studentFees?: StudentFeeUpdateManyWithoutStudentNestedInput
     studentScholarships?: StudentScholarshipUpdateManyWithoutStudentNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateInput = {
@@ -68179,6 +69646,7 @@ export namespace Prisma {
     parents?: StudentParentUncheckedUpdateManyWithoutStudentNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutStudentNestedInput
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutStudentNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentCreateManyInput = {
@@ -69183,6 +70651,7 @@ export namespace Prisma {
     school: SchoolCreateNestedOneWithoutFeeHeadsInput
     feeStructureItems?: FeeStructureItemCreateNestedManyWithoutFeeHeadInput
     studentFeeItems?: StudentFeeItemCreateNestedManyWithoutFeeHeadInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutFeeHeadInput
   }
 
   export type FeeHeadUncheckedCreateInput = {
@@ -69196,6 +70665,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     feeStructureItems?: FeeStructureItemUncheckedCreateNestedManyWithoutFeeHeadInput
     studentFeeItems?: StudentFeeItemUncheckedCreateNestedManyWithoutFeeHeadInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutFeeHeadInput
   }
 
   export type FeeHeadUpdateInput = {
@@ -69208,6 +70678,7 @@ export namespace Prisma {
     school?: SchoolUpdateOneRequiredWithoutFeeHeadsNestedInput
     feeStructureItems?: FeeStructureItemUpdateManyWithoutFeeHeadNestedInput
     studentFeeItems?: StudentFeeItemUpdateManyWithoutFeeHeadNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutFeeHeadNestedInput
   }
 
   export type FeeHeadUncheckedUpdateInput = {
@@ -69221,6 +70692,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     feeStructureItems?: FeeStructureItemUncheckedUpdateManyWithoutFeeHeadNestedInput
     studentFeeItems?: StudentFeeItemUncheckedUpdateManyWithoutFeeHeadNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutFeeHeadNestedInput
   }
 
   export type FeeHeadCreateManyInput = {
@@ -70029,6 +71501,112 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type StudentDiscountCreateInput = {
+    type: $Enums.DiscountType
+    amount: Decimal | DecimalJsLike | number | string
+    applyType: $Enums.DiscountApplyType
+    startMonth?: number | null
+    endMonth?: number | null
+    remarks?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    school: SchoolCreateNestedOneWithoutStudentDiscountsInput
+    student: StudentCreateNestedOneWithoutStudentDiscountsInput
+    feeHead: FeeHeadCreateNestedOneWithoutStudentDiscountsInput
+  }
+
+  export type StudentDiscountUncheckedCreateInput = {
+    id?: number
+    schoolId: number
+    studentId: number
+    feeHeadId: number
+    type: $Enums.DiscountType
+    amount: Decimal | DecimalJsLike | number | string
+    applyType: $Enums.DiscountApplyType
+    startMonth?: number | null
+    endMonth?: number | null
+    remarks?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type StudentDiscountUpdateInput = {
+    type?: EnumDiscountTypeFieldUpdateOperationsInput | $Enums.DiscountType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    applyType?: EnumDiscountApplyTypeFieldUpdateOperationsInput | $Enums.DiscountApplyType
+    startMonth?: NullableIntFieldUpdateOperationsInput | number | null
+    endMonth?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    school?: SchoolUpdateOneRequiredWithoutStudentDiscountsNestedInput
+    student?: StudentUpdateOneRequiredWithoutStudentDiscountsNestedInput
+    feeHead?: FeeHeadUpdateOneRequiredWithoutStudentDiscountsNestedInput
+  }
+
+  export type StudentDiscountUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    schoolId?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    feeHeadId?: IntFieldUpdateOperationsInput | number
+    type?: EnumDiscountTypeFieldUpdateOperationsInput | $Enums.DiscountType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    applyType?: EnumDiscountApplyTypeFieldUpdateOperationsInput | $Enums.DiscountApplyType
+    startMonth?: NullableIntFieldUpdateOperationsInput | number | null
+    endMonth?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentDiscountCreateManyInput = {
+    id?: number
+    schoolId: number
+    studentId: number
+    feeHeadId: number
+    type: $Enums.DiscountType
+    amount: Decimal | DecimalJsLike | number | string
+    applyType: $Enums.DiscountApplyType
+    startMonth?: number | null
+    endMonth?: number | null
+    remarks?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type StudentDiscountUpdateManyMutationInput = {
+    type?: EnumDiscountTypeFieldUpdateOperationsInput | $Enums.DiscountType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    applyType?: EnumDiscountApplyTypeFieldUpdateOperationsInput | $Enums.DiscountApplyType
+    startMonth?: NullableIntFieldUpdateOperationsInput | number | null
+    endMonth?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentDiscountUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    schoolId?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    feeHeadId?: IntFieldUpdateOperationsInput | number
+    type?: EnumDiscountTypeFieldUpdateOperationsInput | $Enums.DiscountType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    applyType?: EnumDiscountApplyTypeFieldUpdateOperationsInput | $Enums.DiscountApplyType
+    startMonth?: NullableIntFieldUpdateOperationsInput | number | null
+    endMonth?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type ExamCreateInput = {
     name: string
     examType: $Enums.ExamType
@@ -70499,6 +72077,12 @@ export namespace Prisma {
     none?: BookPackageWhereInput
   }
 
+  export type StudentDiscountListRelationFilter = {
+    every?: StudentDiscountWhereInput
+    some?: StudentDiscountWhereInput
+    none?: StudentDiscountWhereInput
+  }
+
   export type FeeStructureListRelationFilter = {
     every?: FeeStructureWhereInput
     some?: FeeStructureWhereInput
@@ -70615,6 +72199,10 @@ export namespace Prisma {
   }
 
   export type BookPackageOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type StudentDiscountOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -74095,6 +75683,114 @@ export namespace Prisma {
     _max?: NestedEnumScholarshipTypeFilter<$PrismaModel>
   }
 
+  export type EnumDiscountTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.DiscountType | EnumDiscountTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.DiscountType[]
+    notIn?: $Enums.DiscountType[]
+    not?: NestedEnumDiscountTypeFilter<$PrismaModel> | $Enums.DiscountType
+  }
+
+  export type EnumDiscountApplyTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.DiscountApplyType | EnumDiscountApplyTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.DiscountApplyType[]
+    notIn?: $Enums.DiscountApplyType[]
+    not?: NestedEnumDiscountApplyTypeFilter<$PrismaModel> | $Enums.DiscountApplyType
+  }
+
+  export type StudentDiscountOrderByRelevanceInput = {
+    fields: StudentDiscountOrderByRelevanceFieldEnum | StudentDiscountOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type StudentDiscountCountOrderByAggregateInput = {
+    id?: SortOrder
+    schoolId?: SortOrder
+    studentId?: SortOrder
+    feeHeadId?: SortOrder
+    type?: SortOrder
+    amount?: SortOrder
+    applyType?: SortOrder
+    startMonth?: SortOrder
+    endMonth?: SortOrder
+    remarks?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type StudentDiscountAvgOrderByAggregateInput = {
+    id?: SortOrder
+    schoolId?: SortOrder
+    studentId?: SortOrder
+    feeHeadId?: SortOrder
+    amount?: SortOrder
+    startMonth?: SortOrder
+    endMonth?: SortOrder
+  }
+
+  export type StudentDiscountMaxOrderByAggregateInput = {
+    id?: SortOrder
+    schoolId?: SortOrder
+    studentId?: SortOrder
+    feeHeadId?: SortOrder
+    type?: SortOrder
+    amount?: SortOrder
+    applyType?: SortOrder
+    startMonth?: SortOrder
+    endMonth?: SortOrder
+    remarks?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type StudentDiscountMinOrderByAggregateInput = {
+    id?: SortOrder
+    schoolId?: SortOrder
+    studentId?: SortOrder
+    feeHeadId?: SortOrder
+    type?: SortOrder
+    amount?: SortOrder
+    applyType?: SortOrder
+    startMonth?: SortOrder
+    endMonth?: SortOrder
+    remarks?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type StudentDiscountSumOrderByAggregateInput = {
+    id?: SortOrder
+    schoolId?: SortOrder
+    studentId?: SortOrder
+    feeHeadId?: SortOrder
+    amount?: SortOrder
+    startMonth?: SortOrder
+    endMonth?: SortOrder
+  }
+
+  export type EnumDiscountTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DiscountType | EnumDiscountTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.DiscountType[]
+    notIn?: $Enums.DiscountType[]
+    not?: NestedEnumDiscountTypeWithAggregatesFilter<$PrismaModel> | $Enums.DiscountType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDiscountTypeFilter<$PrismaModel>
+    _max?: NestedEnumDiscountTypeFilter<$PrismaModel>
+  }
+
+  export type EnumDiscountApplyTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DiscountApplyType | EnumDiscountApplyTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.DiscountApplyType[]
+    notIn?: $Enums.DiscountApplyType[]
+    not?: NestedEnumDiscountApplyTypeWithAggregatesFilter<$PrismaModel> | $Enums.DiscountApplyType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDiscountApplyTypeFilter<$PrismaModel>
+    _max?: NestedEnumDiscountApplyTypeFilter<$PrismaModel>
+  }
+
   export type EnumExamTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.ExamType | EnumExamTypeFieldRefInput<$PrismaModel>
     in?: $Enums.ExamType[]
@@ -74469,6 +76165,13 @@ export namespace Prisma {
     connect?: BookPackageWhereUniqueInput | BookPackageWhereUniqueInput[]
   }
 
+  export type StudentDiscountCreateNestedManyWithoutSchoolInput = {
+    create?: XOR<StudentDiscountCreateWithoutSchoolInput, StudentDiscountUncheckedCreateWithoutSchoolInput> | StudentDiscountCreateWithoutSchoolInput[] | StudentDiscountUncheckedCreateWithoutSchoolInput[]
+    connectOrCreate?: StudentDiscountCreateOrConnectWithoutSchoolInput | StudentDiscountCreateOrConnectWithoutSchoolInput[]
+    createMany?: StudentDiscountCreateManySchoolInputEnvelope
+    connect?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+  }
+
   export type FeeStructureCreateNestedManyWithoutSchoolInput = {
     create?: XOR<FeeStructureCreateWithoutSchoolInput, FeeStructureUncheckedCreateWithoutSchoolInput> | FeeStructureCreateWithoutSchoolInput[] | FeeStructureUncheckedCreateWithoutSchoolInput[]
     connectOrCreate?: FeeStructureCreateOrConnectWithoutSchoolInput | FeeStructureCreateOrConnectWithoutSchoolInput[]
@@ -74642,6 +76345,13 @@ export namespace Prisma {
     connectOrCreate?: BookPackageCreateOrConnectWithoutSchoolInput | BookPackageCreateOrConnectWithoutSchoolInput[]
     createMany?: BookPackageCreateManySchoolInputEnvelope
     connect?: BookPackageWhereUniqueInput | BookPackageWhereUniqueInput[]
+  }
+
+  export type StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput = {
+    create?: XOR<StudentDiscountCreateWithoutSchoolInput, StudentDiscountUncheckedCreateWithoutSchoolInput> | StudentDiscountCreateWithoutSchoolInput[] | StudentDiscountUncheckedCreateWithoutSchoolInput[]
+    connectOrCreate?: StudentDiscountCreateOrConnectWithoutSchoolInput | StudentDiscountCreateOrConnectWithoutSchoolInput[]
+    createMany?: StudentDiscountCreateManySchoolInputEnvelope
+    connect?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
   }
 
   export type FeeStructureUncheckedCreateNestedManyWithoutSchoolInput = {
@@ -74959,6 +76669,20 @@ export namespace Prisma {
     update?: BookPackageUpdateWithWhereUniqueWithoutSchoolInput | BookPackageUpdateWithWhereUniqueWithoutSchoolInput[]
     updateMany?: BookPackageUpdateManyWithWhereWithoutSchoolInput | BookPackageUpdateManyWithWhereWithoutSchoolInput[]
     deleteMany?: BookPackageScalarWhereInput | BookPackageScalarWhereInput[]
+  }
+
+  export type StudentDiscountUpdateManyWithoutSchoolNestedInput = {
+    create?: XOR<StudentDiscountCreateWithoutSchoolInput, StudentDiscountUncheckedCreateWithoutSchoolInput> | StudentDiscountCreateWithoutSchoolInput[] | StudentDiscountUncheckedCreateWithoutSchoolInput[]
+    connectOrCreate?: StudentDiscountCreateOrConnectWithoutSchoolInput | StudentDiscountCreateOrConnectWithoutSchoolInput[]
+    upsert?: StudentDiscountUpsertWithWhereUniqueWithoutSchoolInput | StudentDiscountUpsertWithWhereUniqueWithoutSchoolInput[]
+    createMany?: StudentDiscountCreateManySchoolInputEnvelope
+    set?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+    disconnect?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+    delete?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+    connect?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+    update?: StudentDiscountUpdateWithWhereUniqueWithoutSchoolInput | StudentDiscountUpdateWithWhereUniqueWithoutSchoolInput[]
+    updateMany?: StudentDiscountUpdateManyWithWhereWithoutSchoolInput | StudentDiscountUpdateManyWithWhereWithoutSchoolInput[]
+    deleteMany?: StudentDiscountScalarWhereInput | StudentDiscountScalarWhereInput[]
   }
 
   export type FeeStructureUpdateManyWithoutSchoolNestedInput = {
@@ -75317,6 +77041,20 @@ export namespace Prisma {
     update?: BookPackageUpdateWithWhereUniqueWithoutSchoolInput | BookPackageUpdateWithWhereUniqueWithoutSchoolInput[]
     updateMany?: BookPackageUpdateManyWithWhereWithoutSchoolInput | BookPackageUpdateManyWithWhereWithoutSchoolInput[]
     deleteMany?: BookPackageScalarWhereInput | BookPackageScalarWhereInput[]
+  }
+
+  export type StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput = {
+    create?: XOR<StudentDiscountCreateWithoutSchoolInput, StudentDiscountUncheckedCreateWithoutSchoolInput> | StudentDiscountCreateWithoutSchoolInput[] | StudentDiscountUncheckedCreateWithoutSchoolInput[]
+    connectOrCreate?: StudentDiscountCreateOrConnectWithoutSchoolInput | StudentDiscountCreateOrConnectWithoutSchoolInput[]
+    upsert?: StudentDiscountUpsertWithWhereUniqueWithoutSchoolInput | StudentDiscountUpsertWithWhereUniqueWithoutSchoolInput[]
+    createMany?: StudentDiscountCreateManySchoolInputEnvelope
+    set?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+    disconnect?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+    delete?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+    connect?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+    update?: StudentDiscountUpdateWithWhereUniqueWithoutSchoolInput | StudentDiscountUpdateWithWhereUniqueWithoutSchoolInput[]
+    updateMany?: StudentDiscountUpdateManyWithWhereWithoutSchoolInput | StudentDiscountUpdateManyWithWhereWithoutSchoolInput[]
+    deleteMany?: StudentDiscountScalarWhereInput | StudentDiscountScalarWhereInput[]
   }
 
   export type FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput = {
@@ -77994,6 +79732,13 @@ export namespace Prisma {
     connect?: StudentScholarshipWhereUniqueInput | StudentScholarshipWhereUniqueInput[]
   }
 
+  export type StudentDiscountCreateNestedManyWithoutStudentInput = {
+    create?: XOR<StudentDiscountCreateWithoutStudentInput, StudentDiscountUncheckedCreateWithoutStudentInput> | StudentDiscountCreateWithoutStudentInput[] | StudentDiscountUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: StudentDiscountCreateOrConnectWithoutStudentInput | StudentDiscountCreateOrConnectWithoutStudentInput[]
+    createMany?: StudentDiscountCreateManyStudentInputEnvelope
+    connect?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+  }
+
   export type AdmissionUncheckedCreateNestedManyWithoutStudentInput = {
     create?: XOR<AdmissionCreateWithoutStudentInput, AdmissionUncheckedCreateWithoutStudentInput> | AdmissionCreateWithoutStudentInput[] | AdmissionUncheckedCreateWithoutStudentInput[]
     connectOrCreate?: AdmissionCreateOrConnectWithoutStudentInput | AdmissionCreateOrConnectWithoutStudentInput[]
@@ -78041,6 +79786,13 @@ export namespace Prisma {
     connectOrCreate?: StudentScholarshipCreateOrConnectWithoutStudentInput | StudentScholarshipCreateOrConnectWithoutStudentInput[]
     createMany?: StudentScholarshipCreateManyStudentInputEnvelope
     connect?: StudentScholarshipWhereUniqueInput | StudentScholarshipWhereUniqueInput[]
+  }
+
+  export type StudentDiscountUncheckedCreateNestedManyWithoutStudentInput = {
+    create?: XOR<StudentDiscountCreateWithoutStudentInput, StudentDiscountUncheckedCreateWithoutStudentInput> | StudentDiscountCreateWithoutStudentInput[] | StudentDiscountUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: StudentDiscountCreateOrConnectWithoutStudentInput | StudentDiscountCreateOrConnectWithoutStudentInput[]
+    createMany?: StudentDiscountCreateManyStudentInputEnvelope
+    connect?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
   }
 
   export type NullableEnumGenderFieldUpdateOperationsInput = {
@@ -78163,6 +79915,20 @@ export namespace Prisma {
     deleteMany?: StudentScholarshipScalarWhereInput | StudentScholarshipScalarWhereInput[]
   }
 
+  export type StudentDiscountUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<StudentDiscountCreateWithoutStudentInput, StudentDiscountUncheckedCreateWithoutStudentInput> | StudentDiscountCreateWithoutStudentInput[] | StudentDiscountUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: StudentDiscountCreateOrConnectWithoutStudentInput | StudentDiscountCreateOrConnectWithoutStudentInput[]
+    upsert?: StudentDiscountUpsertWithWhereUniqueWithoutStudentInput | StudentDiscountUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: StudentDiscountCreateManyStudentInputEnvelope
+    set?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+    disconnect?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+    delete?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+    connect?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+    update?: StudentDiscountUpdateWithWhereUniqueWithoutStudentInput | StudentDiscountUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: StudentDiscountUpdateManyWithWhereWithoutStudentInput | StudentDiscountUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: StudentDiscountScalarWhereInput | StudentDiscountScalarWhereInput[]
+  }
+
   export type AdmissionUncheckedUpdateManyWithoutStudentNestedInput = {
     create?: XOR<AdmissionCreateWithoutStudentInput, AdmissionUncheckedCreateWithoutStudentInput> | AdmissionCreateWithoutStudentInput[] | AdmissionUncheckedCreateWithoutStudentInput[]
     connectOrCreate?: AdmissionCreateOrConnectWithoutStudentInput | AdmissionCreateOrConnectWithoutStudentInput[]
@@ -78259,6 +80025,20 @@ export namespace Prisma {
     update?: StudentScholarshipUpdateWithWhereUniqueWithoutStudentInput | StudentScholarshipUpdateWithWhereUniqueWithoutStudentInput[]
     updateMany?: StudentScholarshipUpdateManyWithWhereWithoutStudentInput | StudentScholarshipUpdateManyWithWhereWithoutStudentInput[]
     deleteMany?: StudentScholarshipScalarWhereInput | StudentScholarshipScalarWhereInput[]
+  }
+
+  export type StudentDiscountUncheckedUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<StudentDiscountCreateWithoutStudentInput, StudentDiscountUncheckedCreateWithoutStudentInput> | StudentDiscountCreateWithoutStudentInput[] | StudentDiscountUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: StudentDiscountCreateOrConnectWithoutStudentInput | StudentDiscountCreateOrConnectWithoutStudentInput[]
+    upsert?: StudentDiscountUpsertWithWhereUniqueWithoutStudentInput | StudentDiscountUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: StudentDiscountCreateManyStudentInputEnvelope
+    set?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+    disconnect?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+    delete?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+    connect?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+    update?: StudentDiscountUpdateWithWhereUniqueWithoutStudentInput | StudentDiscountUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: StudentDiscountUpdateManyWithWhereWithoutStudentInput | StudentDiscountUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: StudentDiscountScalarWhereInput | StudentDiscountScalarWhereInput[]
   }
 
   export type SchoolCreateNestedOneWithoutAcademicRecordsInput = {
@@ -78783,6 +80563,13 @@ export namespace Prisma {
     connect?: StudentFeeItemWhereUniqueInput | StudentFeeItemWhereUniqueInput[]
   }
 
+  export type StudentDiscountCreateNestedManyWithoutFeeHeadInput = {
+    create?: XOR<StudentDiscountCreateWithoutFeeHeadInput, StudentDiscountUncheckedCreateWithoutFeeHeadInput> | StudentDiscountCreateWithoutFeeHeadInput[] | StudentDiscountUncheckedCreateWithoutFeeHeadInput[]
+    connectOrCreate?: StudentDiscountCreateOrConnectWithoutFeeHeadInput | StudentDiscountCreateOrConnectWithoutFeeHeadInput[]
+    createMany?: StudentDiscountCreateManyFeeHeadInputEnvelope
+    connect?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+  }
+
   export type FeeStructureItemUncheckedCreateNestedManyWithoutFeeHeadInput = {
     create?: XOR<FeeStructureItemCreateWithoutFeeHeadInput, FeeStructureItemUncheckedCreateWithoutFeeHeadInput> | FeeStructureItemCreateWithoutFeeHeadInput[] | FeeStructureItemUncheckedCreateWithoutFeeHeadInput[]
     connectOrCreate?: FeeStructureItemCreateOrConnectWithoutFeeHeadInput | FeeStructureItemCreateOrConnectWithoutFeeHeadInput[]
@@ -78795,6 +80582,13 @@ export namespace Prisma {
     connectOrCreate?: StudentFeeItemCreateOrConnectWithoutFeeHeadInput | StudentFeeItemCreateOrConnectWithoutFeeHeadInput[]
     createMany?: StudentFeeItemCreateManyFeeHeadInputEnvelope
     connect?: StudentFeeItemWhereUniqueInput | StudentFeeItemWhereUniqueInput[]
+  }
+
+  export type StudentDiscountUncheckedCreateNestedManyWithoutFeeHeadInput = {
+    create?: XOR<StudentDiscountCreateWithoutFeeHeadInput, StudentDiscountUncheckedCreateWithoutFeeHeadInput> | StudentDiscountCreateWithoutFeeHeadInput[] | StudentDiscountUncheckedCreateWithoutFeeHeadInput[]
+    connectOrCreate?: StudentDiscountCreateOrConnectWithoutFeeHeadInput | StudentDiscountCreateOrConnectWithoutFeeHeadInput[]
+    createMany?: StudentDiscountCreateManyFeeHeadInputEnvelope
+    connect?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
   }
 
   export type SchoolUpdateOneRequiredWithoutFeeHeadsNestedInput = {
@@ -78833,6 +80627,20 @@ export namespace Prisma {
     deleteMany?: StudentFeeItemScalarWhereInput | StudentFeeItemScalarWhereInput[]
   }
 
+  export type StudentDiscountUpdateManyWithoutFeeHeadNestedInput = {
+    create?: XOR<StudentDiscountCreateWithoutFeeHeadInput, StudentDiscountUncheckedCreateWithoutFeeHeadInput> | StudentDiscountCreateWithoutFeeHeadInput[] | StudentDiscountUncheckedCreateWithoutFeeHeadInput[]
+    connectOrCreate?: StudentDiscountCreateOrConnectWithoutFeeHeadInput | StudentDiscountCreateOrConnectWithoutFeeHeadInput[]
+    upsert?: StudentDiscountUpsertWithWhereUniqueWithoutFeeHeadInput | StudentDiscountUpsertWithWhereUniqueWithoutFeeHeadInput[]
+    createMany?: StudentDiscountCreateManyFeeHeadInputEnvelope
+    set?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+    disconnect?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+    delete?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+    connect?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+    update?: StudentDiscountUpdateWithWhereUniqueWithoutFeeHeadInput | StudentDiscountUpdateWithWhereUniqueWithoutFeeHeadInput[]
+    updateMany?: StudentDiscountUpdateManyWithWhereWithoutFeeHeadInput | StudentDiscountUpdateManyWithWhereWithoutFeeHeadInput[]
+    deleteMany?: StudentDiscountScalarWhereInput | StudentDiscountScalarWhereInput[]
+  }
+
   export type FeeStructureItemUncheckedUpdateManyWithoutFeeHeadNestedInput = {
     create?: XOR<FeeStructureItemCreateWithoutFeeHeadInput, FeeStructureItemUncheckedCreateWithoutFeeHeadInput> | FeeStructureItemCreateWithoutFeeHeadInput[] | FeeStructureItemUncheckedCreateWithoutFeeHeadInput[]
     connectOrCreate?: FeeStructureItemCreateOrConnectWithoutFeeHeadInput | FeeStructureItemCreateOrConnectWithoutFeeHeadInput[]
@@ -78859,6 +80667,20 @@ export namespace Prisma {
     update?: StudentFeeItemUpdateWithWhereUniqueWithoutFeeHeadInput | StudentFeeItemUpdateWithWhereUniqueWithoutFeeHeadInput[]
     updateMany?: StudentFeeItemUpdateManyWithWhereWithoutFeeHeadInput | StudentFeeItemUpdateManyWithWhereWithoutFeeHeadInput[]
     deleteMany?: StudentFeeItemScalarWhereInput | StudentFeeItemScalarWhereInput[]
+  }
+
+  export type StudentDiscountUncheckedUpdateManyWithoutFeeHeadNestedInput = {
+    create?: XOR<StudentDiscountCreateWithoutFeeHeadInput, StudentDiscountUncheckedCreateWithoutFeeHeadInput> | StudentDiscountCreateWithoutFeeHeadInput[] | StudentDiscountUncheckedCreateWithoutFeeHeadInput[]
+    connectOrCreate?: StudentDiscountCreateOrConnectWithoutFeeHeadInput | StudentDiscountCreateOrConnectWithoutFeeHeadInput[]
+    upsert?: StudentDiscountUpsertWithWhereUniqueWithoutFeeHeadInput | StudentDiscountUpsertWithWhereUniqueWithoutFeeHeadInput[]
+    createMany?: StudentDiscountCreateManyFeeHeadInputEnvelope
+    set?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+    disconnect?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+    delete?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+    connect?: StudentDiscountWhereUniqueInput | StudentDiscountWhereUniqueInput[]
+    update?: StudentDiscountUpdateWithWhereUniqueWithoutFeeHeadInput | StudentDiscountUpdateWithWhereUniqueWithoutFeeHeadInput[]
+    updateMany?: StudentDiscountUpdateManyWithWhereWithoutFeeHeadInput | StudentDiscountUpdateManyWithWhereWithoutFeeHeadInput[]
+    deleteMany?: StudentDiscountScalarWhereInput | StudentDiscountScalarWhereInput[]
   }
 
   export type SchoolCreateNestedOneWithoutFeeStructuresInput = {
@@ -79421,6 +81243,56 @@ export namespace Prisma {
     update?: StudentScholarshipUpdateWithWhereUniqueWithoutScholarshipInput | StudentScholarshipUpdateWithWhereUniqueWithoutScholarshipInput[]
     updateMany?: StudentScholarshipUpdateManyWithWhereWithoutScholarshipInput | StudentScholarshipUpdateManyWithWhereWithoutScholarshipInput[]
     deleteMany?: StudentScholarshipScalarWhereInput | StudentScholarshipScalarWhereInput[]
+  }
+
+  export type SchoolCreateNestedOneWithoutStudentDiscountsInput = {
+    create?: XOR<SchoolCreateWithoutStudentDiscountsInput, SchoolUncheckedCreateWithoutStudentDiscountsInput>
+    connectOrCreate?: SchoolCreateOrConnectWithoutStudentDiscountsInput
+    connect?: SchoolWhereUniqueInput
+  }
+
+  export type StudentCreateNestedOneWithoutStudentDiscountsInput = {
+    create?: XOR<StudentCreateWithoutStudentDiscountsInput, StudentUncheckedCreateWithoutStudentDiscountsInput>
+    connectOrCreate?: StudentCreateOrConnectWithoutStudentDiscountsInput
+    connect?: StudentWhereUniqueInput
+  }
+
+  export type FeeHeadCreateNestedOneWithoutStudentDiscountsInput = {
+    create?: XOR<FeeHeadCreateWithoutStudentDiscountsInput, FeeHeadUncheckedCreateWithoutStudentDiscountsInput>
+    connectOrCreate?: FeeHeadCreateOrConnectWithoutStudentDiscountsInput
+    connect?: FeeHeadWhereUniqueInput
+  }
+
+  export type EnumDiscountTypeFieldUpdateOperationsInput = {
+    set?: $Enums.DiscountType
+  }
+
+  export type EnumDiscountApplyTypeFieldUpdateOperationsInput = {
+    set?: $Enums.DiscountApplyType
+  }
+
+  export type SchoolUpdateOneRequiredWithoutStudentDiscountsNestedInput = {
+    create?: XOR<SchoolCreateWithoutStudentDiscountsInput, SchoolUncheckedCreateWithoutStudentDiscountsInput>
+    connectOrCreate?: SchoolCreateOrConnectWithoutStudentDiscountsInput
+    upsert?: SchoolUpsertWithoutStudentDiscountsInput
+    connect?: SchoolWhereUniqueInput
+    update?: XOR<XOR<SchoolUpdateToOneWithWhereWithoutStudentDiscountsInput, SchoolUpdateWithoutStudentDiscountsInput>, SchoolUncheckedUpdateWithoutStudentDiscountsInput>
+  }
+
+  export type StudentUpdateOneRequiredWithoutStudentDiscountsNestedInput = {
+    create?: XOR<StudentCreateWithoutStudentDiscountsInput, StudentUncheckedCreateWithoutStudentDiscountsInput>
+    connectOrCreate?: StudentCreateOrConnectWithoutStudentDiscountsInput
+    upsert?: StudentUpsertWithoutStudentDiscountsInput
+    connect?: StudentWhereUniqueInput
+    update?: XOR<XOR<StudentUpdateToOneWithWhereWithoutStudentDiscountsInput, StudentUpdateWithoutStudentDiscountsInput>, StudentUncheckedUpdateWithoutStudentDiscountsInput>
+  }
+
+  export type FeeHeadUpdateOneRequiredWithoutStudentDiscountsNestedInput = {
+    create?: XOR<FeeHeadCreateWithoutStudentDiscountsInput, FeeHeadUncheckedCreateWithoutStudentDiscountsInput>
+    connectOrCreate?: FeeHeadCreateOrConnectWithoutStudentDiscountsInput
+    upsert?: FeeHeadUpsertWithoutStudentDiscountsInput
+    connect?: FeeHeadWhereUniqueInput
+    update?: XOR<XOR<FeeHeadUpdateToOneWithWhereWithoutStudentDiscountsInput, FeeHeadUpdateWithoutStudentDiscountsInput>, FeeHeadUncheckedUpdateWithoutStudentDiscountsInput>
   }
 
   export type SchoolCreateNestedOneWithoutExamsInput = {
@@ -80218,6 +82090,40 @@ export namespace Prisma {
     _max?: NestedEnumScholarshipTypeFilter<$PrismaModel>
   }
 
+  export type NestedEnumDiscountTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.DiscountType | EnumDiscountTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.DiscountType[]
+    notIn?: $Enums.DiscountType[]
+    not?: NestedEnumDiscountTypeFilter<$PrismaModel> | $Enums.DiscountType
+  }
+
+  export type NestedEnumDiscountApplyTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.DiscountApplyType | EnumDiscountApplyTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.DiscountApplyType[]
+    notIn?: $Enums.DiscountApplyType[]
+    not?: NestedEnumDiscountApplyTypeFilter<$PrismaModel> | $Enums.DiscountApplyType
+  }
+
+  export type NestedEnumDiscountTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DiscountType | EnumDiscountTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.DiscountType[]
+    notIn?: $Enums.DiscountType[]
+    not?: NestedEnumDiscountTypeWithAggregatesFilter<$PrismaModel> | $Enums.DiscountType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDiscountTypeFilter<$PrismaModel>
+    _max?: NestedEnumDiscountTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumDiscountApplyTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DiscountApplyType | EnumDiscountApplyTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.DiscountApplyType[]
+    notIn?: $Enums.DiscountApplyType[]
+    not?: NestedEnumDiscountApplyTypeWithAggregatesFilter<$PrismaModel> | $Enums.DiscountApplyType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDiscountApplyTypeFilter<$PrismaModel>
+    _max?: NestedEnumDiscountApplyTypeFilter<$PrismaModel>
+  }
+
   export type NestedEnumExamTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.ExamType | EnumExamTypeFieldRefInput<$PrismaModel>
     in?: $Enums.ExamType[]
@@ -80644,6 +82550,7 @@ export namespace Prisma {
     parents?: StudentParentCreateNestedManyWithoutStudentInput
     studentFees?: StudentFeeCreateNestedManyWithoutStudentInput
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutStudentInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutSchoolInput = {
@@ -80668,6 +82575,7 @@ export namespace Prisma {
     parents?: StudentParentUncheckedCreateNestedManyWithoutStudentInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutStudentInput
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutStudentInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutSchoolInput = {
@@ -80878,6 +82786,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     feeStructureItems?: FeeStructureItemCreateNestedManyWithoutFeeHeadInput
     studentFeeItems?: StudentFeeItemCreateNestedManyWithoutFeeHeadInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutFeeHeadInput
   }
 
   export type FeeHeadUncheckedCreateWithoutSchoolInput = {
@@ -80890,6 +82799,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     feeStructureItems?: FeeStructureItemUncheckedCreateNestedManyWithoutFeeHeadInput
     studentFeeItems?: StudentFeeItemUncheckedCreateNestedManyWithoutFeeHeadInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutFeeHeadInput
   }
 
   export type FeeHeadCreateOrConnectWithoutSchoolInput = {
@@ -80986,6 +82896,45 @@ export namespace Prisma {
 
   export type BookPackageCreateManySchoolInputEnvelope = {
     data: BookPackageCreateManySchoolInput | BookPackageCreateManySchoolInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type StudentDiscountCreateWithoutSchoolInput = {
+    type: $Enums.DiscountType
+    amount: Decimal | DecimalJsLike | number | string
+    applyType: $Enums.DiscountApplyType
+    startMonth?: number | null
+    endMonth?: number | null
+    remarks?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    student: StudentCreateNestedOneWithoutStudentDiscountsInput
+    feeHead: FeeHeadCreateNestedOneWithoutStudentDiscountsInput
+  }
+
+  export type StudentDiscountUncheckedCreateWithoutSchoolInput = {
+    id?: number
+    studentId: number
+    feeHeadId: number
+    type: $Enums.DiscountType
+    amount: Decimal | DecimalJsLike | number | string
+    applyType: $Enums.DiscountApplyType
+    startMonth?: number | null
+    endMonth?: number | null
+    remarks?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type StudentDiscountCreateOrConnectWithoutSchoolInput = {
+    where: StudentDiscountWhereUniqueInput
+    create: XOR<StudentDiscountCreateWithoutSchoolInput, StudentDiscountUncheckedCreateWithoutSchoolInput>
+  }
+
+  export type StudentDiscountCreateManySchoolInputEnvelope = {
+    data: StudentDiscountCreateManySchoolInput | StudentDiscountCreateManySchoolInput[]
     skipDuplicates?: boolean
   }
 
@@ -81867,6 +83816,41 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"BookPackage"> | Date | string
   }
 
+  export type StudentDiscountUpsertWithWhereUniqueWithoutSchoolInput = {
+    where: StudentDiscountWhereUniqueInput
+    update: XOR<StudentDiscountUpdateWithoutSchoolInput, StudentDiscountUncheckedUpdateWithoutSchoolInput>
+    create: XOR<StudentDiscountCreateWithoutSchoolInput, StudentDiscountUncheckedCreateWithoutSchoolInput>
+  }
+
+  export type StudentDiscountUpdateWithWhereUniqueWithoutSchoolInput = {
+    where: StudentDiscountWhereUniqueInput
+    data: XOR<StudentDiscountUpdateWithoutSchoolInput, StudentDiscountUncheckedUpdateWithoutSchoolInput>
+  }
+
+  export type StudentDiscountUpdateManyWithWhereWithoutSchoolInput = {
+    where: StudentDiscountScalarWhereInput
+    data: XOR<StudentDiscountUpdateManyMutationInput, StudentDiscountUncheckedUpdateManyWithoutSchoolInput>
+  }
+
+  export type StudentDiscountScalarWhereInput = {
+    AND?: StudentDiscountScalarWhereInput | StudentDiscountScalarWhereInput[]
+    OR?: StudentDiscountScalarWhereInput[]
+    NOT?: StudentDiscountScalarWhereInput | StudentDiscountScalarWhereInput[]
+    id?: IntFilter<"StudentDiscount"> | number
+    schoolId?: IntFilter<"StudentDiscount"> | number
+    studentId?: IntFilter<"StudentDiscount"> | number
+    feeHeadId?: IntFilter<"StudentDiscount"> | number
+    type?: EnumDiscountTypeFilter<"StudentDiscount"> | $Enums.DiscountType
+    amount?: DecimalFilter<"StudentDiscount"> | Decimal | DecimalJsLike | number | string
+    applyType?: EnumDiscountApplyTypeFilter<"StudentDiscount"> | $Enums.DiscountApplyType
+    startMonth?: IntNullableFilter<"StudentDiscount"> | number | null
+    endMonth?: IntNullableFilter<"StudentDiscount"> | number | null
+    remarks?: StringNullableFilter<"StudentDiscount"> | string | null
+    isActive?: BoolFilter<"StudentDiscount"> | boolean
+    createdAt?: DateTimeFilter<"StudentDiscount"> | Date | string
+    updatedAt?: DateTimeFilter<"StudentDiscount"> | Date | string
+  }
+
   export type FeeStructureUpsertWithWhereUniqueWithoutSchoolInput = {
     where: FeeStructureWhereUniqueInput
     update: XOR<FeeStructureUpdateWithoutSchoolInput, FeeStructureUncheckedUpdateWithoutSchoolInput>
@@ -82173,6 +84157,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
@@ -82207,6 +84192,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
@@ -82280,6 +84266,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
@@ -82314,6 +84301,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
@@ -82377,6 +84365,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
@@ -82411,6 +84400,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
@@ -82595,6 +84585,7 @@ export namespace Prisma {
     parents?: StudentParentCreateNestedManyWithoutStudentInput
     studentFees?: StudentFeeCreateNestedManyWithoutStudentInput
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutStudentInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutUserInput = {
@@ -82619,6 +84610,7 @@ export namespace Prisma {
     parents?: StudentParentUncheckedCreateNestedManyWithoutStudentInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutStudentInput
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutStudentInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutUserInput = {
@@ -82761,6 +84753,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
@@ -82795,6 +84788,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
@@ -82964,6 +84958,7 @@ export namespace Prisma {
     parents?: StudentParentUpdateManyWithoutStudentNestedInput
     studentFees?: StudentFeeUpdateManyWithoutStudentNestedInput
     studentScholarships?: StudentScholarshipUpdateManyWithoutStudentNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutUserInput = {
@@ -82988,6 +84983,7 @@ export namespace Prisma {
     parents?: StudentParentUncheckedUpdateManyWithoutStudentNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutStudentNestedInput
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutStudentNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type ParentUpsertWithoutUserInput = {
@@ -83150,6 +85146,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
@@ -83184,6 +85181,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
@@ -83370,6 +85368,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
@@ -83404,6 +85403,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
@@ -84156,6 +86156,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
@@ -84190,6 +86191,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
@@ -84690,6 +86692,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
@@ -84724,6 +86727,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
@@ -85001,6 +87005,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
@@ -85035,6 +87040,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
@@ -85433,6 +87439,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
@@ -85467,6 +87474,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
@@ -86420,6 +88428,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
@@ -86454,6 +88463,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
@@ -86558,6 +88568,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
@@ -86592,6 +88603,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
@@ -86981,6 +88993,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
@@ -87015,6 +89028,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
@@ -87064,6 +89078,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
@@ -87098,6 +89113,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
@@ -87131,6 +89147,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
@@ -87165,6 +89182,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
@@ -87285,6 +89303,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
@@ -87319,6 +89338,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
@@ -87406,6 +89426,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
@@ -87440,6 +89461,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
@@ -87709,6 +89731,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
@@ -87743,6 +89766,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
@@ -87840,6 +89864,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
@@ -87874,6 +89899,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
@@ -88147,6 +90173,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
@@ -88181,6 +90208,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
@@ -88474,6 +90502,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
@@ -88508,6 +90537,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
@@ -88862,6 +90892,45 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type StudentDiscountCreateWithoutStudentInput = {
+    type: $Enums.DiscountType
+    amount: Decimal | DecimalJsLike | number | string
+    applyType: $Enums.DiscountApplyType
+    startMonth?: number | null
+    endMonth?: number | null
+    remarks?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    school: SchoolCreateNestedOneWithoutStudentDiscountsInput
+    feeHead: FeeHeadCreateNestedOneWithoutStudentDiscountsInput
+  }
+
+  export type StudentDiscountUncheckedCreateWithoutStudentInput = {
+    id?: number
+    schoolId: number
+    feeHeadId: number
+    type: $Enums.DiscountType
+    amount: Decimal | DecimalJsLike | number | string
+    applyType: $Enums.DiscountApplyType
+    startMonth?: number | null
+    endMonth?: number | null
+    remarks?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type StudentDiscountCreateOrConnectWithoutStudentInput = {
+    where: StudentDiscountWhereUniqueInput
+    create: XOR<StudentDiscountCreateWithoutStudentInput, StudentDiscountUncheckedCreateWithoutStudentInput>
+  }
+
+  export type StudentDiscountCreateManyStudentInputEnvelope = {
+    data: StudentDiscountCreateManyStudentInput | StudentDiscountCreateManyStudentInput[]
+    skipDuplicates?: boolean
+  }
+
   export type SchoolUpsertWithoutStudentsInput = {
     update: XOR<SchoolUpdateWithoutStudentsInput, SchoolUncheckedUpdateWithoutStudentsInput>
     create: XOR<SchoolCreateWithoutStudentsInput, SchoolUncheckedCreateWithoutStudentsInput>
@@ -88897,6 +90966,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
@@ -88931,6 +91001,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
@@ -89139,6 +91210,22 @@ export namespace Prisma {
     data: XOR<StudentScholarshipUpdateManyMutationInput, StudentScholarshipUncheckedUpdateManyWithoutStudentInput>
   }
 
+  export type StudentDiscountUpsertWithWhereUniqueWithoutStudentInput = {
+    where: StudentDiscountWhereUniqueInput
+    update: XOR<StudentDiscountUpdateWithoutStudentInput, StudentDiscountUncheckedUpdateWithoutStudentInput>
+    create: XOR<StudentDiscountCreateWithoutStudentInput, StudentDiscountUncheckedCreateWithoutStudentInput>
+  }
+
+  export type StudentDiscountUpdateWithWhereUniqueWithoutStudentInput = {
+    where: StudentDiscountWhereUniqueInput
+    data: XOR<StudentDiscountUpdateWithoutStudentInput, StudentDiscountUncheckedUpdateWithoutStudentInput>
+  }
+
+  export type StudentDiscountUpdateManyWithWhereWithoutStudentInput = {
+    where: StudentDiscountScalarWhereInput
+    data: XOR<StudentDiscountUpdateManyMutationInput, StudentDiscountUncheckedUpdateManyWithoutStudentInput>
+  }
+
   export type SchoolCreateWithoutAcademicRecordsInput = {
     name: string
     email: string
@@ -89164,6 +91251,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
@@ -89198,6 +91286,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
@@ -89232,6 +91321,7 @@ export namespace Prisma {
     parents?: StudentParentCreateNestedManyWithoutStudentInput
     studentFees?: StudentFeeCreateNestedManyWithoutStudentInput
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutStudentInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutAcademicRecordsInput = {
@@ -89256,6 +91346,7 @@ export namespace Prisma {
     parents?: StudentParentUncheckedCreateNestedManyWithoutStudentInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutStudentInput
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutStudentInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutAcademicRecordsInput = {
@@ -89526,6 +91617,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
@@ -89560,6 +91652,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
@@ -89600,6 +91693,7 @@ export namespace Prisma {
     parents?: StudentParentUpdateManyWithoutStudentNestedInput
     studentFees?: StudentFeeUpdateManyWithoutStudentNestedInput
     studentScholarships?: StudentScholarshipUpdateManyWithoutStudentNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutAcademicRecordsInput = {
@@ -89624,6 +91718,7 @@ export namespace Prisma {
     parents?: StudentParentUncheckedUpdateManyWithoutStudentNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutStudentNestedInput
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutStudentNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type AcademicYearUpsertWithoutAcademicRecordsInput = {
@@ -89926,6 +92021,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
@@ -89960,6 +92056,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
@@ -90081,6 +92178,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
@@ -90115,6 +92213,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
@@ -90161,6 +92260,7 @@ export namespace Prisma {
     attendanceRecords?: StudentAttendanceRecordCreateNestedManyWithoutStudentInput
     studentFees?: StudentFeeCreateNestedManyWithoutStudentInput
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutStudentInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutParentsInput = {
@@ -90185,6 +92285,7 @@ export namespace Prisma {
     attendanceRecords?: StudentAttendanceRecordUncheckedCreateNestedManyWithoutStudentInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutStudentInput
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutStudentInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutParentsInput = {
@@ -90266,6 +92367,7 @@ export namespace Prisma {
     attendanceRecords?: StudentAttendanceRecordUpdateManyWithoutStudentNestedInput
     studentFees?: StudentFeeUpdateManyWithoutStudentNestedInput
     studentScholarships?: StudentScholarshipUpdateManyWithoutStudentNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutParentsInput = {
@@ -90290,6 +92392,7 @@ export namespace Prisma {
     attendanceRecords?: StudentAttendanceRecordUncheckedUpdateManyWithoutStudentNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutStudentNestedInput
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutStudentNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type ParentUpsertWithoutStudentsInput = {
@@ -90361,6 +92464,7 @@ export namespace Prisma {
     parents?: StudentParentCreateNestedManyWithoutStudentInput
     studentFees?: StudentFeeCreateNestedManyWithoutStudentInput
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutStudentInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutAdmissionsInput = {
@@ -90385,6 +92489,7 @@ export namespace Prisma {
     parents?: StudentParentUncheckedCreateNestedManyWithoutStudentInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutStudentInput
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutStudentInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutAdmissionsInput = {
@@ -90416,6 +92521,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
@@ -90450,6 +92556,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
@@ -90616,6 +92723,7 @@ export namespace Prisma {
     parents?: StudentParentUpdateManyWithoutStudentNestedInput
     studentFees?: StudentFeeUpdateManyWithoutStudentNestedInput
     studentScholarships?: StudentScholarshipUpdateManyWithoutStudentNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutAdmissionsInput = {
@@ -90640,6 +92748,7 @@ export namespace Prisma {
     parents?: StudentParentUncheckedUpdateManyWithoutStudentNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutStudentNestedInput
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutStudentNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type SchoolUpsertWithoutAdmissionsInput = {
@@ -90677,6 +92786,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
@@ -90711,6 +92821,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
@@ -90883,6 +92994,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
@@ -90917,6 +93029,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
@@ -91127,6 +93240,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
@@ -91161,6 +93275,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
@@ -91384,6 +93499,7 @@ export namespace Prisma {
     parents?: StudentParentCreateNestedManyWithoutStudentInput
     studentFees?: StudentFeeCreateNestedManyWithoutStudentInput
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutStudentInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutAttendanceRecordsInput = {
@@ -91408,6 +93524,7 @@ export namespace Prisma {
     parents?: StudentParentUncheckedCreateNestedManyWithoutStudentInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutStudentInput
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutStudentInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutAttendanceRecordsInput = {
@@ -91479,6 +93596,7 @@ export namespace Prisma {
     parents?: StudentParentUpdateManyWithoutStudentNestedInput
     studentFees?: StudentFeeUpdateManyWithoutStudentNestedInput
     studentScholarships?: StudentScholarshipUpdateManyWithoutStudentNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutAttendanceRecordsInput = {
@@ -91503,6 +93621,7 @@ export namespace Prisma {
     parents?: StudentParentUncheckedUpdateManyWithoutStudentNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutStudentNestedInput
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutStudentNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type SchoolCreateWithoutEmployeeAttendancesInput = {
@@ -91530,6 +93649,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
@@ -91564,6 +93684,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
@@ -91659,6 +93780,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
@@ -91693,6 +93815,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
@@ -91777,6 +93900,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
@@ -91811,6 +93935,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
@@ -91877,6 +94002,45 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type StudentDiscountCreateWithoutFeeHeadInput = {
+    type: $Enums.DiscountType
+    amount: Decimal | DecimalJsLike | number | string
+    applyType: $Enums.DiscountApplyType
+    startMonth?: number | null
+    endMonth?: number | null
+    remarks?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    school: SchoolCreateNestedOneWithoutStudentDiscountsInput
+    student: StudentCreateNestedOneWithoutStudentDiscountsInput
+  }
+
+  export type StudentDiscountUncheckedCreateWithoutFeeHeadInput = {
+    id?: number
+    schoolId: number
+    studentId: number
+    type: $Enums.DiscountType
+    amount: Decimal | DecimalJsLike | number | string
+    applyType: $Enums.DiscountApplyType
+    startMonth?: number | null
+    endMonth?: number | null
+    remarks?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type StudentDiscountCreateOrConnectWithoutFeeHeadInput = {
+    where: StudentDiscountWhereUniqueInput
+    create: XOR<StudentDiscountCreateWithoutFeeHeadInput, StudentDiscountUncheckedCreateWithoutFeeHeadInput>
+  }
+
+  export type StudentDiscountCreateManyFeeHeadInputEnvelope = {
+    data: StudentDiscountCreateManyFeeHeadInput | StudentDiscountCreateManyFeeHeadInput[]
+    skipDuplicates?: boolean
+  }
+
   export type SchoolUpsertWithoutFeeHeadsInput = {
     update: XOR<SchoolUpdateWithoutFeeHeadsInput, SchoolUncheckedUpdateWithoutFeeHeadsInput>
     create: XOR<SchoolCreateWithoutFeeHeadsInput, SchoolUncheckedCreateWithoutFeeHeadsInput>
@@ -91912,6 +94076,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
@@ -91946,6 +94111,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
@@ -92012,6 +94178,22 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"StudentFeeItem"> | Date | string
   }
 
+  export type StudentDiscountUpsertWithWhereUniqueWithoutFeeHeadInput = {
+    where: StudentDiscountWhereUniqueInput
+    update: XOR<StudentDiscountUpdateWithoutFeeHeadInput, StudentDiscountUncheckedUpdateWithoutFeeHeadInput>
+    create: XOR<StudentDiscountCreateWithoutFeeHeadInput, StudentDiscountUncheckedCreateWithoutFeeHeadInput>
+  }
+
+  export type StudentDiscountUpdateWithWhereUniqueWithoutFeeHeadInput = {
+    where: StudentDiscountWhereUniqueInput
+    data: XOR<StudentDiscountUpdateWithoutFeeHeadInput, StudentDiscountUncheckedUpdateWithoutFeeHeadInput>
+  }
+
+  export type StudentDiscountUpdateManyWithWhereWithoutFeeHeadInput = {
+    where: StudentDiscountScalarWhereInput
+    data: XOR<StudentDiscountUpdateManyMutationInput, StudentDiscountUncheckedUpdateManyWithoutFeeHeadInput>
+  }
+
   export type SchoolCreateWithoutFeeStructuresInput = {
     name: string
     email: string
@@ -92037,6 +94219,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
@@ -92071,6 +94254,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
@@ -92280,6 +94464,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
@@ -92314,6 +94499,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
@@ -92491,6 +94677,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     school: SchoolCreateNestedOneWithoutFeeHeadsInput
     studentFeeItems?: StudentFeeItemCreateNestedManyWithoutFeeHeadInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutFeeHeadInput
   }
 
   export type FeeHeadUncheckedCreateWithoutFeeStructureItemsInput = {
@@ -92503,6 +94690,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     studentFeeItems?: StudentFeeItemUncheckedCreateNestedManyWithoutFeeHeadInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutFeeHeadInput
   }
 
   export type FeeHeadCreateOrConnectWithoutFeeStructureItemsInput = {
@@ -92572,6 +94760,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     school?: SchoolUpdateOneRequiredWithoutFeeHeadsNestedInput
     studentFeeItems?: StudentFeeItemUpdateManyWithoutFeeHeadNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutFeeHeadNestedInput
   }
 
   export type FeeHeadUncheckedUpdateWithoutFeeStructureItemsInput = {
@@ -92584,6 +94773,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     studentFeeItems?: StudentFeeItemUncheckedUpdateManyWithoutFeeHeadNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutFeeHeadNestedInput
   }
 
   export type SchoolCreateWithoutTransportRoutesInput = {
@@ -92610,6 +94800,7 @@ export namespace Prisma {
     feeHeads?: FeeHeadCreateNestedManyWithoutSchoolInput
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
@@ -92644,6 +94835,7 @@ export namespace Prisma {
     feeHeads?: FeeHeadUncheckedCreateNestedManyWithoutSchoolInput
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
@@ -92736,6 +94928,7 @@ export namespace Prisma {
     feeHeads?: FeeHeadUpdateManyWithoutSchoolNestedInput
     studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
@@ -92770,6 +94963,7 @@ export namespace Prisma {
     feeHeads?: FeeHeadUncheckedUpdateManyWithoutSchoolNestedInput
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
@@ -92819,6 +95013,7 @@ export namespace Prisma {
     feeHeads?: FeeHeadCreateNestedManyWithoutSchoolInput
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
@@ -92853,6 +95048,7 @@ export namespace Prisma {
     feeHeads?: FeeHeadUncheckedCreateNestedManyWithoutSchoolInput
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
@@ -92950,6 +95146,7 @@ export namespace Prisma {
     feeHeads?: FeeHeadUpdateManyWithoutSchoolNestedInput
     studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
@@ -92984,6 +95181,7 @@ export namespace Prisma {
     feeHeads?: FeeHeadUncheckedUpdateManyWithoutSchoolNestedInput
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
@@ -93072,6 +95270,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
@@ -93106,6 +95305,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
@@ -93140,6 +95340,7 @@ export namespace Prisma {
     attendanceRecords?: StudentAttendanceRecordCreateNestedManyWithoutStudentInput
     parents?: StudentParentCreateNestedManyWithoutStudentInput
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutStudentInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutStudentFeesInput = {
@@ -93164,6 +95365,7 @@ export namespace Prisma {
     attendanceRecords?: StudentAttendanceRecordUncheckedCreateNestedManyWithoutStudentInput
     parents?: StudentParentUncheckedCreateNestedManyWithoutStudentInput
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutStudentInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutStudentFeesInput = {
@@ -93305,6 +95507,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
@@ -93339,6 +95542,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
@@ -93379,6 +95583,7 @@ export namespace Prisma {
     attendanceRecords?: StudentAttendanceRecordUpdateManyWithoutStudentNestedInput
     parents?: StudentParentUpdateManyWithoutStudentNestedInput
     studentScholarships?: StudentScholarshipUpdateManyWithoutStudentNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutStudentFeesInput = {
@@ -93403,6 +95608,7 @@ export namespace Prisma {
     attendanceRecords?: StudentAttendanceRecordUncheckedUpdateManyWithoutStudentNestedInput
     parents?: StudentParentUncheckedUpdateManyWithoutStudentNestedInput
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutStudentNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type FeeStructureUpsertWithoutStudentFeesInput = {
@@ -93536,6 +95742,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     school: SchoolCreateNestedOneWithoutFeeHeadsInput
     feeStructureItems?: FeeStructureItemCreateNestedManyWithoutFeeHeadInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutFeeHeadInput
   }
 
   export type FeeHeadUncheckedCreateWithoutStudentFeeItemsInput = {
@@ -93548,6 +95755,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     feeStructureItems?: FeeStructureItemUncheckedCreateNestedManyWithoutFeeHeadInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutFeeHeadInput
   }
 
   export type FeeHeadCreateOrConnectWithoutStudentFeeItemsInput = {
@@ -93629,6 +95837,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     school?: SchoolUpdateOneRequiredWithoutFeeHeadsNestedInput
     feeStructureItems?: FeeStructureItemUpdateManyWithoutFeeHeadNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutFeeHeadNestedInput
   }
 
   export type FeeHeadUncheckedUpdateWithoutStudentFeeItemsInput = {
@@ -93641,6 +95850,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     feeStructureItems?: FeeStructureItemUncheckedUpdateManyWithoutFeeHeadNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutFeeHeadNestedInput
   }
 
   export type SchoolCreateWithoutPaymentReceiptsInput = {
@@ -93668,6 +95878,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
@@ -93702,6 +95913,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
@@ -93845,6 +96057,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
@@ -93879,6 +96092,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
@@ -94017,6 +96231,7 @@ export namespace Prisma {
     feeHeads?: FeeHeadCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
@@ -94051,6 +96266,7 @@ export namespace Prisma {
     feeHeads?: FeeHeadUncheckedCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
@@ -94086,6 +96302,7 @@ export namespace Prisma {
     attendanceRecords?: StudentAttendanceRecordCreateNestedManyWithoutStudentInput
     parents?: StudentParentCreateNestedManyWithoutStudentInput
     studentFees?: StudentFeeCreateNestedManyWithoutStudentInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutStudentScholarshipsInput = {
@@ -94110,6 +96327,7 @@ export namespace Prisma {
     attendanceRecords?: StudentAttendanceRecordUncheckedCreateNestedManyWithoutStudentInput
     parents?: StudentParentUncheckedCreateNestedManyWithoutStudentInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutStudentInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutStudentScholarshipsInput = {
@@ -94180,6 +96398,7 @@ export namespace Prisma {
     feeHeads?: FeeHeadUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
@@ -94214,6 +96433,7 @@ export namespace Prisma {
     feeHeads?: FeeHeadUncheckedUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
@@ -94255,6 +96475,7 @@ export namespace Prisma {
     attendanceRecords?: StudentAttendanceRecordUpdateManyWithoutStudentNestedInput
     parents?: StudentParentUpdateManyWithoutStudentNestedInput
     studentFees?: StudentFeeUpdateManyWithoutStudentNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutStudentScholarshipsInput = {
@@ -94279,6 +96500,7 @@ export namespace Prisma {
     attendanceRecords?: StudentAttendanceRecordUncheckedUpdateManyWithoutStudentNestedInput
     parents?: StudentParentUncheckedUpdateManyWithoutStudentNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutStudentNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type ScholarshipUpsertWithoutStudentScholarshipsInput = {
@@ -94340,6 +96562,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
@@ -94374,6 +96597,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
@@ -94450,6 +96674,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
@@ -94484,6 +96709,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
@@ -94506,6 +96732,340 @@ export namespace Prisma {
   export type StudentScholarshipUpdateManyWithWhereWithoutScholarshipInput = {
     where: StudentScholarshipScalarWhereInput
     data: XOR<StudentScholarshipUpdateManyMutationInput, StudentScholarshipUncheckedUpdateManyWithoutScholarshipInput>
+  }
+
+  export type SchoolCreateWithoutStudentDiscountsInput = {
+    name: string
+    email: string
+    phone?: string | null
+    status?: $Enums.SchoolStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sections?: SectionCreateNestedManyWithoutSchoolInput
+    subscriptions?: SchoolSubscriptionCreateNestedManyWithoutSchoolInput
+    users?: UserCreateNestedManyWithoutSchoolInput
+    teachers?: TeacherCreateNestedManyWithoutSchoolInput
+    timetables?: TimetableCreateNestedManyWithoutSchoolInput
+    timings?: SchoolTimingCreateNestedManyWithoutSchoolInput
+    periods?: PeriodCreateNestedManyWithoutSchoolInput
+    days?: DayCreateNestedManyWithoutSchoolInput
+    parents?: ParentCreateNestedManyWithoutSchoolInput
+    academicYears?: AcademicYearCreateNestedManyWithoutSchoolInput
+    students?: StudentCreateNestedManyWithoutSchoolInput
+    admissions?: AdmissionCreateNestedManyWithoutSchoolInput
+    exams?: ExamCreateNestedManyWithoutSchoolInput
+    classes?: ClassCreateNestedManyWithoutSchoolInput
+    feeHeads?: FeeHeadCreateNestedManyWithoutSchoolInput
+    studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
+    transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
+    bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
+    studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
+    paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
+    academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
+    studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
+    employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    scholarships?: ScholarshipCreateNestedManyWithoutSchoolInput
+  }
+
+  export type SchoolUncheckedCreateWithoutStudentDiscountsInput = {
+    id?: number
+    name: string
+    email: string
+    phone?: string | null
+    status?: $Enums.SchoolStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sections?: SectionUncheckedCreateNestedManyWithoutSchoolInput
+    subscriptions?: SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
+    users?: UserUncheckedCreateNestedManyWithoutSchoolInput
+    teachers?: TeacherUncheckedCreateNestedManyWithoutSchoolInput
+    timetables?: TimetableUncheckedCreateNestedManyWithoutSchoolInput
+    timings?: SchoolTimingUncheckedCreateNestedManyWithoutSchoolInput
+    periods?: PeriodUncheckedCreateNestedManyWithoutSchoolInput
+    days?: DayUncheckedCreateNestedManyWithoutSchoolInput
+    parents?: ParentUncheckedCreateNestedManyWithoutSchoolInput
+    academicYears?: AcademicYearUncheckedCreateNestedManyWithoutSchoolInput
+    students?: StudentUncheckedCreateNestedManyWithoutSchoolInput
+    admissions?: AdmissionUncheckedCreateNestedManyWithoutSchoolInput
+    exams?: ExamUncheckedCreateNestedManyWithoutSchoolInput
+    classes?: ClassUncheckedCreateNestedManyWithoutSchoolInput
+    feeHeads?: FeeHeadUncheckedCreateNestedManyWithoutSchoolInput
+    studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
+    transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
+    bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
+    studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
+    paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
+    academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
+    studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
+    employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    scholarships?: ScholarshipUncheckedCreateNestedManyWithoutSchoolInput
+  }
+
+  export type SchoolCreateOrConnectWithoutStudentDiscountsInput = {
+    where: SchoolWhereUniqueInput
+    create: XOR<SchoolCreateWithoutStudentDiscountsInput, SchoolUncheckedCreateWithoutStudentDiscountsInput>
+  }
+
+  export type StudentCreateWithoutStudentDiscountsInput = {
+    name: string
+    profilePhoto?: string | null
+    studentCode: string
+    dob?: Date | string | null
+    gender?: $Enums.Gender | null
+    address?: string | null
+    phoneNumber?: string | null
+    email?: string | null
+    isActive?: boolean
+    isDeleted?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    school: SchoolCreateNestedOneWithoutStudentsInput
+    user?: UserCreateNestedOneWithoutStudentInput
+    admissions?: AdmissionCreateNestedManyWithoutStudentInput
+    examMarks?: ExamMarkCreateNestedManyWithoutStudentInput
+    academicRecords?: StudentAcademicRecordCreateNestedManyWithoutStudentInput
+    attendanceRecords?: StudentAttendanceRecordCreateNestedManyWithoutStudentInput
+    parents?: StudentParentCreateNestedManyWithoutStudentInput
+    studentFees?: StudentFeeCreateNestedManyWithoutStudentInput
+    studentScholarships?: StudentScholarshipCreateNestedManyWithoutStudentInput
+  }
+
+  export type StudentUncheckedCreateWithoutStudentDiscountsInput = {
+    id?: number
+    schoolId: number
+    userId?: number | null
+    name: string
+    profilePhoto?: string | null
+    studentCode: string
+    dob?: Date | string | null
+    gender?: $Enums.Gender | null
+    address?: string | null
+    phoneNumber?: string | null
+    email?: string | null
+    isActive?: boolean
+    isDeleted?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    admissions?: AdmissionUncheckedCreateNestedManyWithoutStudentInput
+    examMarks?: ExamMarkUncheckedCreateNestedManyWithoutStudentInput
+    academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutStudentInput
+    attendanceRecords?: StudentAttendanceRecordUncheckedCreateNestedManyWithoutStudentInput
+    parents?: StudentParentUncheckedCreateNestedManyWithoutStudentInput
+    studentFees?: StudentFeeUncheckedCreateNestedManyWithoutStudentInput
+    studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutStudentInput
+  }
+
+  export type StudentCreateOrConnectWithoutStudentDiscountsInput = {
+    where: StudentWhereUniqueInput
+    create: XOR<StudentCreateWithoutStudentDiscountsInput, StudentUncheckedCreateWithoutStudentDiscountsInput>
+  }
+
+  export type FeeHeadCreateWithoutStudentDiscountsInput = {
+    name: string
+    description?: string | null
+    isOptional?: boolean
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    school: SchoolCreateNestedOneWithoutFeeHeadsInput
+    feeStructureItems?: FeeStructureItemCreateNestedManyWithoutFeeHeadInput
+    studentFeeItems?: StudentFeeItemCreateNestedManyWithoutFeeHeadInput
+  }
+
+  export type FeeHeadUncheckedCreateWithoutStudentDiscountsInput = {
+    id?: number
+    schoolId: number
+    name: string
+    description?: string | null
+    isOptional?: boolean
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    feeStructureItems?: FeeStructureItemUncheckedCreateNestedManyWithoutFeeHeadInput
+    studentFeeItems?: StudentFeeItemUncheckedCreateNestedManyWithoutFeeHeadInput
+  }
+
+  export type FeeHeadCreateOrConnectWithoutStudentDiscountsInput = {
+    where: FeeHeadWhereUniqueInput
+    create: XOR<FeeHeadCreateWithoutStudentDiscountsInput, FeeHeadUncheckedCreateWithoutStudentDiscountsInput>
+  }
+
+  export type SchoolUpsertWithoutStudentDiscountsInput = {
+    update: XOR<SchoolUpdateWithoutStudentDiscountsInput, SchoolUncheckedUpdateWithoutStudentDiscountsInput>
+    create: XOR<SchoolCreateWithoutStudentDiscountsInput, SchoolUncheckedCreateWithoutStudentDiscountsInput>
+    where?: SchoolWhereInput
+  }
+
+  export type SchoolUpdateToOneWithWhereWithoutStudentDiscountsInput = {
+    where?: SchoolWhereInput
+    data: XOR<SchoolUpdateWithoutStudentDiscountsInput, SchoolUncheckedUpdateWithoutStudentDiscountsInput>
+  }
+
+  export type SchoolUpdateWithoutStudentDiscountsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sections?: SectionUpdateManyWithoutSchoolNestedInput
+    subscriptions?: SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
+    users?: UserUpdateManyWithoutSchoolNestedInput
+    teachers?: TeacherUpdateManyWithoutSchoolNestedInput
+    timetables?: TimetableUpdateManyWithoutSchoolNestedInput
+    timings?: SchoolTimingUpdateManyWithoutSchoolNestedInput
+    periods?: PeriodUpdateManyWithoutSchoolNestedInput
+    days?: DayUpdateManyWithoutSchoolNestedInput
+    parents?: ParentUpdateManyWithoutSchoolNestedInput
+    academicYears?: AcademicYearUpdateManyWithoutSchoolNestedInput
+    students?: StudentUpdateManyWithoutSchoolNestedInput
+    admissions?: AdmissionUpdateManyWithoutSchoolNestedInput
+    exams?: ExamUpdateManyWithoutSchoolNestedInput
+    classes?: ClassUpdateManyWithoutSchoolNestedInput
+    feeHeads?: FeeHeadUpdateManyWithoutSchoolNestedInput
+    studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
+    transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
+    bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
+    studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
+    paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
+    academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
+    studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
+    employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    scholarships?: ScholarshipUpdateManyWithoutSchoolNestedInput
+  }
+
+  export type SchoolUncheckedUpdateWithoutStudentDiscountsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sections?: SectionUncheckedUpdateManyWithoutSchoolNestedInput
+    subscriptions?: SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
+    users?: UserUncheckedUpdateManyWithoutSchoolNestedInput
+    teachers?: TeacherUncheckedUpdateManyWithoutSchoolNestedInput
+    timetables?: TimetableUncheckedUpdateManyWithoutSchoolNestedInput
+    timings?: SchoolTimingUncheckedUpdateManyWithoutSchoolNestedInput
+    periods?: PeriodUncheckedUpdateManyWithoutSchoolNestedInput
+    days?: DayUncheckedUpdateManyWithoutSchoolNestedInput
+    parents?: ParentUncheckedUpdateManyWithoutSchoolNestedInput
+    academicYears?: AcademicYearUncheckedUpdateManyWithoutSchoolNestedInput
+    students?: StudentUncheckedUpdateManyWithoutSchoolNestedInput
+    admissions?: AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
+    exams?: ExamUncheckedUpdateManyWithoutSchoolNestedInput
+    classes?: ClassUncheckedUpdateManyWithoutSchoolNestedInput
+    feeHeads?: FeeHeadUncheckedUpdateManyWithoutSchoolNestedInput
+    studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
+    transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
+    bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
+    studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
+    paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
+    academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
+    studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
+    employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    scholarships?: ScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
+  }
+
+  export type StudentUpsertWithoutStudentDiscountsInput = {
+    update: XOR<StudentUpdateWithoutStudentDiscountsInput, StudentUncheckedUpdateWithoutStudentDiscountsInput>
+    create: XOR<StudentCreateWithoutStudentDiscountsInput, StudentUncheckedCreateWithoutStudentDiscountsInput>
+    where?: StudentWhereInput
+  }
+
+  export type StudentUpdateToOneWithWhereWithoutStudentDiscountsInput = {
+    where?: StudentWhereInput
+    data: XOR<StudentUpdateWithoutStudentDiscountsInput, StudentUncheckedUpdateWithoutStudentDiscountsInput>
+  }
+
+  export type StudentUpdateWithoutStudentDiscountsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profilePhoto?: NullableStringFieldUpdateOperationsInput | string | null
+    studentCode?: StringFieldUpdateOperationsInput | string
+    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    school?: SchoolUpdateOneRequiredWithoutStudentsNestedInput
+    user?: UserUpdateOneWithoutStudentNestedInput
+    admissions?: AdmissionUpdateManyWithoutStudentNestedInput
+    examMarks?: ExamMarkUpdateManyWithoutStudentNestedInput
+    academicRecords?: StudentAcademicRecordUpdateManyWithoutStudentNestedInput
+    attendanceRecords?: StudentAttendanceRecordUpdateManyWithoutStudentNestedInput
+    parents?: StudentParentUpdateManyWithoutStudentNestedInput
+    studentFees?: StudentFeeUpdateManyWithoutStudentNestedInput
+    studentScholarships?: StudentScholarshipUpdateManyWithoutStudentNestedInput
+  }
+
+  export type StudentUncheckedUpdateWithoutStudentDiscountsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    schoolId?: IntFieldUpdateOperationsInput | number
+    userId?: NullableIntFieldUpdateOperationsInput | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    profilePhoto?: NullableStringFieldUpdateOperationsInput | string | null
+    studentCode?: StringFieldUpdateOperationsInput | string
+    dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    admissions?: AdmissionUncheckedUpdateManyWithoutStudentNestedInput
+    examMarks?: ExamMarkUncheckedUpdateManyWithoutStudentNestedInput
+    academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutStudentNestedInput
+    attendanceRecords?: StudentAttendanceRecordUncheckedUpdateManyWithoutStudentNestedInput
+    parents?: StudentParentUncheckedUpdateManyWithoutStudentNestedInput
+    studentFees?: StudentFeeUncheckedUpdateManyWithoutStudentNestedInput
+    studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutStudentNestedInput
+  }
+
+  export type FeeHeadUpsertWithoutStudentDiscountsInput = {
+    update: XOR<FeeHeadUpdateWithoutStudentDiscountsInput, FeeHeadUncheckedUpdateWithoutStudentDiscountsInput>
+    create: XOR<FeeHeadCreateWithoutStudentDiscountsInput, FeeHeadUncheckedCreateWithoutStudentDiscountsInput>
+    where?: FeeHeadWhereInput
+  }
+
+  export type FeeHeadUpdateToOneWithWhereWithoutStudentDiscountsInput = {
+    where?: FeeHeadWhereInput
+    data: XOR<FeeHeadUpdateWithoutStudentDiscountsInput, FeeHeadUncheckedUpdateWithoutStudentDiscountsInput>
+  }
+
+  export type FeeHeadUpdateWithoutStudentDiscountsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isOptional?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    school?: SchoolUpdateOneRequiredWithoutFeeHeadsNestedInput
+    feeStructureItems?: FeeStructureItemUpdateManyWithoutFeeHeadNestedInput
+    studentFeeItems?: StudentFeeItemUpdateManyWithoutFeeHeadNestedInput
+  }
+
+  export type FeeHeadUncheckedUpdateWithoutStudentDiscountsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    schoolId?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isOptional?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    feeStructureItems?: FeeStructureItemUncheckedUpdateManyWithoutFeeHeadNestedInput
+    studentFeeItems?: StudentFeeItemUncheckedUpdateManyWithoutFeeHeadNestedInput
   }
 
   export type SchoolCreateWithoutExamsInput = {
@@ -94532,6 +97092,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
@@ -94566,6 +97127,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
     transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
     bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
     feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
     paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
@@ -94766,6 +97328,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
@@ -94800,6 +97363,7 @@ export namespace Prisma {
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
     transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
     bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
     feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
     paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
@@ -95205,6 +97769,7 @@ export namespace Prisma {
     parents?: StudentParentCreateNestedManyWithoutStudentInput
     studentFees?: StudentFeeCreateNestedManyWithoutStudentInput
     studentScholarships?: StudentScholarshipCreateNestedManyWithoutStudentInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutExamMarksInput = {
@@ -95229,6 +97794,7 @@ export namespace Prisma {
     parents?: StudentParentUncheckedCreateNestedManyWithoutStudentInput
     studentFees?: StudentFeeUncheckedCreateNestedManyWithoutStudentInput
     studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutStudentInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutExamMarksInput = {
@@ -95300,6 +97866,7 @@ export namespace Prisma {
     parents?: StudentParentUpdateManyWithoutStudentNestedInput
     studentFees?: StudentFeeUpdateManyWithoutStudentNestedInput
     studentScholarships?: StudentScholarshipUpdateManyWithoutStudentNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutExamMarksInput = {
@@ -95324,6 +97891,7 @@ export namespace Prisma {
     parents?: StudentParentUncheckedUpdateManyWithoutStudentNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutStudentNestedInput
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutStudentNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type SectionCreateManySchoolInput = {
@@ -95568,6 +98136,21 @@ export namespace Prisma {
     classId: number
     name: string
     amount: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type StudentDiscountCreateManySchoolInput = {
+    id?: number
+    studentId: number
+    feeHeadId: number
+    type: $Enums.DiscountType
+    amount: Decimal | DecimalJsLike | number | string
+    applyType: $Enums.DiscountApplyType
+    startMonth?: number | null
+    endMonth?: number | null
+    remarks?: string | null
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -96101,6 +98684,7 @@ export namespace Prisma {
     parents?: StudentParentUpdateManyWithoutStudentNestedInput
     studentFees?: StudentFeeUpdateManyWithoutStudentNestedInput
     studentScholarships?: StudentScholarshipUpdateManyWithoutStudentNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutSchoolInput = {
@@ -96125,6 +98709,7 @@ export namespace Prisma {
     parents?: StudentParentUncheckedUpdateManyWithoutStudentNestedInput
     studentFees?: StudentFeeUncheckedUpdateManyWithoutStudentNestedInput
     studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutStudentNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateManyWithoutSchoolInput = {
@@ -96381,6 +98966,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     feeStructureItems?: FeeStructureItemUpdateManyWithoutFeeHeadNestedInput
     studentFeeItems?: StudentFeeItemUpdateManyWithoutFeeHeadNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutFeeHeadNestedInput
   }
 
   export type FeeHeadUncheckedUpdateWithoutSchoolInput = {
@@ -96393,6 +98979,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     feeStructureItems?: FeeStructureItemUncheckedUpdateManyWithoutFeeHeadNestedInput
     studentFeeItems?: StudentFeeItemUncheckedUpdateManyWithoutFeeHeadNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutFeeHeadNestedInput
   }
 
   export type FeeHeadUncheckedUpdateManyWithoutSchoolInput = {
@@ -96486,6 +99073,50 @@ export namespace Prisma {
     classId?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentDiscountUpdateWithoutSchoolInput = {
+    type?: EnumDiscountTypeFieldUpdateOperationsInput | $Enums.DiscountType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    applyType?: EnumDiscountApplyTypeFieldUpdateOperationsInput | $Enums.DiscountApplyType
+    startMonth?: NullableIntFieldUpdateOperationsInput | number | null
+    endMonth?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    student?: StudentUpdateOneRequiredWithoutStudentDiscountsNestedInput
+    feeHead?: FeeHeadUpdateOneRequiredWithoutStudentDiscountsNestedInput
+  }
+
+  export type StudentDiscountUncheckedUpdateWithoutSchoolInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    feeHeadId?: IntFieldUpdateOperationsInput | number
+    type?: EnumDiscountTypeFieldUpdateOperationsInput | $Enums.DiscountType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    applyType?: EnumDiscountApplyTypeFieldUpdateOperationsInput | $Enums.DiscountApplyType
+    startMonth?: NullableIntFieldUpdateOperationsInput | number | null
+    endMonth?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentDiscountUncheckedUpdateManyWithoutSchoolInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    feeHeadId?: IntFieldUpdateOperationsInput | number
+    type?: EnumDiscountTypeFieldUpdateOperationsInput | $Enums.DiscountType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    applyType?: EnumDiscountApplyTypeFieldUpdateOperationsInput | $Enums.DiscountApplyType
+    startMonth?: NullableIntFieldUpdateOperationsInput | number | null
+    endMonth?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -99257,6 +101888,21 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type StudentDiscountCreateManyStudentInput = {
+    id?: number
+    schoolId: number
+    feeHeadId: number
+    type: $Enums.DiscountType
+    amount: Decimal | DecimalJsLike | number | string
+    applyType: $Enums.DiscountApplyType
+    startMonth?: number | null
+    endMonth?: number | null
+    remarks?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type AdmissionUpdateWithoutStudentInput = {
     studentName?: StringFieldUpdateOperationsInput | string
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -99593,6 +102239,50 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type StudentDiscountUpdateWithoutStudentInput = {
+    type?: EnumDiscountTypeFieldUpdateOperationsInput | $Enums.DiscountType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    applyType?: EnumDiscountApplyTypeFieldUpdateOperationsInput | $Enums.DiscountApplyType
+    startMonth?: NullableIntFieldUpdateOperationsInput | number | null
+    endMonth?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    school?: SchoolUpdateOneRequiredWithoutStudentDiscountsNestedInput
+    feeHead?: FeeHeadUpdateOneRequiredWithoutStudentDiscountsNestedInput
+  }
+
+  export type StudentDiscountUncheckedUpdateWithoutStudentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    schoolId?: IntFieldUpdateOperationsInput | number
+    feeHeadId?: IntFieldUpdateOperationsInput | number
+    type?: EnumDiscountTypeFieldUpdateOperationsInput | $Enums.DiscountType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    applyType?: EnumDiscountApplyTypeFieldUpdateOperationsInput | $Enums.DiscountApplyType
+    startMonth?: NullableIntFieldUpdateOperationsInput | number | null
+    endMonth?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentDiscountUncheckedUpdateManyWithoutStudentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    schoolId?: IntFieldUpdateOperationsInput | number
+    feeHeadId?: IntFieldUpdateOperationsInput | number
+    type?: EnumDiscountTypeFieldUpdateOperationsInput | $Enums.DiscountType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    applyType?: EnumDiscountApplyTypeFieldUpdateOperationsInput | $Enums.DiscountApplyType
+    startMonth?: NullableIntFieldUpdateOperationsInput | number | null
+    endMonth?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StudentAcademicRecordCreateManyPromotedFromInput = {
     id?: number
     schoolId: number
@@ -99730,6 +102420,21 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type StudentDiscountCreateManyFeeHeadInput = {
+    id?: number
+    schoolId: number
+    studentId: number
+    type: $Enums.DiscountType
+    amount: Decimal | DecimalJsLike | number | string
+    applyType: $Enums.DiscountApplyType
+    startMonth?: number | null
+    endMonth?: number | null
+    remarks?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type FeeStructureItemUpdateWithoutFeeHeadInput = {
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     frequency?: EnumFeeFrequencyFieldUpdateOperationsInput | $Enums.FeeFrequency
@@ -99777,6 +102482,50 @@ export namespace Prisma {
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     frequency?: EnumFeeFrequencyFieldUpdateOperationsInput | $Enums.FeeFrequency
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentDiscountUpdateWithoutFeeHeadInput = {
+    type?: EnumDiscountTypeFieldUpdateOperationsInput | $Enums.DiscountType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    applyType?: EnumDiscountApplyTypeFieldUpdateOperationsInput | $Enums.DiscountApplyType
+    startMonth?: NullableIntFieldUpdateOperationsInput | number | null
+    endMonth?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    school?: SchoolUpdateOneRequiredWithoutStudentDiscountsNestedInput
+    student?: StudentUpdateOneRequiredWithoutStudentDiscountsNestedInput
+  }
+
+  export type StudentDiscountUncheckedUpdateWithoutFeeHeadInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    schoolId?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    type?: EnumDiscountTypeFieldUpdateOperationsInput | $Enums.DiscountType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    applyType?: EnumDiscountApplyTypeFieldUpdateOperationsInput | $Enums.DiscountApplyType
+    startMonth?: NullableIntFieldUpdateOperationsInput | number | null
+    endMonth?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentDiscountUncheckedUpdateManyWithoutFeeHeadInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    schoolId?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    type?: EnumDiscountTypeFieldUpdateOperationsInput | $Enums.DiscountType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    applyType?: EnumDiscountApplyTypeFieldUpdateOperationsInput | $Enums.DiscountApplyType
+    startMonth?: NullableIntFieldUpdateOperationsInput | number | null
+    endMonth?: NullableIntFieldUpdateOperationsInput | number | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type FeeStructureItemCreateManyFeeStructureInput = {

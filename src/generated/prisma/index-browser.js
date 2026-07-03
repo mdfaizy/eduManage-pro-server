@@ -672,6 +672,22 @@ exports.Prisma.ScholarshipScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.StudentDiscountScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  studentId: 'studentId',
+  feeHeadId: 'feeHeadId',
+  type: 'type',
+  amount: 'amount',
+  applyType: 'applyType',
+  startMonth: 'startMonth',
+  endMonth: 'endMonth',
+  remarks: 'remarks',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.ExamScalarFieldEnum = {
   id: 'id',
   schoolId: 'schoolId',
@@ -947,6 +963,10 @@ exports.Prisma.ScholarshipOrderByRelevanceFieldEnum = {
   description: 'description'
 };
 
+exports.Prisma.StudentDiscountOrderByRelevanceFieldEnum = {
+  remarks: 'remarks'
+};
+
 exports.Prisma.ExamOrderByRelevanceFieldEnum = {
   name: 'name'
 };
@@ -1087,6 +1107,17 @@ exports.ScholarshipType = exports.$Enums.ScholarshipType = {
   PERCENTAGE: 'PERCENTAGE'
 };
 
+exports.DiscountType = exports.$Enums.DiscountType = {
+  FIXED: 'FIXED',
+  PERCENTAGE: 'PERCENTAGE'
+};
+
+exports.DiscountApplyType = exports.$Enums.DiscountApplyType = {
+  ONE_TIME: 'ONE_TIME',
+  MONTHLY: 'MONTHLY',
+  YEARLY: 'YEARLY'
+};
+
 exports.ExamType = exports.$Enums.ExamType = {
   UNIT_TEST: 'UNIT_TEST',
   MID_TERM: 'MID_TERM',
@@ -1141,6 +1172,7 @@ exports.Prisma.ModelName = {
   PaymentReceipt: 'PaymentReceipt',
   StudentScholarship: 'StudentScholarship',
   Scholarship: 'Scholarship',
+  StudentDiscount: 'StudentDiscount',
   Exam: 'Exam',
   ExamSubject: 'ExamSubject',
   ExamMark: 'ExamMark',

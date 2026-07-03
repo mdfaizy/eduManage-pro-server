@@ -393,130 +393,138 @@ guardianEmail:
 // 6️⃣ FIND FEE STRUCTURE
 ///////////////////////////////////////////////////
 
-const feeStructure =
-  await tx.feeStructure.findFirst({
+// const feeStructure =await tx.feeStructure.findFirst({
 
-    where: {
-
-      schoolId,
-
-      classId:
-        admission.classId,
-
-      academicYearId:
-        admission.academicYearId,
-
-      isActive: true,
-    },
-  });
-console.log("FEE STRUCTURE", feeStructure);
-///////////////////////////////////////////////////
-// 7️⃣ GENERATE BASIC FEE
-///////////////////////////////////////////////////
-
-// if (feeStructure) {
-
-//   await tx.studentFee.create({
-
-//     data: {
+//     where: {
 
 //       schoolId,
 
-//       studentId:
-//         student.id,
+//       classId:
+//         admission.classId,
 
-//       feeStructureId:
-//         feeStructure.id,
+//       academicYearId:
+//         admission.academicYearId,
 
-//       month:
-//         new Date().getMonth() + 1,
-
-//       year:
-//         new Date().getFullYear(),
-
-//       totalAmount:
-//         Number(
-//           feeStructure.totalFee
-//         ),
-
-//       paidAmount: 0,
-
-//       dueAmount:
-//         Number(
-//           feeStructure.totalFee
-//         ),
-
-//       lateFee: 0,
-
-//       discount: 0,
-
-//       isAdmissionFee: false,
-
-//       status: "PENDING",
-
-//       dueDate: new Date(),
+//       isActive: true,
 //     },
 //   });
+//   console.log("========== ADMISSION ==========");
+// console.log(admission);
+
+// console.log("========== STUDENT ==========");
+// console.log(student);
+
+// console.log("========== FEE STRUCTURE ==========");
+// console.log(feeStructure);
+// console.log("FEE STRUCTURE", feeStructure);
+// ///////////////////////////////////////////////////
+// // 7️⃣ GENERATE BASIC FEE
+// ///////////////////////////////////////////////////
+
+// // if (feeStructure) {
+
+// //   await tx.studentFee.create({
+
+// //     data: {
+
+// //       schoolId,
+
+// //       studentId:
+// //         student.id,
+
+// //       feeStructureId:
+// //         feeStructure.id,
+
+// //       month:
+// //         new Date().getMonth() + 1,
+
+// //       year:
+// //         new Date().getFullYear(),
+
+// //       totalAmount:
+// //         Number(
+// //           feeStructure.totalFee
+// //         ),
+
+// //       paidAmount: 0,
+
+// //       dueAmount:
+// //         Number(
+// //           feeStructure.totalFee
+// //         ),
+
+// //       lateFee: 0,
+
+// //       discount: 0,
+
+// //       isAdmissionFee: false,
+
+// //       status: "PENDING",
+
+// //       dueDate: new Date(),
+// //     },
+// //   });
+// // }
+// if (feeStructure) {
+// console.log("Calling Fee Generation...");
+//   await this.studentFeeService.generateWithTransaction(tx,
+//       {schoolId,
+//       studentId:student.id,
+//         feeStructureId:feeStructure.id,
+//         month:new Date().getMonth() + 1,
+//         year:new Date().getFullYear(),
+//         dueDate:new Date(),
+//       }
+//     );
 // }
-if (feeStructure) {
 
-  await this
-    .studentFeeService
-    .generateWithTransaction(
+const feeStructure = await tx.feeStructure.findFirst({
+  where: {
+    schoolId,
+    classId: admission.classId,
+    academicYearId: admission.academicYearId,
+    isActive: true,
+  },
+});
 
-      tx,
+console.log("========== ADMISSION ==========");
+console.log(admission);
 
-      {
+console.log("========== STUDENT ==========");
+console.log(student);
 
-        schoolId,
+console.log("========== FEE STRUCTURE ==========");
+console.log(feeStructure);
 
-        studentId:
-          student.id,
-
-        feeStructureId:
-          feeStructure.id,
-
-        month:
-          new Date()
-            .getMonth() + 1,
-
-        year:
-          new Date()
-            .getFullYear(),
-
-        dueDate:
-          new Date(),
-      }
-    );
+// ✅ Validation
+if (!feeStructure) {
+  throw new Error(
+    `Fee Structure not found for Class ${admission.classId} and Academic Year ${admission.academicYearId}. Please create Fee Structure first.`
+  );
 }
+
+console.log("Calling Fee Generation...");
+
+await this.studentFeeService.generateWithTransaction(tx, {
+  schoolId,
+  studentId: student.id,
+  feeStructureId: feeStructure.id,
+  month: new Date().getMonth() + 1,
+  year: new Date().getFullYear(),
+  dueDate: new Date(),
+});
         // 6️⃣ UPDATE ADMISSION
-
-        await tx.admission.update({
-
-          where: {
-            id: admission.id,
-          },
-
+        await tx.admission.update({where: {id: admission.id,},
           data: {
-
-            studentId:
-              student.id,
-
+            studentId:student.id,
             rollNumber,
-
             admissionNo,
-
             status: "ACTIVE",
           },
         });
-
         return {
-
-          message:
-            "Admission approved successfully",
-
-          studentId:
-            student.id,
+          message:"Admission approved successfully",
+          studentId:student.id,
         };
       }
     );

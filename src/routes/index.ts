@@ -34,7 +34,8 @@ from "../models/transportRoute/transportRoute.routes.js";
 import studentScholarshipRoutes from "../models/studentScholarship/studentScholarship.routes.js";
 import scholarshipRoutes
 from "../models/scholarship/scholarship.routes.js";
-
+import studentDiscountRoutes
+from "../models/studentDiscount/studentDiscount.routes.js";
 const router = express.Router();
 
 router.use("/auth", authRoutes);
@@ -68,4 +69,8 @@ router.use("/student-fee",studentFeeRoutes);
 router.use("/transport-routes", transportRouteRoutes);
 router.use("/student-scholarships", studentScholarshipRoutes);
 router.use("/scholarships", scholarshipRoutes);
+router.use(
+  "/student-discounts",
+  studentDiscountRoutes
+);
 export default router;

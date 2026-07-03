@@ -416,7 +416,8 @@ class StudentFeeRepository {
     tx: any,
     data: any
   ) {
-
+console.log("========== GENERATE FEE ==========");
+console.log(data);
     // =====================================
     // CHECK EXISTING
     // =====================================
@@ -470,7 +471,11 @@ class StudentFeeRepository {
             items: true,
           },
         });
+console.log("========== STRUCTURE ==========");
+console.log(structure);
 
+console.log("========== ITEMS ==========");
+console.log(structure?.items);
     if (!structure) {
 
       throw new Error(
@@ -577,6 +582,7 @@ class StudentFeeRepository {
       }
     }
 
+    console.log("TOTAL =", total);
 
     // =====================================
 // SCHOLARSHIP
@@ -592,7 +598,8 @@ const studentScholarship =
       scholarship: true,
     },
   });
-
+console.log("========== SCHOLARSHIP ==========");
+console.log(studentScholarship);
 const {
   discount,
   finalAmount,
@@ -600,10 +607,12 @@ const {
   total,
   studentScholarship?.scholarship
 );
+console.log("Discount =", discount);
+console.log("Final Amount =", finalAmount);
     // =====================================
     // CREATE
     // =====================================
-
+console.log("Creating Student Fee...");
     return tx
       .studentFee
       .create({

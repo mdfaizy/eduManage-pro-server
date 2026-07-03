@@ -3,9 +3,9 @@ import {
   Response,
 } from "express";
 
-import service from "./studentScholarship.service.js";
+import service from "./studentDiscount.service.js";
 
-class StudentScholarshipController {
+class StudentDiscountController {
 
   // =====================================
   // CREATE
@@ -15,6 +15,7 @@ class StudentScholarshipController {
     req: Request,
     res: Response
   ) {
+
     try {
 
       const schoolId =
@@ -22,25 +23,37 @@ class StudentScholarshipController {
 
       const data =
         await service.create({
+
           ...req.body,
+
           schoolId,
+
         });
 
       res.status(201).json({
+
         success: true,
+
         message:
-          "Student scholarship assigned successfully",
+          "Student discount added successfully.",
+
         data,
+
       });
 
     } catch (e: any) {
 
       res.status(400).json({
+
         success: false,
-        message: e.message,
+
+        message:
+          e.message,
+
       });
 
     }
+
   }
 
   // =====================================
@@ -63,15 +76,22 @@ class StudentScholarshipController {
         );
 
       res.status(200).json({
+
         success: true,
+
         data,
+
       });
 
     } catch (e: any) {
 
       res.status(500).json({
+
         success: false,
-        message: e.message,
+
+        message:
+          e.message,
+
       });
 
     }
@@ -94,20 +114,30 @@ class StudentScholarshipController {
 
       const data =
         await service.getOne(
+
           Number(req.params.id),
+
           schoolId
+
         );
 
       res.status(200).json({
+
         success: true,
+
         data,
+
       });
 
     } catch (e: any) {
 
       res.status(404).json({
+
         success: false,
-        message: e.message,
+
+        message:
+          e.message,
+
       });
 
     }
@@ -130,23 +160,35 @@ class StudentScholarshipController {
 
       const data =
         await service.update(
+
           Number(req.params.id),
+
           schoolId,
+
           req.body
+
         );
 
       res.status(200).json({
+
         success: true,
+
         message:
-          "Student scholarship updated successfully",
+          "Student discount updated successfully.",
+
         data,
+
       });
 
     } catch (e: any) {
 
       res.status(400).json({
+
         success: false,
-        message: e.message,
+
+        message:
+          e.message,
+
       });
 
     }
@@ -168,21 +210,31 @@ class StudentScholarshipController {
         (req as any).user.schoolId;
 
       await service.delete(
+
         Number(req.params.id),
+
         schoolId
+
       );
 
       res.status(200).json({
+
         success: true,
+
         message:
-          "Student scholarship deleted successfully",
+          "Student discount deleted successfully.",
+
       });
 
     } catch (e: any) {
 
       res.status(400).json({
+
         success: false,
-        message: e.message,
+
+        message:
+          e.message,
+
       });
 
     }
@@ -205,23 +257,35 @@ class StudentScholarshipController {
 
       const data =
         await service.toggle(
+
           Number(req.params.id),
+
           schoolId,
+
           req.body.isActive
+
         );
 
       res.status(200).json({
+
         success: true,
+
         message:
-          "Student scholarship status updated",
+          "Student discount status updated.",
+
         data,
+
       });
 
     } catch (e: any) {
 
       res.status(400).json({
+
         success: false,
-        message: e.message,
+
+        message:
+          e.message,
+
       });
 
     }
@@ -230,4 +294,4 @@ class StudentScholarshipController {
 
 }
 
-export default new StudentScholarshipController();
+export default new StudentDiscountController();

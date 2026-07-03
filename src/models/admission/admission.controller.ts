@@ -23,8 +23,9 @@ export class AdmissionController {
     try {
       const schoolId =(req as any).user.schoolId;
       const id =Number(req.params.id);
-      const data =await this.service.approveAdmission(
-          id,schoolId);
+      const data =await this.service.approveAdmission(id,schoolId);
+      console.log("Admission Approved Successfully");
+console.log(data);
       res.json({
         success: true,
         data,
