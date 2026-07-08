@@ -749,17 +749,20 @@ console.log("Creating Student Fee...");
         }
 
         const newPaid =
-
-          fee.paidAmount +
-          data.amount;
+  Number(fee.paidAmount) +
+  Number(data.amount);
 
         // const newDue =
 
         //   fee.totalAmount -
         //   newPaid;
-        const newDue =
-  (fee.totalAmount - fee.discount) -
-  newPaid;
+       const newDue =
+  Math.max(
+    0,
+    Number(fee.totalAmount) -
+      Number(fee.discount) -
+      newPaid
+  );
 
         let status: any =
           "PENDING";
@@ -774,8 +777,9 @@ console.log("Creating Student Fee...");
 
         //   status = "PARTIAL";
         // }
-        const payableAmount =
-  fee.totalAmount - fee.discount;
+    const payableAmount =
+  Number(fee.totalAmount) -
+  Number(fee.discount);
 
 if (newPaid >= payableAmount) {
 
