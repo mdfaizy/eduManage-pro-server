@@ -1,0 +1,329 @@
+///////////////////////////////////////////////////////////////
+// 👨‍🎓 STUDENT MODULE
+///////////////////////////////////////////////////////////////
+model Student {
+  id Int @id @default(autoincrement())
+  /////////////////////////////////////////////////////////////
+  // BASIC INFORMATION
+  /////////////////////////////////////////////////////////////
+
+  schoolId Int
+
+  userId Int? @unique
+
+  name String
+
+  profilePhoto String?
+
+  studentCode String @unique
+
+  dob DateTime?
+
+  gender Gender?
+
+  address String?
+
+  phoneNumber String?
+
+  email String?
+
+  /////////////////////////////////////////////////////////////
+  // STATUS
+  /////////////////////////////////////////////////////////////
+
+  isActive Boolean @default(true)
+
+  isDeleted Boolean @default(false)
+
+  /////////////////////////////////////////////////////////////
+  // RELATIONS
+  /////////////////////////////////////////////////////////////
+
+  school School @relation(fields: [schoolId], references: [id])
+
+  user User? @relation(fields: [userId], references: [id])
+
+  admissions Admission[]
+
+  academicRecords StudentAcademicRecord[]
+
+  attendanceRecords StudentAttendanceRecord[]
+
+  examMarks ExamMark[]
+
+  studentFees StudentFee[]
+
+  studentScholarships StudentScholarship[]
+
+  studentDiscounts StudentDiscount[]
+
+  parents StudentParent[]
+
+  /////////////////////////////////////////////////////////////
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  @@index([schoolId])
+}
+
+///////////////////////////////////////////////////////////////
+
+model StudentAcademicRecord {
+  id Int @id @default(autoincrement())
+
+  /////////////////////////////////////////////////////////////
+
+  schoolId Int
+
+  studentId Int
+
+  academicYearId Int
+
+  classId Int
+
+  sectionId Int?
+
+  transportRouteId Int?
+
+  /////////////////////////////////////////////////////////////
+
+  rollNumber Int
+
+  admissionNo String
+
+  /////////////////////////////////////////////////////////////
+
+  isCurrent Boolean @default(true)
+
+  status AcademicRecordStatus @default(ACTIVE)
+
+  /////////////////////////////////////////////////////////////
+
+  promotedFromId Int?
+
+  /////////////////////////////////////////////////////////////
+  // RELATIONS
+  /////////////////////////////////////////////////////////////
+
+  school School @relation(fields: [schoolId], references: [id])
+
+  student Student @relation(fields: [studentId], references: [id])
+
+  academicYear AcademicYear @relation(fields: [academicYearId], references: [id])
+
+  class Class @relation(fields: [classId], references: [id])
+
+  section Section? @relation(fields: [sectionId], references: [id])
+
+  transportRoute TransportRoute?    @relation(fields: [transportRouteId], references: [id])
+
+  promotedFrom StudentAcademicRecord?    @relation("PromotionHistory", fields: [promotedFromId], references: [id])
+
+  promotedTo StudentAcademicRecord[]    @relation("PromotionHistory")
+
+  /////////////////////////////////////////////////////////////
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  /////////////////////////////////////////////////////////////
+
+  @@index([schoolId])
+
+  @@index([studentId])
+
+  @@index([academicYearId])
+}
+
+///////////////////////////////////////////////////////////////
+
+model Admission {
+  id Int @id @default(autoincrement())
+
+  /////////////////////////////////////////////////////////////
+
+  schoolId Int
+
+  studentId Int?
+
+  /////////////////////////////////////////////////////////////
+
+  studentName String
+
+  dob DateTime?
+
+  gender Gender?
+
+  /////////////////////////////////////////////////////////////
+
+  address String?
+
+  phoneNumber String?
+
+  email String?
+
+  /////////////////////////////////////////////////////////////
+
+  classId Int
+
+  sectionId Int?
+
+  academicYearId Int
+
+  /////////////////////////////////////////////////////////////
+
+  previousSchool String?
+
+  previousClass String?
+
+  previousPercentage Float?
+
+  /////////////////////////////////////////////////////////////
+
+  rollNumber Int?
+
+  admissionNo String?
+
+  /////////////////////////////////////////////////////////////
+
+  bloodGroup String?
+
+  nationality String?
+
+  religion String?
+
+  caste String?
+
+  aadharNumber String?
+
+  /////////////////////////////////////////////////////////////
+  // FATHER
+  /////////////////////////////////////////////////////////////
+
+  fatherName String?
+
+  fatherPhone String?
+
+  fatherEmail String?
+
+  fatherOccupation String?
+
+  /////////////////////////////////////////////////////////////
+  // MOTHER
+  /////////////////////////////////////////////////////////////
+
+  motherName String?
+
+  motherPhone String?
+
+  motherEmail String?
+
+  motherOccupation String?
+
+  /////////////////////////////////////////////////////////////
+  // GUARDIAN
+  /////////////////////////////////////////////////////////////
+
+  guardianName String?
+
+  guardianRelation String?
+
+  guardianPhone String?
+
+  guardianEmail String?
+
+  /////////////////////////////////////////////////////////////
+
+  admissionType AdmissionType @default(NEW)
+
+  status AdmissionStatus @default(PENDING)
+
+  admissionDate DateTime? @default(now())
+
+  approvedAt DateTime?
+
+  /////////////////////////////////////////////////////////////
+
+  medium String?
+
+  previousBoard String?
+
+  tcNumber String?
+
+  /////////////////////////////////////////////////////////////
+  // RELATIONS
+  /////////////////////////////////////////////////////////////
+
+  school School @relation(fields: [schoolId], references: [id])
+
+  student Student? @relation(fields: [studentId], references: [id])
+
+  class Class @relation(fields: [classId], references: [id])
+
+  section Section? @relation(fields: [sectionId], references: [id])
+
+  academicYear AcademicYear    @relation(fields: [academicYearId], references: [id])
+
+  /////////////////////////////////////////////////////////////
+
+  createdAt DateTime @default(now())
+
+  @@index([schoolId])
+}
+
+///////////////////////////////////////////////////////////////
+
+model StudentParent {
+  studentId Int
+
+  parentId Int
+
+  /////////////////////////////////////////////////////////////
+
+  student Student    @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  parent Parent    @relation(fields: [parentId], references: [id], onDelete: Cascade)
+
+  /////////////////////////////////////////////////////////////
+
+  createdAt DateTime @default(now())
+
+  /////////////////////////////////////////////////////////////
+
+  @@id([studentId, parentId])
+
+  @@index([parentId])
+}
+
+///////////////////////////////////////////////////////////////
+
+enum AcademicRecordStatus {
+  ACTIVE
+  PROMOTED
+  REVERTED
+  TRANSFERRED
+  COMPLETED
+  DROPPED
+}
+
+///////////////////////////////////////////////////////////////
+
+enum AdmissionType {
+  NEW
+  TRANSFER
+  READMISSION
+}
+
+///////////////////////////////////////////////////////////////
+
+enum AdmissionStatus {
+  PENDING
+  APPROVED
+  ACTIVE
+  CANCELLED
+  TRANSFERRED
+  COMPLETED
+}

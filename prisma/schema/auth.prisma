@@ -1,0 +1,140 @@
+///////////////////////////////////////////////////////////////
+// 🔐 AUTH & RBAC
+///////////////////////////////////////////////////////////////
+
+model User {
+  id            Int     @id @default(autoincrement())
+  name          String
+  email         String  @unique
+  password      String
+
+  isActive      Boolean @default(true)
+  isDeleted     Boolean @default(false)
+  emailVerified Boolean @default(false)
+  schoolId Int?
+  /////////////////////////////////////////////////////////////
+  // RELATIONS
+  /////////////////////////////////////////////////////////////
+  school School? @relation(fields: [schoolId], references: [id])
+  teacher Teacher?
+  student Student?
+  parent Parent?
+  roles UserRole[]
+  tokens Token[]
+  userPermissions UserPermission[]
+  paymentReceipts PaymentReceipt[]
+  markedAttendances StudentAttendanceSession[]
+  employeeAttendanceRecords EmployeeAttendance[]
+  /////////////////////////////////////////////////////////////
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+///////////////////////////////////////////////////////////////
+
+model Role {
+  id Int @id @default(autoincrement())
+
+  name String
+
+  schoolId Int?
+
+  profileType String?
+
+  users UserRole[]
+
+  permissions RolePermission[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([name, schoolId])
+}
+
+///////////////////////////////////////////////////////////////
+
+model Permission {
+  id Int @id @default(autoincrement())
+
+  key String @unique
+
+  description String?
+
+  roles RolePermission[]
+
+  userPermissions UserPermission[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+///////////////////////////////////////////////////////////////
+
+model UserRole {
+  userId Int
+
+  roleId Int
+
+  user User @relation(fields: [userId], references: [id])
+
+  role Role @relation(fields: [roleId], references: [id])
+
+  @@id([userId, roleId])
+}
+
+///////////////////////////////////////////////////////////////
+
+model UserPermission {
+  id Int @id @default(autoincrement())
+
+  userId Int
+
+  permissionId Int
+
+  granted Boolean @default(true)
+
+  user User @relation(fields: [userId], references: [id])
+
+  permission Permission @relation(fields: [permissionId], references: [id])
+
+  @@unique([userId, permissionId])
+}
+
+///////////////////////////////////////////////////////////////
+
+model RolePermission {
+  roleId Int
+
+  permissionId Int
+
+  role Role @relation(fields: [roleId], references: [id])
+
+  permission Permission @relation(fields: [permissionId], references: [id])
+
+  @@id([roleId, permissionId])
+}
+
+///////////////////////////////////////////////////////////////
+
+model Token {
+  id Int @id @default(autoincrement())
+  userId Int
+  tokenHash String @unique
+  type TokenType
+  expiresAt DateTime
+  isUsed Boolean @default(false)
+  isRevoked Boolean @default(false)
+  userAgent String?
+  ipAddress String?
+  createdAt DateTime @default(now())
+  user User @relation(fields: [userId],references: [id],onDelete: Cascade)
+  @@index([userId, type])
+}
+///////////////////////////////////////////////////////////////
+enum TokenType {
+  ACCESS
+  REFRESH
+  RESET_PASSWORD
+  VERIFY_EMAIL
+  SET_PASSWORD
+}

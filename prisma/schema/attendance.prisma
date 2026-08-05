@@ -1,0 +1,146 @@
+///////////////////////////////////////////////////////////////
+// 📋 ATTENDANCE MODULE
+///////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////
+// STUDENT ATTENDANCE SESSION
+///////////////////////////////////////////////////////////////
+
+model StudentAttendanceSession {
+    id Int @id @default(autoincrement())
+
+    schoolId Int
+
+    classId Int
+
+    sectionId Int?
+
+    markedById Int
+
+    attendanceDate DateTime @db.Date
+
+    /////////////////////////////////////////////////////////////
+    // RELATIONS
+    /////////////////////////////////////////////////////////////
+
+    school School @relation("SchoolStudentAttendanceSessions", fields: [schoolId], references: [id])
+
+    class Class @relation(fields: [classId], references: [id])
+
+    section Section?    @relation(fields: [sectionId], references: [id])
+
+    markedBy User    @relation(fields: [markedById], references: [id])
+
+    records StudentAttendanceRecord[]
+
+    /////////////////////////////////////////////////////////////
+
+    createdAt DateTime @default(now())
+
+    updatedAt DateTime @updatedAt
+
+    /////////////////////////////////////////////////////////////
+
+    @@unique([schoolId, classId, sectionId, attendanceDate])
+    @@index([schoolId, attendanceDate])
+}
+
+///////////////////////////////////////////////////////////////
+// STUDENT ATTENDANCE RECORD
+///////////////////////////////////////////////////////////////
+
+model StudentAttendanceRecord {
+    id Int @id @default(autoincrement())
+
+    sessionId Int
+
+    studentId Int
+
+    status AttendanceStatus
+
+    remarks String?
+
+    /////////////////////////////////////////////////////////////
+    // RELATIONS
+    /////////////////////////////////////////////////////////////
+
+   session StudentAttendanceSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+    /////////////////////////////////////////////////////////////
+
+    createdAt DateTime @default(now())
+
+    updatedAt DateTime @updatedAt
+
+    /////////////////////////////////////////////////////////////
+
+    @@unique([sessionId, studentId])
+    @@index([studentId])
+}
+
+///////////////////////////////////////////////////////////////
+// EMPLOYEE ATTENDANCE
+///////////////////////////////////////////////////////////////
+
+model EmployeeAttendance {
+    id Int @id @default(autoincrement())
+
+    schoolId Int
+
+    employeeId Int
+
+    attendanceDate DateTime @db.Date
+
+    checkInTime DateTime?
+
+    checkOutTime DateTime?
+
+    status EmployeeAttendanceStatus
+
+    remarks String?
+
+    /////////////////////////////////////////////////////////////
+    // RELATIONS
+    /////////////////////////////////////////////////////////////
+
+    school School @relation("SchoolEmployeeAttendances", fields: [schoolId], references: [id])
+
+    employee User @relation(fields: [employeeId], references: [id])
+
+    /////////////////////////////////////////////////////////////
+
+    createdAt DateTime @default(now())
+
+    updatedAt DateTime @updatedAt
+
+    /////////////////////////////////////////////////////////////
+
+    @@unique([employeeId, attendanceDate])
+    @@index([schoolId, attendanceDate])
+}
+
+///////////////////////////////////////////////////////////////
+// STUDENT ATTENDANCE STATUS
+///////////////////////////////////////////////////////////////
+
+enum AttendanceStatus {
+    PRESENT
+    ABSENT
+    LATE
+    HALF_DAY
+    LEAVE
+}
+
+///////////////////////////////////////////////////////////////
+// EMPLOYEE ATTENDANCE STATUS
+///////////////////////////////////////////////////////////////
+
+enum EmployeeAttendanceStatus {
+    PRESENT
+    ABSENT
+    LATE
+    HALF_DAY
+    LEAVE
+    HOLIDAY
+}
