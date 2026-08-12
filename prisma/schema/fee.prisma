@@ -327,6 +327,8 @@ model PaymentReceipt {
   @@index([studentFeeId])
 
   @@index([paymentDate])
+
+  @@map("paymentreceipt")
 }
 
 ///////////////////////////////////////////////////////////////
@@ -369,6 +371,30 @@ enum PaymentTransactionStatus {
   FAILED
 
   PENDING
+}
+
+
+model Report {
+  id          Int      @id @default(autoincrement())
+  schoolId    Int
+  title       String
+  type        ReportType
+  filePath    String?
+  generatedBy Int
+  createdAt   DateTime @default(now())
+
+  school School @relation(fields: [schoolId], references: [id])
+  user   User   @relation(fields: [generatedBy], references: [id])
+
+  @@index([schoolId])
+}
+
+enum ReportType {
+  FEE_COLLECTION
+  PENDING_FEE
+  STUDENT_LEDGER
+  SCHOLARSHIP
+  DISCOUNT
 }
 
 ///////////////////////////////////////////////////////////////

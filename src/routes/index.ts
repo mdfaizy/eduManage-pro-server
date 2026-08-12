@@ -37,6 +37,7 @@ from "../models/scholarship/scholarship.routes.js";
 import studentDiscountRoutes
 from "../models/studentDiscount/studentDiscount.routes.js";
 import paymentRoutes from "../models/payment/payment.routes.js";
+import reportRoutes from "../models/report/report.routes.js";
 const router = express.Router();
 
 router.use("/auth", authRoutes);
@@ -74,4 +75,5 @@ router.use("/student-discounts",
   studentDiscountRoutes
 );
 router.use("/payments", paymentRoutes);
+router.use("/reports", reportRoutes);
 export default router;

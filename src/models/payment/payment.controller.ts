@@ -4,188 +4,416 @@ import { PaymentService } from "./payment.service";
 const paymentService = new PaymentService();
 
 export class PaymentController {
+
+  // =====================================================
   // CREATE
+  // =====================================================
+
   static async createPayment(req: Request, res: Response) {
     try {
       const userId = req.user?.id;
-      if (!userId) {
-        return res.status(401).json({ error: "Unauthorized" });
+      const schoolId = req.user?.schoolId;
+
+      if (!userId || !schoolId) {
+        return res.status(401).json({
+          error: "Unauthorized",
+        });
       }
 
-      const payment = await paymentService.createPayment(req.body, userId);
-      res.status(201).json(payment);
+      const payment = await paymentService.createPayment(
+        req.body,
+        userId,
+        schoolId
+      );
+
+      return res.status(201).json(payment);
     } catch (error: any) {
-      res.status(400).json({ error: error.message });
+      return res.status(400).json({
+        error: error.message,
+      });
     }
   }
 
-  // FIND ALL
+  // =====================================================
+  // GET ALL
+  // =====================================================
+
   static async getPayments(req: Request, res: Response) {
     try {
       const schoolId = req.user?.schoolId;
 
-if (!schoolId) {
-  return res.status(401).json({
-    error: "Unauthorized",
-  });
-}
+      if (!schoolId) {
+        return res.status(401).json({
+          error: "Unauthorized",
+        });
+      }
 
-      const payments = await paymentService.getPayments(schoolId, req.query);
-      res.json(payments);
+      const payments = await paymentService.getPayments(
+        schoolId,
+        req.query
+      );
+
+      return res.json(payments);
     } catch (error: any) {
-      res.status(500).json({ error: error.message });
+      return res.status(500).json({
+        error: error.message,
+      });
     }
   }
 
-  // FIND ONE
-  static async getPaymentById(req: Request, res: Response) {
+  // =====================================================
+  // PAYMENT REPORT
+  // =====================================================
+
+  static async getPaymentReport(req: Request, res: Response) {
     try {
-      const id = parseInt(req.params.id);
-      const payment = await paymentService.getPaymentById(id);
-      res.json(payment);
+      const schoolId = req.user?.schoolId;
+
+      if (!schoolId) {
+        return res.status(401).json({
+          error: "Unauthorized",
+        });
+      }
+
+      const report = await paymentService.getPaymentReport(
+        schoolId,
+        req.query
+      );
+
+      return res.json(report);
     } catch (error: any) {
-      res.status(404).json({ error: error.message });
+      return res.status(500).json({
+        error: error.message,
+      });
     }
   }
 
-  // FIND BY RECEIPT NO
-  static async getPaymentByReceiptNo(req: Request, res: Response) {
-    try {
-      const { receiptNo } = req.params;
-      const payment = await paymentService.getPaymentByReceiptNo(receiptNo);
-      res.json(payment);
-    } catch (error: any) {
-      res.status(404).json({ error: error.message });
-    }
-  }
+  // =====================================================
+  // SUMMARY
+  // =====================================================
 
-  // GET STUDENT PAYMENTS
-  static async getStudentPayments(req: Request, res: Response) {
-    try {
-      const studentId = parseInt(req.params.studentId);
-      const payments = await paymentService.getStudentPayments(studentId);
-      res.json(payments);
-    } catch (error: any) {
-      res.status(500).json({ error: error.message });
-    }
-  }
-
-  // GET PAYMENT SUMMARY
   static async getPaymentSummary(req: Request, res: Response) {
     try {
-      const schoolId = parseInt(req.query.schoolId as string);
-      const studentId = req.query.studentId ? parseInt(req.query.studentId as string) : undefined;
+      const schoolId = req.user?.schoolId;
 
       if (!schoolId) {
-        return res.status(400).json({ error: "School ID is required" });
+        return res.status(401).json({
+          error: "Unauthorized",
+        });
       }
 
-      const summary = await paymentService.getPaymentSummary(schoolId, studentId);
-      res.json(summary);
+      const summary = await paymentService.getPaymentSummary(
+        schoolId,
+        req.query
+      );
+
+      return res.json(summary);
     } catch (error: any) {
-      res.status(500).json({ error: error.message });
+      return res.status(500).json({
+        error: error.message,
+      });
     }
   }
 
-  // GET PAYMENT STATS
+  // =====================================================
+  // STATS
+  // =====================================================
+
   static async getPaymentStats(req: Request, res: Response) {
     try {
-      const schoolId = parseInt(req.query.schoolId as string);
-      const academicYearId = req.query.academicYearId ? parseInt(req.query.academicYearId as string) : undefined;
+      const schoolId = req.user?.schoolId;
 
       if (!schoolId) {
-        return res.status(400).json({ error: "School ID is required" });
+        return res.status(401).json({
+          error: "Unauthorized",
+        });
       }
 
-      const stats = await paymentService.getPaymentStats(schoolId, academicYearId);
-      res.json(stats);
+      const academicYearId = req.query.academicYearId
+        ? Number(req.query.academicYearId)
+        : undefined;
+
+      const stats = await paymentService.getPaymentStats(
+        schoolId,
+        academicYearId
+      );
+
+      return res.json(stats);
     } catch (error: any) {
-      res.status(500).json({ error: error.message });
+      return res.status(500).json({
+        error: error.message,
+      });
     }
   }
 
-  // GET PAYMENT ANALYTICS
+  // =====================================================
+  // ANALYTICS
+  // =====================================================
+
   static async getPaymentAnalytics(req: Request, res: Response) {
     try {
-      const schoolId = parseInt(req.query.schoolId as string);
-      const startDate = req.query.startDate as string;
-      const endDate = req.query.endDate as string;
+      const schoolId = req.user?.schoolId;
 
-      if (!schoolId || !startDate || !endDate) {
-        return res.status(400).json({ error: "School ID, startDate, and endDate are required" });
+      if (!schoolId) {
+        return res.status(401).json({
+          error: "Unauthorized",
+        });
       }
 
-      const analytics = await paymentService.getPaymentAnalytics(schoolId, startDate, endDate);
-      res.json(analytics);
+      const analytics = await paymentService.getPaymentAnalytics(
+        schoolId,
+        req.query
+      );
+
+      return res.json(analytics);
     } catch (error: any) {
-      res.status(500).json({ error: error.message });
+      return res.status(400).json({
+        error: error.message,
+      });
     }
   }
 
-  // GET PENDING PAYMENTS
+  // =====================================================
+  // STUDENT PAYMENTS
+  // =====================================================
+
+  static async getStudentPayments(req: Request, res: Response) {
+    try {
+      const schoolId = req.user?.schoolId;
+      const studentId = Number(req.params.studentId);
+
+      if (!schoolId) {
+        return res.status(401).json({
+          error: "Unauthorized",
+        });
+      }
+
+      if (!studentId) {
+        return res.status(400).json({
+          error: "Invalid student ID",
+        });
+      }
+
+      const payments = await paymentService.getStudentPayments(
+        schoolId,
+        studentId
+      );
+
+      return res.json(payments);
+    } catch (error: any) {
+      return res.status(500).json({
+        error: error.message,
+      });
+    }
+  }
+
+  // =====================================================
+  // PAYMENT BY RECEIPT
+  // =====================================================
+
+  static async getPaymentByReceiptNo(req: Request, res: Response) {
+    try {
+      const schoolId = req.user?.schoolId;
+      const { receiptNo } = req.params;
+
+      if (!schoolId) {
+        return res.status(401).json({
+          error: "Unauthorized",
+        });
+      }
+
+      const payment =
+        await paymentService.getPaymentByReceiptNo(
+          schoolId,
+          receiptNo
+        );
+
+      return res.json(payment);
+    } catch (error: any) {
+      return res.status(404).json({
+        error: error.message,
+      });
+    }
+  }
+
+  // =====================================================
+  // PAYMENT BY ID
+  // =====================================================
+
+  static async getPaymentById(req: Request, res: Response) {
+    try {
+      const schoolId = req.user?.schoolId;
+      const id = Number(req.params.id);
+
+      if (!schoolId) {
+        return res.status(401).json({
+          error: "Unauthorized",
+        });
+      }
+
+      const payment =
+        await paymentService.getPaymentById(
+          schoolId,
+          id
+        );
+
+      return res.json(payment);
+    } catch (error: any) {
+      return res.status(404).json({
+        error: error.message,
+      });
+    }
+  }
+
+  // =====================================================
+  // PENDING
+  // =====================================================
+
   static async getPendingPayments(req: Request, res: Response) {
     try {
-      const schoolId = parseInt(req.query.schoolId as string);
-      const studentId = req.query.studentId ? parseInt(req.query.studentId as string) : undefined;
+      const schoolId = req.user?.schoolId;
 
       if (!schoolId) {
-        return res.status(400).json({ error: "School ID is required" });
+        return res.status(401).json({
+          error: "Unauthorized",
+        });
       }
 
-      const pending = await paymentService.getPendingPayments(schoolId, studentId);
-      res.json(pending);
+      const studentId = req.query.studentId
+        ? Number(req.query.studentId)
+        : undefined;
+
+      const pending =
+        await paymentService.getPendingPayments(
+          schoolId,
+          studentId
+        );
+
+      return res.json(pending);
     } catch (error: any) {
-      res.status(500).json({ error: error.message });
+      return res.status(500).json({
+        error: error.message,
+      });
     }
   }
 
-  // GET OVERDUE PAYMENTS
+  // =====================================================
+  // OVERDUE
+  // =====================================================
+
   static async getOverduePayments(req: Request, res: Response) {
     try {
-      const schoolId = parseInt(req.query.schoolId as string);
-      const studentId = req.query.studentId ? parseInt(req.query.studentId as string) : undefined;
+      const schoolId = req.user?.schoolId;
 
       if (!schoolId) {
-        return res.status(400).json({ error: "School ID is required" });
+        return res.status(401).json({
+          error: "Unauthorized",
+        });
       }
 
-      const overdue = await paymentService.getOverduePayments(schoolId, studentId);
-      res.json(overdue);
+      const studentId = req.query.studentId
+        ? Number(req.query.studentId)
+        : undefined;
+
+      const overdue =
+        await paymentService.getOverduePayments(
+          schoolId,
+          studentId
+        );
+
+      return res.json(overdue);
     } catch (error: any) {
-      res.status(500).json({ error: error.message });
+      return res.status(500).json({
+        error: error.message,
+      });
     }
   }
 
+  // =====================================================
   // UPDATE
+  // =====================================================
+
   static async updatePayment(req: Request, res: Response) {
     try {
-      const id = parseInt(req.params.id);
-      const payment = await paymentService.updatePayment(id, req.body);
-      res.json(payment);
+      const schoolId = req.user?.schoolId;
+      const id = Number(req.params.id);
+
+      if (!schoolId) {
+        return res.status(401).json({
+          error: "Unauthorized",
+        });
+      }
+
+      const payment =
+        await paymentService.updatePayment(
+          schoolId,
+          id,
+          req.body
+        );
+
+      return res.json(payment);
     } catch (error: any) {
-      res.status(400).json({ error: error.message });
+      return res.status(400).json({
+        error: error.message,
+      });
     }
   }
 
+  // =====================================================
   // DELETE
+  // =====================================================
+
   static async deletePayment(req: Request, res: Response) {
     try {
-      const id = parseInt(req.params.id);
-      const result = await paymentService.deletePayment(id);
-      res.json(result);
+      const schoolId = req.user?.schoolId;
+      const id = Number(req.params.id);
+
+      if (!schoolId) {
+        return res.status(401).json({
+          error: "Unauthorized",
+        });
+      }
+
+      const result =
+        await paymentService.deletePayment(
+          schoolId,
+          id
+        );
+
+      return res.json(result);
     } catch (error: any) {
-      res.status(400).json({ error: error.message });
+      return res.status(400).json({
+        error: error.message,
+      });
     }
   }
 
+  // =====================================================
   // DOWNLOAD RECEIPT
+  // =====================================================
+
   static async downloadReceipt(req: Request, res: Response) {
     try {
-      const id = parseInt(req.params.id);
-      const result = await paymentService.downloadReceipt(id);
-      res.json(result);
+      const schoolId = req.user?.schoolId;
+      const id = Number(req.params.id);
+
+      if (!schoolId) {
+        return res.status(401).json({
+          error: "Unauthorized",
+        });
+      }
+
+      const result =
+        await paymentService.downloadReceipt(
+          schoolId,
+          id
+        );
+
+      return res.json(result);
     } catch (error: any) {
-      res.status(404).json({ error: error.message });
+      return res.status(404).json({
+        error: error.message,
+      });
     }
   }
 }

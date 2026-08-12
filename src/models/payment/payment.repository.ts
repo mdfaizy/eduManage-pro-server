@@ -1,116 +1,680 @@
 import prisma from "../../config/prisma";
-import { PaymentMethod } from "@prisma/client";
+import {
+  FeeStatus,
+ PaymentTransactionStatus,
+} from "../../generated/prisma";
 
 export class PaymentRepository {
-  // CREATE
-  create(data: any) {
-    return prisma.paymentReceipt.create({
-      data,
-      include: {
-        studentFee: {
-          include: {
-            student: true,
-            feeStructure: true,
-          },
-        },
-        receivedBy: true,
-      },
-    });
-  }
 
-  createMany(data: any[]) {
-    return prisma.paymentReceipt.createMany({
-      data,
-      skipDuplicates: true,
-    });
-  }
+  // =====================================================
+  // FIND PAYMENTS
+  // =====================================================
 
-  // FIND
-  findBySchool(schoolId: number, query?: any) {
-    const { page = 1, limit = 10, startDate, endDate, paymentMethod, status } = query || {};
+  async findBySchool(
+    schoolId: number,
+    query: any = {}
+  ) {
+    const page = Math.max(Number(query.page) || 1, 1);
+    const limit = Math.min(
+      Math.max(Number(query.limit) || 10, 1),
+      100
+    );
+
     const skip = (page - 1) * limit;
 
-    const where: any = { schoolId };
+    const where: any = {
+      schoolId,
+    };
 
-    if (paymentMethod) where.paymentMethod = paymentMethod;
-    if (status) where.status = status;
-    if (startDate || endDate) {
+    // ---------------------------------------------------
+    // DATE
+    // ---------------------------------------------------
+
+    if (query.startDate || query.endDate) {
       where.paymentDate = {};
-      if (startDate) where.paymentDate.gte = new Date(startDate);
-      if (endDate) where.paymentDate.lte = new Date(endDate);
+
+      if (query.startDate) {
+        where.paymentDate.gte =
+          new Date(`${query.startDate}T00:00:00`);
+      }
+
+      if (query.endDate) {
+        where.paymentDate.lte =
+          new Date(`${query.endDate}T23:59:59.999`);
+      }
     }
 
-    return prisma.paymentReceipt.findMany({
-      where,
-      include: {
-        studentFee: {
-          include: {
-            student: true,
-            feeStructure: true,
+    // ---------------------------------------------------
+    // PAYMENT METHOD
+    // ---------------------------------------------------
+
+    if (
+      query.paymentMethod &&
+      query.paymentMethod !== "ALL"
+    ) {
+      where.paymentMethod = query.paymentMethod;
+    }
+
+    // ---------------------------------------------------
+    // PAYMENT STATUS
+    // ---------------------------------------------------
+
+    if (
+      query.status &&
+      query.status !== "ALL"
+    ) {
+      where.status = query.status;
+    }
+
+    // ---------------------------------------------------
+    // CLASS
+    // ---------------------------------------------------
+
+    if (query.classId) {
+      where.studentFee = {
+        ...(where.studentFee || {}),
+        feeStructure: {
+          ...(where.studentFee?.feeStructure || {}),
+          classId: Number(query.classId),
+        },
+      };
+    }
+
+    // ---------------------------------------------------
+    // ACADEMIC YEAR
+    // ---------------------------------------------------
+
+    if (query.academicYearId) {
+      where.studentFee = {
+        ...(where.studentFee || {}),
+        feeStructure: {
+          ...(where.studentFee?.feeStructure || {}),
+          academicYearId: Number(query.academicYearId),
+        },
+      };
+    }
+
+    // ---------------------------------------------------
+    // SEARCH
+    // ---------------------------------------------------
+
+    if (query.search?.trim()) {
+      const search = query.search.trim();
+
+      where.OR = [
+        {
+          receiptNo: {
+            contains: search,
           },
         },
-        receivedBy: {
-  select: {
-    id: true,
-    name: true,
-    email: true,
-  },
-},
-      },
-      skip,
-      take: limit,
-      orderBy: { createdAt: "desc" },
-    });
-  }
-
-  findByStudent(studentId: number) {
-    return prisma.paymentReceipt.findMany({
-      where: {
-        studentFee: {
-          studentId,
-        },
-      },
-      include: {
-        studentFee: {
-          include: {
-            feeStructure: true,
+        {
+          transactionId: {
+            contains: search,
           },
         },
-        receivedBy: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
+        {
+          studentFee: {
+            student: {
+              firstName: {
+                contains: search,
+              },
+            },
           },
         },
-      },
-      orderBy: { paymentDate: "desc" },
-    });
-  }
+        {
+          studentFee: {
+            student: {
+              lastName: {
+                contains: search,
+              },
+            },
+          },
+        },
+      ];
+    }
 
-  findByStudentFee(studentFeeId: number) {
-    return prisma.paymentReceipt.findMany({
-      where: { studentFeeId },
-      orderBy: { paymentDate: "desc" },
-    });
-  }
+    const [payments, total] = await Promise.all([
+      prisma.paymentReceipt.findMany({
+        where,
 
-  findById(id: number) {
-    return prisma.paymentReceipt.findUnique({
-      where: { id },
-      include: {
-        studentFee: {
-          include: {
-            student: true,
-            feeStructure: {
-              include: {
-                items: {
-                  include: {
-                    feeHead: true,
-                  },
+        include: {
+          studentFee: {
+            include: {
+              student: true,
+
+              feeStructure: {
+                include: {
+                  class: true,
+                  academicYear: true,
                 },
               },
             },
+          },
+
+          receivedBy: {
+            select: {
+              id: true,
+      name: true,
+      email: true,
+            },
+          },
+        },
+
+        skip,
+        take: limit,
+
+        orderBy: {
+          paymentDate: "desc",
+        },
+      }),
+
+      prisma.paymentReceipt.count({
+        where,
+      }),
+    ]);
+
+    return {
+      payments,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
+  }
+
+  // =====================================================
+  // SUMMARY
+  // =====================================================
+
+async getPaymentSummary(
+  schoolId: number,
+  query: any = {}
+) {
+  /**
+   * ---------------------------------------------------------
+   * PAYMENT RECEIPT FILTER
+   * ---------------------------------------------------------
+   */
+  const paymentWhere: any = {
+    schoolId,
+  };
+
+  // Payment method filter
+  if (
+    query.paymentMethod &&
+    query.paymentMethod !== "ALL"
+  ) {
+    paymentWhere.paymentMethod = query.paymentMethod;
+  }
+
+  // Payment status filter
+  if (
+    query.status &&
+    query.status !== "ALL"
+  ) {
+    paymentWhere.status = query.status;
+  }
+
+  /**
+   * ---------------------------------------------------------
+   * STUDENT FEE FILTER
+   * Class + Academic Year
+   * ---------------------------------------------------------
+   */
+  const studentFeeWhere: any = {
+    schoolId,
+  };
+
+  if (query.classId) {
+    studentFeeWhere.feeStructure = {
+      classId: Number(query.classId),
+    };
+  }
+
+  if (query.academicYearId) {
+    studentFeeWhere.feeStructure = {
+      ...(studentFeeWhere.feeStructure || {}),
+      academicYearId: Number(query.academicYearId),
+    };
+  }
+
+  /**
+   * ---------------------------------------------------------
+   * DATE RANGE
+   * ---------------------------------------------------------
+   */
+
+  const now = new Date();
+
+  const startOfToday = new Date(now);
+  startOfToday.setHours(0, 0, 0, 0);
+
+  const startOfTomorrow = new Date(startOfToday);
+  startOfTomorrow.setDate(
+    startOfTomorrow.getDate() + 1
+  );
+
+  // Monday = start of week
+  const startOfWeek = new Date(startOfToday);
+  const day = startOfWeek.getDay();
+
+  const diff = day === 0 ? 6 : day - 1;
+
+  startOfWeek.setDate(
+    startOfWeek.getDate() - diff
+  );
+
+  const startOfMonth = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    1
+  );
+
+  const startOfYear = new Date(
+    now.getFullYear(),
+    0,
+    1
+  );
+
+  /**
+   * ---------------------------------------------------------
+   * OPTIONAL REPORT DATE FILTER
+   * ---------------------------------------------------------
+   */
+
+  const dateFilter: any = {};
+
+  if (query.startDate) {
+    dateFilter.gte = new Date(
+      `${query.startDate}T00:00:00`
+    );
+  }
+
+  if (query.endDate) {
+    dateFilter.lte = new Date(
+      `${query.endDate}T23:59:59.999`
+    );
+  }
+
+  if (
+    dateFilter.gte ||
+    dateFilter.lte
+  ) {
+    paymentWhere.paymentDate = dateFilter;
+  }
+
+  /**
+   * ---------------------------------------------------------
+   * PAYMENT COLLECTION DATA
+   * ---------------------------------------------------------
+   */
+
+  const [
+    totalCollection,
+    todayCollection,
+    weekCollection,
+    monthCollection,
+    totalTransactions,
+  ] = await Promise.all([
+    // Total collection
+    prisma.paymentReceipt.aggregate({
+      where: paymentWhere,
+      _sum: {
+        amount: true,
+      },
+    }),
+
+    // Today's collection
+    prisma.paymentReceipt.aggregate({
+      where: {
+        ...paymentWhere,
+        paymentDate: {
+          gte: startOfToday,
+          lt: startOfTomorrow,
+        },
+      },
+      _sum: {
+        amount: true,
+      },
+    }),
+
+    // This week's collection
+    prisma.paymentReceipt.aggregate({
+      where: {
+        ...paymentWhere,
+        paymentDate: {
+          gte: startOfWeek,
+        },
+      },
+      _sum: {
+        amount: true,
+      },
+    }),
+
+    // This month's collection
+    prisma.paymentReceipt.aggregate({
+      where: {
+        ...paymentWhere,
+        paymentDate: {
+          gte: startOfMonth,
+        },
+      },
+      _sum: {
+        amount: true,
+      },
+    }),
+
+    // Total receipts
+    prisma.paymentReceipt.count({
+      where: paymentWhere,
+    }),
+  ]);
+
+  /**
+   * ---------------------------------------------------------
+   * STUDENT FEE DATA
+   * ---------------------------------------------------------
+   */
+
+  const [
+    totalFee,
+    totalPaid,
+    totalDue,
+    totalDiscount,
+    totalLateFee,
+    totalStudents,
+    overdueFee,
+  ] = await Promise.all([
+    // Total assigned fee
+    prisma.studentFee.aggregate({
+      where: studentFeeWhere,
+      _sum: {
+        totalAmount: true,
+      },
+    }),
+
+    // Total paid
+    prisma.studentFee.aggregate({
+      where: studentFeeWhere,
+      _sum: {
+        paidAmount: true,
+      },
+    }),
+
+    // Total pending/due
+    prisma.studentFee.aggregate({
+      where: studentFeeWhere,
+      _sum: {
+        dueAmount: true,
+      },
+    }),
+
+    // Total discount
+    prisma.studentFee.aggregate({
+      where: studentFeeWhere,
+      _sum: {
+        discount: true,
+      },
+    }),
+
+    // Total late fee
+    prisma.studentFee.aggregate({
+      where: studentFeeWhere,
+      _sum: {
+        lateFee: true,
+      },
+    }),
+
+    // Unique students having fee records
+    prisma.studentFee.findMany({
+      where: studentFeeWhere,
+      select: {
+        studentId: true,
+      },
+      distinct: ["studentId"],
+    }),
+
+    // Overdue amount
+    prisma.studentFee.aggregate({
+      where: {
+        ...studentFeeWhere,
+        dueAmount: {
+          gt: 0,
+        },
+        dueDate: {
+          lt: now,
+        },
+      },
+      _sum: {
+        dueAmount: true,
+      },
+    }),
+  ]);
+
+  /**
+   * ---------------------------------------------------------
+   * NORMALIZE VALUES
+   * ---------------------------------------------------------
+   */
+
+  const totalFeeAmount = Number(
+    totalFee._sum.totalAmount || 0
+  );
+
+  const totalCollected = Number(
+    totalCollection._sum.amount || 0
+  );
+
+  const totalPending = Number(
+    totalDue._sum.dueAmount || 0
+  );
+
+  const totalDiscountAmount = Number(
+    totalDiscount._sum.discount || 0
+  );
+
+  const totalLateFeeAmount = Number(
+    totalLateFee._sum.lateFee || 0
+  );
+
+  const totalOverdue = Number(
+    overdueFee._sum.dueAmount || 0
+  );
+
+  /**
+   * ---------------------------------------------------------
+   * PERCENTAGES
+   * ---------------------------------------------------------
+   */
+
+  const collectionRate =
+    totalFeeAmount > 0
+      ? Number(
+          (
+            (totalCollected /
+              totalFeeAmount) *
+            100
+          ).toFixed(2)
+        )
+      : 0;
+
+  const pendingRate =
+    totalFeeAmount > 0
+      ? Number(
+          (
+            (totalPending /
+              totalFeeAmount) *
+            100
+          ).toFixed(2)
+        )
+      : 0;
+
+  /**
+   * ---------------------------------------------------------
+   * FINAL RESPONSE
+   * ---------------------------------------------------------
+   */
+
+  return {
+    totalStudents:
+      totalStudents.length,
+
+    totalFeeAmount,
+
+    totalCollected,
+
+    totalPending,
+
+    totalDiscount:
+      totalDiscountAmount,
+
+    totalOverdue,
+
+    totalLateFee:
+      totalLateFeeAmount,
+
+    collectionRate,
+
+    pendingRate,
+
+    todayCollection:
+      Number(
+        todayCollection._sum.amount || 0
+      ),
+
+    weekCollection:
+      Number(
+        weekCollection._sum.amount || 0
+      ),
+
+    monthCollection:
+      Number(
+        monthCollection._sum.amount || 0
+      ),
+
+    totalTransactions,
+  };
+}
+
+  // =====================================================
+  // METHOD SUMMARY
+  // =====================================================
+
+  async getPaymentMethodSummary(
+    schoolId: number,
+    query: any = {}
+  ) {
+    const where: any = {
+      schoolId,
+    };
+
+    if (query.startDate || query.endDate) {
+      where.paymentDate = {};
+
+      if (query.startDate) {
+        where.paymentDate.gte =
+          new Date(`${query.startDate}T00:00:00`);
+      }
+
+      if (query.endDate) {
+        where.paymentDate.lte =
+          new Date(`${query.endDate}T23:59:59.999`);
+      }
+    }
+
+    const result =
+      await prisma.paymentReceipt.groupBy({
+        by: ["paymentMethod"],
+
+        where,
+
+        _sum: {
+          amount: true,
+        },
+
+        _count: {
+          _all: true,
+        },
+      });
+
+    return result.map((item: any) => ({
+      method: item.paymentMethod,
+
+      total: Number(
+        item._sum.amount || 0
+      ),
+
+      count: item._count._all,
+    }));
+  }
+
+  // =====================================================
+  // DAILY COLLECTION
+  // =====================================================
+
+ async getDailyCollection(
+  schoolId: number,
+  query: any = {}
+) {
+  const startDate = query.startDate
+    ? new Date(`${query.startDate}T00:00:00`)
+    : new Date(
+        new Date().getFullYear(),
+        new Date().getMonth(),
+        1
+      );
+
+  const endDate = query.endDate
+    ? new Date(`${query.endDate}T23:59:59.999`)
+    : new Date();
+
+  const result = await prisma.$queryRaw`
+    SELECT
+      DATE(paymentDate) AS date,
+      SUM(amount) AS total,
+      COUNT(*) AS count
+    FROM paymentreceipt
+    WHERE schoolId = ${schoolId}
+      AND paymentDate BETWEEN ${startDate} AND ${endDate}
+    GROUP BY DATE(paymentDate)
+    ORDER BY date ASC
+  `;
+
+  return result.map((item: any) => ({
+    date: item.date,
+    total: Number(item.total || 0),
+    count: Number(item.count || 0),
+  }));
+}
+
+  // =====================================================
+  // FIND BY ID + SCHOOL
+  // =====================================================
+
+  async findById(
+    schoolId: number,
+    id: number
+  ) {
+    return prisma.paymentReceipt.findFirst({
+      where: {
+        id,
+        schoolId,
+      },
+
+      include: {
+        studentFee: {
+          include: {
+            student: true,
+
+            feeStructure: {
+              include: {
+                class: true,
+                academicYear: true,
+              },
+            },
+
             items: {
               include: {
                 feeHead: true,
@@ -118,14 +682,15 @@ export class PaymentRepository {
             },
           },
         },
+
         receivedBy: {
           select: {
             id: true,
+            name: true,
             email: true,
-            firstName: true,
-            lastName: true,
           },
         },
+
         school: {
           select: {
             id: true,
@@ -136,395 +701,151 @@ export class PaymentRepository {
     });
   }
 
-  findByReceiptNo(receiptNo: string) {
-    return prisma.paymentReceipt.findUnique({
-      where: { receiptNo },
-      include: {
-        studentFee: {
-          include: {
-            student: true,
-          },
-        },
-        receivedBy: true,
-      },
-    });
-  }
+  // =====================================================
+  // FIND BY RECEIPT + SCHOOL
+  // =====================================================
 
-  // UPDATE
-  update(id: number, data: any) {
-    return prisma.paymentReceipt.update({
-      where: { id },
-      data,
-      include: {
-        studentFee: {
-          include: {
-            student: true,
-          },
-        },
-        receivedBy: true,
-      },
-    });
-  }
-
-  // DELETE
-  delete(id: number) {
-    return prisma.paymentReceipt.delete({
-      where: { id },
-    });
-  }
-
-  deleteByStudentFee(studentFeeId: number) {
-    return prisma.paymentReceipt.deleteMany({
-      where: { studentFeeId },
-    });
-  }
-
-  deleteBySchool(schoolId: number) {
-    return prisma.paymentReceipt.deleteMany({
-      where: { schoolId },
-    });
-  }
-
-  // COUNT
-  countBySchool(schoolId: number, query?: any) {
-    const { startDate, endDate, paymentMethod, status } = query || {};
-    const where: any = { schoolId };
-
-    if (paymentMethod) where.paymentMethod = paymentMethod;
-    if (status) where.status = status;
-    if (startDate || endDate) {
-      where.paymentDate = {};
-      if (startDate) where.paymentDate.gte = new Date(startDate);
-      if (endDate) where.paymentDate.lte = new Date(endDate);
-    }
-
-    return prisma.paymentReceipt.count({ where });
-  }
-
-  countByStudent(studentId: number) {
-    return prisma.paymentReceipt.count({
-      where: {
-        studentFee: {
-          studentId,
-        },
-      },
-    });
-  }
-
-  // AGGREGATE
-  getTotalAmountBySchool(schoolId: number, query?: any) {
-    const { startDate, endDate, paymentMethod, status } = query || {};
-    const where: any = { schoolId };
-
-    if (paymentMethod) where.paymentMethod = paymentMethod;
-    if (status) where.status = status;
-    if (startDate || endDate) {
-      where.paymentDate = {};
-      if (startDate) where.paymentDate.gte = new Date(startDate);
-      if (endDate) where.paymentDate.lte = new Date(endDate);
-    }
-
-    return prisma.paymentReceipt.aggregate({
-      where,
-      _sum: { amount: true },
-    });
-  }
-
-  getTotalAmountByStudent(studentId: number) {
-    return prisma.paymentReceipt.aggregate({
-      where: {
-        studentFee: {
-          studentId,
-        },
-        status: PaymentTransactionStatus.SUCCESS,
-      },
-      _sum: { amount: true },
-    });
-  }
-
-  getTotalAmountByStudentFee(studentFeeId: number) {
-    return prisma.paymentReceipt.aggregate({
-      where: {
-        studentFeeId,
-        status: PaymentTransactionStatus.SUCCESS,
-      },
-      _sum: { amount: true },
-    });
-  }
-
-  // SUMMARY
-  getPaymentSummary(schoolId: number, studentId?: number) {
-    const where: any = { schoolId };
-    if (studentId) {
-      where.studentFee = { studentId };
-    }
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-    const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
-
-    return Promise.all([
-      prisma.paymentReceipt.aggregate({
-        where,
-        _sum: { amount: true },
-      }),
-      prisma.paymentReceipt.aggregate({
-        where: {
-          ...where,
-          paymentDate: { gte: today },
-        },
-        _sum: { amount: true },
-      }),
-      prisma.paymentReceipt.aggregate({
-        where: {
-          ...where,
-          paymentDate: { gte: firstDayOfMonth },
-        },
-        _sum: { amount: true },
-      }),
-      prisma.paymentReceipt.aggregate({
-        where: {
-          ...where,
-          paymentDate: { gte: firstDayOfYear },
-        },
-        _sum: { amount: true },
-      }),
-    ]).then(([total, todayTotal, monthTotal, yearTotal]) => ({
-      total: total._sum.amount || 0,
-      today: todayTotal._sum.amount || 0,
-      month: monthTotal._sum.amount || 0,
-      year: yearTotal._sum.amount || 0,
-    }));
-  }
-
-  // GROUP BY
-  groupByPaymentMethod(schoolId: number, startDate?: Date, endDate?: Date) {
-    const where: any = { schoolId };
-    if (startDate && endDate) {
-      where.paymentDate = {
-        gte: startDate,
-        lte: endDate,
-      };
-    }
-
-    return prisma.paymentReceipt.groupBy({
-      by: ['paymentMethod'],
-      where,
-      _sum: {
-        amount: true,
-      },
-      _count: true,
-    });
-  }
-
-  groupByStatus(schoolId: number, startDate?: Date, endDate?: Date) {
-    const where: any = { schoolId };
-    if (startDate && endDate) {
-      where.paymentDate = {
-        gte: startDate,
-        lte: endDate,
-      };
-    }
-
-    return prisma.paymentReceipt.groupBy({
-      by: ['status'],
-      where,
-      _sum: {
-        amount: true,
-      },
-      _count: true,
-    });
-  }
-
-  groupByDate(schoolId: number, startDate: Date, endDate: Date) {
-    return prisma.$queryRaw`
-      SELECT 
-        DATE(payment_date) as date,
-        SUM(amount) as total,
-        COUNT(*) as count
-      FROM payment_receipts
-      WHERE school_id = ${schoolId}
-        AND payment_date BETWEEN ${startDate} AND ${endDate}
-      GROUP BY DATE(payment_date)
-      ORDER BY date ASC
-    `;
-  }
-
-  // ⭐ NEW — generate receipt number
-  generateReceiptNumber(schoolId: number): Promise<string> {
-    const prefix = 'RCP';
-    const date = new Date();
-    const year = date.getFullYear().toString().slice(-2);
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-
-    return prisma.paymentReceipt
-      .findFirst({
-        where: {
-          receiptNo: {
-            startsWith: `${prefix}${year}${month}${day}`,
-          },
-        },
-        orderBy: {
-          receiptNo: 'desc',
-        },
-      })
-      .then((lastReceipt) => {
-        let sequence = 1;
-        if (lastReceipt) {
-          const lastSeq = parseInt(lastReceipt.receiptNo.slice(-4));
-          sequence = lastSeq + 1;
-        }
-        return `${prefix}${year}${month}${day}${String(sequence).padStart(4, '0')}`;
-      });
-  }
-
-  // ⭐ NEW — find duplicate receipt
-  findDuplicateReceipt(
+  async findByReceiptNo(
     schoolId: number,
-    studentFeeId: number,
-    amount: number,
-    paymentDate: Date
+    receiptNo: string
   ) {
     return prisma.paymentReceipt.findFirst({
       where: {
         schoolId,
-        studentFeeId,
-        amount,
-        paymentDate: {
-          gte: new Date(paymentDate.setHours(0, 0, 0, 0)),
-          lte: new Date(paymentDate.setHours(23, 59, 59, 999)),
-        },
+        receiptNo,
       },
-    });
-  }
 
-  // ⭐ NEW — get pending payments
-  getPendingPayments(schoolId: number, studentId?: number) {
-    const where: any = {
-      schoolId,
-      status: {
-        in: [FeeStatus.PENDING, FeeStatus.PARTIAL, FeeStatus.OVERDUE],
-      },
-    };
-
-    if (studentId) {
-      where.studentId = studentId;
-    }
-
-    return prisma.studentFee.findMany({
-      where,
       include: {
-        student: true,
-        feeStructure: true,
-        items: {
+        studentFee: {
           include: {
-            feeHead: true,
+            student: true,
+            feeStructure: {
+              include: {
+                class: true,
+                academicYear: true,
+              },
+            },
           },
         },
+
+        receivedBy: true,
       },
-      orderBy: { dueDate: 'asc' },
     });
   }
 
-  // ⭐ NEW — get overdue payments
-  getOverduePayments(schoolId: number, studentId?: number) {
-    const where: any = {
-      schoolId,
-      status: FeeStatus.OVERDUE,
-      dueDate: {
-        lt: new Date(),
+  // =====================================================
+  // STUDENT PAYMENTS
+  // =====================================================
+
+  async findByStudent(
+    schoolId: number,
+    studentId: number
+  ) {
+    return prisma.paymentReceipt.findMany({
+      where: {
+        schoolId,
+
+        studentFee: {
+          studentId,
+        },
       },
-    };
 
-    if (studentId) {
-      where.studentId = studentId;
-    }
-
-    return prisma.studentFee.findMany({
-      where,
       include: {
-        student: true,
-        feeStructure: true,
+        studentFee: {
+          include: {
+            student: true,
+            feeStructure: {
+              include: {
+                class: true,
+                academicYear: true,
+              },
+            },
+          },
+        },
+
+        receivedBy: true,
       },
-      orderBy: { dueDate: 'asc' },
+
+      orderBy: {
+        paymentDate: "desc",
+      },
     });
   }
 
-  // ⭐ NEW — update student fee after payment
-  updateStudentFeeAfterPayment(studentFeeId: number, paidAmount: number) {
-    return prisma.$transaction(async (tx: any) => {
-      const studentFee = await tx.studentFee.findUnique({
-        where: { id: studentFeeId },
-      });
+  // =====================================================
+  // CREATE PAYMENT
+  // =====================================================
 
-      if (!studentFee) {
-        throw new Error('Student fee not found');
-      }
+  async create(
+    data: any
+  ) {
+    return prisma.paymentReceipt.create({
+      data,
 
-      const newPaidAmount = studentFee.paidAmount.toNumber() + paidAmount;
-      const newDueAmount = studentFee.totalAmount.toNumber() - newPaidAmount;
-
-      let status: FeeStatus;
-      if (newDueAmount <= 0) {
-        status = FeeStatus.PAID;
-      } else if (newPaidAmount > 0) {
-        status = FeeStatus.PARTIAL;
-      } else {
-        status = FeeStatus.PENDING;
-      }
-
-      return tx.studentFee.update({
-        where: { id: studentFeeId },
-        data: {
-          paidAmount: newPaidAmount,
-          dueAmount: newDueAmount,
-          status,
+      include: {
+        studentFee: {
+          include: {
+            student: true,
+            feeStructure: true,
+          },
         },
-      });
+
+        receivedBy: true,
+      },
     });
   }
 
-  // ⭐ NEW — get payment statistics
-  getPaymentStats(schoolId: number, academicYearId?: number) {
-    const where: any = { schoolId };
-    if (academicYearId) {
-      where.studentFee = {
-        feeStructure: {
-          academicYearId,
-        },
-      };
-    }
+  // =====================================================
+  // UPDATE
+  // =====================================================
 
-    return Promise.all([
-      prisma.paymentReceipt.count({ where }),
-      prisma.paymentReceipt.aggregate({
-        where,
-        _sum: { amount: true },
-      }),
-      prisma.paymentReceipt.groupBy({
-        by: ['status'],
-        where,
-        _count: true,
-      }),
-      prisma.paymentReceipt.groupBy({
-        by: ['paymentMethod'],
-        where,
-        _sum: { amount: true },
-      }),
-    ]).then(([totalCount, totalAmount, statusCounts, methodTotals]) => ({
-      totalReceipts: totalCount,
-      totalAmount: totalAmount._sum.amount || 0,
-      statusCounts: statusCounts.map((s: any) => ({
-        status: s.status,
-        count: s._count,
-      })),
-      methodTotals: methodTotals.map((m: any) => ({
-        method: m.paymentMethod,
-        total: m._sum.amount || 0,
-      })),
-    }));
+  async update(
+    schoolId: number,
+    id: number,
+    data: any
+  ) {
+    return prisma.paymentReceipt.updateMany({
+      where: {
+        id,
+        schoolId,
+      },
+
+      data,
+    });
+  }
+
+  // =====================================================
+  // DELETE
+  // =====================================================
+
+  async delete(
+    schoolId: number,
+    id: number
+  ) {
+    return prisma.paymentReceipt.deleteMany({
+      where: {
+        id,
+        schoolId,
+      },
+    });
+  }
+
+  // =====================================================
+  // TOTAL PAID BY STUDENT FEE
+  // =====================================================
+
+  async getTotalAmountByStudentFee(
+    studentFeeId: number
+  ) {
+    return prisma.paymentReceipt.aggregate({
+      where: {
+        studentFeeId,
+        status: PaymentTransactionStatus.SUCCESS,
+      },
+
+      _sum: {
+        amount: true,
+      },
+    });
   }
 }

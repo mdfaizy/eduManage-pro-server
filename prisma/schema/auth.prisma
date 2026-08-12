@@ -21,6 +21,7 @@ model User {
   parent Parent?
   roles UserRole[]
   tokens Token[]
+  reports Report[]  
   userPermissions UserPermission[]
   paymentReceipts PaymentReceipt[]
   markedAttendances StudentAttendanceSession[]
