@@ -1,0 +1,237 @@
+// =====================================================
+// PAYMENT
+// =====================================================
+
+model Payment {
+  id Int @id @default(autoincrement())
+
+  schoolId     Int
+  studentId    Int
+  studentFeeId Int
+
+  // Payment
+  amount        Decimal                  @db.Decimal(12, 2)
+  paymentMethod PaymentMethod
+  status        PaymentTransactionStatus @default(SUCCESS)
+
+  // Gateway / transaction
+  transactionId String? @db.VarChar(150)
+  referenceNo   String? @db.VarChar(150)
+
+  // Payment date
+  paymentDate DateTime @default(now())
+
+  // Remarks
+  remarks String? @db.Text
+
+  // Audit
+  collectedBy Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  school     School     @relation(fields: [schoolId], references: [id])
+  student    Student    @relation(fields: [studentId], references: [id])
+  studentFee StudentFee @relation(fields: [studentFeeId], references: [id])
+
+  collector User? @relation("PaymentCollectedBy", fields: [collectedBy], references: [id])
+
+  receipts PaymentReceipt[]
+  refunds  Refund[]
+
+  @@index([schoolId])
+  @@index([studentId])
+  @@index([studentFeeId])
+  @@index([transactionId])
+  @@index([paymentDate])
+  @@index([status])
+}
+
+// =====================================================
+// PAYMENT RECEIPT
+// =====================================================
+
+// model PaymentReceipt {
+//   id           Int      @id @default(autoincrement())
+
+//   schoolId     Int
+//   studentId    Int
+//   studentFeeId Int
+//   paymentId    Int
+
+//   receiptNo    String   @unique @db.VarChar(100)
+
+//   amount       Decimal  @db.Decimal(12, 2)
+
+//   issuedAt     DateTime @default(now())
+
+//   remarks      String?  @db.Text
+
+//   createdAt    DateTime @default(now())
+//   updatedAt    DateTime @updatedAt
+
+//   // Relations
+//   school       School      @relation(fields: [schoolId], references: [id])
+//   student      Student     @relation(fields: [studentId], references: [id])
+// //   studentFee   StudentFee  @relation(fields: [studentFeeId], references: [id])
+// studentFee StudentFee @relation(fields: [studentFeeId],references: [id])
+//   payment      Payment     @relation(fields: [paymentId], references: [id])
+
+//   @@index([schoolId])
+//   @@index([studentId])
+//   @@index([studentFeeId])
+//   @@index([paymentId])
+//   @@index([issuedAt])
+// }
+
+model PaymentReceipt {
+  id Int @id @default(autoincrement())
+
+  schoolId     Int
+  studentId    Int?
+  studentFeeId Int
+  paymentId    Int?
+
+  receiptNo String  @unique @db.VarChar(191)
+  amount    Decimal @db.Decimal(12, 2)
+
+  paymentDate DateTime @default(now())
+  issuedAt    DateTime @default(now())
+
+  paymentMethod PaymentMethod
+
+  transactionId String? @db.VarChar(191)
+  remarks       String? @db.VarChar(191)
+
+  receivedById Int?
+
+  status PaymentReceiptStatus @default(SUCCESS)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  school     School     @relation(fields: [schoolId], references: [id])
+  student    Student?   @relation(fields: [studentId], references: [id])
+  studentFee StudentFee @relation(fields: [studentFeeId], references: [id])
+  payment    Payment?   @relation(fields: [paymentId], references: [id])
+
+  receivedBy User? @relation("PaymentReceiptReceivedBy", fields: [receivedById], references: [id])
+
+  @@index([schoolId])
+  @@index([studentId])
+  @@index([studentFeeId])
+  @@index([paymentId])
+  @@index([receivedById])
+  @@index([paymentDate])
+  @@index([issuedAt])
+}
+
+// =====================================================
+// PAYMENT REFUND
+// =====================================================
+
+// model Refund {
+//   id            Int      @id @default(autoincrement())
+
+//   schoolId      Int
+//   studentId     Int
+//   studentFeeId  Int
+//   paymentId     Int
+
+//   amount        Decimal  @db.Decimal(12, 2)
+
+//   reason        String   @db.Text
+
+//   refundMethod  PaymentMethod
+
+//   status        RefundStatus @default(PENDING)
+
+//   transactionId String?  @db.VarChar(150)
+
+//   refundedBy    Int?
+
+//   refundDate    DateTime?
+
+//   createdAt     DateTime @default(now())
+//   updatedAt     DateTime @updatedAt
+
+//   // Relations
+//   school        School     @relation(fields: [schoolId], references: [id])
+//   student       Student    @relation(fields: [studentId], references: [id])
+//   studentFee    StudentFee @relation(fields: [studentFeeId], references: [id])
+//   payment       Payment    @relation(fields: [paymentId], references: [id])
+
+//   refundedUser  User?      @relation("RefundProcessedBy", fields: [refundedBy], references: [id] )
+
+//   @@index([schoolId])
+//   @@index([studentId])
+//   @@index([studentFeeId])
+//   @@index([paymentId])
+//   @@index([status])
+//   @@index([refundDate])
+// }
+
+model Refund {
+  id Int @id @default(autoincrement())
+
+  schoolId     Int
+  studentId    Int
+  studentFeeId Int
+  paymentId    Int
+
+  amount Decimal @db.Decimal(12, 2)
+
+  reason String @db.Text
+
+  refundMethod PaymentMethod
+
+  status RefundStatus @default(PENDING)
+
+  transactionId String? @db.VarChar(150)
+
+  refundedBy Int?
+
+  refundDate DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  school School @relation(fields: [schoolId], references: [id])
+
+  student Student @relation(fields: [studentId], references: [id])
+
+  // IMPORTANT:
+  // Named relation because StudentFee also has FeeRefund relation
+  studentFee StudentFee @relation("StudentFeeRefunds", fields: [studentFeeId], references: [id])
+
+  payment Payment @relation(fields: [paymentId], references: [id])
+
+  refundedUser User? @relation("RefundProcessedBy", fields: [refundedBy], references: [id])
+
+  @@index([schoolId])
+  @@index([studentId])
+  @@index([studentFeeId])
+  @@index([paymentId])
+  @@index([status])
+  @@index([refundDate])
+}
+
+// =====================================================
+// REFUND STATUS
+// =====================================================
+
+enum RefundStatus {
+  PENDING
+  APPROVED
+  COMPLETED
+  REJECTED
+  CANCELLED
+}
+
+enum PaymentReceiptStatus {
+  SUCCESS
+  FAILED
+  PENDING
+}

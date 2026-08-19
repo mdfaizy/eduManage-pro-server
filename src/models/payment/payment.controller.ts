@@ -11,8 +11,17 @@ export class PaymentController {
 
   static async createPayment(req: Request, res: Response) {
     try {
-      const userId = req.user?.id;
+      // const userId = req.user?.id;
+      // const schoolId = req.user?.schoolId;
+
+      console.log("PAYMENT USER:", req.user);
+
+      // ✅ correct
+      const userId = req.user?.userId;
       const schoolId = req.user?.schoolId;
+
+      console.log("USER ID:", userId);
+      console.log("SCHOOL ID:", schoolId);
 
       if (!userId || !schoolId) {
         return res.status(401).json({
@@ -413,6 +422,232 @@ export class PaymentController {
     } catch (error: any) {
       return res.status(404).json({
         error: error.message,
+      });
+    }
+  }
+
+
+
+  static async getPaymentRefunds(
+    req: Request,
+    res: Response
+  ) {
+    try {
+      const paymentId = Number(req.params.id);
+
+      if (!paymentId || Number.isNaN(paymentId)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid payment id",
+        });
+      }
+
+      const schoolId = Number(
+        req.user?.schoolId
+      );
+
+      if (!schoolId) {
+        return res.status(401).json({
+          success: false,
+          message: "Unauthorized",
+        });
+      }
+
+      const refunds =
+        await paymentService.getPaymentRefunds(
+          paymentId,
+          schoolId
+        );
+
+      return res.status(200).json({
+        success: true,
+        data: refunds,
+      });
+
+    } catch (error: any) {
+      console.error(
+        "Get Payment Refunds Error:",
+        error
+      );
+
+      return res.status(400).json({
+        success: false,
+        message:
+          error?.message ||
+          "Failed to get payment refunds",
+      });
+    }
+  }
+  // static async refundPayment(req: Request, res: Response) {
+  //   try {
+  //     const paymentId = Number(req.params.id);
+
+  //     if (!paymentId || Number.isNaN(paymentId)) {
+  //       return res.status(400).json({
+  //         success: false,
+  //         message: "Invalid payment id",
+  //       });
+  //     }
+
+  //     const { amount, reason, referenceNo } = req.body;
+
+  //     if (amount === undefined || amount === null || amount === "") {
+  //       return res.status(400).json({
+  //         success: false,
+  //         message: "Refund amount is required",
+  //       });
+  //     }
+
+  //     const refundAmount = Number(amount);
+
+  //     if (!Number.isFinite(refundAmount) || refundAmount <= 0) {
+  //       return res.status(400).json({
+  //         success: false,
+  //         message: "Refund amount must be greater than zero",
+  //       });
+  //     }
+
+  //     const schoolId = Number(req.user.schoolId);
+  //     // const refundedBy = Number(req.user.userId);
+  //     const refundedBy = Number(req.user?.id);
+
+  //     const result = await paymentService.refundPayment(
+  //       paymentId,
+  //       schoolId,
+  //       refundAmount,
+  //       reason,
+  //       referenceNo,
+  //       refundedBy
+  //     );
+
+  //     return res.status(200).json({
+  //       success: true,
+  //       message: "Payment refunded successfully",
+  //       data: result,
+  //     });
+  //   } catch (error: any) {
+  //     console.error("Refund Payment Error:", error);
+
+  //     return res.status(400).json({
+  //       success: false,
+  //       message: error.message || "Failed to refund payment",
+  //     });
+  //   }
+  // }
+
+  static async refundPayment(req: Request, res: Response) {
+  try {
+    const paymentId = Number(req.params.id);
+
+    const schoolId = req.user?.schoolId;
+    // const refundedBy = req.user?.id;
+    const refundedBy = req.user?.userId;
+
+    if (!schoolId || !refundedBy) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+
+    const amount = Number(req.body.amount);
+
+    const reason =
+      req.body.reason || undefined;
+
+    const referenceNo =
+      req.body.referenceNo || undefined;
+
+    // ✅ ADD THIS
+    const refundMethod =
+      req.body.refundMethod;
+
+    if (!refundMethod) {
+      return res.status(400).json({
+        success: false,
+        message: "refundMethod is required",
+      });
+    }
+
+    const refund =
+      await paymentService.refundPayment(
+        paymentId,
+        schoolId,
+        amount,
+        reason,
+        referenceNo,
+
+        // ✅ ADD/PASS THIS
+        refundMethod,
+
+        refundedBy
+      );
+
+    return res.status(201).json({
+      success: true,
+      data: refund,
+    });
+
+  } catch (error: any) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
+  static async cancelPayment(
+    req: Request,
+    res: Response
+  ) {
+    try {
+      const paymentId = Number(
+        req.params.id
+      );
+
+      if (
+        !paymentId ||
+        Number.isNaN(paymentId)
+      ) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid payment id",
+        });
+      }
+
+      const schoolId = Number(
+        req.user?.schoolId
+      );
+
+      if (!schoolId) {
+        return res.status(401).json({
+          success: false,
+          message: "Unauthorized",
+        });
+      }
+
+      const result =
+        await paymentService.cancelPayment(
+          paymentId,
+          schoolId
+        );
+
+      return res.status(200).json({
+        success: true,
+        message: "Payment cancelled successfully",
+        data: result,
+      });
+
+    } catch (error: any) {
+      console.error(
+        "Cancel Payment Error:",
+        error
+      );
+
+      return res.status(400).json({
+        success: false,
+        message:
+          error?.message ||
+          "Payment cancellation failed",
       });
     }
   }

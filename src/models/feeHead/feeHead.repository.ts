@@ -107,15 +107,29 @@ async update(
   // DELETE
   // =====================================================
 
-  async delete(id: number) {
+  // async delete(id: number) {
 
-    return prisma.feeHead.delete({
+  //   return prisma.feeHead.delete({
 
-      where: {
-        id,
-      },
-    });
-  }
+  //     where: {
+  //       id,
+  //     },
+  //   });
+  // }
+  async delete(
+  id: number,
+  schoolId: number
+) {
+  return prisma.feeHead.updateMany({
+    where: {
+      id,
+      schoolId,
+    },
+    data: {
+      isActive: false,
+    },
+  });
+}
 
   // =====================================================
   // TOGGLE

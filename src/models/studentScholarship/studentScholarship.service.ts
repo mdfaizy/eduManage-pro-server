@@ -1,16 +1,11 @@
 import repo from "./studentScholarship.repository.js";
-import {
-  recalculatePendingFees,
-} from "../../utils/recalculatePendingFees.js";
 
 class StudentScholarshipService {
-
   // =====================================
   // CREATE
   // =====================================
 
   async create(data: any) {
-
     // ==============================
     // DUPLICATE CHECK
     // ==============================
@@ -18,7 +13,8 @@ class StudentScholarshipService {
     const existing =
       await repo.findByStudentAndScholarship(
         data.studentId,
-        data.scholarshipId
+        data.scholarshipId,
+        data.schoolId
       );
 
     if (existing) {
@@ -27,17 +23,12 @@ class StudentScholarshipService {
       );
     }
 
+    // ==============================
+    // CREATE
+    // ==============================
+
     const result =
       await repo.create(data);
-
-    // ==============================
-    // RECALCULATE FEES
-    // ==============================
-
-    // await recalculatePendingFees(
-    //   data.studentId
-    // );
-
 
     return result;
   }
@@ -49,7 +40,6 @@ class StudentScholarshipService {
   async getAll(
     schoolId: number
   ) {
-
     return repo.getAll(
       schoolId
     );
@@ -63,7 +53,6 @@ class StudentScholarshipService {
     id: number,
     schoolId: number
   ) {
-
     const record =
       await repo.getOne(
         id,
@@ -88,7 +77,6 @@ class StudentScholarshipService {
     schoolId: number,
     data: any
   ) {
-
     const record =
       await repo.getOne(
         id,
@@ -108,10 +96,6 @@ class StudentScholarshipService {
         data
       );
 
-    // await recalculatePendingFees(
-    //   record.studentId
-    // );
-
     return result;
   }
 
@@ -123,7 +107,6 @@ class StudentScholarshipService {
     id: number,
     schoolId: number
   ) {
-
     const record =
       await repo.getOne(
         id,
@@ -142,10 +125,6 @@ class StudentScholarshipService {
         schoolId
       );
 
-    // await recalculatePendingFees(
-    //   record.studentId
-    // );
-
     return result;
   }
 
@@ -158,7 +137,6 @@ class StudentScholarshipService {
     schoolId: number,
     isActive: boolean
   ) {
-
     const record =
       await repo.getOne(
         id,
@@ -177,10 +155,6 @@ class StudentScholarshipService {
         schoolId,
         isActive
       );
-
-    // await recalculatePendingFees(
-    //   record.studentId
-    // );
 
     return result;
   }

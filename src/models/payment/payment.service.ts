@@ -1,7 +1,7 @@
 import prisma from "../../config/prisma";
 import {
   FeeStatus,
- PaymentTransactionStatus,
+  PaymentTransactionStatus,
 } from "../../generated/prisma";
 
 import { PaymentRepository } from "./payment.repository";
@@ -14,6 +14,7 @@ export class PaymentService {
   // CREATE PAYMENT
   // =====================================================
 
+
   async createPayment(
     data: any,
     userId: number,
@@ -24,13 +25,16 @@ export class PaymentService {
       amount,
       paymentMethod,
       transactionId,
+      referenceNo,
       remarks,
     } = data;
 
+    // =====================================================
+    // VALIDATION
+    // =====================================================
+
     if (!studentFeeId) {
-      throw new Error(
-        "Student fee ID is required"
-      );
+      throw new Error("Student fee ID is required");
     }
 
     if (!amount || Number(amount) <= 0) {
@@ -39,203 +43,267 @@ export class PaymentService {
       );
     }
 
-    return prisma.$transaction(
-      async (tx) => {
+    if (!paymentMethod) {
+      throw new Error(
+        "Payment method is required"
+      );
+    }
 
-        const studentFee =
-          await tx.studentFee.findFirst({
-            where: {
-              id: Number(studentFeeId),
-              schoolId,
-            },
+    if (!userId || Number.isNaN(Number(userId))) {
+      throw new Error(
+        "Valid user ID is required"
+      );
+    }
 
-            include: {
-              student: true,
-              feeStructure: true,
-            },
-          });
+    return prisma.$transaction(async (tx) => {
 
-        if (!studentFee) {
-          throw new Error(
-            "Student fee not found"
-          );
-        }
+      // =====================================================
+      // 1. FIND STUDENT FEE
+      // =====================================================
 
-        if (
-          studentFee.status === FeeStatus.PAID
-        ) {
-          throw new Error(
-            "This fee is already fully paid"
-          );
-        }
-
-        const paymentAmount =
-          Number(amount);
-
-        const currentDue =
-          Number(
-            studentFee.dueAmount
-          );
-
-        if (paymentAmount > currentDue) {
-          throw new Error(
-            `Payment amount cannot exceed due amount of ${currentDue}`
-          );
-        }
-
-        // ---------------------------------------------
-        // Generate receipt number
-        // ---------------------------------------------
-
-        const today = new Date();
-
-        const year =
-          today.getFullYear()
-            .toString()
-            .slice(-2);
-
-        const month =
-          String(
-            today.getMonth() + 1
-          ).padStart(2, "0");
-
-        const day =
-          String(
-            today.getDate()
-          ).padStart(2, "0");
-
-        const prefix =
-          `RCP${year}${month}${day}`;
-
-        const lastReceipt =
-          await tx.paymentReceipt.findFirst({
-            where: {
-              schoolId,
-
-              receiptNo: {
-                startsWith: prefix,
-              },
-            },
-
-            orderBy: {
-              receiptNo: "desc",
-            },
-          });
-
-        let sequence = 1;
-
-        if (lastReceipt) {
-          const lastSequence =
-            parseInt(
-              lastReceipt.receiptNo.slice(-4),
-              10
-            );
-
-          sequence =
-            lastSequence + 1;
-        }
-
-        const receiptNo =
-          `${prefix}${String(sequence).padStart(4, "0")}`;
-
-        // ---------------------------------------------
-        // Create payment
-        // ---------------------------------------------
-
-        const payment =
-          await tx.paymentReceipt.create({
-            data: {
-              schoolId,
-              studentFeeId:
-                Number(studentFeeId),
-
-              receiptNo,
-
-              amount: paymentAmount,
-
-              paymentMethod,
-
-              transactionId:
-                transactionId || null,
-
-              remarks:
-                remarks || null,
-
-              receivedById: userId,
-
-              paymentDate: new Date(),
-
-              status:
-                PaymentTransactionStatus.SUCCESS,
-            },
-
-            include: {
-              studentFee: {
-                include: {
-                  student: true,
-                  feeStructure: true,
-                },
-              },
-
-              receivedBy: true,
-            },
-          });
-
-        // ---------------------------------------------
-        // Update Student Fee
-        // ---------------------------------------------
-
-        const newPaidAmount =
-          Number(
-            studentFee.paidAmount
-          ) + paymentAmount;
-
-        const newDueAmount =
-          Number(
-            studentFee.totalAmount
-          ) - newPaidAmount;
-
-        let newStatus:
-          | FeeStatus.PAID
-          | FeeStatus.PARTIAL
-          | FeeStatus.PENDING;
-
-        if (newDueAmount <= 0) {
-          newStatus =
-            FeeStatus.PAID;
-        } else if (
-          newPaidAmount > 0
-        ) {
-          newStatus =
-            FeeStatus.PARTIAL;
-        } else {
-          newStatus =
-            FeeStatus.PENDING;
-        }
-
-        await tx.studentFee.update({
+      const studentFee =
+        await tx.studentFee.findFirst({
           where: {
             id: Number(studentFeeId),
+            schoolId,
           },
 
-          data: {
-            paidAmount:
-              newPaidAmount,
-
-            dueAmount:
-              Math.max(
-                newDueAmount,
-                0
-              ),
-
-            status:
-              newStatus,
+          include: {
+            student: true,
+            feeStructure: true,
           },
         });
 
-        return payment;
+      if (!studentFee) {
+        throw new Error(
+          "Student fee not found"
+        );
       }
-    );
+
+      // =====================================================
+      // 2. CHECK FEE STATUS
+      // =====================================================
+
+      if (studentFee.status === "PAID") {
+        throw new Error(
+          "This fee is already fully paid"
+        );
+      }
+
+      // =====================================================
+      // 3. PAYMENT AMOUNT VALIDATION
+      // =====================================================
+
+      const paymentAmount =
+        Number(amount);
+
+      const currentDue =
+        Number(studentFee.dueAmount);
+
+      if (paymentAmount > currentDue) {
+        throw new Error(
+          `Payment amount cannot exceed due amount of ₹${currentDue}`
+        );
+      }
+
+      // =====================================================
+      // 4. GENERATE RECEIPT NUMBER
+      // =====================================================
+
+      const today = new Date();
+
+      const year =
+        today
+          .getFullYear()
+          .toString()
+          .slice(-2);
+
+      const month =
+        String(
+          today.getMonth() + 1
+        ).padStart(2, "0");
+
+      const day =
+        String(
+          today.getDate()
+        ).padStart(2, "0");
+
+      const prefix =
+        `RCP${year}${month}${day}`;
+
+      const lastReceipt =
+        await tx.paymentReceipt.findFirst({
+          where: {
+            schoolId,
+
+            receiptNo: {
+              startsWith: prefix,
+            },
+          },
+
+          orderBy: {
+            receiptNo: "desc",
+          },
+        });
+
+      let sequence = 1;
+
+      if (lastReceipt) {
+        const lastSequence =
+          parseInt(
+            lastReceipt.receiptNo.slice(-4),
+            10
+          );
+
+        if (!Number.isNaN(lastSequence)) {
+          sequence =
+            lastSequence + 1;
+        }
+      }
+
+      const receiptNo =
+        `${prefix}${String(sequence).padStart(4, "0")}`;
+
+      // =====================================================
+      // 5. CREATE PAYMENT
+      // =====================================================
+
+      const payment =
+        await tx.payment.create({
+          data: {
+            schoolId,
+
+            // Student ID from StudentFee
+            studentId:
+              studentFee.studentId,
+
+            studentFeeId:
+              Number(studentFeeId),
+
+            amount:
+              paymentAmount,
+
+            paymentMethod,
+
+            status:
+              PaymentTransactionStatus.SUCCESS,
+
+            transactionId:
+              transactionId || null,
+
+            referenceNo:
+              referenceNo || null,
+
+            paymentDate:
+              new Date(),
+
+            remarks:
+              remarks || null,
+
+            collectedBy:
+              Number(userId),
+          },
+        });
+
+      // =====================================================
+      // 6. CREATE PAYMENT RECEIPT
+      // =====================================================
+
+      const receipt =
+        await tx.paymentReceipt.create({
+          data: {
+            schoolId,
+
+            // Student
+            studentId:
+              studentFee.studentId,
+
+            // Student Fee
+            studentFeeId:
+              Number(studentFeeId),
+
+            // IMPORTANT:
+            // Link receipt with newly created Payment
+            paymentId:payment.id,
+            receiptNo,
+            amount:paymentAmount,
+            issuedAt:new Date(),
+            paymentMethod,
+            transactionId:transactionId || null,
+            remarks:remarks || null,
+            // Logged-in user
+            receivedById: Number(userId),
+            status:PaymentTransactionStatus.SUCCESS,
+          },
+        });
+
+      // =====================================================
+      // 7. UPDATE STUDENT FEE
+      // =====================================================
+
+      const currentPaidAmount =
+        Number(
+          studentFee.paidAmount
+        );
+
+      const totalAmount =
+        Number(
+          studentFee.totalAmount
+        );
+
+      const newPaidAmount =
+        currentPaidAmount +
+        paymentAmount;
+
+      const newDueAmount =
+        totalAmount -
+        newPaidAmount;
+
+      // IMPORTANT:
+      // FeeStatus type-only issue fixed here.
+      let newStatus:
+        | "PAID"
+        | "PARTIAL"
+        | "PENDING";
+
+      if (newDueAmount <= 0) {
+        newStatus = "PAID";
+      } else if (newPaidAmount > 0) {
+        newStatus = "PARTIAL";
+      } else {
+        newStatus = "PENDING";
+      }
+
+      await tx.studentFee.update({
+        where: {
+          id:
+            Number(studentFeeId),
+        },
+
+        data: {
+          paidAmount:
+            newPaidAmount,
+
+          dueAmount:
+            Math.max(
+              newDueAmount,
+              0
+            ),
+
+          status:
+            newStatus,
+        },
+      });
+
+      // =====================================================
+      // 8. RETURN PAYMENT + RECEIPT
+      // =====================================================
+
+      return {
+        payment,
+        receipt,
+      };
+    });
   }
 
   // =====================================================
@@ -256,37 +324,55 @@ export class PaymentService {
   // PAYMENT REPORT
   // =====================================================
 
+
   async getPaymentReport(
     schoolId: number,
     query: any = {}
   ) {
     const [
-      paymentResult,
+      studentFeeReport,
       summary,
       methodSummary,
       dailyCollection,
     ] = await Promise.all([
 
-      paymentRepository.findBySchool(
+      // STUDENT-WISE FEE REPORT
+      paymentRepository.getStudentFeeReport(
         schoolId,
         query
       ),
 
+      // SUMMARY
       paymentRepository.getPaymentSummary(
         schoolId,
         query
       ),
 
+      // PAYMENT METHOD SUMMARY
       paymentRepository.getPaymentMethodSummary(
         schoolId,
         query
       ),
 
+      // DAILY COLLECTION
       paymentRepository.getDailyCollection(
         schoolId,
         query
       ),
     ]);
+
+    console.log("=================================");
+    console.log("PAYMENT REPORT SERVICE");
+    console.log("QUERY:", query);
+    console.log(
+      "STUDENT REPORT LENGTH:",
+      studentFeeReport.length
+    );
+    console.log(
+      "STUDENT REPORT:",
+      studentFeeReport
+    );
+    console.log("=================================");
 
     return {
       summary,
@@ -295,11 +381,17 @@ export class PaymentService {
 
       dailyCollection,
 
-      payments:
-        paymentResult.payments,
+      // IMPORTANT
+      // ClassPaymentReport yahi data read karega
+      payments: studentFeeReport,
 
-      pagination:
-        paymentResult.pagination,
+      pagination: {
+        page: Number(query.page) || 1,
+        limit: Number(query.limit) || 1000,
+        total: studentFeeReport.length,
+        totalPages:
+          studentFeeReport.length > 0 ? 1 : 0,
+      },
     };
   }
 
@@ -683,8 +775,8 @@ export class PaymentService {
               <div>
                 Date:
                 ${new Date(
-                  receipt.paymentDate
-                ).toLocaleDateString()}
+      receipt.paymentDate
+    ).toLocaleDateString()}
               </div>
 
             </div>
@@ -719,8 +811,8 @@ export class PaymentService {
 
                 <span>
                   ₹${Number(
-                    receipt.amount
-                  ).toFixed(2)}
+      receipt.amount
+    ).toFixed(2)}
                 </span>
               </div>
 
@@ -734,9 +826,8 @@ export class PaymentService {
                 </span>
               </div>
 
-              ${
-                receipt.transactionId
-                  ? `
+              ${receipt.transactionId
+        ? `
                     <div class="row">
                       <span class="label">
                         Transaction ID
@@ -747,12 +838,11 @@ export class PaymentService {
                       </span>
                     </div>
                   `
-                  : ""
-              }
+        : ""
+      }
 
-              ${
-                receipt.remarks
-                  ? `
+              ${receipt.remarks
+        ? `
                     <div class="row">
                       <span class="label">
                         Remarks
@@ -763,8 +853,8 @@ export class PaymentService {
                       </span>
                     </div>
                   `
-                  : ""
-              }
+        : ""
+      }
 
             </div>
 
@@ -783,5 +873,304 @@ export class PaymentService {
         </body>
       </html>
     `;
+  }
+
+
+  async refundPayment(
+    paymentId: number,
+    schoolId: number,
+    amount: number,
+    reason: string | undefined,
+    referenceNo: string | undefined,
+    refundMethod: PaymentMethod,
+    refundedBy: number
+  ) {
+    return prisma.$transaction(async (tx) => {
+      // ==========================================
+      // 1. PAYMENT FIND
+      // ==========================================
+      const payment = await tx.payment.findFirst({
+        where: {
+          id: paymentId,
+          schoolId,
+        },
+        include: {
+          refunds: true,
+        },
+      });
+
+      if (!payment) {
+        throw new Error("Payment not found");
+      }
+
+      if (payment.status !== "SUCCESS") {
+        throw new Error(
+          "Only successful payments can be refunded"
+        );
+      }
+
+      // ==========================================
+      // 2. ALREADY REFUNDED AMOUNT
+      // ==========================================
+      const alreadyRefunded = payment.refunds.reduce(
+        (sum, refund) => sum + Number(refund.amount),
+        0
+      );
+
+      const refundableAmount =
+        Number(payment.amount) - alreadyRefunded;
+
+      if (amount <= 0) {
+        throw new Error(
+          "Refund amount must be greater than zero"
+        );
+      }
+
+      if (amount > refundableAmount) {
+        throw new Error(
+          `Maximum refundable amount is ₹${refundableAmount}`
+        );
+      }
+
+      // ==========================================
+      // 3. CREATE REFUND
+      // ==========================================
+//       const refund = await tx.refund.create({
+//         data: {
+//           school: {
+//             connect: {
+//               id: schoolId,
+//             },
+//           },
+
+//           payment: {
+//             connect: {
+//               id: payment.id,
+//             },
+//           },
+
+//           student: {
+//             connect: {
+//               id: payment.studentId,
+//             },
+//           },
+
+//           studentFee: {
+//             connect: {
+//               id: payment.studentFeeId,
+//             },
+//           },
+
+//           amount,
+
+//           reason: reason ?? "Payment refund",
+
+//           // Refund model me referenceNo nahi hai
+//           transactionId: referenceNo,
+
+//           refundMethod,
+
+//           // refundedBy,
+
+//           refundedUser: {
+//   connect: {
+//     id: refundedBy,
+//   },
+// },
+//           status: "COMPLETED",
+
+//           refundDate: new Date(),
+//         },
+//       });
+
+      const refund = await tx.refund.create({
+        data: {
+          school: {
+            connect: {
+              id: schoolId,
+            },
+          },
+
+          payment: {
+            connect: {
+              id: payment.id,
+            },
+          },
+
+          student: {
+            connect: {
+              id: payment.studentId,
+            },
+          },
+
+          studentFee: {
+            connect: {
+              id: payment.studentFeeId,
+            },
+          },
+
+          amount,
+
+          reason: reason ?? "Payment refund",
+
+          transactionId: referenceNo,
+
+          refundMethod,
+
+          refundedUser: {
+            connect: {
+              id: refundedBy,
+            },
+          },
+
+          status: "COMPLETED",
+
+          refundDate: new Date(),
+        },
+      });
+
+      // ==========================================
+      // UPDATE PAYMENT REFUND STATUS
+      // ==========================================
+
+      const totalRefunded =
+        alreadyRefunded + amount;
+
+      const newPaymentStatus =
+        totalRefunded >= Number(payment.amount)
+          ? PaymentTransactionStatus.REFUNDED
+          : PaymentTransactionStatus.PARTIALLY_REFUNDED;
+
+      await tx.payment.update({
+        where: {
+          id: payment.id,
+        },
+        data: {
+          status: newPaymentStatus,
+        },
+      });
+
+      // ==========================================
+      // GET STUDENT FEE
+      // ==========================================
+
+      // const studentFee =
+      //   await tx.studentFee.findUnique({
+      //     where: {
+      //       id: payment.studentFeeId,
+      //     },
+      //   });
+      // ==========================================
+      // 4. GET STUDENT FEE
+      // ==========================================
+      const studentFee = await tx.studentFee.findUnique({
+        where: {
+          id: payment.studentFeeId,
+        },
+      });
+
+      if (!studentFee) {
+        throw new Error("Student fee not found");
+      }
+
+      // ==========================================
+      // 5. CALCULATE NEW PAID AMOUNT
+      // ==========================================
+      const newPaidAmount =
+        Number(studentFee.paidAmount) - amount;
+
+      if (newPaidAmount < 0) {
+        throw new Error(
+          "Refund amount exceeds paid amount"
+        );
+      }
+
+      // ==========================================
+      // 6. CALCULATE NEW DUE AMOUNT
+      // ==========================================
+      const payableAmount =
+        Number(studentFee.totalAmount) -
+        Number(studentFee.discount) +
+        Number(studentFee.lateFee);
+
+      const newDueAmount =
+        payableAmount - newPaidAmount;
+
+      // ==========================================
+      // 7. CALCULATE STATUS
+      // ==========================================
+      let newStatus:
+        | "PAID"
+        | "PARTIAL"
+        | "PENDING"
+        | "OVERDUE";
+
+      if (newPaidAmount <= 0) {
+        newStatus = "PENDING";
+      } else if (
+        newPaidAmount >= payableAmount
+      ) {
+        newStatus = "PAID";
+      } else {
+        newStatus = "PARTIAL";
+      }
+
+      // ==========================================
+      // 8. UPDATE STUDENT FEE
+      // ==========================================
+      await tx.studentFee.update({
+        where: {
+          id: studentFee.id,
+        },
+        data: {
+          paidAmount: newPaidAmount,
+          dueAmount: Math.max(0, newDueAmount),
+          status: newStatus,
+        },
+      });
+
+      // ==========================================
+      // 9. RETURN REFUND
+      // ==========================================
+      return refund;
+    });
+  }
+  async getPaymentRefunds(
+    paymentId: number,
+    schoolId: number
+  ) {
+    const payment = await prisma.payment.findFirst({
+      where: {
+        id: paymentId,
+        schoolId,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    if (!payment) {
+      throw new Error("Payment not found");
+    }
+
+    return prisma.refund.findMany({
+      where: {
+        paymentId: payment.id,
+        schoolId,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  }
+
+  async cancelPayment(
+    paymentId: number,
+    schoolId: number
+  ) {
+    return paymentRepository.cancelPayment(
+      paymentId,
+      schoolId
+    );
   }
 }

@@ -12,7 +12,28 @@ class FeeStructureRepository {
     data: any
 
   ) {
+const items = data.items || [];
 
+if (!items.length) {
+  throw new Error("At least one fee head is required");
+}
+
+for (const item of items) {
+  const amount = Number(item.amount);
+
+  if (!Number.isFinite(amount)) {
+    throw new Error("Fee amount must be a valid number");
+  }
+
+  if (amount <= 0) {
+    throw new Error("Fee amount must be greater than 0");
+  }
+
+  if (!Number.isInteger(Number(item.feeHeadId)) ||
+      Number(item.feeHeadId) <= 0) {
+    throw new Error("Invalid fee head");
+  }
+}
  
 const monthlyFee =
   data.items
@@ -181,8 +202,41 @@ async update(
   data: any
 ) {
 
-  const items =
-    data.items || [];
+ const items = data.items || [];
+
+if (!items.length) {
+  throw new Error(
+    "At least one fee head is required"
+  );
+}
+
+for (const item of items) {
+
+  const amount = Number(item.amount);
+
+  if (!Number.isFinite(amount)) {
+    throw new Error(
+      "Fee amount must be a valid number"
+    );
+  }
+
+  if (amount <= 0) {
+    throw new Error(
+      "Fee amount must be greater than 0"
+    );
+  }
+
+  if (
+    !Number.isInteger(
+      Number(item.feeHeadId)
+    ) ||
+    Number(item.feeHeadId) <= 0
+  ) {
+    throw new Error(
+      "Invalid fee head"
+    );
+  }
+}
 
   // =====================================
   // DUPLICATE FEE HEAD CHECK
@@ -329,8 +383,8 @@ async update(
                     frequency:
                       item.frequency,
 
-                    isOptional:
-                      item.isOptional || false,
+                    // isOptional:
+                    //   item.isOptional || false,
                   })
                 ),
             },
@@ -359,21 +413,36 @@ async update(
   // DELETE
   // =====================================
 
+  // async delete(
+  //   id: number,
+  //   schoolId: number
+  // ) {
+
+  //   return prisma
+  //     .feeStructure
+  //     .delete({
+
+  //       where: {
+  //         id,
+  //         schoolId,
+  //       },
+  //     });
+  // }
+
   async delete(
-    id: number,
-    schoolId: number
-  ) {
-
-    return prisma
-      .feeStructure
-      .delete({
-
-        where: {
-          id,
-          schoolId,
-        },
-      });
-  }
+  id: number,
+  schoolId: number
+) {
+  return prisma.feeStructure.update({
+    where: {
+      id,
+      schoolId,
+    },
+    data: {
+      isActive: false,
+    },
+  });
+}
   // =====================================
 // GET ONE
 // =====================================

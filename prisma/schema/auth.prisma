@@ -3,32 +3,50 @@
 ///////////////////////////////////////////////////////////////
 
 model User {
-  id            Int     @id @default(autoincrement())
-  name          String
-  email         String  @unique
-  password      String
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String @unique
+  password String
 
-  isActive      Boolean @default(true)
-  isDeleted     Boolean @default(false)
-  emailVerified Boolean @default(false)
-  schoolId Int?
+  isActive      Boolean    @default(true)
+  isDeleted     Boolean    @default(false)
+  emailVerified Boolean    @default(false)
+  schoolId      Int?
   /////////////////////////////////////////////////////////////
   // RELATIONS
   /////////////////////////////////////////////////////////////
-  school School? @relation(fields: [schoolId], references: [id])
-  teacher Teacher?
-  student Student?
-  parent Parent?
-  roles UserRole[]
-  tokens Token[]
-  reports Report[]  
+  school        School?    @relation(fields: [schoolId], references: [id])
+  teacher       Teacher?
+  student       Student?
+  parent        Parent?
+  roles         UserRole[]
+  tokens        Token[]
+  // reports Report[]  
+  // userPermissions UserPermission[]
+  // paymentReceipts PaymentReceipt[]
+  // markedAttendances StudentAttendanceSession[]
+  // employeeAttendanceRecords EmployeeAttendance[]
+
+  reports Report[]
+
   userPermissions UserPermission[]
-  paymentReceipts PaymentReceipt[]
-  markedAttendances StudentAttendanceSession[]
+
+  // paymentReceipts PaymentReceipt[]
+
+  // paymentsCollected Payment[]
+  // refundsProcessed Refund[]
+
+  paymentReceipts PaymentReceipt[] @relation("PaymentReceiptReceivedBy")
+
+  paymentsCollected Payment[] @relation("PaymentCollectedBy")
+
+  refundsProcessed Refund[] @relation("RefundProcessedBy")
+
+  markedAttendances         StudentAttendanceSession[]
   employeeAttendanceRecords EmployeeAttendance[]
   /////////////////////////////////////////////////////////////
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt                 DateTime                   @default(now())
+  updatedAt                 DateTime                   @updatedAt
 }
 
 ///////////////////////////////////////////////////////////////
@@ -118,19 +136,21 @@ model RolePermission {
 ///////////////////////////////////////////////////////////////
 
 model Token {
-  id Int @id @default(autoincrement())
-  userId Int
-  tokenHash String @unique
-  type TokenType
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  tokenHash String    @unique
+  type      TokenType
   expiresAt DateTime
-  isUsed Boolean @default(false)
-  isRevoked Boolean @default(false)
+  isUsed    Boolean   @default(false)
+  isRevoked Boolean   @default(false)
   userAgent String?
   ipAddress String?
-  createdAt DateTime @default(now())
-  user User @relation(fields: [userId],references: [id],onDelete: Cascade)
+  createdAt DateTime  @default(now())
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@index([userId, type])
 }
+
 ///////////////////////////////////////////////////////////////
 enum TokenType {
   ACCESS

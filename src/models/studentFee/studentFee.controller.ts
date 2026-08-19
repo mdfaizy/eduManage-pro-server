@@ -4,14 +4,11 @@ import {
 } from "express";
 
 import service
-from "./studentFee.service";
-
+  from "./studentFee.service";
 class StudentFeeController {
-
   // =====================================
   // GENERATE FEE
   // =====================================
-
   async generate(
     req: Request,
     res: Response
@@ -46,62 +43,6 @@ class StudentFeeController {
 
           message:
             "Fee generated successfully",
-
-          data,
-        });
-
-    } catch (e: any) {
-
-      res.status(400)
-        .json({
-
-          success: false,
-
-          message:
-            e.message,
-        });
-    }
-  }
-
-  // =====================================
-  // PAY FEE
-  // =====================================
-
-  async payFee(
-    req: Request,
-    res: Response
-  ) {
-
-    try {
-
-      const schoolId =
-        (req as any)
-          .user
-          .schoolId;
-
-      const receivedById =
-        (req as any)
-          .user
-          .id;
-
-      const data =
-        await service
-          .payFee({
-
-            ...req.body,
-
-            schoolId,
-
-            receivedById,
-          });
-
-      res.status(200)
-        .json({
-
-          success: true,
-
-          message:
-            "Fee paid successfully",
 
           data,
         });
@@ -170,42 +111,37 @@ class StudentFeeController {
     req: Request,
     res: Response
   ) {
-
     try {
+      const schoolId =
+        (req as any)
+          .user
+          .schoolId;
 
       const studentId =
         Number(
-          req.params
-            .studentId
+          req.params.studentId
         );
 
       const data =
         await service
           .getStudentHistory(
+            schoolId,
             studentId
           );
 
-      res.status(200)
-        .json({
-
-          success: true,
-
-          data,
-        });
+      res.status(200).json({
+        success: true,
+        data,
+      });
 
     } catch (e: any) {
 
-      res.status(500)
-        .json({
-
-          success: false,
-
-          message:
-            e.message,
-        });
+      res.status(500).json({
+        success: false,
+        message: e.message,
+      });
     }
   }
-
   // =====================================
   // GET DUE FEES
   // =====================================
@@ -251,4 +187,4 @@ class StudentFeeController {
 }
 
 export default
-new StudentFeeController();
+  new StudentFeeController();

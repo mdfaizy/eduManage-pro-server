@@ -120,130 +120,6 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.SchoolScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  email: 'email',
-  phone: 'phone',
-  status: 'status',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.PlanScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  price: 'price',
-  duration: 'duration',
-  features: 'features',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.SchoolSubscriptionScalarFieldEnum = {
-  id: 'id',
-  schoolId: 'schoolId',
-  planId: 'planId',
-  startDate: 'startDate',
-  endDate: 'endDate',
-  status: 'status',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.SchoolRequestScalarFieldEnum = {
-  id: 'id',
-  schoolName: 'schoolName',
-  email: 'email',
-  phone: 'phone',
-  status: 'status',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.TransactionScalarFieldEnum = {
-  id: 'id',
-  schoolId: 'schoolId',
-  amount: 'amount',
-  gateway: 'gateway',
-  reference: 'reference',
-  status: 'status',
-  createdAt: 'createdAt'
-};
-
-exports.Prisma.UserScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  email: 'email',
-  password: 'password',
-  isActive: 'isActive',
-  isDeleted: 'isDeleted',
-  emailVerified: 'emailVerified',
-  schoolId: 'schoolId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.TeacherScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  schoolId: 'schoolId',
-  teacherCode: 'teacherCode',
-  phone: 'phone',
-  gender: 'gender',
-  joiningDate: 'joiningDate',
-  qualification: 'qualification',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.RoleScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  schoolId: 'schoolId',
-  profileType: 'profileType',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.PermissionScalarFieldEnum = {
-  id: 'id',
-  key: 'key',
-  description: 'description',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.UserRoleScalarFieldEnum = {
-  userId: 'userId',
-  roleId: 'roleId'
-};
-
-exports.Prisma.UserPermissionScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  permissionId: 'permissionId',
-  granted: 'granted'
-};
-
-exports.Prisma.RolePermissionScalarFieldEnum = {
-  roleId: 'roleId',
-  permissionId: 'permissionId'
-};
-
-exports.Prisma.TokenScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  tokenHash: 'tokenHash',
-  type: 'type',
-  expiresAt: 'expiresAt',
-  isUsed: 'isUsed',
-  isRevoked: 'isRevoked',
-  userAgent: 'userAgent',
-  ipAddress: 'ipAddress',
-  createdAt: 'createdAt'
-};
-
 exports.Prisma.ClassScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -389,111 +265,6 @@ exports.Prisma.TimetableScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.StudentScalarFieldEnum = {
-  id: 'id',
-  schoolId: 'schoolId',
-  userId: 'userId',
-  name: 'name',
-  profilePhoto: 'profilePhoto',
-  studentCode: 'studentCode',
-  dob: 'dob',
-  gender: 'gender',
-  address: 'address',
-  phoneNumber: 'phoneNumber',
-  email: 'email',
-  isActive: 'isActive',
-  isDeleted: 'isDeleted',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.StudentAcademicRecordScalarFieldEnum = {
-  id: 'id',
-  schoolId: 'schoolId',
-  studentId: 'studentId',
-  academicYearId: 'academicYearId',
-  classId: 'classId',
-  sectionId: 'sectionId',
-  rollNumber: 'rollNumber',
-  admissionNo: 'admissionNo',
-  isCurrent: 'isCurrent',
-  status: 'status',
-  promotedFromId: 'promotedFromId',
-  transportRouteId: 'transportRouteId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.ParentScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  schoolId: 'schoolId',
-  fatherName: 'fatherName',
-  fatherPhone: 'fatherPhone',
-  fatherEmail: 'fatherEmail',
-  fatherOccupation: 'fatherOccupation',
-  motherName: 'motherName',
-  motherPhone: 'motherPhone',
-  motherEmail: 'motherEmail',
-  motherOccupation: 'motherOccupation',
-  guardianName: 'guardianName',
-  guardianRelation: 'guardianRelation',
-  guardianPhone: 'guardianPhone',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.StudentParentScalarFieldEnum = {
-  studentId: 'studentId',
-  parentId: 'parentId',
-  createdAt: 'createdAt'
-};
-
-exports.Prisma.AdmissionScalarFieldEnum = {
-  id: 'id',
-  schoolId: 'schoolId',
-  studentId: 'studentId',
-  studentName: 'studentName',
-  dob: 'dob',
-  gender: 'gender',
-  address: 'address',
-  phoneNumber: 'phoneNumber',
-  email: 'email',
-  classId: 'classId',
-  sectionId: 'sectionId',
-  academicYearId: 'academicYearId',
-  previousSchool: 'previousSchool',
-  previousClass: 'previousClass',
-  previousPercentage: 'previousPercentage',
-  rollNumber: 'rollNumber',
-  admissionNo: 'admissionNo',
-  bloodGroup: 'bloodGroup',
-  nationality: 'nationality',
-  religion: 'religion',
-  caste: 'caste',
-  aadharNumber: 'aadharNumber',
-  fatherName: 'fatherName',
-  fatherPhone: 'fatherPhone',
-  fatherEmail: 'fatherEmail',
-  fatherOccupation: 'fatherOccupation',
-  motherName: 'motherName',
-  motherPhone: 'motherPhone',
-  motherEmail: 'motherEmail',
-  motherOccupation: 'motherOccupation',
-  guardianName: 'guardianName',
-  guardianRelation: 'guardianRelation',
-  guardianPhone: 'guardianPhone',
-  guardianEmail: 'guardianEmail',
-  status: 'status',
-  approvedAt: 'approvedAt',
-  admissionType: 'admissionType',
-  admissionDate: 'admissionDate',
-  medium: 'medium',
-  previousBoard: 'previousBoard',
-  tcNumber: 'tcNumber',
-  createdAt: 'createdAt'
-};
-
 exports.Prisma.StudentAttendanceSessionScalarFieldEnum = {
   id: 'id',
   schoolId: 'schoolId',
@@ -528,164 +299,64 @@ exports.Prisma.EmployeeAttendanceScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.StaffScalarFieldEnum = {
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  password: 'password',
+  isActive: 'isActive',
+  isDeleted: 'isDeleted',
+  emailVerified: 'emailVerified',
+  schoolId: 'schoolId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.RoleScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  schoolId: 'schoolId',
+  profileType: 'profileType',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PermissionScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserRoleScalarFieldEnum = {
+  userId: 'userId',
+  roleId: 'roleId'
+};
+
+exports.Prisma.UserPermissionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  schoolId: 'schoolId',
-  designationId: 'designationId'
+  permissionId: 'permissionId',
+  granted: 'granted'
 };
 
-exports.Prisma.DesignationScalarFieldEnum = {
-  id: 'id',
-  name: 'name'
+exports.Prisma.RolePermissionScalarFieldEnum = {
+  roleId: 'roleId',
+  permissionId: 'permissionId'
 };
 
-exports.Prisma.PayrollScalarFieldEnum = {
+exports.Prisma.TokenScalarFieldEnum = {
   id: 'id',
-  staffId: 'staffId',
-  salary: 'salary',
-  month: 'month'
-};
-
-exports.Prisma.FeeHeadScalarFieldEnum = {
-  id: 'id',
-  schoolId: 'schoolId',
-  name: 'name',
-  description: 'description',
-  isOptional: 'isOptional',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.FeeStructureScalarFieldEnum = {
-  id: 'id',
-  schoolId: 'schoolId',
-  academicYearId: 'academicYearId',
-  classId: 'classId',
-  name: 'name',
-  isActive: 'isActive',
-  dueDay: 'dueDay',
-  monthlyFee: 'monthlyFee',
-  yearlyFee: 'yearlyFee',
-  oneTimeFee: 'oneTimeFee',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.FeeStructureItemScalarFieldEnum = {
-  id: 'id',
-  feeStructureId: 'feeStructureId',
-  feeHeadId: 'feeHeadId',
-  amount: 'amount',
-  frequency: 'frequency',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.TransportRouteScalarFieldEnum = {
-  id: 'id',
-  schoolId: 'schoolId',
-  name: 'name',
-  pickupPoint: 'pickupPoint',
-  amount: 'amount',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.BookPackageScalarFieldEnum = {
-  id: 'id',
-  schoolId: 'schoolId',
-  classId: 'classId',
-  name: 'name',
-  amount: 'amount',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.StudentFeeScalarFieldEnum = {
-  id: 'id',
-  invoiceNo: 'invoiceNo',
-  schoolId: 'schoolId',
-  studentId: 'studentId',
-  feeStructureId: 'feeStructureId',
-  month: 'month',
-  year: 'year',
-  totalAmount: 'totalAmount',
-  paidAmount: 'paidAmount',
-  dueAmount: 'dueAmount',
-  lateFee: 'lateFee',
-  discount: 'discount',
-  isAdmissionFee: 'isAdmissionFee',
-  status: 'status',
-  dueDate: 'dueDate',
-  remarks: 'remarks',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.StudentFeeItemScalarFieldEnum = {
-  id: 'id',
-  studentFeeId: 'studentFeeId',
-  feeHeadId: 'feeHeadId',
-  amount: 'amount',
-  frequency: 'frequency',
-  createdAt: 'createdAt'
-};
-
-exports.Prisma.PaymentReceiptScalarFieldEnum = {
-  id: 'id',
-  schoolId: 'schoolId',
-  studentFeeId: 'studentFeeId',
-  receiptNo: 'receiptNo',
-  amount: 'amount',
-  paymentDate: 'paymentDate',
-  paymentMethod: 'paymentMethod',
-  transactionId: 'transactionId',
-  remarks: 'remarks',
-  receivedById: 'receivedById',
-  status: 'status',
-  createdAt: 'createdAt'
-};
-
-exports.Prisma.StudentScholarshipScalarFieldEnum = {
-  id: 'id',
-  schoolId: 'schoolId',
-  studentId: 'studentId',
-  scholarshipId: 'scholarshipId',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.ScholarshipScalarFieldEnum = {
-  id: 'id',
-  schoolId: 'schoolId',
-  name: 'name',
+  userId: 'userId',
+  tokenHash: 'tokenHash',
   type: 'type',
-  amount: 'amount',
-  description: 'description',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.StudentDiscountScalarFieldEnum = {
-  id: 'id',
-  schoolId: 'schoolId',
-  studentId: 'studentId',
-  feeHeadId: 'feeHeadId',
-  type: 'type',
-  amount: 'amount',
-  applyType: 'applyType',
-  startMonth: 'startMonth',
-  endMonth: 'endMonth',
-  remarks: 'remarks',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  expiresAt: 'expiresAt',
+  isUsed: 'isUsed',
+  isRevoked: 'isRevoked',
+  userAgent: 'userAgent',
+  ipAddress: 'ipAddress',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.ExamScalarFieldEnum = {
@@ -724,13 +395,398 @@ exports.Prisma.ExamMarkScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.AuditLogScalarFieldEnum = {
+exports.Prisma.FeeHeadScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  name: 'name',
+  description: 'description',
+  isOptional: 'isOptional',
+  frequency: 'frequency',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.FeeStructureScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  academicYearId: 'academicYearId',
+  classId: 'classId',
+  name: 'name',
+  monthlyFee: 'monthlyFee',
+  yearlyFee: 'yearlyFee',
+  oneTimeFee: 'oneTimeFee',
+  dueDay: 'dueDay',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.FeeStructureItemScalarFieldEnum = {
+  id: 'id',
+  feeStructureId: 'feeStructureId',
+  feeHeadId: 'feeHeadId',
+  amount: 'amount',
+  frequency: 'frequency',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.StudentFeeScalarFieldEnum = {
+  id: 'id',
+  invoiceNo: 'invoiceNo',
+  schoolId: 'schoolId',
+  studentId: 'studentId',
+  feeStructureId: 'feeStructureId',
+  month: 'month',
+  year: 'year',
+  totalAmount: 'totalAmount',
+  paidAmount: 'paidAmount',
+  dueAmount: 'dueAmount',
+  lateFee: 'lateFee',
+  discount: 'discount',
+  isAdmissionFee: 'isAdmissionFee',
+  status: 'status',
+  dueDate: 'dueDate',
+  remarks: 'remarks',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.StudentFeeItemScalarFieldEnum = {
+  id: 'id',
+  studentFeeId: 'studentFeeId',
+  feeHeadId: 'feeHeadId',
+  amount: 'amount',
+  frequency: 'frequency',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ReportScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  title: 'title',
+  type: 'type',
+  filePath: 'filePath',
+  generatedBy: 'generatedBy',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ScholarshipScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  name: 'name',
+  type: 'type',
+  amount: 'amount',
+  description: 'description',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.StudentScholarshipScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  studentId: 'studentId',
+  scholarshipId: 'scholarshipId',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.StudentDiscountScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  studentId: 'studentId',
+  feeHeadId: 'feeHeadId',
+  type: 'type',
+  amount: 'amount',
+  applyType: 'applyType',
+  appliedOn: 'appliedOn',
+  startMonth: 'startMonth',
+  endMonth: 'endMonth',
+  remarks: 'remarks',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TransportRouteScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  name: 'name',
+  pickupPoint: 'pickupPoint',
+  amount: 'amount',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.BookPackageScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  classId: 'classId',
+  name: 'name',
+  amount: 'amount',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.FeeRefundScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  studentId: 'studentId',
+  studentFeeId: 'studentFeeId',
+  refundNo: 'refundNo',
+  amount: 'amount',
+  refundMethod: 'refundMethod',
+  reason: 'reason',
+  status: 'status',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PaymentScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  studentId: 'studentId',
+  studentFeeId: 'studentFeeId',
+  amount: 'amount',
+  paymentMethod: 'paymentMethod',
+  status: 'status',
+  transactionId: 'transactionId',
+  referenceNo: 'referenceNo',
+  paymentDate: 'paymentDate',
+  remarks: 'remarks',
+  collectedBy: 'collectedBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PaymentReceiptScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  studentId: 'studentId',
+  studentFeeId: 'studentFeeId',
+  paymentId: 'paymentId',
+  receiptNo: 'receiptNo',
+  amount: 'amount',
+  paymentDate: 'paymentDate',
+  issuedAt: 'issuedAt',
+  paymentMethod: 'paymentMethod',
+  transactionId: 'transactionId',
+  remarks: 'remarks',
+  receivedById: 'receivedById',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.RefundScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  studentId: 'studentId',
+  studentFeeId: 'studentFeeId',
+  paymentId: 'paymentId',
+  amount: 'amount',
+  reason: 'reason',
+  refundMethod: 'refundMethod',
+  status: 'status',
+  transactionId: 'transactionId',
+  refundedBy: 'refundedBy',
+  refundDate: 'refundDate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SchoolScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  phone: 'phone',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PlanScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  price: 'price',
+  duration: 'duration',
+  features: 'features',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SchoolSubscriptionScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  planId: 'planId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SchoolRequestScalarFieldEnum = {
+  id: 'id',
+  schoolName: 'schoolName',
+  email: 'email',
+  phone: 'phone',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TransactionScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  amount: 'amount',
+  gateway: 'gateway',
+  reference: 'reference',
+  status: 'status',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.StudentScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  userId: 'userId',
+  name: 'name',
+  profilePhoto: 'profilePhoto',
+  studentCode: 'studentCode',
+  dob: 'dob',
+  gender: 'gender',
+  address: 'address',
+  phoneNumber: 'phoneNumber',
+  email: 'email',
+  isActive: 'isActive',
+  isDeleted: 'isDeleted',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.StudentAcademicRecordScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  studentId: 'studentId',
+  academicYearId: 'academicYearId',
+  classId: 'classId',
+  sectionId: 'sectionId',
+  transportRouteId: 'transportRouteId',
+  rollNumber: 'rollNumber',
+  admissionNo: 'admissionNo',
+  isCurrent: 'isCurrent',
+  status: 'status',
+  promotedFromId: 'promotedFromId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AdmissionScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  studentId: 'studentId',
+  studentName: 'studentName',
+  dob: 'dob',
+  gender: 'gender',
+  address: 'address',
+  phoneNumber: 'phoneNumber',
+  email: 'email',
+  classId: 'classId',
+  sectionId: 'sectionId',
+  academicYearId: 'academicYearId',
+  previousSchool: 'previousSchool',
+  previousClass: 'previousClass',
+  previousPercentage: 'previousPercentage',
+  rollNumber: 'rollNumber',
+  admissionNo: 'admissionNo',
+  bloodGroup: 'bloodGroup',
+  nationality: 'nationality',
+  religion: 'religion',
+  caste: 'caste',
+  aadharNumber: 'aadharNumber',
+  fatherName: 'fatherName',
+  fatherPhone: 'fatherPhone',
+  fatherEmail: 'fatherEmail',
+  fatherOccupation: 'fatherOccupation',
+  motherName: 'motherName',
+  motherPhone: 'motherPhone',
+  motherEmail: 'motherEmail',
+  motherOccupation: 'motherOccupation',
+  guardianName: 'guardianName',
+  guardianRelation: 'guardianRelation',
+  guardianPhone: 'guardianPhone',
+  guardianEmail: 'guardianEmail',
+  admissionType: 'admissionType',
+  status: 'status',
+  admissionDate: 'admissionDate',
+  approvedAt: 'approvedAt',
+  medium: 'medium',
+  previousBoard: 'previousBoard',
+  tcNumber: 'tcNumber',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.StudentParentScalarFieldEnum = {
+  studentId: 'studentId',
+  parentId: 'parentId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ParentScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  action: 'action',
-  entity: 'entity',
-  entityId: 'entityId',
-  createdAt: 'createdAt'
+  schoolId: 'schoolId',
+  fatherName: 'fatherName',
+  fatherPhone: 'fatherPhone',
+  fatherEmail: 'fatherEmail',
+  fatherOccupation: 'fatherOccupation',
+  motherName: 'motherName',
+  motherPhone: 'motherPhone',
+  motherEmail: 'motherEmail',
+  motherOccupation: 'motherOccupation',
+  guardianName: 'guardianName',
+  guardianRelation: 'guardianRelation',
+  guardianPhone: 'guardianPhone',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TeacherScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  schoolId: 'schoolId',
+  teacherCode: 'teacherCode',
+  phone: 'phone',
+  gender: 'gender',
+  joiningDate: 'joiningDate',
+  qualification: 'qualification',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.StaffScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  schoolId: 'schoolId',
+  designationId: 'designationId'
+};
+
+exports.Prisma.DesignationScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+};
+
+exports.Prisma.PayrollScalarFieldEnum = {
+  id: 'id',
+  staffId: 'staffId',
+  salary: 'salary',
+  month: 'month'
 };
 
 exports.Prisma.SortOrder = {
@@ -745,67 +801,6 @@ exports.Prisma.JsonNullValueInput = {
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
-};
-
-exports.Prisma.SchoolOrderByRelevanceFieldEnum = {
-  name: 'name',
-  email: 'email',
-  phone: 'phone'
-};
-
-exports.Prisma.JsonNullValueFilter = {
-  DbNull: Prisma.DbNull,
-  JsonNull: Prisma.JsonNull,
-  AnyNull: Prisma.AnyNull
-};
-
-exports.Prisma.QueryMode = {
-  default: 'default',
-  insensitive: 'insensitive'
-};
-
-exports.Prisma.PlanOrderByRelevanceFieldEnum = {
-  name: 'name'
-};
-
-exports.Prisma.SchoolRequestOrderByRelevanceFieldEnum = {
-  schoolName: 'schoolName',
-  email: 'email',
-  phone: 'phone'
-};
-
-exports.Prisma.TransactionOrderByRelevanceFieldEnum = {
-  gateway: 'gateway',
-  reference: 'reference'
-};
-
-exports.Prisma.UserOrderByRelevanceFieldEnum = {
-  name: 'name',
-  email: 'email',
-  password: 'password'
-};
-
-exports.Prisma.TeacherOrderByRelevanceFieldEnum = {
-  teacherCode: 'teacherCode',
-  phone: 'phone',
-  gender: 'gender',
-  qualification: 'qualification'
-};
-
-exports.Prisma.RoleOrderByRelevanceFieldEnum = {
-  name: 'name',
-  profileType: 'profileType'
-};
-
-exports.Prisma.PermissionOrderByRelevanceFieldEnum = {
-  key: 'key',
-  description: 'description'
-};
-
-exports.Prisma.TokenOrderByRelevanceFieldEnum = {
-  tokenHash: 'tokenHash',
-  userAgent: 'userAgent',
-  ipAddress: 'ipAddress'
 };
 
 exports.Prisma.ClassOrderByRelevanceFieldEnum = {
@@ -827,6 +822,17 @@ exports.Prisma.SubjectOrderByRelevanceFieldEnum = {
   name: 'name',
   description: 'description',
   code: 'code'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
 };
 
 exports.Prisma.SyllabusOrderByRelevanceFieldEnum = {
@@ -856,6 +862,126 @@ exports.Prisma.TimetableOrderByRelevanceFieldEnum = {
   endTime: 'endTime'
 };
 
+exports.Prisma.StudentAttendanceRecordOrderByRelevanceFieldEnum = {
+  remarks: 'remarks'
+};
+
+exports.Prisma.EmployeeAttendanceOrderByRelevanceFieldEnum = {
+  remarks: 'remarks'
+};
+
+exports.Prisma.UserOrderByRelevanceFieldEnum = {
+  name: 'name',
+  email: 'email',
+  password: 'password'
+};
+
+exports.Prisma.RoleOrderByRelevanceFieldEnum = {
+  name: 'name',
+  profileType: 'profileType'
+};
+
+exports.Prisma.PermissionOrderByRelevanceFieldEnum = {
+  key: 'key',
+  description: 'description'
+};
+
+exports.Prisma.TokenOrderByRelevanceFieldEnum = {
+  tokenHash: 'tokenHash',
+  userAgent: 'userAgent',
+  ipAddress: 'ipAddress'
+};
+
+exports.Prisma.ExamOrderByRelevanceFieldEnum = {
+  name: 'name'
+};
+
+exports.Prisma.ExamMarkOrderByRelevanceFieldEnum = {
+  remarks: 'remarks'
+};
+
+exports.Prisma.FeeHeadOrderByRelevanceFieldEnum = {
+  name: 'name',
+  description: 'description'
+};
+
+exports.Prisma.FeeStructureOrderByRelevanceFieldEnum = {
+  name: 'name'
+};
+
+exports.Prisma.StudentFeeOrderByRelevanceFieldEnum = {
+  invoiceNo: 'invoiceNo',
+  remarks: 'remarks'
+};
+
+exports.Prisma.ReportOrderByRelevanceFieldEnum = {
+  title: 'title',
+  filePath: 'filePath'
+};
+
+exports.Prisma.ScholarshipOrderByRelevanceFieldEnum = {
+  name: 'name',
+  description: 'description'
+};
+
+exports.Prisma.StudentDiscountOrderByRelevanceFieldEnum = {
+  remarks: 'remarks'
+};
+
+exports.Prisma.TransportRouteOrderByRelevanceFieldEnum = {
+  name: 'name',
+  pickupPoint: 'pickupPoint'
+};
+
+exports.Prisma.BookPackageOrderByRelevanceFieldEnum = {
+  name: 'name'
+};
+
+exports.Prisma.FeeRefundOrderByRelevanceFieldEnum = {
+  refundNo: 'refundNo',
+  refundMethod: 'refundMethod',
+  reason: 'reason',
+  status: 'status'
+};
+
+exports.Prisma.PaymentOrderByRelevanceFieldEnum = {
+  transactionId: 'transactionId',
+  referenceNo: 'referenceNo',
+  remarks: 'remarks'
+};
+
+exports.Prisma.PaymentReceiptOrderByRelevanceFieldEnum = {
+  receiptNo: 'receiptNo',
+  transactionId: 'transactionId',
+  remarks: 'remarks'
+};
+
+exports.Prisma.RefundOrderByRelevanceFieldEnum = {
+  reason: 'reason',
+  transactionId: 'transactionId'
+};
+
+exports.Prisma.SchoolOrderByRelevanceFieldEnum = {
+  name: 'name',
+  email: 'email',
+  phone: 'phone'
+};
+
+exports.Prisma.PlanOrderByRelevanceFieldEnum = {
+  name: 'name'
+};
+
+exports.Prisma.SchoolRequestOrderByRelevanceFieldEnum = {
+  schoolName: 'schoolName',
+  email: 'email',
+  phone: 'phone'
+};
+
+exports.Prisma.TransactionOrderByRelevanceFieldEnum = {
+  gateway: 'gateway',
+  reference: 'reference'
+};
+
 exports.Prisma.StudentOrderByRelevanceFieldEnum = {
   name: 'name',
   profilePhoto: 'profilePhoto',
@@ -867,20 +993,6 @@ exports.Prisma.StudentOrderByRelevanceFieldEnum = {
 
 exports.Prisma.StudentAcademicRecordOrderByRelevanceFieldEnum = {
   admissionNo: 'admissionNo'
-};
-
-exports.Prisma.ParentOrderByRelevanceFieldEnum = {
-  fatherName: 'fatherName',
-  fatherPhone: 'fatherPhone',
-  fatherEmail: 'fatherEmail',
-  fatherOccupation: 'fatherOccupation',
-  motherName: 'motherName',
-  motherPhone: 'motherPhone',
-  motherEmail: 'motherEmail',
-  motherOccupation: 'motherOccupation',
-  guardianName: 'guardianName',
-  guardianRelation: 'guardianRelation',
-  guardianPhone: 'guardianPhone'
 };
 
 exports.Prisma.AdmissionOrderByRelevanceFieldEnum = {
@@ -913,12 +1025,25 @@ exports.Prisma.AdmissionOrderByRelevanceFieldEnum = {
   tcNumber: 'tcNumber'
 };
 
-exports.Prisma.StudentAttendanceRecordOrderByRelevanceFieldEnum = {
-  remarks: 'remarks'
+exports.Prisma.ParentOrderByRelevanceFieldEnum = {
+  fatherName: 'fatherName',
+  fatherPhone: 'fatherPhone',
+  fatherEmail: 'fatherEmail',
+  fatherOccupation: 'fatherOccupation',
+  motherName: 'motherName',
+  motherPhone: 'motherPhone',
+  motherEmail: 'motherEmail',
+  motherOccupation: 'motherOccupation',
+  guardianName: 'guardianName',
+  guardianRelation: 'guardianRelation',
+  guardianPhone: 'guardianPhone'
 };
 
-exports.Prisma.EmployeeAttendanceOrderByRelevanceFieldEnum = {
-  remarks: 'remarks'
+exports.Prisma.TeacherOrderByRelevanceFieldEnum = {
+  teacherCode: 'teacherCode',
+  phone: 'phone',
+  gender: 'gender',
+  qualification: 'qualification'
 };
 
 exports.Prisma.DesignationOrderByRelevanceFieldEnum = {
@@ -928,57 +1053,125 @@ exports.Prisma.DesignationOrderByRelevanceFieldEnum = {
 exports.Prisma.PayrollOrderByRelevanceFieldEnum = {
   month: 'month'
 };
-
-exports.Prisma.FeeHeadOrderByRelevanceFieldEnum = {
-  name: 'name',
-  description: 'description'
+exports.SubjectType = exports.$Enums.SubjectType = {
+  CORE: 'CORE',
+  EXTRA: 'EXTRA',
+  THEORY: 'THEORY',
+  PRACTICAL: 'PRACTICAL',
+  BOTH: 'BOTH'
 };
 
-exports.Prisma.FeeStructureOrderByRelevanceFieldEnum = {
-  name: 'name'
+exports.TimingType = exports.$Enums.TimingType = {
+  REGULAR: 'REGULAR',
+  WINTER: 'WINTER',
+  RAMADAN: 'RAMADAN',
+  EXAM: 'EXAM'
 };
 
-exports.Prisma.TransportRouteOrderByRelevanceFieldEnum = {
-  name: 'name',
-  pickupPoint: 'pickupPoint'
+exports.AttendanceStatus = exports.$Enums.AttendanceStatus = {
+  PRESENT: 'PRESENT',
+  ABSENT: 'ABSENT',
+  LATE: 'LATE',
+  HALF_DAY: 'HALF_DAY',
+  LEAVE: 'LEAVE'
 };
 
-exports.Prisma.BookPackageOrderByRelevanceFieldEnum = {
-  name: 'name'
+exports.EmployeeAttendanceStatus = exports.$Enums.EmployeeAttendanceStatus = {
+  PRESENT: 'PRESENT',
+  ABSENT: 'ABSENT',
+  LATE: 'LATE',
+  HALF_DAY: 'HALF_DAY',
+  LEAVE: 'LEAVE',
+  HOLIDAY: 'HOLIDAY'
 };
 
-exports.Prisma.StudentFeeOrderByRelevanceFieldEnum = {
-  invoiceNo: 'invoiceNo',
-  remarks: 'remarks'
+exports.TokenType = exports.$Enums.TokenType = {
+  ACCESS: 'ACCESS',
+  REFRESH: 'REFRESH',
+  RESET_PASSWORD: 'RESET_PASSWORD',
+  VERIFY_EMAIL: 'VERIFY_EMAIL',
+  SET_PASSWORD: 'SET_PASSWORD'
 };
 
-exports.Prisma.PaymentReceiptOrderByRelevanceFieldEnum = {
-  receiptNo: 'receiptNo',
-  transactionId: 'transactionId',
-  remarks: 'remarks'
+exports.ExamType = exports.$Enums.ExamType = {
+  UNIT_TEST: 'UNIT_TEST',
+  MID_TERM: 'MID_TERM',
+  FINAL_EXAM: 'FINAL_EXAM',
+  PRACTICAL: 'PRACTICAL'
 };
 
-exports.Prisma.ScholarshipOrderByRelevanceFieldEnum = {
-  name: 'name',
-  description: 'description'
+exports.DiscountApplyType = exports.$Enums.DiscountApplyType = {
+  ONE_TIME: 'ONE_TIME',
+  MONTHLY: 'MONTHLY',
+  YEARLY: 'YEARLY'
 };
 
-exports.Prisma.StudentDiscountOrderByRelevanceFieldEnum = {
-  remarks: 'remarks'
+exports.FeeFrequency = exports.$Enums.FeeFrequency = {
+  MONTHLY: 'MONTHLY',
+  QUARTERLY: 'QUARTERLY',
+  HALF_YEARLY: 'HALF_YEARLY',
+  YEARLY: 'YEARLY',
+  ONE_TIME: 'ONE_TIME'
 };
 
-exports.Prisma.ExamOrderByRelevanceFieldEnum = {
-  name: 'name'
+exports.FeeStatus = exports.$Enums.FeeStatus = {
+  PAID: 'PAID',
+  PARTIAL: 'PARTIAL',
+  PENDING: 'PENDING',
+  OVERDUE: 'OVERDUE'
 };
 
-exports.Prisma.ExamMarkOrderByRelevanceFieldEnum = {
-  remarks: 'remarks'
+exports.ReportType = exports.$Enums.ReportType = {
+  FEE_COLLECTION: 'FEE_COLLECTION',
+  PENDING_FEE: 'PENDING_FEE',
+  STUDENT_LEDGER: 'STUDENT_LEDGER',
+  SCHOLARSHIP: 'SCHOLARSHIP',
+  DISCOUNT: 'DISCOUNT'
 };
 
-exports.Prisma.AuditLogOrderByRelevanceFieldEnum = {
-  action: 'action',
-  entity: 'entity'
+exports.ScholarshipType = exports.$Enums.ScholarshipType = {
+  FIXED: 'FIXED',
+  PERCENTAGE: 'PERCENTAGE'
 };
+
+exports.DiscountType = exports.$Enums.DiscountType = {
+  FIXED: 'FIXED',
+  PERCENTAGE: 'PERCENTAGE'
+};
+
+exports.PaymentMethod = exports.$Enums.PaymentMethod = {
+  CASH: 'CASH',
+  ONLINE: 'ONLINE',
+  UPI: 'UPI',
+  CARD: 'CARD',
+  BANK_TRANSFER: 'BANK_TRANSFER',
+  CHEQUE: 'CHEQUE',
+  OTHER: 'OTHER'
+};
+
+exports.PaymentTransactionStatus = exports.$Enums.PaymentTransactionStatus = {
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED',
+  PENDING: 'PENDING',
+  CANCELLED: 'CANCELLED',
+  REFUNDED: 'REFUNDED',
+  PARTIALLY_REFUNDED: 'PARTIALLY_REFUNDED'
+};
+
+exports.PaymentReceiptStatus = exports.$Enums.PaymentReceiptStatus = {
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED',
+  PENDING: 'PENDING'
+};
+
+exports.RefundStatus = exports.$Enums.RefundStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  COMPLETED: 'COMPLETED',
+  REJECTED: 'REJECTED',
+  CANCELLED: 'CANCELLED'
+};
+
 exports.SchoolStatus = exports.$Enums.SchoolStatus = {
   PENDING: 'PENDING',
   ACTIVE: 'ACTIVE',
@@ -1003,29 +1196,6 @@ exports.PaymentStatus = exports.$Enums.PaymentStatus = {
   PENDING: 'PENDING'
 };
 
-exports.TokenType = exports.$Enums.TokenType = {
-  ACCESS: 'ACCESS',
-  REFRESH: 'REFRESH',
-  RESET_PASSWORD: 'RESET_PASSWORD',
-  VERIFY_EMAIL: 'VERIFY_EMAIL',
-  SET_PASSWORD: 'SET_PASSWORD'
-};
-
-exports.SubjectType = exports.$Enums.SubjectType = {
-  CORE: 'CORE',
-  EXTRA: 'EXTRA',
-  THEORY: 'THEORY',
-  PRACTICAL: 'PRACTICAL',
-  BOTH: 'BOTH'
-};
-
-exports.TimingType = exports.$Enums.TimingType = {
-  REGULAR: 'REGULAR',
-  WINTER: 'WINTER',
-  RAMADAN: 'RAMADAN',
-  EXAM: 'EXAM'
-};
-
 exports.Gender = exports.$Enums.Gender = {
   MALE: 'MALE',
   FEMALE: 'FEMALE',
@@ -1041,6 +1211,12 @@ exports.AcademicRecordStatus = exports.$Enums.AcademicRecordStatus = {
   DROPPED: 'DROPPED'
 };
 
+exports.AdmissionType = exports.$Enums.AdmissionType = {
+  NEW: 'NEW',
+  TRANSFER: 'TRANSFER',
+  READMISSION: 'READMISSION'
+};
+
 exports.AdmissionStatus = exports.$Enums.AdmissionStatus = {
   PENDING: 'PENDING',
   APPROVED: 'APPROVED',
@@ -1050,95 +1226,7 @@ exports.AdmissionStatus = exports.$Enums.AdmissionStatus = {
   COMPLETED: 'COMPLETED'
 };
 
-exports.AdmissionType = exports.$Enums.AdmissionType = {
-  NEW: 'NEW',
-  TRANSFER: 'TRANSFER',
-  READMISSION: 'READMISSION'
-};
-
-exports.AttendanceStatus = exports.$Enums.AttendanceStatus = {
-  PRESENT: 'PRESENT',
-  ABSENT: 'ABSENT',
-  LATE: 'LATE',
-  HALF_DAY: 'HALF_DAY',
-  LEAVE: 'LEAVE'
-};
-
-exports.EmployeeAttendanceStatus = exports.$Enums.EmployeeAttendanceStatus = {
-  PRESENT: 'PRESENT',
-  ABSENT: 'ABSENT',
-  LATE: 'LATE',
-  HALF_DAY: 'HALF_DAY',
-  LEAVE: 'LEAVE',
-  HOLIDAY: 'HOLIDAY'
-};
-
-exports.FeeFrequency = exports.$Enums.FeeFrequency = {
-  MONTHLY: 'MONTHLY',
-  QUARTERLY: 'QUARTERLY',
-  HALF_YEARLY: 'HALF_YEARLY',
-  YEARLY: 'YEARLY',
-  ONE_TIME: 'ONE_TIME'
-};
-
-exports.FeeStatus = exports.$Enums.FeeStatus = {
-  PAID: 'PAID',
-  PARTIAL: 'PARTIAL',
-  PENDING: 'PENDING',
-  OVERDUE: 'OVERDUE'
-};
-
-exports.PaymentMethod = exports.$Enums.PaymentMethod = {
-  CASH: 'CASH',
-  ONLINE: 'ONLINE',
-  UPI: 'UPI',
-  CARD: 'CARD',
-  BANK_TRANSFER: 'BANK_TRANSFER'
-};
-
-exports.PaymentTransactionStatus = exports.$Enums.PaymentTransactionStatus = {
-  SUCCESS: 'SUCCESS',
-  FAILED: 'FAILED',
-  PENDING: 'PENDING'
-};
-
-exports.ScholarshipType = exports.$Enums.ScholarshipType = {
-  FIXED: 'FIXED',
-  PERCENTAGE: 'PERCENTAGE'
-};
-
-exports.DiscountType = exports.$Enums.DiscountType = {
-  FIXED: 'FIXED',
-  PERCENTAGE: 'PERCENTAGE'
-};
-
-exports.DiscountApplyType = exports.$Enums.DiscountApplyType = {
-  ONE_TIME: 'ONE_TIME',
-  MONTHLY: 'MONTHLY',
-  YEARLY: 'YEARLY'
-};
-
-exports.ExamType = exports.$Enums.ExamType = {
-  UNIT_TEST: 'UNIT_TEST',
-  MID_TERM: 'MID_TERM',
-  FINAL_EXAM: 'FINAL_EXAM',
-  PRACTICAL: 'PRACTICAL'
-};
-
 exports.Prisma.ModelName = {
-  School: 'School',
-  Plan: 'Plan',
-  SchoolSubscription: 'SchoolSubscription',
-  SchoolRequest: 'SchoolRequest',
-  Transaction: 'Transaction',
-  User: 'User',
-  Teacher: 'Teacher',
-  Role: 'Role',
-  Permission: 'Permission',
-  UserRole: 'UserRole',
-  UserPermission: 'UserPermission',
-  RolePermission: 'RolePermission',
-  Token: 'Token',
   Class: 'Class',
   Section: 'Section',
   Grade: 'Grade',
@@ -1151,32 +1239,48 @@ exports.Prisma.ModelName = {
   Period: 'Period',
   AcademicYear: 'AcademicYear',
   Timetable: 'Timetable',
-  Student: 'Student',
-  StudentAcademicRecord: 'StudentAcademicRecord',
-  Parent: 'Parent',
-  StudentParent: 'StudentParent',
-  Admission: 'Admission',
   StudentAttendanceSession: 'StudentAttendanceSession',
   StudentAttendanceRecord: 'StudentAttendanceRecord',
   EmployeeAttendance: 'EmployeeAttendance',
-  Staff: 'Staff',
-  Designation: 'Designation',
-  Payroll: 'Payroll',
-  FeeHead: 'FeeHead',
-  FeeStructure: 'FeeStructure',
-  FeeStructureItem: 'FeeStructureItem',
-  TransportRoute: 'TransportRoute',
-  BookPackage: 'BookPackage',
-  StudentFee: 'StudentFee',
-  StudentFeeItem: 'StudentFeeItem',
-  PaymentReceipt: 'PaymentReceipt',
-  StudentScholarship: 'StudentScholarship',
-  Scholarship: 'Scholarship',
-  StudentDiscount: 'StudentDiscount',
+  User: 'User',
+  Role: 'Role',
+  Permission: 'Permission',
+  UserRole: 'UserRole',
+  UserPermission: 'UserPermission',
+  RolePermission: 'RolePermission',
+  Token: 'Token',
   Exam: 'Exam',
   ExamSubject: 'ExamSubject',
   ExamMark: 'ExamMark',
-  AuditLog: 'AuditLog'
+  FeeHead: 'FeeHead',
+  FeeStructure: 'FeeStructure',
+  FeeStructureItem: 'FeeStructureItem',
+  StudentFee: 'StudentFee',
+  StudentFeeItem: 'StudentFeeItem',
+  Report: 'Report',
+  Scholarship: 'Scholarship',
+  StudentScholarship: 'StudentScholarship',
+  StudentDiscount: 'StudentDiscount',
+  TransportRoute: 'TransportRoute',
+  BookPackage: 'BookPackage',
+  FeeRefund: 'FeeRefund',
+  Payment: 'Payment',
+  PaymentReceipt: 'PaymentReceipt',
+  Refund: 'Refund',
+  School: 'School',
+  Plan: 'Plan',
+  SchoolSubscription: 'SchoolSubscription',
+  SchoolRequest: 'SchoolRequest',
+  Transaction: 'Transaction',
+  Student: 'Student',
+  StudentAcademicRecord: 'StudentAcademicRecord',
+  Admission: 'Admission',
+  StudentParent: 'StudentParent',
+  Parent: 'Parent',
+  Teacher: 'Teacher',
+  Staff: 'Staff',
+  Designation: 'Designation',
+  Payroll: 'Payroll'
 };
 
 /**

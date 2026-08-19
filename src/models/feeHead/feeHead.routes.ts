@@ -1,63 +1,9 @@
-// import { Router }
-// from "express";
-
-// import controller
-// from "./feeHead.controller.js";
-
-// import {
-//   authMiddleware,
-// } from "../../middlewares/auth.js";
-
-// import {
-//   validate,
-// } from "../../middlewares/validate.js";
-
-// import {
-//   createFeeHeadSchema,
-// } from "./feeHead.validation.js";
-
-// const router = Router();
-
-// ////////////////////////////////////////////////////////
-// // CREATE
-// ////////////////////////////////////////////////////////
-
-// router.post(
-//   "/",
-//   authMiddleware,
-//   validate(
-//     createFeeHeadSchema
-//   ),
-//   (req, res) =>
-//     controller.create(
-//       req,
-//       res
-//     )
-// );
-
-// ////////////////////////////////////////////////////////
-// // GET ALL
-// ////////////////////////////////////////////////////////
-// router.get(
-//   "/",
-//   authMiddleware,
-//   (req, res) =>
-//     controller.getAll(
-//       req,
-//       res
-//     )
-// );
-// export default router;
-
-// =====================================================
-// feeHead.routes.ts
-// =====================================================
 
 import { Router } from "express";
 import controller from "./feeHead.controller.js";
 import {authMiddleware,} from "../../middlewares/auth.js";
 import {validate,} from "../../middlewares/validate.js";
-import { createFeeHeadSchema,} from "./feeHead.validation.js";
+import { createFeeHeadSchema, updateFeeHeadSchema,} from "./feeHead.validation.js";
 const router = Router();
 ////////////////////////////////////////////////////////
 // CREATE
@@ -79,7 +25,7 @@ router.get("/:id",authMiddleware,(req, res) =>controller.getOne(req,res));
 ////////////////////////////////////////////////////////
 // UPDATE
 ////////////////////////////////////////////////////////
-router.put("/:id",authMiddleware,(req, res) => controller.update(req,res));
+router.put("/:id",authMiddleware,validate(updateFeeHeadSchema),(req, res) => controller.update(req,res));
 ////////////////////////////////////////////////////////
 // DELETE
 ////////////////////////////////////////////////////////

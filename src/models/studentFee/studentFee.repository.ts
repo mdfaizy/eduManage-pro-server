@@ -1,389 +1,8 @@
 import prisma from "../../config/prisma.js";
 import {
-  calculateFee,
-} from "../../utils/feeCalculation.js";
+  calculateFeeWithDiscounts,
+} from "../../utils/feeCalculationWithDiscounts.js";
 class StudentFeeRepository {
-
-  // =====================================
-  // GENERATE
-  // =====================================a
-
-  // =====================================
-  // GENERATE
-  // =====================================
-
-  // async generate(
-  //   data: any
-  // ) {
-
-  //   // =====================================
-  //   // CHECK EXISTING MONTHLY FEE
-  //   // =====================================
-
-  //   const existing =
-
-  //     await prisma
-  //       .studentFee
-  //       .findFirst({
-
-  //         where: {
-
-  //           studentId:
-  //             data.studentId,
-
-  //           feeStructureId:
-  //             data.feeStructureId,
-
-  //           month:
-  //             data.month,
-
-  //           year:
-  //             data.year,
-  //         },
-  //       });
-
-  //   if (existing) {
-
-  //     throw new Error(
-  //       "Fee already generated"
-  //     );
-  //   }
-
-  //   // =====================================
-  //   // STUDENT RECORD
-  //   // =====================================
-
-  //   const studentRecord =
-  //     await prisma
-  //       .studentAcademicRecord
-  //       .findFirst({
-
-  //         where: {
-
-  //           studentId:
-  //             data.studentId,
-
-  //           isCurrent: true,
-  //         },
-
-  //         include: {
-
-  //           transportRoute: true,
-  //         },
-  //       });
-
-  //   if (!studentRecord) {
-
-  //     throw new Error(
-  //       "Student academic record not found"
-  //     );
-  //   }
-
-  //   // =====================================
-  //   // FEE STRUCTURE
-  //   // =====================================
-
-  //   const structure =
-  //     await prisma
-  //       .feeStructure
-  //       .findUnique({
-
-  //         where: {
-
-  //           id:
-  //             data.feeStructureId,
-  //         },
-
-  //         include: {
-
-  //           items: {
-
-  //             include: {
-
-  //               feeHead: true,
-  //             },
-  //           },
-  //         },
-  //       });
-
-  //   if (!structure) {
-
-  //     throw new Error(
-  //       "Fee structure not found"
-  //     );
-  //   }
-
-  //   // =====================================
-  //   // GENERATE ITEMS
-  //   // =====================================
-
-  //   let structureAmount = 0;
-
-  //   const generatedItems: any[] = [];
-
-  //   for (
-  //     const item of structure.items
-  //   ) {
-
-  //     // =====================================
-  //     // MONTHLY
-  //     // =====================================
-
-  //     if (
-  //       item.frequency ===
-  //       "MONTHLY"
-  //     ) {
-
-  //       structureAmount +=
-  //         Number(item.amount);
-
-  //       generatedItems.push(item);
-  //     }
-
-  //     // =====================================
-  //     // YEARLY
-  //     // =====================================
-
-  //     if (
-  //       item.frequency ===
-  //       "YEARLY"
-  //     ) {
-
-  //       const yearlyExists =
-
-  //         await prisma
-  //           .studentFeeItem
-  //           .findFirst({
-
-  //             where: {
-
-  //               feeHeadId:
-  //                 item.feeHeadId,
-
-  //               studentFee: {
-
-  //                 studentId:
-  //                   data.studentId,
-
-  //                 year:
-  //                   data.year,
-  //               },
-  //             },
-  //           });
-
-  //       if (!yearlyExists) {
-
-  //         structureAmount +=
-  //           Number(item.amount);
-
-  //         generatedItems.push(item);
-  //       }
-  //     }
-
-  //     // =====================================
-  //     // ONE TIME
-  //     // =====================================
-
-  //     if (
-  //       item.frequency ===
-  //       "ONE_TIME"
-  //     ) {
-
-  //       const oneTimeExists =
-
-  //         await prisma
-  //           .studentFeeItem
-  //           .findFirst({
-
-  //             where: {
-
-  //               feeHeadId:
-  //                 item.feeHeadId,
-
-  //               studentFee: {
-
-  //                 studentId:
-  //                   data.studentId,
-  //               },
-  //             },
-  //           });
-
-  //       if (!oneTimeExists) {
-
-  //         structureAmount +=
-  //           Number(item.amount);
-
-  //         generatedItems.push(item);
-  //       }
-  //     }
-  //   }
-
-  //   // =====================================
-  //   // TRANSPORT
-  //   // =====================================
-
-  //   const transportAmount =
-
-  //     studentRecord
-  //       ?.transportRoute
-  //       ?.amount || 0;
-
-  //   // =====================================
-  //   // GROSS AMOUNT
-  //   // =====================================
-
-  //   const grossAmount =
-
-  //     structureAmount +
-  //     transportAmount;
-
-  //   // =====================================
-  //   // SCHOLARSHIP
-  //   // =====================================
-
-  //   const studentScholarship =
-  //     await prisma
-  //       .studentScholarship
-  //       .findFirst({
-
-  //         where: {
-
-  //           studentId:
-  //             data.studentId,
-
-  //           isActive: true,
-  //         },
-
-  //         include: {
-
-  //           scholarship: true,
-  //         },
-  //       });
-
-  //   // =====================================
-  //   // FINAL CALCULATION
-  //   // =====================================
-
-  //   const {
-
-  //     grossAmount:
-  //       finalGrossAmount,
-
-  //     discount,
-
-  //     finalAmount,
-
-  //   } = calculateFee(
-
-  //     grossAmount,
-
-  //     studentScholarship
-  //       ?.scholarship
-  //   );
-
-  //   // =====================================
-  //   // CREATE STUDENT FEE
-  //   // =====================================
-
-  //   return prisma
-  //     .$transaction(
-  //       async (tx) => {
-
-  //         return tx
-  //           .studentFee
-  //           .create({
-
-  //             data: {
-
-  //               schoolId:
-  //                 data.schoolId,
-
-  //               studentId:
-  //                 data.studentId,
-
-  //               feeStructureId:
-  //                 data.feeStructureId,
-
-  //               month:
-  //                 data.month,
-
-  //               year:
-  //                 data.year,
-
-  //               dueDate:
-  //                 data.dueDate,
-
-  //               // =====================================
-  //               // ORIGINAL TOTAL
-  //               // =====================================
-
-  //               totalAmount:
-  //                 finalGrossAmount,
-
-  //               // =====================================
-  //               // SCHOLARSHIP DISCOUNT
-  //               // =====================================
-
-  //               discount,
-
-  //               // =====================================
-  //               // FINAL PAYABLE
-  //               // =====================================
-
-  //               dueAmount:
-  //                 finalAmount,
-
-  //               paidAmount: 0,
-
-  //               status:
-  //                 "PENDING",
-
-  //               invoiceNo:
-  //                 `INV-${Date.now()}`,
-
-  //               // =====================================
-  //               // FEE ITEMS
-  //               // =====================================
-
-  //               items: {
-
-  //                 create:
-  //                   generatedItems.map(
-  //                     (item: any) => ({
-
-  //                       feeHeadId:
-  //                         item.feeHeadId,
-
-  //                       amount:
-  //                         item.amount,
-
-  //                       frequency:
-  //                         item.frequency,
-  //                     })
-  //                   ),
-  //               },
-  //             },
-
-  //             include: {
-
-  //               student: true,
-
-  //               feeStructure: true,
-
-  //               receipts: true,
-
-  //               items: {
-
-  //                 include: {
-
-  //                   feeHead: true,
-  //                 },
-  //               },
-  //             },
-  //           });
-  //       }
-  //     );
-  // }
 
   // =====================================
   // GENERATE
@@ -407,45 +26,28 @@ class StudentFeeRepository {
       }
     );
   }
-
   // =====================================
   // GENERATE WITH TRANSACTION
   // =====================================
-
   async generateWithTransaction(
     tx: any,
     data: any
   ) {
-console.log("========== GENERATE FEE ==========");
-console.log(data);
     // =====================================
     // CHECK EXISTING
     // =====================================
 
     const existing =
-
-      await tx
-        .studentFee
-        .findFirst({
-
-          where: {
-
-            studentId:
-              data.studentId,
-
-            feeStructureId:
-              data.feeStructureId,
-
-            month:
-              data.month,
-
-            year:
-              data.year,
-          },
-        });
+      await tx.studentFee.findFirst({
+        where: {
+          studentId: data.studentId,
+          feeStructureId: data.feeStructureId,
+          month: data.month,
+          year: data.year,
+        },
+      });
 
     if (existing) {
-
       throw new Error(
         "Fee already generated"
       );
@@ -456,404 +58,523 @@ console.log(data);
     // =====================================
 
     const structure =
-      await tx
-        .feeStructure
-        .findUnique({
+      await tx.feeStructure.findUnique({
+        where: {
+          id: data.feeStructureId,
+        },
 
-          where: {
+        include: {
+          items: true,
+        },
+      });
 
-            id:
-              data.feeStructureId,
-          },
-
-          include: {
-
-            items: true,
-          },
-        });
-console.log("========== STRUCTURE ==========");
-console.log(structure);
-
-console.log("========== ITEMS ==========");
-console.log(structure?.items);
     if (!structure) {
-
       throw new Error(
         "Fee structure not found"
       );
     }
 
     // =====================================
-    // CALCULATE
+    // CALCULATE FEE ITEMS
     // =====================================
 
     let total = 0;
 
     const generatedItems: any[] = [];
 
-    for (
-      const item of structure.items
-    ) {
-
+    for (const item of structure.items) {
+      // =====================================
       // MONTHLY
+      // =====================================
 
       if (
-        item.frequency ===
-        "MONTHLY"
+        item.frequency === "MONTHLY"
       ) {
-
         total +=
-          Number(item.amount);
+          Number(item.amount) || 0;
 
         generatedItems.push(item);
       }
 
+      // =====================================
       // YEARLY
+      // =====================================
 
       if (
-        item.frequency ===
-        "YEARLY"
+        item.frequency === "YEARLY"
       ) {
-
         const exists =
+          await tx.studentFeeItem.findFirst({
+            where: {
+              feeHeadId:
+                item.feeHeadId,
 
-          await tx
-            .studentFeeItem
-            .findFirst({
+              studentFee: {
+                studentId:
+                  data.studentId,
 
-              where: {
-
-                feeHeadId:
-                  item.feeHeadId,
-
-                studentFee: {
-
-                  studentId:
-                    data.studentId,
-
-                  year:
-                    data.year,
-                },
+                year:
+                  data.year,
               },
-            });
+            },
+          });
 
         if (!exists) {
-
           total +=
-            Number(item.amount);
+            Number(item.amount) || 0;
 
           generatedItems.push(item);
         }
       }
 
+      // =====================================
       // ONE TIME
+      // =====================================
 
       if (
-        item.frequency ===
-        "ONE_TIME"
+        item.frequency === "ONE_TIME"
       ) {
-
         const exists =
+          await tx.studentFeeItem.findFirst({
+            where: {
+              feeHeadId:
+                item.feeHeadId,
 
-          await tx
-            .studentFeeItem
-            .findFirst({
-
-              where: {
-
-                feeHeadId:
-                  item.feeHeadId,
-
-                studentFee: {
-
-                  studentId:
-                    data.studentId,
-                },
+              studentFee: {
+                studentId:
+                  data.studentId,
               },
-            });
+            },
+          });
 
         if (!exists) {
-
           total +=
-            Number(item.amount);
+            Number(item.amount) || 0;
 
           generatedItems.push(item);
         }
       }
     }
 
-    console.log("TOTAL =", total);
-
     // =====================================
-// SCHOLARSHIP
-// =====================================
-
-const studentScholarship =
-  await tx.studentScholarship.findFirst({
-    where: {
-      studentId: data.studentId,
-      isActive: true,
-    },
-    include: {
-      scholarship: true,
-    },
-  });
-console.log("========== SCHOLARSHIP ==========");
-console.log(studentScholarship);
-const {
-  discount,
-  finalAmount,
-} = calculateFee(
-  total,
-  studentScholarship?.scholarship
-);
-console.log("Discount =", discount);
-console.log("Final Amount =", finalAmount);
+    // SCHOLARSHIP
     // =====================================
-    // CREATE
-    // =====================================
-console.log("Creating Student Fee...");
-    return tx
-      .studentFee
-      .create({
 
-        data: {
-
-          schoolId:
-            data.schoolId,
-
+    const studentScholarship =
+      await tx.studentScholarship.findFirst({
+        where: {
           studentId:
             data.studentId,
 
-          feeStructureId:
-            data.feeStructureId,
+          isActive: true,
+        },
 
+        include: {
+          scholarship: true,
+        },
+      });
+
+    // =====================================
+    // FEE HEAD IDS
+    // =====================================
+
+    const feeHeadIds =
+      generatedItems
+        .map(
+          (item: any) =>
+            Number(item.feeHeadId)
+        )
+        .filter(
+          (id: number) =>
+            Number.isInteger(id) &&
+            id > 0
+        );
+
+    // =====================================
+    // FEE ITEMS
+    // =====================================
+    // These items are passed to the discount
+    // calculator so fee-head-specific
+    // discounts use the correct fee amount.
+
+    const feeItems =
+      generatedItems.map(
+        (item: any) => ({
+          feeHeadId:
+            Number(item.feeHeadId),
+
+          amount: Math.max(
+            0,
+            Number(item.amount) || 0
+          ),
+        })
+      );
+
+    // =====================================
+    // STUDENT DISCOUNTS
+    // =====================================
+
+    let studentDiscounts: any[] = [];
+
+    if (feeHeadIds.length > 0) {
+      studentDiscounts =
+        await tx.studentDiscount.findMany({
+          where: {
+            studentId:
+              data.studentId,
+
+            feeHeadId: {
+              in: feeHeadIds,
+            },
+
+            isActive: true,
+          },
+
+          orderBy: {
+            createdAt: "asc",
+          },
+        });
+    }
+
+    // =====================================
+    // CALCULATE
+    // SCHOLARSHIP + STUDENT DISCOUNTS
+    // =====================================
+
+    const {
+      totalDiscount,
+      finalAmount,
+      appliedDiscountIds,
+    } =
+      calculateFeeWithDiscounts(
+        total,
+
+        studentScholarship
+          ?.scholarship ?? null,
+
+        studentDiscounts,
+
+        {
           month:
             data.month,
 
           year:
             data.year,
-
-          totalAmount: total,
-
-          paidAmount: 0,
-
-          // dueAmount:
-          //   total,
-          dueAmount: finalAmount,
-
-          lateFee: 0,
-
-          // discount: 0,
-          discount: discount,
-
-          status:
-            "PENDING",
-
-          dueDate:
-            data.dueDate,
-
-          invoiceNo:
-            `INV-${Date.now()}`,
-
-          // =====================================
-          // ITEMS
-          // =====================================
-
-          items: {
-
-            create:
-              generatedItems.map(
-                (item: any) => ({
-
-                  feeHeadId:
-                    item.feeHeadId,
-
-                  amount:
-                    item.amount,
-
-                  frequency:
-                    item.frequency,
-                })
-              ),
-          },
         },
 
-        include: {
+        feeItems
+      );
 
-          student: true,
+    // =====================================
+    // MARK ONLY ACTUALLY APPLIED
+    // ONE_TIME DISCOUNTS
+    // =====================================
 
-          feeStructure: true,
+    for (
+      const discount of studentDiscounts
+    ) {
+      if (
+        discount.applyType ===
+        "ONE_TIME" &&
 
-          items: {
+        appliedDiscountIds.includes(
+          Number(discount.id)
+        ) &&
 
-            include: {
+        !discount.appliedOn
+      ) {
+        await tx.studentDiscount.update({
+          where: {
+            id: discount.id,
+          },
 
-              feeHead: true,
-            },
+          data: {
+            appliedOn:
+              new Date(),
+          },
+        });
+      }
+    }
+
+    // =====================================
+    // CREATE STUDENT FEE
+    // =====================================
+
+    return tx.studentFee.create({
+      data: {
+        // ===================================
+        // BASIC DETAILS
+        // ===================================
+
+        schoolId:
+          data.schoolId,
+
+        studentId:
+          data.studentId,
+
+        feeStructureId:
+          data.feeStructureId,
+
+        month:
+          data.month,
+
+        year:
+          data.year,
+
+        // ===================================
+        // AMOUNTS
+        // ===================================
+
+        // Original fee amount
+        totalAmount:
+          total,
+
+        // No payment at generation time
+        paidAmount:
+          0,
+
+        // Final amount after discounts
+        dueAmount:
+          finalAmount,
+
+        // Late fee initially zero
+        lateFee:
+          0,
+
+        // Total scholarship +
+        // student discount
+        discount:
+          totalDiscount,
+
+        // ===================================
+        // STATUS
+        // ===================================
+
+        status:
+          "PENDING",
+
+        // ===================================
+        // DUE DATE
+        // ===================================
+
+        dueDate:
+          data.dueDate,
+
+        // ===================================
+        // INVOICE
+        // ===================================
+
+        invoiceNo:
+          `INV-${Date.now()}`,
+
+        // ===================================
+        // FEE ITEMS
+        // ===================================
+
+        items: {
+          create:
+            generatedItems.map(
+              (item: any) => ({
+                feeHeadId:
+                  item.feeHeadId,
+
+                amount:
+                  Number(item.amount) || 0,
+
+                frequency:
+                  item.frequency,
+              })
+            ),
+        },
+      },
+      include: {
+        student: true,
+
+        feeStructure: true,
+
+        items: {
+          include: {
+            feeHead: true,
           },
         },
-      });
+      },
+    });
   }
 
+  async getStudentFeeForPayment(
+    studentFeeId: number,
+    schoolId: number
+  ) {
+    return prisma.studentFee.findFirst({
+      where: {
+        id: studentFeeId,
+        schoolId,
+      },
+      include: {
+        student: true,
+        items: true,
+        feeStructure: true,
+      },
+    });
+  }
   // =====================================
   // PAY FEE
   // =====================================
 
-  async payFee(data: any) {
+  //   async payFee(data: any) {
 
-    return prisma.$transaction(
-      async (tx) => {
+  //     return prisma.$transaction(
+  //       async (tx) => {
 
-        const fee =
-          await tx.studentFee.findUnique({
+  //         const fee =
+  //           await tx.studentFee.findUnique({
 
-            where: {
-              id:
-                data.studentFeeId,
-            },
-          });
+  //             where: {
+  //               id:
+  //                 data.studentFeeId,
+  //             },
+  //           });
 
-        if (!fee) {
+  //         if (!fee) {
 
-          throw new Error(
-            "Fee not found"
-          );
-        }
+  //           throw new Error(
+  //             "Fee not found"
+  //           );
+  //         }
 
-        // SCHOOL SECURITY
+  //         // SCHOOL SECURITY
 
-        if (
-          fee.schoolId !==
-          data.schoolId
-        ) {
+  //         if (
+  //           fee.schoolId !==
+  //           data.schoolId
+  //         ) {
 
-          throw new Error(
-            "Unauthorized access"
-          );
-        }
+  //           throw new Error(
+  //             "Unauthorized access"
+  //           );
+  //         }
 
-        // OVERPAYMENT BLOCK
+  //         // OVERPAYMENT BLOCK
 
-        if (
+  //         if (
 
-          data.amount >
+  //           data.amount >
 
-          fee.dueAmount
+  //           fee.dueAmount
 
-        ) {
+  //         ) {
 
-          throw new Error(
-            "Amount exceeds due amount"
-          );
-        }
+  //           throw new Error(
+  //             "Amount exceeds due amount"
+  //           );
+  //         }
 
-        const newPaid =
-  Number(fee.paidAmount) +
-  Number(data.amount);
+  //         const newPaid =
+  //   Number(fee.paidAmount) +
+  //   Number(data.amount);
 
-        // const newDue =
+  //         // const newDue =
 
-        //   fee.totalAmount -
-        //   newPaid;
-       const newDue =
-  Math.max(
-    0,
-    Number(fee.totalAmount) -
-      Number(fee.discount) -
-      newPaid
-  );
+  //         //   fee.totalAmount -
+  //         //   newPaid;
+  //        const newDue =
+  //   Math.max(
+  //     0,
+  //     Number(fee.totalAmount) -
+  //       Number(fee.discount) -
+  //       newPaid
+  //   );
 
-        let status: any =
-          "PENDING";
+  //         let status: any =
+  //           "PENDING";
 
-        // if (newDue <= 0) {
+  //         // if (newDue <= 0) {
 
-        //   status = "PAID";
+  //         //   status = "PAID";
 
-        // } else if (
-        //   newPaid > 0
-        // ) {
+  //         // } else if (
+  //         //   newPaid > 0
+  //         // ) {
 
-        //   status = "PARTIAL";
-        // }
-    const payableAmount =
-  Number(fee.totalAmount) -
-  Number(fee.discount);
+  //         //   status = "PARTIAL";
+  //         // }
+  //     const payableAmount =
+  //   Number(fee.totalAmount) -
+  //   Number(fee.discount);
 
-if (newPaid >= payableAmount) {
+  // if (newPaid >= payableAmount) {
 
-  status = "PAID";
+  //   status = "PAID";
 
-} else if (newPaid > 0) {
+  // } else if (newPaid > 0) {
 
-  status = "PARTIAL";
+  //   status = "PARTIAL";
 
-} else {
+  // } else {
 
-  status = "PENDING";
-}
+  //   status = "PENDING";
+  // }
 
-        // UPDATE FEE
+  //         // UPDATE FEE
 
-        const updatedFee =
-          await tx.studentFee.update({
+  //         const updatedFee =
+  //           await tx.studentFee.update({
 
-            where: {
-              id: fee.id,
-            },
+  //             where: {
+  //               id: fee.id,
+  //             },
 
-            data: {
+  //             data: {
 
-              paidAmount:
-                newPaid,
+  //               paidAmount:
+  //                 newPaid,
 
-              dueAmount:
-                newDue,
+  //               dueAmount:
+  //                 newDue,
 
-              status,
-            },
-          });
+  //               status,
+  //             },
+  //           });
 
-        // CREATE RECEIPT
+  //         // CREATE RECEIPT
 
-        await tx.paymentReceipt.create({
+  //         await tx.paymentReceipt.create({
 
-          data: {
+  //           data: {
 
-            schoolId:
-              fee.schoolId,
+  //             schoolId:
+  //               fee.schoolId,
 
-            studentFeeId:
-              fee.id,
+  //             studentFeeId:
+  //               fee.id,
 
-            amount:
-              data.amount,
+  //             amount:
+  //               data.amount,
 
-            paymentMethod:
-              data.paymentMethod,
+  //             paymentMethod:
+  //               data.paymentMethod,
 
-            transactionId:
-              data.transactionId,
+  //             transactionId:
+  //               data.transactionId,
 
-            remarks:
-              data.remarks,
+  //             remarks:
+  //               data.remarks,
 
-            paymentDate:
-              new Date(),
+  //             paymentDate:
+  //               new Date(),
 
-            receiptNo:
-              `REC-${Date.now()}`,
+  //             receiptNo:
+  //               `REC-${Date.now()}`,
 
-            receivedById:
-              data.receivedById,
-          },
-        });
+  //             receivedById:
+  //               data.receivedById,
+  //           },
+  //         });
 
-        return updatedFee;
-      }
-    );
-  }
+  //         return updatedFee;
+  //       }
+  //     );
+  //   }
 
   // =====================================
   // GET ALL
@@ -902,41 +623,31 @@ if (newPaid >= payableAmount) {
   // =====================================
 
   async getStudentHistory(
+    schoolId: number,
     studentId: number
   ) {
-
     return prisma.studentFee.findMany({
-
       where: {
         studentId,
+        schoolId,
       },
-
-      // include: {
-
-      //   receipts: true,
-
-      //   feeStructure: true,
-      // },
-
       include: {
         receipts: true,
         feeStructure: true,
-
         items: {
           include: {
             feeHead: true,
           },
         },
+        student: true,
       },
 
       orderBy: {
-
         createdAt:
           "desc",
       },
     });
   }
-
   // =====================================
   // DUE FEES
   // =====================================
@@ -956,10 +667,6 @@ if (newPaid >= payableAmount) {
       },
     });
   }
-
-
-
-
 }
 
 export default

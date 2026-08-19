@@ -1,23 +1,24 @@
-import {Request,Response,} from "express";
+import { Request, Response, } from "express";
 import service from "./feeHead.service";
 class FeeHeadController {
   // =====================================================
   // CREATE
   // =====================================================
-  async create(req: Request,res: Response){
+  async create(req: Request, res: Response) {
     try {
-      const schoolId =(req as any).user.schoolId;
-      const data =await service.create({
-          ...req.body,schoolId,});
+      const schoolId = (req as any).user.schoolId;
+      const data = await service.create({
+        ...req.body, schoolId,
+      });
       res.status(201).json({
         success: true,
-        message:"Fee head created successfully",
+        message: "Fee head created successfully",
         data,
       });
     } catch (e: any) {
       res.status(400).json({
         success: false,
-        message:e.message,
+        message: e.message,
       });
     }
   }
@@ -31,10 +32,7 @@ class FeeHeadController {
 
     try {
 
-      const schoolId =
-        (req as any)
-          .user
-          .schoolId;
+      const schoolId = (req as any).user.schoolId;
 
       const data =
         await service.getAll(
@@ -176,8 +174,7 @@ class FeeHeadController {
 
         success: true,
 
-        message:
-          "Fee head deleted successfully",
+        message:"Fee head deactivated successfully",
       });
 
     } catch (e: any) {

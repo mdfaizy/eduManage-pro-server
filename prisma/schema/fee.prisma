@@ -20,13 +20,14 @@ model FeeHead {
 
   isOptional Boolean @default(false)
 
-  isActive Boolean @default(true)
+  frequency DiscountApplyType @default(MONTHLY)
+  isActive  Boolean           @default(true)
 
   /////////////////////////////////////////////////////////////
   // RELATIONS
   /////////////////////////////////////////////////////////////
 
-  school School    @relation(fields: [schoolId], references: [id])
+  school School @relation(fields: [schoolId], references: [id])
 
   feeStructureItems FeeStructureItem[]
 
@@ -43,7 +44,6 @@ model FeeHead {
   /////////////////////////////////////////////////////////////
 
   @@unique([schoolId, name])
-
   @@index([schoolId])
 }
 
@@ -84,11 +84,11 @@ model FeeStructure {
   // RELATIONS
   /////////////////////////////////////////////////////////////
 
-  school School    @relation(fields: [schoolId], references: [id])
+  school School @relation(fields: [schoolId], references: [id])
 
-  academicYear AcademicYear    @relation(fields: [academicYearId], references: [id])
+  academicYear AcademicYear @relation(fields: [academicYearId], references: [id])
 
-  class Class    @relation(fields: [classId], references: [id])
+  class Class @relation(fields: [classId], references: [id])
 
   items FeeStructureItem[]
 
@@ -103,11 +103,8 @@ model FeeStructure {
   /////////////////////////////////////////////////////////////
 
   @@unique([schoolId, academicYearId, classId])
-
   @@index([schoolId])
-
   @@index([classId])
-
   @@index([academicYearId])
 }
 
@@ -124,7 +121,7 @@ model FeeStructureItem {
 
   feeHeadId Int
 
-  amount Decimal @db.Decimal(10,2)
+  amount Decimal @db.Decimal(10, 2)
 
   frequency FeeFrequency
 
@@ -132,9 +129,9 @@ model FeeStructureItem {
   // RELATIONS
   /////////////////////////////////////////////////////////////
 
-  feeStructure FeeStructure    @relation(fields: [feeStructureId], references: [id],onDelete: Cascade)
+  feeStructure FeeStructure @relation(fields: [feeStructureId], references: [id], onDelete: Cascade)
 
-  feeHead FeeHead    @relation(fields: [feeHeadId], references: [id])
+  feeHead FeeHead @relation(fields: [feeHeadId], references: [id])
 
   /////////////////////////////////////////////////////////////
 
@@ -145,27 +142,13 @@ model FeeStructureItem {
   /////////////////////////////////////////////////////////////
 
   @@unique([feeStructureId, feeHeadId])
-
   @@index([feeStructureId])
-
   @@index([feeHeadId])
 }
 
 ///////////////////////////////////////////////////////////////
 // FEE FREQUENCY
 ///////////////////////////////////////////////////////////////
-
-enum FeeFrequency {
-  MONTHLY
-
-  QUARTERLY
-
-  HALF_YEARLY
-
-  YEARLY
-
-  ONE_TIME
-}
 
 ///////////////////////////////////////////////////////////////
 // 🧾 STUDENT FEE
@@ -194,15 +177,15 @@ model StudentFee {
   // AMOUNT
   /////////////////////////////////////////////////////////////
 
-  totalAmount Decimal @db.Decimal(10,2)
+  totalAmount Decimal @db.Decimal(10, 2)
 
-  paidAmount Decimal @default(0) @db.Decimal(10,2)
+  paidAmount Decimal @default(0) @db.Decimal(10, 2)
 
-  dueAmount Decimal @db.Decimal(10,2)
+  dueAmount Decimal @db.Decimal(10, 2)
 
-  lateFee Decimal @default(0) @db.Decimal(10,2)
+  lateFee Decimal @default(0) @db.Decimal(10, 2)
 
-  discount Decimal @default(0) @db.Decimal(10,2)
+  discount Decimal @default(0) @db.Decimal(10, 2)
 
   /////////////////////////////////////////////////////////////
 
@@ -218,16 +201,22 @@ model StudentFee {
   // RELATIONS
   /////////////////////////////////////////////////////////////
 
-  school School    @relation(fields: [schoolId], references: [id])
+  school School @relation(fields: [schoolId], references: [id])
 
-  student Student    @relation(fields: [studentId], references: [id])
+  student Student @relation(fields: [studentId], references: [id])
 
-  feeStructure FeeStructure    @relation(fields: [feeStructureId], references: [id])
+  feeStructure FeeStructure @relation(fields: [feeStructureId], references: [id])
 
   items StudentFeeItem[]
 
-  receipts PaymentReceipt[]
+  // receipts PaymentReceipt[]
 
+  payments Payment[]
+  receipts PaymentReceipt[]
+  // refunds   Refund[]
+  refunds  Refund[]         @relation("StudentFeeRefunds")
+
+  feeRefunds FeeRefund[] @relation("StudentFeeFeeRefunds")
   /////////////////////////////////////////////////////////////
 
   createdAt DateTime @default(now())
@@ -237,11 +226,8 @@ model StudentFee {
   /////////////////////////////////////////////////////////////
 
   @@unique([studentId, feeStructureId, month, year])
-
   @@index([studentId])
-
   @@index([schoolId])
-
   @@index([status])
 }
 
@@ -256,7 +242,7 @@ model StudentFeeItem {
 
   feeHeadId Int
 
-  amount Decimal @db.Decimal(10,2)
+  amount Decimal @db.Decimal(10, 2)
 
   frequency FeeFrequency
 
@@ -264,9 +250,9 @@ model StudentFeeItem {
   // RELATIONS
   /////////////////////////////////////////////////////////////
 
-  studentFee StudentFee    @relation(      fields: [studentFeeId], references: [id], onDelete: Cascade    )
+  studentFee StudentFee @relation(fields: [studentFeeId], references: [id], onDelete: Cascade)
 
-  feeHead FeeHead    @relation(fields: [feeHeadId], references: [id])
+  feeHead FeeHead @relation(fields: [feeHeadId], references: [id])
 
   /////////////////////////////////////////////////////////////
 
@@ -275,7 +261,6 @@ model StudentFeeItem {
   /////////////////////////////////////////////////////////////
 
   @@index([studentFeeId])
-
   @@index([feeHeadId])
 }
 
@@ -283,118 +268,67 @@ model StudentFeeItem {
 // 💳 PAYMENT RECEIPT
 ///////////////////////////////////////////////////////////////
 
-model PaymentReceipt {
-  id Int @id @default(autoincrement())
+// model PaymentReceipt {
+//   id Int @id @default(autoincrement())
 
-  /////////////////////////////////////////////////////////////
+//   /////////////////////////////////////////////////////////////
 
-  schoolId Int
+//   schoolId Int
 
-  studentFeeId Int
+//   studentFeeId Int
 
-  receiptNo String @unique
+//   receiptNo String @unique
 
-  amount Float
+//   amount Float
 
-  paymentDate DateTime @default(now())
+//   paymentDate DateTime @default(now())
 
-  paymentMethod PaymentMethod
+//   paymentMethod PaymentMethod
 
-  transactionId String?
+//   transactionId String?
 
-  remarks String?
+//   remarks String?
 
-  receivedById Int?
+//   receivedById Int?
 
-  status PaymentTransactionStatus @default(SUCCESS)
+//   status PaymentTransactionStatus @default(SUCCESS)
 
-  /////////////////////////////////////////////////////////////
-  // RELATIONS
-  /////////////////////////////////////////////////////////////
+//   /////////////////////////////////////////////////////////////
+//   // RELATIONS
+//   /////////////////////////////////////////////////////////////
 
-  school School    @relation(fields: [schoolId], references: [id])
+//   school School    @relation(fields: [schoolId], references: [id])
 
-  studentFee StudentFee    @relation(fields: [studentFeeId], references: [id])
+//   studentFee StudentFee    @relation(fields: [studentFeeId], references: [id])
 
-  receivedBy User?    @relation(fields: [receivedById], references: [id])
+//   receivedBy User?    @relation(fields: [receivedById], references: [id])
 
-  /////////////////////////////////////////////////////////////
+//   /////////////////////////////////////////////////////////////
 
-  createdAt DateTime @default(now())
+//   createdAt DateTime @default(now())
 
-  @@index([schoolId])
+//   @@index([schoolId])
 
-  @@index([studentFeeId])
+//   @@index([studentFeeId])
 
-  @@index([paymentDate])
+//   @@index([paymentDate])
 
-  @@map("paymentreceipt")
-}
-
-///////////////////////////////////////////////////////////////
-// 💰 FEE STATUS
-///////////////////////////////////////////////////////////////
-
-enum FeeStatus {
-  PAID
-
-  PARTIAL
-
-  PENDING
-
-  OVERDUE
-}
-
-///////////////////////////////////////////////////////////////
-// 💳 PAYMENT METHOD
-///////////////////////////////////////////////////////////////
-
-enum PaymentMethod {
-  CASH
-
-  ONLINE
-
-  UPI
-
-  CARD
-
-  BANK_TRANSFER
-}
-
-///////////////////////////////////////////////////////////////
-// 💳 PAYMENT TRANSACTION STATUS
-///////////////////////////////////////////////////////////////
-
-enum PaymentTransactionStatus {
-  SUCCESS
-
-  FAILED
-
-  PENDING
-}
-
+//   @@map("paymentreceipt")
+// }
 
 model Report {
-  id          Int      @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   schoolId    Int
   title       String
   type        ReportType
   filePath    String?
   generatedBy Int
-  createdAt   DateTime @default(now())
+  createdAt   DateTime   @default(now())
 
   school School @relation(fields: [schoolId], references: [id])
   user   User   @relation(fields: [generatedBy], references: [id])
 
   @@index([schoolId])
-}
-
-enum ReportType {
-  FEE_COLLECTION
-  PENDING_FEE
-  STUDENT_LEDGER
-  SCHOLARSHIP
-  DISCOUNT
 }
 
 ///////////////////////////////////////////////////////////////
@@ -422,7 +356,7 @@ model Scholarship {
   // RELATIONS
   /////////////////////////////////////////////////////////////
 
-  school School    @relation(fields: [schoolId], references: [id])
+  school School @relation(fields: [schoolId], references: [id])
 
   studentScholarships StudentScholarship[]
 
@@ -432,9 +366,8 @@ model Scholarship {
 
   updatedAt DateTime @updatedAt
 
-  @@index([schoolId])
-
   @@unique([schoolId, name])
+  @@index([schoolId])
 }
 
 ///////////////////////////////////////////////////////////////
@@ -456,11 +389,11 @@ model StudentScholarship {
   // RELATIONS
   /////////////////////////////////////////////////////////////
 
-  school School    @relation(fields: [schoolId], references: [id])
+  school School @relation(fields: [schoolId], references: [id])
 
-  student Student    @relation(fields: [studentId], references: [id])
+  student Student @relation(fields: [studentId], references: [id])
 
-  scholarship Scholarship    @relation(fields: [scholarshipId], references: [id])
+  scholarship Scholarship @relation(fields: [scholarshipId], references: [id])
 
   /////////////////////////////////////////////////////////////
 
@@ -469,9 +402,7 @@ model StudentScholarship {
   updatedAt DateTime @updatedAt
 
   @@unique([studentId, scholarshipId])
-
   @@index([schoolId])
-
   @@index([studentId])
 }
 
@@ -492,9 +423,11 @@ model StudentDiscount {
 
   type DiscountType
 
-  amount Decimal @db.Decimal(10,2)
+  amount Decimal @db.Decimal(10, 2)
 
   applyType DiscountApplyType
+
+  appliedOn DateTime?
 
   startMonth Int?
 
@@ -508,11 +441,11 @@ model StudentDiscount {
   // RELATIONS
   /////////////////////////////////////////////////////////////
 
-  school School    @relation(fields: [schoolId], references: [id])
+  school School @relation(fields: [schoolId], references: [id])
 
-  student Student    @relation(fields: [studentId], references: [id])
+  student Student @relation(fields: [studentId], references: [id])
 
-  feeHead FeeHead    @relation(fields: [feeHeadId], references: [id])
+  feeHead FeeHead @relation(fields: [feeHeadId], references: [id])
 
   /////////////////////////////////////////////////////////////
 
@@ -521,9 +454,7 @@ model StudentDiscount {
   updatedAt DateTime @updatedAt
 
   @@index([schoolId])
-
   @@index([studentId])
-
   @@index([feeHeadId])
 }
 
@@ -531,9 +462,9 @@ model StudentDiscount {
 // 🚌 TRANSPORT ROUTE
 ///////////////////////////////////////////////////////////////
 model TransportRoute {
-  id Int @id @default(autoincrement())
-  schoolId Int
-  name String
+  id          Int     @id @default(autoincrement())
+  schoolId    Int
+  name        String
   pickupPoint String?
 
   amount Float
@@ -544,7 +475,7 @@ model TransportRoute {
   // RELATIONS
   /////////////////////////////////////////////////////////////
 
-  school School    @relation(fields: [schoolId], references: [id])
+  school School @relation(fields: [schoolId], references: [id])
 
   studentAcademicRecords StudentAcademicRecord[]
 
@@ -555,7 +486,6 @@ model TransportRoute {
   updatedAt DateTime @updatedAt
 
   @@unique([schoolId, name])
-
   @@index([schoolId])
 }
 
@@ -580,9 +510,9 @@ model BookPackage {
   // RELATIONS
   /////////////////////////////////////////////////////////////
 
-  school School    @relation(fields: [schoolId], references: [id])
+  school School @relation(fields: [schoolId], references: [id])
 
-  class Class    @relation(fields: [classId], references: [id])
+  class Class @relation(fields: [classId], references: [id])
 
   /////////////////////////////////////////////////////////////
 
@@ -591,36 +521,30 @@ model BookPackage {
   updatedAt DateTime @updatedAt
 
   @@unique([schoolId, classId, name])
-
   @@index([schoolId])
-
   @@index([classId])
 }
 
-///////////////////////////////////////////////////////////////
-// 🎓 SCHOLARSHIP TYPE
-///////////////////////////////////////////////////////////////
+model FeeRefund {
+  id Int @id @default(autoincrement())
 
-enum ScholarshipType {
-  FIXED
-  PERCENTAGE
-}
+  schoolId     Int
+  studentId    Int
+  studentFeeId Int
 
-///////////////////////////////////////////////////////////////
-// 💸 DISCOUNT TYPE
-///////////////////////////////////////////////////////////////
+  refundNo String @unique
 
-enum DiscountType {
-  FIXED
-  PERCENTAGE
-}
+  amount Decimal @db.Decimal(10, 2)
 
-///////////////////////////////////////////////////////////////
-// 💸 DISCOUNT APPLY TYPE
-///////////////////////////////////////////////////////////////
+  refundMethod String
+  reason       String?
 
-enum DiscountApplyType {
-  ONE_TIME
-  MONTHLY
-  YEARLY
+  status String @default("COMPLETED")
+
+  createdBy Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  studentFee StudentFee @relation("StudentFeeFeeRefunds", fields: [studentFeeId], references: [id])
 }

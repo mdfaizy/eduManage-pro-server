@@ -7,7 +7,13 @@ from "./feeStructure.controller.js";
 
 import {authMiddleware}
 from "../../middlewares/auth.js";
-
+import {
+  createFeeStructureSchema,
+  updateFeeStructureSchema,
+} from "./feeStructure.validation.js";
+import {
+  validate,
+} from "../../middlewares/validate.js";
 const router =
   Router();
 
@@ -18,6 +24,7 @@ const router =
 router.post(
   "/",
   authMiddleware,
+  validate(createFeeStructureSchema),
   controller.create
 );
 

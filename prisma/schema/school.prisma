@@ -3,70 +3,73 @@
 ///////////////////////////////////////////////////////////////
 
 model School {
-  id                  Int                  @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  name                String
-  email               String               @unique
-  phone               String?
+  name  String
+  email String  @unique
+  phone String?
 
-  status              SchoolStatus         @default(PENDING)
+  status SchoolStatus @default(PENDING)
 
   /////////////////////////////////////////////////////////////
   // RELATIONS
   /////////////////////////////////////////////////////////////
 
-  users               User[]
+  users User[]
 
-  teachers            Teacher[]
+  teachers Teacher[]
 
-  students            Student[]
+  students Student[]
 
-  parents             Parent[]
+  parents Parent[]
 
-  classes             Class[]
+  classes Class[]
 
-  sections            Section[]
+  sections Section[]
 
-  academicYears       AcademicYear[]
+  academicYears AcademicYear[]
 
-  admissions          Admission[]
+  admissions Admission[]
 
-  periods             Period[]
+  periods Period[]
 
-  days                Day[]
+  days Day[]
 
-  timings             SchoolTiming[]
+  timings SchoolTiming[]
 
-  timetables          Timetable[]
+  timetables Timetable[]
 
-  exams               Exam[]
-  reports Report[]  
+  exams   Exam[]
+  reports Report[]
 
-  feeHeads            FeeHead[]
+  feeHeads FeeHead[]
 
-  feeStructures       FeeStructure[]
+  feeStructures FeeStructure[]
 
-  studentFees         StudentFee[]
+  studentFees StudentFee[]
 
-  paymentReceipts     PaymentReceipt[]
+  // paymentReceipts     PaymentReceipt[]
+  payments        Payment[]
+  paymentReceipts PaymentReceipt[]
+  refunds         Refund[]
 
-  scholarships        Scholarship[]
+  scholarships Scholarship[]
 
   studentScholarships StudentScholarship[]
 
-  studentDiscounts    StudentDiscount[]
+  studentDiscounts StudentDiscount[]
 
-  transportRoutes     TransportRoute[]
+  transportRoutes TransportRoute[]
 
-  bookPackages        BookPackage[]
+  bookPackages BookPackage[]
 
-  subscriptions       SchoolSubscription[]
+  subscriptions SchoolSubscription[]
 
-  academicRecords     StudentAcademicRecord[]
+  academicRecords StudentAcademicRecord[]
 
-  studentAttendanceSessions StudentAttendanceSession[]  @relation("SchoolStudentAttendanceSessions")
+  studentAttendanceSessions StudentAttendanceSession[] @relation("SchoolStudentAttendanceSessions")
 
-  employeeAttendances EmployeeAttendance[]  @relation("SchoolEmployeeAttendances")
+  employeeAttendances EmployeeAttendance[] @relation("SchoolEmployeeAttendances")
 
   /////////////////////////////////////////////////////////////
 

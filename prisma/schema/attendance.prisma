@@ -7,42 +7,42 @@
 ///////////////////////////////////////////////////////////////
 
 model StudentAttendanceSession {
-    id Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-    schoolId Int
+  schoolId Int
 
-    classId Int
+  classId Int
 
-    sectionId Int?
+  sectionId Int?
 
-    markedById Int
+  markedById Int
 
-    attendanceDate DateTime @db.Date
+  attendanceDate DateTime @db.Date
 
-    /////////////////////////////////////////////////////////////
-    // RELATIONS
-    /////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////
+  // RELATIONS
+  /////////////////////////////////////////////////////////////
 
-    school School @relation("SchoolStudentAttendanceSessions", fields: [schoolId], references: [id])
+  school School @relation("SchoolStudentAttendanceSessions", fields: [schoolId], references: [id])
 
-    class Class @relation(fields: [classId], references: [id])
+  class Class @relation(fields: [classId], references: [id])
 
-    section Section?    @relation(fields: [sectionId], references: [id])
+  section Section? @relation(fields: [sectionId], references: [id])
 
-    markedBy User    @relation(fields: [markedById], references: [id])
+  markedBy User @relation(fields: [markedById], references: [id])
 
-    records StudentAttendanceRecord[]
+  records StudentAttendanceRecord[]
 
-    /////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////
 
-    createdAt DateTime @default(now())
+  createdAt DateTime @default(now())
 
-    updatedAt DateTime @updatedAt
+  updatedAt DateTime @updatedAt
 
-    /////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////
 
-    @@unique([schoolId, classId, sectionId, attendanceDate])
-    @@index([schoolId, attendanceDate])
+  @@unique([schoolId, classId, sectionId, attendanceDate])
+  @@index([schoolId, attendanceDate])
 }
 
 ///////////////////////////////////////////////////////////////
@@ -50,33 +50,33 @@ model StudentAttendanceSession {
 ///////////////////////////////////////////////////////////////
 
 model StudentAttendanceRecord {
-    id Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-    sessionId Int
+  sessionId Int
 
-    studentId Int
+  studentId Int
 
-    status AttendanceStatus
+  status AttendanceStatus
 
-    remarks String?
+  remarks String?
 
-    /////////////////////////////////////////////////////////////
-    // RELATIONS
-    /////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////
+  // RELATIONS
+  /////////////////////////////////////////////////////////////
 
-   session StudentAttendanceSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  session StudentAttendanceSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
 
-student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
-    /////////////////////////////////////////////////////////////
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  /////////////////////////////////////////////////////////////
 
-    createdAt DateTime @default(now())
+  createdAt DateTime @default(now())
 
-    updatedAt DateTime @updatedAt
+  updatedAt DateTime @updatedAt
 
-    /////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////
 
-    @@unique([sessionId, studentId])
-    @@index([studentId])
+  @@unique([sessionId, studentId])
+  @@index([studentId])
 }
 
 ///////////////////////////////////////////////////////////////
@@ -84,40 +84,40 @@ student Student @relation(fields: [studentId], references: [id], onDelete: Casca
 ///////////////////////////////////////////////////////////////
 
 model EmployeeAttendance {
-    id Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-    schoolId Int
+  schoolId Int
 
-    employeeId Int
+  employeeId Int
 
-    attendanceDate DateTime @db.Date
+  attendanceDate DateTime @db.Date
 
-    checkInTime DateTime?
+  checkInTime DateTime?
 
-    checkOutTime DateTime?
+  checkOutTime DateTime?
 
-    status EmployeeAttendanceStatus
+  status EmployeeAttendanceStatus
 
-    remarks String?
+  remarks String?
 
-    /////////////////////////////////////////////////////////////
-    // RELATIONS
-    /////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////
+  // RELATIONS
+  /////////////////////////////////////////////////////////////
 
-    school School @relation("SchoolEmployeeAttendances", fields: [schoolId], references: [id])
+  school School @relation("SchoolEmployeeAttendances", fields: [schoolId], references: [id])
 
-    employee User @relation(fields: [employeeId], references: [id])
+  employee User @relation(fields: [employeeId], references: [id])
 
-    /////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////
 
-    createdAt DateTime @default(now())
+  createdAt DateTime @default(now())
 
-    updatedAt DateTime @updatedAt
+  updatedAt DateTime @updatedAt
 
-    /////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////
 
-    @@unique([employeeId, attendanceDate])
-    @@index([schoolId, attendanceDate])
+  @@unique([employeeId, attendanceDate])
+  @@index([schoolId, attendanceDate])
 }
 
 ///////////////////////////////////////////////////////////////
@@ -125,11 +125,11 @@ model EmployeeAttendance {
 ///////////////////////////////////////////////////////////////
 
 enum AttendanceStatus {
-    PRESENT
-    ABSENT
-    LATE
-    HALF_DAY
-    LEAVE
+  PRESENT
+  ABSENT
+  LATE
+  HALF_DAY
+  LEAVE
 }
 
 ///////////////////////////////////////////////////////////////
@@ -137,10 +137,10 @@ enum AttendanceStatus {
 ///////////////////////////////////////////////////////////////
 
 enum EmployeeAttendanceStatus {
-    PRESENT
-    ABSENT
-    LATE
-    HALF_DAY
-    LEAVE
-    HOLIDAY
+  PRESENT
+  ABSENT
+  LATE
+  HALF_DAY
+  LEAVE
+  HOLIDAY
 }

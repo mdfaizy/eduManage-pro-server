@@ -133,7 +133,11 @@ class FeeHeadService {
       );
     }
 
-    return repo.delete(id);
+    // return repo.delete(id);
+    return repo.delete(
+  id,
+  schoolId
+);
   }
 
   // =====================================================

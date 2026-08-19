@@ -164,8 +164,7 @@ async delete(
 
       success: true,
 
-      message:
-        "Fee structure deleted successfully",
+      message: "Fee structure deactivated successfully",
     });
 
   } catch (e: any) {

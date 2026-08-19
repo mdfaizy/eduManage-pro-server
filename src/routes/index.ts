@@ -38,6 +38,7 @@ import studentDiscountRoutes
 from "../models/studentDiscount/studentDiscount.routes.js";
 import paymentRoutes from "../models/payment/payment.routes.js";
 import reportRoutes from "../models/report/report.routes.js";
+
 const router = express.Router();
 
 router.use("/auth", authRoutes);

@@ -1,115 +1,132 @@
+
 // import { Router } from "express";
 // import { PaymentController } from "./payment.controller";
 // import { authMiddleware } from "../../middlewares/auth";
 
-
-
 // const router = Router();
 
-// // All routes require authentication
+// // All payment routes require authentication
 // router.use(authMiddleware);
 
-// // CREATE
+// // =====================================================
+// // PAYMENT CRUD
+// // =====================================================
+
+// // CREATE PAYMENT
 // router.post(
 //   "/",
-//  authMiddleware,
 //   PaymentController.createPayment
 // );
 
-// // GET ALL
+// // GET ALL PAYMENTS
 // router.get(
 //   "/",
-//   authMiddleware,
 //   PaymentController.getPayments
 // );
 
-// // GET SUMMARY
+// // =====================================================
+// // REPORT / ANALYTICS
+// // =====================================================
+
+// // PAYMENT REPORT
+// router.get(
+//   "/report",
+//   PaymentController.getPaymentReport
+// );
+
+// // PAYMENT SUMMARY
 // router.get(
 //   "/summary",
-//   authMiddleware,
 //   PaymentController.getPaymentSummary
 // );
 
-// // GET STATS
+// // PAYMENT STATS
 // router.get(
 //   "/stats",
-//   authMiddleware,
 //   PaymentController.getPaymentStats
 // );
 
-// // GET ANALYTICS
+// // PAYMENT ANALYTICS
 // router.get(
 //   "/analytics",
-//   authMiddleware,
 //   PaymentController.getPaymentAnalytics
 // );
 
-// // GET PENDING PAYMENTS
+// // =====================================================
+// // PENDING / OVERDUE
+// // =====================================================
+
 // router.get(
 //   "/pending",
-//   authMiddleware,
 //   PaymentController.getPendingPayments
 // );
 
-// // GET OVERDUE PAYMENTS
 // router.get(
 //   "/overdue",
-//   authMiddleware,
 //   PaymentController.getOverduePayments
 // );
 
-// // GET STUDENT PAYMENTS
+// // =====================================================
+// // STUDENT
+// // =====================================================
+
 // router.get(
 //   "/student/:studentId",
-//   authMiddleware,
 //   PaymentController.getStudentPayments
 // );
 
-// // GET BY RECEIPT NO
+// // =====================================================
+// // RECEIPT
+// // =====================================================
+
 // router.get(
 //   "/receipt/:receiptNo",
-// //   roleMiddleware([Role.ADMIN, Role.TEACHER, Role.ACCOUNTANT]),
-// authMiddleware,
 //   PaymentController.getPaymentByReceiptNo
 // );
+
+// // =====================================================
+// // IMPORTANT:
+// // Specific routes above must come before /:id
+// // =====================================================
 
 // // GET BY ID
 // router.get(
 //   "/:id",
-// //   roleMiddleware([Role.ADMIN, Role.TEACHER, Role.ACCOUNTANT]),
 //   PaymentController.getPaymentById
 // );
 
 // // DOWNLOAD RECEIPT
 // router.get(
 //   "/:id/download",
-// //   roleMiddleware([Role.ADMIN, Role.TEACHER, Role.ACCOUNTANT, Role.PARENT]),
 //   PaymentController.downloadReceipt
 // );
 
 // // UPDATE
 // router.put(
 //   "/:id",
-// //   roleMiddleware([Role.ADMIN, Role.ACCOUNTANT]),
 //   PaymentController.updatePayment
 // );
 
 // // DELETE
 // router.delete(
 //   "/:id",
-// //   roleMiddleware([Role.ADMIN]),
 //   PaymentController.deletePayment
 // );
 
 // export default router;
 
+
 import { Router } from "express";
+
 import { PaymentController } from "./payment.controller";
 import { authMiddleware } from "../../middlewares/auth";
 
 const router = Router();
 
-// All payment routes require authentication
+// =====================================================
+// AUTHENTICATION
+// =====================================================
+
 router.use(authMiddleware);
 
 // =====================================================
@@ -119,6 +136,7 @@ router.use(authMiddleware);
 // CREATE PAYMENT
 router.post(
   "/",
+  // authMiddleware,
   PaymentController.createPayment
 );
 
@@ -160,11 +178,13 @@ router.get(
 // PENDING / OVERDUE
 // =====================================================
 
+// PENDING PAYMENTS
 router.get(
   "/pending",
   PaymentController.getPendingPayments
 );
 
+// OVERDUE PAYMENTS
 router.get(
   "/overdue",
   PaymentController.getOverduePayments
@@ -174,6 +194,7 @@ router.get(
 // STUDENT
 // =====================================================
 
+// GET STUDENT PAYMENTS
 router.get(
   "/student/:studentId",
   PaymentController.getStudentPayments
@@ -183,17 +204,51 @@ router.get(
 // RECEIPT
 // =====================================================
 
+// GET PAYMENT BY RECEIPT NUMBER
 router.get(
   "/receipt/:receiptNo",
   PaymentController.getPaymentByReceiptNo
 );
 
 // =====================================================
-// IMPORTANT:
-// Specific routes above must come before /:id
+// PAYMENT REFUND
 // =====================================================
 
-// GET BY ID
+// REFUND PAYMENT
+// Example:
+// POST /payments/15/refund
+router.post(
+  "/:id/refund",
+  PaymentController.refundPayment
+);
+
+// GET PAYMENT REFUNDS
+// Example:
+// GET /payments/15/refunds
+router.get(
+  "/:id/refunds",
+  PaymentController.getPaymentRefunds
+);
+
+// =====================================================
+// PAYMENT CANCEL / REVERSAL
+// =====================================================
+
+// CANCEL / REVERSE PAYMENT
+// Example:
+// POST /payments/15/cancel
+router.post(
+  "/:id/cancel",
+  PaymentController.cancelPayment
+);
+
+// =====================================================
+// PAYMENT BY ID
+// IMPORTANT:
+// Keep this AFTER all specific routes
+// =====================================================
+
+// GET PAYMENT BY ID
 router.get(
   "/:id",
   PaymentController.getPaymentById
@@ -205,13 +260,13 @@ router.get(
   PaymentController.downloadReceipt
 );
 
-// UPDATE
+// UPDATE PAYMENT
 router.put(
   "/:id",
   PaymentController.updatePayment
 );
 
-// DELETE
+// DELETE PAYMENT
 router.delete(
   "/:id",
   PaymentController.deletePayment

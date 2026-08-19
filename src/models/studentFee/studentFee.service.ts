@@ -16,23 +16,6 @@ class StudentFeeService {
   );
 }
 
-  // =====================================
-// GENERATE
-// =====================================
-
-
-  // =====================================
-  // PAY FEE
-  // =====================================
-
-  async payFee(
-    data: any
-  ) {
-
-    return repo.payFee(
-      data
-    );
-  }
 
   // =====================================
   // GET ALL FEES
@@ -51,15 +34,15 @@ class StudentFeeService {
   // GET STUDENT HISTORY
   // =====================================
 
-  async getStudentHistory(
-    studentId: number
-  ) {
-
-    return repo
-      .getStudentHistory(
-        studentId
-      );
-  }
+async getStudentHistory(
+  schoolId: number,
+  studentId: number
+) {
+  return repo.getStudentHistory(
+    schoolId,
+    studentId
+  );
+}
 
   // =====================================
   // GET DUE FEES
