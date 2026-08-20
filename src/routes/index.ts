@@ -38,7 +38,7 @@ import studentDiscountRoutes
 from "../models/studentDiscount/studentDiscount.routes.js";
 import paymentRoutes from "../models/payment/payment.routes.js";
 import reportRoutes from "../models/report/report.routes.js";
-
+import lateFeeWaivers from "../models/lateFeeWaiver/lateFeeWaiver.routes.js"
 const router = express.Router();
 
 router.use("/auth", authRoutes);
@@ -77,4 +77,5 @@ router.use("/student-discounts",
 );
 router.use("/payments", paymentRoutes);
 router.use("/reports", reportRoutes);
+router.use("/late-fee-waivers",lateFeeWaivers)
 export default router;

@@ -952,6 +952,25 @@ async bulkUpdate(
       throw new Error("Fee head is required.");
     }
 
+    if (!["FIXED", "PERCENTAGE"].includes(discount.type)) {
+  throw new Error("Invalid discount type.");
+}
+
+if (
+  !["ONE_TIME", "MONTHLY", "YEARLY"].includes(
+    discount.applyType
+  )
+) {
+  throw new Error("Invalid discount apply type.");
+}
+if (
+  discount.type === "PERCENTAGE" &&
+  amount > 100
+) {
+  throw new Error(
+    "Percentage discount cannot exceed 100%."
+  );
+}
     // ========================================
     // GET APPLICABLE FEE
     // ========================================

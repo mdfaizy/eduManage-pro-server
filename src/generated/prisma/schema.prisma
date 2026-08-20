@@ -525,9 +525,12 @@ model User {
 
   markedAttendances         StudentAttendanceSession[]
   employeeAttendanceRecords EmployeeAttendance[]
+
+  lateFeeWaiversProcessed LateFeeWaiver[]
+  // lateFeeWaiversProcessed LateFeeWaiver[] @relation("LateFeeWaiverProcessedBy")
   /////////////////////////////////////////////////////////////
-  createdAt                 DateTime                   @default(now())
-  updatedAt                 DateTime                   @updatedAt
+  createdAt               DateTime        @default(now())
+  updatedAt               DateTime        @updatedAt
 }
 
 ///////////////////////////////////////////////////////////////
@@ -1058,7 +1061,7 @@ model StudentFee {
 
   dueAmount Decimal @db.Decimal(10, 2)
 
-  lateFee Decimal @default(0) @db.Decimal(10, 2)
+  // lateFee Decimal @default(0) @db.Decimal(10, 2)
 
   discount Decimal @default(0) @db.Decimal(10, 2)
 
@@ -1092,6 +1095,11 @@ model StudentFee {
   refunds  Refund[]         @relation("StudentFeeRefunds")
 
   feeRefunds FeeRefund[] @relation("StudentFeeFeeRefunds")
+
+  lateFee       Decimal @default(0) @db.Decimal(10, 2)
+  lateFeeWaived Decimal @default(0) @db.Decimal(10, 2)
+
+  lateFeeWaivers LateFeeWaiver[]
   /////////////////////////////////////////////////////////////
 
   createdAt DateTime @default(now())
@@ -1424,6 +1432,30 @@ model FeeRefund {
   studentFee StudentFee @relation("StudentFeeFeeRefunds", fields: [studentFeeId], references: [id])
 }
 
+model LateFeeWaiver {
+  id Int @id @default(autoincrement())
+
+  schoolId     Int
+  studentFeeId Int
+
+  amount Decimal @db.Decimal(10, 2)
+  reason String
+
+  waivedBy Int
+  waivedAt DateTime @default(now())
+
+  school     School     @relation(fields: [schoolId], references: [id])
+  studentFee StudentFee @relation(fields: [studentFeeId], references: [id])
+  user       User       @relation(fields: [waivedBy], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([schoolId])
+  @@index([studentFeeId])
+  @@index([waivedBy])
+}
+
 // =====================================================
 // PAYMENT
 // =====================================================
@@ -1735,6 +1767,7 @@ model School {
 
   employeeAttendances EmployeeAttendance[] @relation("SchoolEmployeeAttendances")
 
+  lateFeeWaivers LateFeeWaiver[]
   /////////////////////////////////////////////////////////////
 
   createdAt DateTime @default(now())

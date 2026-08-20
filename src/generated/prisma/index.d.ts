@@ -202,6 +202,11 @@ export type BookPackage = $Result.DefaultSelection<Prisma.$BookPackagePayload>
  */
 export type FeeRefund = $Result.DefaultSelection<Prisma.$FeeRefundPayload>
 /**
+ * Model LateFeeWaiver
+ * 
+ */
+export type LateFeeWaiver = $Result.DefaultSelection<Prisma.$LateFeeWaiverPayload>
+/**
  * Model Payment
  * 
  */
@@ -1126,6 +1131,16 @@ export class PrismaClient<
   get feeRefund(): Prisma.FeeRefundDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.lateFeeWaiver`: Exposes CRUD operations for the **LateFeeWaiver** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LateFeeWaivers
+    * const lateFeeWaivers = await prisma.lateFeeWaiver.findMany()
+    * ```
+    */
+  get lateFeeWaiver(): Prisma.LateFeeWaiverDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.payment`: Exposes CRUD operations for the **Payment** model.
     * Example usage:
     * ```ts
@@ -1765,6 +1780,7 @@ export namespace Prisma {
     TransportRoute: 'TransportRoute',
     BookPackage: 'BookPackage',
     FeeRefund: 'FeeRefund',
+    LateFeeWaiver: 'LateFeeWaiver',
     Payment: 'Payment',
     PaymentReceipt: 'PaymentReceipt',
     Refund: 'Refund',
@@ -1797,7 +1813,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "class" | "section" | "grade" | "subject" | "syllabus" | "classTeacher" | "day" | "teacherSubject" | "schoolTiming" | "period" | "academicYear" | "timetable" | "studentAttendanceSession" | "studentAttendanceRecord" | "employeeAttendance" | "user" | "role" | "permission" | "userRole" | "userPermission" | "rolePermission" | "token" | "exam" | "examSubject" | "examMark" | "feeHead" | "feeStructure" | "feeStructureItem" | "studentFee" | "studentFeeItem" | "report" | "scholarship" | "studentScholarship" | "studentDiscount" | "transportRoute" | "bookPackage" | "feeRefund" | "payment" | "paymentReceipt" | "refund" | "school" | "plan" | "schoolSubscription" | "schoolRequest" | "transaction" | "student" | "studentAcademicRecord" | "admission" | "studentParent" | "parent" | "teacher" | "staff" | "designation" | "payroll"
+      modelProps: "class" | "section" | "grade" | "subject" | "syllabus" | "classTeacher" | "day" | "teacherSubject" | "schoolTiming" | "period" | "academicYear" | "timetable" | "studentAttendanceSession" | "studentAttendanceRecord" | "employeeAttendance" | "user" | "role" | "permission" | "userRole" | "userPermission" | "rolePermission" | "token" | "exam" | "examSubject" | "examMark" | "feeHead" | "feeStructure" | "feeStructureItem" | "studentFee" | "studentFeeItem" | "report" | "scholarship" | "studentScholarship" | "studentDiscount" | "transportRoute" | "bookPackage" | "feeRefund" | "lateFeeWaiver" | "payment" | "paymentReceipt" | "refund" | "school" | "plan" | "schoolSubscription" | "schoolRequest" | "transaction" | "student" | "studentAcademicRecord" | "admission" | "studentParent" | "parent" | "teacher" | "staff" | "designation" | "payroll"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -4243,6 +4259,72 @@ export namespace Prisma {
           }
         }
       }
+      LateFeeWaiver: {
+        payload: Prisma.$LateFeeWaiverPayload<ExtArgs>
+        fields: Prisma.LateFeeWaiverFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LateFeeWaiverFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LateFeeWaiverPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LateFeeWaiverFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LateFeeWaiverPayload>
+          }
+          findFirst: {
+            args: Prisma.LateFeeWaiverFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LateFeeWaiverPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LateFeeWaiverFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LateFeeWaiverPayload>
+          }
+          findMany: {
+            args: Prisma.LateFeeWaiverFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LateFeeWaiverPayload>[]
+          }
+          create: {
+            args: Prisma.LateFeeWaiverCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LateFeeWaiverPayload>
+          }
+          createMany: {
+            args: Prisma.LateFeeWaiverCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.LateFeeWaiverDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LateFeeWaiverPayload>
+          }
+          update: {
+            args: Prisma.LateFeeWaiverUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LateFeeWaiverPayload>
+          }
+          deleteMany: {
+            args: Prisma.LateFeeWaiverDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LateFeeWaiverUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.LateFeeWaiverUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LateFeeWaiverPayload>
+          }
+          aggregate: {
+            args: Prisma.LateFeeWaiverAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLateFeeWaiver>
+          }
+          groupBy: {
+            args: Prisma.LateFeeWaiverGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LateFeeWaiverGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LateFeeWaiverCountArgs<ExtArgs>
+            result: $Utils.Optional<LateFeeWaiverCountAggregateOutputType> | number
+          }
+        }
+      }
       Payment: {
         payload: Prisma.$PaymentPayload<ExtArgs>
         fields: Prisma.PaymentFieldRefs
@@ -5510,6 +5592,7 @@ export namespace Prisma {
     transportRoute?: TransportRouteOmit
     bookPackage?: BookPackageOmit
     feeRefund?: FeeRefundOmit
+    lateFeeWaiver?: LateFeeWaiverOmit
     payment?: PaymentOmit
     paymentReceipt?: PaymentReceiptOmit
     refund?: RefundOmit
@@ -6071,6 +6154,7 @@ export namespace Prisma {
     refundsProcessed: number
     markedAttendances: number
     employeeAttendanceRecords: number
+    lateFeeWaiversProcessed: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6083,6 +6167,7 @@ export namespace Prisma {
     refundsProcessed?: boolean | UserCountOutputTypeCountRefundsProcessedArgs
     markedAttendances?: boolean | UserCountOutputTypeCountMarkedAttendancesArgs
     employeeAttendanceRecords?: boolean | UserCountOutputTypeCountEmployeeAttendanceRecordsArgs
+    lateFeeWaiversProcessed?: boolean | UserCountOutputTypeCountLateFeeWaiversProcessedArgs
   }
 
   // Custom InputTypes
@@ -6157,6 +6242,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountEmployeeAttendanceRecordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: EmployeeAttendanceWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountLateFeeWaiversProcessedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LateFeeWaiverWhereInput
   }
 
 
@@ -6401,6 +6493,7 @@ export namespace Prisma {
     receipts: number
     refunds: number
     feeRefunds: number
+    lateFeeWaivers: number
   }
 
   export type StudentFeeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6409,6 +6502,7 @@ export namespace Prisma {
     receipts?: boolean | StudentFeeCountOutputTypeCountReceiptsArgs
     refunds?: boolean | StudentFeeCountOutputTypeCountRefundsArgs
     feeRefunds?: boolean | StudentFeeCountOutputTypeCountFeeRefundsArgs
+    lateFeeWaivers?: boolean | StudentFeeCountOutputTypeCountLateFeeWaiversArgs
   }
 
   // Custom InputTypes
@@ -6455,6 +6549,13 @@ export namespace Prisma {
    */
   export type StudentFeeCountOutputTypeCountFeeRefundsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FeeRefundWhereInput
+  }
+
+  /**
+   * StudentFeeCountOutputType without action
+   */
+  export type StudentFeeCountOutputTypeCountLateFeeWaiversArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LateFeeWaiverWhereInput
   }
 
 
@@ -6594,6 +6695,7 @@ export namespace Prisma {
     academicRecords: number
     studentAttendanceSessions: number
     employeeAttendances: number
+    lateFeeWaivers: number
   }
 
   export type SchoolCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6626,6 +6728,7 @@ export namespace Prisma {
     academicRecords?: boolean | SchoolCountOutputTypeCountAcademicRecordsArgs
     studentAttendanceSessions?: boolean | SchoolCountOutputTypeCountStudentAttendanceSessionsArgs
     employeeAttendances?: boolean | SchoolCountOutputTypeCountEmployeeAttendancesArgs
+    lateFeeWaivers?: boolean | SchoolCountOutputTypeCountLateFeeWaiversArgs
   }
 
   // Custom InputTypes
@@ -6840,6 +6943,13 @@ export namespace Prisma {
    */
   export type SchoolCountOutputTypeCountEmployeeAttendancesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: EmployeeAttendanceWhereInput
+  }
+
+  /**
+   * SchoolCountOutputType without action
+   */
+  export type SchoolCountOutputTypeCountLateFeeWaiversArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LateFeeWaiverWhereInput
   }
 
 
@@ -23752,6 +23862,7 @@ export namespace Prisma {
     refundsProcessed?: boolean | User$refundsProcessedArgs<ExtArgs>
     markedAttendances?: boolean | User$markedAttendancesArgs<ExtArgs>
     employeeAttendanceRecords?: boolean | User$employeeAttendanceRecordsArgs<ExtArgs>
+    lateFeeWaiversProcessed?: boolean | User$lateFeeWaiversProcessedArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -23785,6 +23896,7 @@ export namespace Prisma {
     refundsProcessed?: boolean | User$refundsProcessedArgs<ExtArgs>
     markedAttendances?: boolean | User$markedAttendancesArgs<ExtArgs>
     employeeAttendanceRecords?: boolean | User$employeeAttendanceRecordsArgs<ExtArgs>
+    lateFeeWaiversProcessed?: boolean | User$lateFeeWaiversProcessedArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -23808,6 +23920,7 @@ export namespace Prisma {
       refundsProcessed: Prisma.$RefundPayload<ExtArgs>[]
       markedAttendances: Prisma.$StudentAttendanceSessionPayload<ExtArgs>[]
       employeeAttendanceRecords: Prisma.$EmployeeAttendancePayload<ExtArgs>[]
+      lateFeeWaiversProcessed: Prisma.$LateFeeWaiverPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -24176,6 +24289,7 @@ export namespace Prisma {
     refundsProcessed<T extends User$refundsProcessedArgs<ExtArgs> = {}>(args?: Subset<T, User$refundsProcessedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RefundPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     markedAttendances<T extends User$markedAttendancesArgs<ExtArgs> = {}>(args?: Subset<T, User$markedAttendancesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentAttendanceSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     employeeAttendanceRecords<T extends User$employeeAttendanceRecordsArgs<ExtArgs> = {}>(args?: Subset<T, User$employeeAttendanceRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmployeeAttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    lateFeeWaiversProcessed<T extends User$lateFeeWaiversProcessedArgs<ExtArgs> = {}>(args?: Subset<T, User$lateFeeWaiversProcessedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LateFeeWaiverPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -24852,6 +24966,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: EmployeeAttendanceScalarFieldEnum | EmployeeAttendanceScalarFieldEnum[]
+  }
+
+  /**
+   * User.lateFeeWaiversProcessed
+   */
+  export type User$lateFeeWaiversProcessedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LateFeeWaiver
+     */
+    select?: LateFeeWaiverSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LateFeeWaiver
+     */
+    omit?: LateFeeWaiverOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LateFeeWaiverInclude<ExtArgs> | null
+    where?: LateFeeWaiverWhereInput
+    orderBy?: LateFeeWaiverOrderByWithRelationInput | LateFeeWaiverOrderByWithRelationInput[]
+    cursor?: LateFeeWaiverWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LateFeeWaiverScalarFieldEnum | LateFeeWaiverScalarFieldEnum[]
   }
 
   /**
@@ -37298,8 +37436,9 @@ export namespace Prisma {
     totalAmount: Decimal | null
     paidAmount: Decimal | null
     dueAmount: Decimal | null
-    lateFee: Decimal | null
     discount: Decimal | null
+    lateFee: Decimal | null
+    lateFeeWaived: Decimal | null
   }
 
   export type StudentFeeSumAggregateOutputType = {
@@ -37312,8 +37451,9 @@ export namespace Prisma {
     totalAmount: Decimal | null
     paidAmount: Decimal | null
     dueAmount: Decimal | null
-    lateFee: Decimal | null
     discount: Decimal | null
+    lateFee: Decimal | null
+    lateFeeWaived: Decimal | null
   }
 
   export type StudentFeeMinAggregateOutputType = {
@@ -37327,12 +37467,13 @@ export namespace Prisma {
     totalAmount: Decimal | null
     paidAmount: Decimal | null
     dueAmount: Decimal | null
-    lateFee: Decimal | null
     discount: Decimal | null
     isAdmissionFee: boolean | null
     status: $Enums.FeeStatus | null
     dueDate: Date | null
     remarks: string | null
+    lateFee: Decimal | null
+    lateFeeWaived: Decimal | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -37348,12 +37489,13 @@ export namespace Prisma {
     totalAmount: Decimal | null
     paidAmount: Decimal | null
     dueAmount: Decimal | null
-    lateFee: Decimal | null
     discount: Decimal | null
     isAdmissionFee: boolean | null
     status: $Enums.FeeStatus | null
     dueDate: Date | null
     remarks: string | null
+    lateFee: Decimal | null
+    lateFeeWaived: Decimal | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -37369,12 +37511,13 @@ export namespace Prisma {
     totalAmount: number
     paidAmount: number
     dueAmount: number
-    lateFee: number
     discount: number
     isAdmissionFee: number
     status: number
     dueDate: number
     remarks: number
+    lateFee: number
+    lateFeeWaived: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -37391,8 +37534,9 @@ export namespace Prisma {
     totalAmount?: true
     paidAmount?: true
     dueAmount?: true
-    lateFee?: true
     discount?: true
+    lateFee?: true
+    lateFeeWaived?: true
   }
 
   export type StudentFeeSumAggregateInputType = {
@@ -37405,8 +37549,9 @@ export namespace Prisma {
     totalAmount?: true
     paidAmount?: true
     dueAmount?: true
-    lateFee?: true
     discount?: true
+    lateFee?: true
+    lateFeeWaived?: true
   }
 
   export type StudentFeeMinAggregateInputType = {
@@ -37420,12 +37565,13 @@ export namespace Prisma {
     totalAmount?: true
     paidAmount?: true
     dueAmount?: true
-    lateFee?: true
     discount?: true
     isAdmissionFee?: true
     status?: true
     dueDate?: true
     remarks?: true
+    lateFee?: true
+    lateFeeWaived?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -37441,12 +37587,13 @@ export namespace Prisma {
     totalAmount?: true
     paidAmount?: true
     dueAmount?: true
-    lateFee?: true
     discount?: true
     isAdmissionFee?: true
     status?: true
     dueDate?: true
     remarks?: true
+    lateFee?: true
+    lateFeeWaived?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -37462,12 +37609,13 @@ export namespace Prisma {
     totalAmount?: true
     paidAmount?: true
     dueAmount?: true
-    lateFee?: true
     discount?: true
     isAdmissionFee?: true
     status?: true
     dueDate?: true
     remarks?: true
+    lateFee?: true
+    lateFeeWaived?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -37570,12 +37718,13 @@ export namespace Prisma {
     totalAmount: Decimal
     paidAmount: Decimal
     dueAmount: Decimal
-    lateFee: Decimal
     discount: Decimal
     isAdmissionFee: boolean
     status: $Enums.FeeStatus
     dueDate: Date
     remarks: string | null
+    lateFee: Decimal
+    lateFeeWaived: Decimal
     createdAt: Date
     updatedAt: Date
     _count: StudentFeeCountAggregateOutputType | null
@@ -37610,12 +37759,13 @@ export namespace Prisma {
     totalAmount?: boolean
     paidAmount?: boolean
     dueAmount?: boolean
-    lateFee?: boolean
     discount?: boolean
     isAdmissionFee?: boolean
     status?: boolean
     dueDate?: boolean
     remarks?: boolean
+    lateFee?: boolean
+    lateFeeWaived?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     school?: boolean | SchoolDefaultArgs<ExtArgs>
@@ -37626,6 +37776,7 @@ export namespace Prisma {
     receipts?: boolean | StudentFee$receiptsArgs<ExtArgs>
     refunds?: boolean | StudentFee$refundsArgs<ExtArgs>
     feeRefunds?: boolean | StudentFee$feeRefundsArgs<ExtArgs>
+    lateFeeWaivers?: boolean | StudentFee$lateFeeWaiversArgs<ExtArgs>
     _count?: boolean | StudentFeeCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["studentFee"]>
 
@@ -37642,17 +37793,18 @@ export namespace Prisma {
     totalAmount?: boolean
     paidAmount?: boolean
     dueAmount?: boolean
-    lateFee?: boolean
     discount?: boolean
     isAdmissionFee?: boolean
     status?: boolean
     dueDate?: boolean
     remarks?: boolean
+    lateFee?: boolean
+    lateFeeWaived?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type StudentFeeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "invoiceNo" | "schoolId" | "studentId" | "feeStructureId" | "month" | "year" | "totalAmount" | "paidAmount" | "dueAmount" | "lateFee" | "discount" | "isAdmissionFee" | "status" | "dueDate" | "remarks" | "createdAt" | "updatedAt", ExtArgs["result"]["studentFee"]>
+  export type StudentFeeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "invoiceNo" | "schoolId" | "studentId" | "feeStructureId" | "month" | "year" | "totalAmount" | "paidAmount" | "dueAmount" | "discount" | "isAdmissionFee" | "status" | "dueDate" | "remarks" | "lateFee" | "lateFeeWaived" | "createdAt" | "updatedAt", ExtArgs["result"]["studentFee"]>
   export type StudentFeeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     school?: boolean | SchoolDefaultArgs<ExtArgs>
     student?: boolean | StudentDefaultArgs<ExtArgs>
@@ -37662,6 +37814,7 @@ export namespace Prisma {
     receipts?: boolean | StudentFee$receiptsArgs<ExtArgs>
     refunds?: boolean | StudentFee$refundsArgs<ExtArgs>
     feeRefunds?: boolean | StudentFee$feeRefundsArgs<ExtArgs>
+    lateFeeWaivers?: boolean | StudentFee$lateFeeWaiversArgs<ExtArgs>
     _count?: boolean | StudentFeeCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -37680,6 +37833,7 @@ export namespace Prisma {
       receipts: Prisma.$PaymentReceiptPayload<ExtArgs>[]
       refunds: Prisma.$RefundPayload<ExtArgs>[]
       feeRefunds: Prisma.$FeeRefundPayload<ExtArgs>[]
+      lateFeeWaivers: Prisma.$LateFeeWaiverPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -37700,7 +37854,6 @@ export namespace Prisma {
       totalAmount: Prisma.Decimal
       paidAmount: Prisma.Decimal
       dueAmount: Prisma.Decimal
-      lateFee: Prisma.Decimal
       discount: Prisma.Decimal
       /**
        * //////////////////////////////////////////////////////////
@@ -37709,6 +37862,8 @@ export namespace Prisma {
       status: $Enums.FeeStatus
       dueDate: Date
       remarks: string | null
+      lateFee: Prisma.Decimal
+      lateFeeWaived: Prisma.Decimal
       /**
        * //////////////////////////////////////////////////////////
        */
@@ -38062,6 +38217,7 @@ export namespace Prisma {
     receipts<T extends StudentFee$receiptsArgs<ExtArgs> = {}>(args?: Subset<T, StudentFee$receiptsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentReceiptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     refunds<T extends StudentFee$refundsArgs<ExtArgs> = {}>(args?: Subset<T, StudentFee$refundsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RefundPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     feeRefunds<T extends StudentFee$feeRefundsArgs<ExtArgs> = {}>(args?: Subset<T, StudentFee$feeRefundsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FeeRefundPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    lateFeeWaivers<T extends StudentFee$lateFeeWaiversArgs<ExtArgs> = {}>(args?: Subset<T, StudentFee$lateFeeWaiversArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LateFeeWaiverPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -38101,12 +38257,13 @@ export namespace Prisma {
     readonly totalAmount: FieldRef<"StudentFee", 'Decimal'>
     readonly paidAmount: FieldRef<"StudentFee", 'Decimal'>
     readonly dueAmount: FieldRef<"StudentFee", 'Decimal'>
-    readonly lateFee: FieldRef<"StudentFee", 'Decimal'>
     readonly discount: FieldRef<"StudentFee", 'Decimal'>
     readonly isAdmissionFee: FieldRef<"StudentFee", 'Boolean'>
     readonly status: FieldRef<"StudentFee", 'FeeStatus'>
     readonly dueDate: FieldRef<"StudentFee", 'DateTime'>
     readonly remarks: FieldRef<"StudentFee", 'String'>
+    readonly lateFee: FieldRef<"StudentFee", 'Decimal'>
+    readonly lateFeeWaived: FieldRef<"StudentFee", 'Decimal'>
     readonly createdAt: FieldRef<"StudentFee", 'DateTime'>
     readonly updatedAt: FieldRef<"StudentFee", 'DateTime'>
   }
@@ -38574,6 +38731,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: FeeRefundScalarFieldEnum | FeeRefundScalarFieldEnum[]
+  }
+
+  /**
+   * StudentFee.lateFeeWaivers
+   */
+  export type StudentFee$lateFeeWaiversArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LateFeeWaiver
+     */
+    select?: LateFeeWaiverSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LateFeeWaiver
+     */
+    omit?: LateFeeWaiverOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LateFeeWaiverInclude<ExtArgs> | null
+    where?: LateFeeWaiverWhereInput
+    orderBy?: LateFeeWaiverOrderByWithRelationInput | LateFeeWaiverOrderByWithRelationInput[]
+    cursor?: LateFeeWaiverWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LateFeeWaiverScalarFieldEnum | LateFeeWaiverScalarFieldEnum[]
   }
 
   /**
@@ -46921,6 +47102,1042 @@ export namespace Prisma {
 
 
   /**
+   * Model LateFeeWaiver
+   */
+
+  export type AggregateLateFeeWaiver = {
+    _count: LateFeeWaiverCountAggregateOutputType | null
+    _avg: LateFeeWaiverAvgAggregateOutputType | null
+    _sum: LateFeeWaiverSumAggregateOutputType | null
+    _min: LateFeeWaiverMinAggregateOutputType | null
+    _max: LateFeeWaiverMaxAggregateOutputType | null
+  }
+
+  export type LateFeeWaiverAvgAggregateOutputType = {
+    id: number | null
+    schoolId: number | null
+    studentFeeId: number | null
+    amount: Decimal | null
+    waivedBy: number | null
+  }
+
+  export type LateFeeWaiverSumAggregateOutputType = {
+    id: number | null
+    schoolId: number | null
+    studentFeeId: number | null
+    amount: Decimal | null
+    waivedBy: number | null
+  }
+
+  export type LateFeeWaiverMinAggregateOutputType = {
+    id: number | null
+    schoolId: number | null
+    studentFeeId: number | null
+    amount: Decimal | null
+    reason: string | null
+    waivedBy: number | null
+    waivedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LateFeeWaiverMaxAggregateOutputType = {
+    id: number | null
+    schoolId: number | null
+    studentFeeId: number | null
+    amount: Decimal | null
+    reason: string | null
+    waivedBy: number | null
+    waivedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LateFeeWaiverCountAggregateOutputType = {
+    id: number
+    schoolId: number
+    studentFeeId: number
+    amount: number
+    reason: number
+    waivedBy: number
+    waivedAt: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type LateFeeWaiverAvgAggregateInputType = {
+    id?: true
+    schoolId?: true
+    studentFeeId?: true
+    amount?: true
+    waivedBy?: true
+  }
+
+  export type LateFeeWaiverSumAggregateInputType = {
+    id?: true
+    schoolId?: true
+    studentFeeId?: true
+    amount?: true
+    waivedBy?: true
+  }
+
+  export type LateFeeWaiverMinAggregateInputType = {
+    id?: true
+    schoolId?: true
+    studentFeeId?: true
+    amount?: true
+    reason?: true
+    waivedBy?: true
+    waivedAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LateFeeWaiverMaxAggregateInputType = {
+    id?: true
+    schoolId?: true
+    studentFeeId?: true
+    amount?: true
+    reason?: true
+    waivedBy?: true
+    waivedAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LateFeeWaiverCountAggregateInputType = {
+    id?: true
+    schoolId?: true
+    studentFeeId?: true
+    amount?: true
+    reason?: true
+    waivedBy?: true
+    waivedAt?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type LateFeeWaiverAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LateFeeWaiver to aggregate.
+     */
+    where?: LateFeeWaiverWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LateFeeWaivers to fetch.
+     */
+    orderBy?: LateFeeWaiverOrderByWithRelationInput | LateFeeWaiverOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LateFeeWaiverWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LateFeeWaivers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LateFeeWaivers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LateFeeWaivers
+    **/
+    _count?: true | LateFeeWaiverCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: LateFeeWaiverAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: LateFeeWaiverSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LateFeeWaiverMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LateFeeWaiverMaxAggregateInputType
+  }
+
+  export type GetLateFeeWaiverAggregateType<T extends LateFeeWaiverAggregateArgs> = {
+        [P in keyof T & keyof AggregateLateFeeWaiver]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLateFeeWaiver[P]>
+      : GetScalarType<T[P], AggregateLateFeeWaiver[P]>
+  }
+
+
+
+
+  export type LateFeeWaiverGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LateFeeWaiverWhereInput
+    orderBy?: LateFeeWaiverOrderByWithAggregationInput | LateFeeWaiverOrderByWithAggregationInput[]
+    by: LateFeeWaiverScalarFieldEnum[] | LateFeeWaiverScalarFieldEnum
+    having?: LateFeeWaiverScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LateFeeWaiverCountAggregateInputType | true
+    _avg?: LateFeeWaiverAvgAggregateInputType
+    _sum?: LateFeeWaiverSumAggregateInputType
+    _min?: LateFeeWaiverMinAggregateInputType
+    _max?: LateFeeWaiverMaxAggregateInputType
+  }
+
+  export type LateFeeWaiverGroupByOutputType = {
+    id: number
+    schoolId: number
+    studentFeeId: number
+    amount: Decimal
+    reason: string
+    waivedBy: number
+    waivedAt: Date
+    createdAt: Date
+    updatedAt: Date
+    _count: LateFeeWaiverCountAggregateOutputType | null
+    _avg: LateFeeWaiverAvgAggregateOutputType | null
+    _sum: LateFeeWaiverSumAggregateOutputType | null
+    _min: LateFeeWaiverMinAggregateOutputType | null
+    _max: LateFeeWaiverMaxAggregateOutputType | null
+  }
+
+  type GetLateFeeWaiverGroupByPayload<T extends LateFeeWaiverGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LateFeeWaiverGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LateFeeWaiverGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LateFeeWaiverGroupByOutputType[P]>
+            : GetScalarType<T[P], LateFeeWaiverGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LateFeeWaiverSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    schoolId?: boolean
+    studentFeeId?: boolean
+    amount?: boolean
+    reason?: boolean
+    waivedBy?: boolean
+    waivedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    school?: boolean | SchoolDefaultArgs<ExtArgs>
+    studentFee?: boolean | StudentFeeDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["lateFeeWaiver"]>
+
+
+
+  export type LateFeeWaiverSelectScalar = {
+    id?: boolean
+    schoolId?: boolean
+    studentFeeId?: boolean
+    amount?: boolean
+    reason?: boolean
+    waivedBy?: boolean
+    waivedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type LateFeeWaiverOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "schoolId" | "studentFeeId" | "amount" | "reason" | "waivedBy" | "waivedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["lateFeeWaiver"]>
+  export type LateFeeWaiverInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    school?: boolean | SchoolDefaultArgs<ExtArgs>
+    studentFee?: boolean | StudentFeeDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $LateFeeWaiverPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "LateFeeWaiver"
+    objects: {
+      school: Prisma.$SchoolPayload<ExtArgs>
+      studentFee: Prisma.$StudentFeePayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      schoolId: number
+      studentFeeId: number
+      amount: Prisma.Decimal
+      reason: string
+      waivedBy: number
+      waivedAt: Date
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["lateFeeWaiver"]>
+    composites: {}
+  }
+
+  type LateFeeWaiverGetPayload<S extends boolean | null | undefined | LateFeeWaiverDefaultArgs> = $Result.GetResult<Prisma.$LateFeeWaiverPayload, S>
+
+  type LateFeeWaiverCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<LateFeeWaiverFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: LateFeeWaiverCountAggregateInputType | true
+    }
+
+  export interface LateFeeWaiverDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LateFeeWaiver'], meta: { name: 'LateFeeWaiver' } }
+    /**
+     * Find zero or one LateFeeWaiver that matches the filter.
+     * @param {LateFeeWaiverFindUniqueArgs} args - Arguments to find a LateFeeWaiver
+     * @example
+     * // Get one LateFeeWaiver
+     * const lateFeeWaiver = await prisma.lateFeeWaiver.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LateFeeWaiverFindUniqueArgs>(args: SelectSubset<T, LateFeeWaiverFindUniqueArgs<ExtArgs>>): Prisma__LateFeeWaiverClient<$Result.GetResult<Prisma.$LateFeeWaiverPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one LateFeeWaiver that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {LateFeeWaiverFindUniqueOrThrowArgs} args - Arguments to find a LateFeeWaiver
+     * @example
+     * // Get one LateFeeWaiver
+     * const lateFeeWaiver = await prisma.lateFeeWaiver.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LateFeeWaiverFindUniqueOrThrowArgs>(args: SelectSubset<T, LateFeeWaiverFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LateFeeWaiverClient<$Result.GetResult<Prisma.$LateFeeWaiverPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first LateFeeWaiver that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LateFeeWaiverFindFirstArgs} args - Arguments to find a LateFeeWaiver
+     * @example
+     * // Get one LateFeeWaiver
+     * const lateFeeWaiver = await prisma.lateFeeWaiver.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LateFeeWaiverFindFirstArgs>(args?: SelectSubset<T, LateFeeWaiverFindFirstArgs<ExtArgs>>): Prisma__LateFeeWaiverClient<$Result.GetResult<Prisma.$LateFeeWaiverPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first LateFeeWaiver that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LateFeeWaiverFindFirstOrThrowArgs} args - Arguments to find a LateFeeWaiver
+     * @example
+     * // Get one LateFeeWaiver
+     * const lateFeeWaiver = await prisma.lateFeeWaiver.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LateFeeWaiverFindFirstOrThrowArgs>(args?: SelectSubset<T, LateFeeWaiverFindFirstOrThrowArgs<ExtArgs>>): Prisma__LateFeeWaiverClient<$Result.GetResult<Prisma.$LateFeeWaiverPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more LateFeeWaivers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LateFeeWaiverFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LateFeeWaivers
+     * const lateFeeWaivers = await prisma.lateFeeWaiver.findMany()
+     * 
+     * // Get first 10 LateFeeWaivers
+     * const lateFeeWaivers = await prisma.lateFeeWaiver.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const lateFeeWaiverWithIdOnly = await prisma.lateFeeWaiver.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LateFeeWaiverFindManyArgs>(args?: SelectSubset<T, LateFeeWaiverFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LateFeeWaiverPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a LateFeeWaiver.
+     * @param {LateFeeWaiverCreateArgs} args - Arguments to create a LateFeeWaiver.
+     * @example
+     * // Create one LateFeeWaiver
+     * const LateFeeWaiver = await prisma.lateFeeWaiver.create({
+     *   data: {
+     *     // ... data to create a LateFeeWaiver
+     *   }
+     * })
+     * 
+     */
+    create<T extends LateFeeWaiverCreateArgs>(args: SelectSubset<T, LateFeeWaiverCreateArgs<ExtArgs>>): Prisma__LateFeeWaiverClient<$Result.GetResult<Prisma.$LateFeeWaiverPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many LateFeeWaivers.
+     * @param {LateFeeWaiverCreateManyArgs} args - Arguments to create many LateFeeWaivers.
+     * @example
+     * // Create many LateFeeWaivers
+     * const lateFeeWaiver = await prisma.lateFeeWaiver.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LateFeeWaiverCreateManyArgs>(args?: SelectSubset<T, LateFeeWaiverCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a LateFeeWaiver.
+     * @param {LateFeeWaiverDeleteArgs} args - Arguments to delete one LateFeeWaiver.
+     * @example
+     * // Delete one LateFeeWaiver
+     * const LateFeeWaiver = await prisma.lateFeeWaiver.delete({
+     *   where: {
+     *     // ... filter to delete one LateFeeWaiver
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LateFeeWaiverDeleteArgs>(args: SelectSubset<T, LateFeeWaiverDeleteArgs<ExtArgs>>): Prisma__LateFeeWaiverClient<$Result.GetResult<Prisma.$LateFeeWaiverPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one LateFeeWaiver.
+     * @param {LateFeeWaiverUpdateArgs} args - Arguments to update one LateFeeWaiver.
+     * @example
+     * // Update one LateFeeWaiver
+     * const lateFeeWaiver = await prisma.lateFeeWaiver.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LateFeeWaiverUpdateArgs>(args: SelectSubset<T, LateFeeWaiverUpdateArgs<ExtArgs>>): Prisma__LateFeeWaiverClient<$Result.GetResult<Prisma.$LateFeeWaiverPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more LateFeeWaivers.
+     * @param {LateFeeWaiverDeleteManyArgs} args - Arguments to filter LateFeeWaivers to delete.
+     * @example
+     * // Delete a few LateFeeWaivers
+     * const { count } = await prisma.lateFeeWaiver.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LateFeeWaiverDeleteManyArgs>(args?: SelectSubset<T, LateFeeWaiverDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LateFeeWaivers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LateFeeWaiverUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LateFeeWaivers
+     * const lateFeeWaiver = await prisma.lateFeeWaiver.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LateFeeWaiverUpdateManyArgs>(args: SelectSubset<T, LateFeeWaiverUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one LateFeeWaiver.
+     * @param {LateFeeWaiverUpsertArgs} args - Arguments to update or create a LateFeeWaiver.
+     * @example
+     * // Update or create a LateFeeWaiver
+     * const lateFeeWaiver = await prisma.lateFeeWaiver.upsert({
+     *   create: {
+     *     // ... data to create a LateFeeWaiver
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LateFeeWaiver we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LateFeeWaiverUpsertArgs>(args: SelectSubset<T, LateFeeWaiverUpsertArgs<ExtArgs>>): Prisma__LateFeeWaiverClient<$Result.GetResult<Prisma.$LateFeeWaiverPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of LateFeeWaivers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LateFeeWaiverCountArgs} args - Arguments to filter LateFeeWaivers to count.
+     * @example
+     * // Count the number of LateFeeWaivers
+     * const count = await prisma.lateFeeWaiver.count({
+     *   where: {
+     *     // ... the filter for the LateFeeWaivers we want to count
+     *   }
+     * })
+    **/
+    count<T extends LateFeeWaiverCountArgs>(
+      args?: Subset<T, LateFeeWaiverCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LateFeeWaiverCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LateFeeWaiver.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LateFeeWaiverAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LateFeeWaiverAggregateArgs>(args: Subset<T, LateFeeWaiverAggregateArgs>): Prisma.PrismaPromise<GetLateFeeWaiverAggregateType<T>>
+
+    /**
+     * Group by LateFeeWaiver.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LateFeeWaiverGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LateFeeWaiverGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LateFeeWaiverGroupByArgs['orderBy'] }
+        : { orderBy?: LateFeeWaiverGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LateFeeWaiverGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLateFeeWaiverGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the LateFeeWaiver model
+   */
+  readonly fields: LateFeeWaiverFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LateFeeWaiver.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LateFeeWaiverClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    school<T extends SchoolDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SchoolDefaultArgs<ExtArgs>>): Prisma__SchoolClient<$Result.GetResult<Prisma.$SchoolPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    studentFee<T extends StudentFeeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StudentFeeDefaultArgs<ExtArgs>>): Prisma__StudentFeeClient<$Result.GetResult<Prisma.$StudentFeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the LateFeeWaiver model
+   */
+  interface LateFeeWaiverFieldRefs {
+    readonly id: FieldRef<"LateFeeWaiver", 'Int'>
+    readonly schoolId: FieldRef<"LateFeeWaiver", 'Int'>
+    readonly studentFeeId: FieldRef<"LateFeeWaiver", 'Int'>
+    readonly amount: FieldRef<"LateFeeWaiver", 'Decimal'>
+    readonly reason: FieldRef<"LateFeeWaiver", 'String'>
+    readonly waivedBy: FieldRef<"LateFeeWaiver", 'Int'>
+    readonly waivedAt: FieldRef<"LateFeeWaiver", 'DateTime'>
+    readonly createdAt: FieldRef<"LateFeeWaiver", 'DateTime'>
+    readonly updatedAt: FieldRef<"LateFeeWaiver", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * LateFeeWaiver findUnique
+   */
+  export type LateFeeWaiverFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LateFeeWaiver
+     */
+    select?: LateFeeWaiverSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LateFeeWaiver
+     */
+    omit?: LateFeeWaiverOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LateFeeWaiverInclude<ExtArgs> | null
+    /**
+     * Filter, which LateFeeWaiver to fetch.
+     */
+    where: LateFeeWaiverWhereUniqueInput
+  }
+
+  /**
+   * LateFeeWaiver findUniqueOrThrow
+   */
+  export type LateFeeWaiverFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LateFeeWaiver
+     */
+    select?: LateFeeWaiverSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LateFeeWaiver
+     */
+    omit?: LateFeeWaiverOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LateFeeWaiverInclude<ExtArgs> | null
+    /**
+     * Filter, which LateFeeWaiver to fetch.
+     */
+    where: LateFeeWaiverWhereUniqueInput
+  }
+
+  /**
+   * LateFeeWaiver findFirst
+   */
+  export type LateFeeWaiverFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LateFeeWaiver
+     */
+    select?: LateFeeWaiverSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LateFeeWaiver
+     */
+    omit?: LateFeeWaiverOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LateFeeWaiverInclude<ExtArgs> | null
+    /**
+     * Filter, which LateFeeWaiver to fetch.
+     */
+    where?: LateFeeWaiverWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LateFeeWaivers to fetch.
+     */
+    orderBy?: LateFeeWaiverOrderByWithRelationInput | LateFeeWaiverOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LateFeeWaivers.
+     */
+    cursor?: LateFeeWaiverWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LateFeeWaivers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LateFeeWaivers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LateFeeWaivers.
+     */
+    distinct?: LateFeeWaiverScalarFieldEnum | LateFeeWaiverScalarFieldEnum[]
+  }
+
+  /**
+   * LateFeeWaiver findFirstOrThrow
+   */
+  export type LateFeeWaiverFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LateFeeWaiver
+     */
+    select?: LateFeeWaiverSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LateFeeWaiver
+     */
+    omit?: LateFeeWaiverOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LateFeeWaiverInclude<ExtArgs> | null
+    /**
+     * Filter, which LateFeeWaiver to fetch.
+     */
+    where?: LateFeeWaiverWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LateFeeWaivers to fetch.
+     */
+    orderBy?: LateFeeWaiverOrderByWithRelationInput | LateFeeWaiverOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LateFeeWaivers.
+     */
+    cursor?: LateFeeWaiverWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LateFeeWaivers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LateFeeWaivers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LateFeeWaivers.
+     */
+    distinct?: LateFeeWaiverScalarFieldEnum | LateFeeWaiverScalarFieldEnum[]
+  }
+
+  /**
+   * LateFeeWaiver findMany
+   */
+  export type LateFeeWaiverFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LateFeeWaiver
+     */
+    select?: LateFeeWaiverSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LateFeeWaiver
+     */
+    omit?: LateFeeWaiverOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LateFeeWaiverInclude<ExtArgs> | null
+    /**
+     * Filter, which LateFeeWaivers to fetch.
+     */
+    where?: LateFeeWaiverWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LateFeeWaivers to fetch.
+     */
+    orderBy?: LateFeeWaiverOrderByWithRelationInput | LateFeeWaiverOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LateFeeWaivers.
+     */
+    cursor?: LateFeeWaiverWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LateFeeWaivers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LateFeeWaivers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LateFeeWaivers.
+     */
+    distinct?: LateFeeWaiverScalarFieldEnum | LateFeeWaiverScalarFieldEnum[]
+  }
+
+  /**
+   * LateFeeWaiver create
+   */
+  export type LateFeeWaiverCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LateFeeWaiver
+     */
+    select?: LateFeeWaiverSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LateFeeWaiver
+     */
+    omit?: LateFeeWaiverOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LateFeeWaiverInclude<ExtArgs> | null
+    /**
+     * The data needed to create a LateFeeWaiver.
+     */
+    data: XOR<LateFeeWaiverCreateInput, LateFeeWaiverUncheckedCreateInput>
+  }
+
+  /**
+   * LateFeeWaiver createMany
+   */
+  export type LateFeeWaiverCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LateFeeWaivers.
+     */
+    data: LateFeeWaiverCreateManyInput | LateFeeWaiverCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LateFeeWaiver update
+   */
+  export type LateFeeWaiverUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LateFeeWaiver
+     */
+    select?: LateFeeWaiverSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LateFeeWaiver
+     */
+    omit?: LateFeeWaiverOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LateFeeWaiverInclude<ExtArgs> | null
+    /**
+     * The data needed to update a LateFeeWaiver.
+     */
+    data: XOR<LateFeeWaiverUpdateInput, LateFeeWaiverUncheckedUpdateInput>
+    /**
+     * Choose, which LateFeeWaiver to update.
+     */
+    where: LateFeeWaiverWhereUniqueInput
+  }
+
+  /**
+   * LateFeeWaiver updateMany
+   */
+  export type LateFeeWaiverUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LateFeeWaivers.
+     */
+    data: XOR<LateFeeWaiverUpdateManyMutationInput, LateFeeWaiverUncheckedUpdateManyInput>
+    /**
+     * Filter which LateFeeWaivers to update
+     */
+    where?: LateFeeWaiverWhereInput
+    /**
+     * Limit how many LateFeeWaivers to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * LateFeeWaiver upsert
+   */
+  export type LateFeeWaiverUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LateFeeWaiver
+     */
+    select?: LateFeeWaiverSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LateFeeWaiver
+     */
+    omit?: LateFeeWaiverOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LateFeeWaiverInclude<ExtArgs> | null
+    /**
+     * The filter to search for the LateFeeWaiver to update in case it exists.
+     */
+    where: LateFeeWaiverWhereUniqueInput
+    /**
+     * In case the LateFeeWaiver found by the `where` argument doesn't exist, create a new LateFeeWaiver with this data.
+     */
+    create: XOR<LateFeeWaiverCreateInput, LateFeeWaiverUncheckedCreateInput>
+    /**
+     * In case the LateFeeWaiver was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LateFeeWaiverUpdateInput, LateFeeWaiverUncheckedUpdateInput>
+  }
+
+  /**
+   * LateFeeWaiver delete
+   */
+  export type LateFeeWaiverDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LateFeeWaiver
+     */
+    select?: LateFeeWaiverSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LateFeeWaiver
+     */
+    omit?: LateFeeWaiverOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LateFeeWaiverInclude<ExtArgs> | null
+    /**
+     * Filter which LateFeeWaiver to delete.
+     */
+    where: LateFeeWaiverWhereUniqueInput
+  }
+
+  /**
+   * LateFeeWaiver deleteMany
+   */
+  export type LateFeeWaiverDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LateFeeWaivers to delete
+     */
+    where?: LateFeeWaiverWhereInput
+    /**
+     * Limit how many LateFeeWaivers to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * LateFeeWaiver without action
+   */
+  export type LateFeeWaiverDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LateFeeWaiver
+     */
+    select?: LateFeeWaiverSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LateFeeWaiver
+     */
+    omit?: LateFeeWaiverOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LateFeeWaiverInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Payment
    */
 
@@ -50651,6 +51868,7 @@ export namespace Prisma {
     academicRecords?: boolean | School$academicRecordsArgs<ExtArgs>
     studentAttendanceSessions?: boolean | School$studentAttendanceSessionsArgs<ExtArgs>
     employeeAttendances?: boolean | School$employeeAttendancesArgs<ExtArgs>
+    lateFeeWaivers?: boolean | School$lateFeeWaiversArgs<ExtArgs>
     _count?: boolean | SchoolCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["school"]>
 
@@ -50697,6 +51915,7 @@ export namespace Prisma {
     academicRecords?: boolean | School$academicRecordsArgs<ExtArgs>
     studentAttendanceSessions?: boolean | School$studentAttendanceSessionsArgs<ExtArgs>
     employeeAttendances?: boolean | School$employeeAttendancesArgs<ExtArgs>
+    lateFeeWaivers?: boolean | School$lateFeeWaiversArgs<ExtArgs>
     _count?: boolean | SchoolCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -50736,6 +51955,7 @@ export namespace Prisma {
       academicRecords: Prisma.$StudentAcademicRecordPayload<ExtArgs>[]
       studentAttendanceSessions: Prisma.$StudentAttendanceSessionPayload<ExtArgs>[]
       employeeAttendances: Prisma.$EmployeeAttendancePayload<ExtArgs>[]
+      lateFeeWaivers: Prisma.$LateFeeWaiverPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -51117,6 +52337,7 @@ export namespace Prisma {
     academicRecords<T extends School$academicRecordsArgs<ExtArgs> = {}>(args?: Subset<T, School$academicRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentAcademicRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     studentAttendanceSessions<T extends School$studentAttendanceSessionsArgs<ExtArgs> = {}>(args?: Subset<T, School$studentAttendanceSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentAttendanceSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     employeeAttendances<T extends School$employeeAttendancesArgs<ExtArgs> = {}>(args?: Subset<T, School$employeeAttendancesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmployeeAttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    lateFeeWaivers<T extends School$lateFeeWaiversArgs<ExtArgs> = {}>(args?: Subset<T, School$lateFeeWaiversArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LateFeeWaiverPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -52194,6 +53415,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: EmployeeAttendanceScalarFieldEnum | EmployeeAttendanceScalarFieldEnum[]
+  }
+
+  /**
+   * School.lateFeeWaivers
+   */
+  export type School$lateFeeWaiversArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LateFeeWaiver
+     */
+    select?: LateFeeWaiverSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LateFeeWaiver
+     */
+    omit?: LateFeeWaiverOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LateFeeWaiverInclude<ExtArgs> | null
+    where?: LateFeeWaiverWhereInput
+    orderBy?: LateFeeWaiverOrderByWithRelationInput | LateFeeWaiverOrderByWithRelationInput[]
+    cursor?: LateFeeWaiverWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LateFeeWaiverScalarFieldEnum | LateFeeWaiverScalarFieldEnum[]
   }
 
   /**
@@ -66669,12 +67914,13 @@ export namespace Prisma {
     totalAmount: 'totalAmount',
     paidAmount: 'paidAmount',
     dueAmount: 'dueAmount',
-    lateFee: 'lateFee',
     discount: 'discount',
     isAdmissionFee: 'isAdmissionFee',
     status: 'status',
     dueDate: 'dueDate',
     remarks: 'remarks',
+    lateFee: 'lateFee',
+    lateFeeWaived: 'lateFeeWaived',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -66799,6 +68045,21 @@ export namespace Prisma {
   };
 
   export type FeeRefundScalarFieldEnum = (typeof FeeRefundScalarFieldEnum)[keyof typeof FeeRefundScalarFieldEnum]
+
+
+  export const LateFeeWaiverScalarFieldEnum: {
+    id: 'id',
+    schoolId: 'schoolId',
+    studentFeeId: 'studentFeeId',
+    amount: 'amount',
+    reason: 'reason',
+    waivedBy: 'waivedBy',
+    waivedAt: 'waivedAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type LateFeeWaiverScalarFieldEnum = (typeof LateFeeWaiverScalarFieldEnum)[keyof typeof LateFeeWaiverScalarFieldEnum]
 
 
   export const PaymentScalarFieldEnum: {
@@ -67342,6 +68603,13 @@ export namespace Prisma {
   };
 
   export type FeeRefundOrderByRelevanceFieldEnum = (typeof FeeRefundOrderByRelevanceFieldEnum)[keyof typeof FeeRefundOrderByRelevanceFieldEnum]
+
+
+  export const LateFeeWaiverOrderByRelevanceFieldEnum: {
+    reason: 'reason'
+  };
+
+  export type LateFeeWaiverOrderByRelevanceFieldEnum = (typeof LateFeeWaiverOrderByRelevanceFieldEnum)[keyof typeof LateFeeWaiverOrderByRelevanceFieldEnum]
 
 
   export const PaymentOrderByRelevanceFieldEnum: {
@@ -69078,6 +70346,7 @@ export namespace Prisma {
     refundsProcessed?: RefundListRelationFilter
     markedAttendances?: StudentAttendanceSessionListRelationFilter
     employeeAttendanceRecords?: EmployeeAttendanceListRelationFilter
+    lateFeeWaiversProcessed?: LateFeeWaiverListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -69104,6 +70373,7 @@ export namespace Prisma {
     refundsProcessed?: RefundOrderByRelationAggregateInput
     markedAttendances?: StudentAttendanceSessionOrderByRelationAggregateInput
     employeeAttendanceRecords?: EmployeeAttendanceOrderByRelationAggregateInput
+    lateFeeWaiversProcessed?: LateFeeWaiverOrderByRelationAggregateInput
     _relevance?: UserOrderByRelevanceInput
   }
 
@@ -69134,6 +70404,7 @@ export namespace Prisma {
     refundsProcessed?: RefundListRelationFilter
     markedAttendances?: StudentAttendanceSessionListRelationFilter
     employeeAttendanceRecords?: EmployeeAttendanceListRelationFilter
+    lateFeeWaiversProcessed?: LateFeeWaiverListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -70064,12 +71335,13 @@ export namespace Prisma {
     totalAmount?: DecimalFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
     discount?: DecimalFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolFilter<"StudentFee"> | boolean
     status?: EnumFeeStatusFilter<"StudentFee"> | $Enums.FeeStatus
     dueDate?: DateTimeFilter<"StudentFee"> | Date | string
     remarks?: StringNullableFilter<"StudentFee"> | string | null
+    lateFee?: DecimalFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFilter<"StudentFee"> | Date | string
     updatedAt?: DateTimeFilter<"StudentFee"> | Date | string
     school?: XOR<SchoolScalarRelationFilter, SchoolWhereInput>
@@ -70080,6 +71352,7 @@ export namespace Prisma {
     receipts?: PaymentReceiptListRelationFilter
     refunds?: RefundListRelationFilter
     feeRefunds?: FeeRefundListRelationFilter
+    lateFeeWaivers?: LateFeeWaiverListRelationFilter
   }
 
   export type StudentFeeOrderByWithRelationInput = {
@@ -70093,12 +71366,13 @@ export namespace Prisma {
     totalAmount?: SortOrder
     paidAmount?: SortOrder
     dueAmount?: SortOrder
-    lateFee?: SortOrder
     discount?: SortOrder
     isAdmissionFee?: SortOrder
     status?: SortOrder
     dueDate?: SortOrder
     remarks?: SortOrderInput | SortOrder
+    lateFee?: SortOrder
+    lateFeeWaived?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     school?: SchoolOrderByWithRelationInput
@@ -70109,6 +71383,7 @@ export namespace Prisma {
     receipts?: PaymentReceiptOrderByRelationAggregateInput
     refunds?: RefundOrderByRelationAggregateInput
     feeRefunds?: FeeRefundOrderByRelationAggregateInput
+    lateFeeWaivers?: LateFeeWaiverOrderByRelationAggregateInput
     _relevance?: StudentFeeOrderByRelevanceInput
   }
 
@@ -70127,12 +71402,13 @@ export namespace Prisma {
     totalAmount?: DecimalFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
     discount?: DecimalFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolFilter<"StudentFee"> | boolean
     status?: EnumFeeStatusFilter<"StudentFee"> | $Enums.FeeStatus
     dueDate?: DateTimeFilter<"StudentFee"> | Date | string
     remarks?: StringNullableFilter<"StudentFee"> | string | null
+    lateFee?: DecimalFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFilter<"StudentFee"> | Date | string
     updatedAt?: DateTimeFilter<"StudentFee"> | Date | string
     school?: XOR<SchoolScalarRelationFilter, SchoolWhereInput>
@@ -70143,6 +71419,7 @@ export namespace Prisma {
     receipts?: PaymentReceiptListRelationFilter
     refunds?: RefundListRelationFilter
     feeRefunds?: FeeRefundListRelationFilter
+    lateFeeWaivers?: LateFeeWaiverListRelationFilter
   }, "id" | "invoiceNo" | "studentId_feeStructureId_month_year">
 
   export type StudentFeeOrderByWithAggregationInput = {
@@ -70156,12 +71433,13 @@ export namespace Prisma {
     totalAmount?: SortOrder
     paidAmount?: SortOrder
     dueAmount?: SortOrder
-    lateFee?: SortOrder
     discount?: SortOrder
     isAdmissionFee?: SortOrder
     status?: SortOrder
     dueDate?: SortOrder
     remarks?: SortOrderInput | SortOrder
+    lateFee?: SortOrder
+    lateFeeWaived?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: StudentFeeCountOrderByAggregateInput
@@ -70185,12 +71463,13 @@ export namespace Prisma {
     totalAmount?: DecimalWithAggregatesFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalWithAggregatesFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalWithAggregatesFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalWithAggregatesFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
     discount?: DecimalWithAggregatesFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolWithAggregatesFilter<"StudentFee"> | boolean
     status?: EnumFeeStatusWithAggregatesFilter<"StudentFee"> | $Enums.FeeStatus
     dueDate?: DateTimeWithAggregatesFilter<"StudentFee"> | Date | string
     remarks?: StringNullableWithAggregatesFilter<"StudentFee"> | string | null
+    lateFee?: DecimalWithAggregatesFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalWithAggregatesFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeWithAggregatesFilter<"StudentFee"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"StudentFee"> | Date | string
   }
@@ -70843,6 +72122,90 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"FeeRefund"> | Date | string
   }
 
+  export type LateFeeWaiverWhereInput = {
+    AND?: LateFeeWaiverWhereInput | LateFeeWaiverWhereInput[]
+    OR?: LateFeeWaiverWhereInput[]
+    NOT?: LateFeeWaiverWhereInput | LateFeeWaiverWhereInput[]
+    id?: IntFilter<"LateFeeWaiver"> | number
+    schoolId?: IntFilter<"LateFeeWaiver"> | number
+    studentFeeId?: IntFilter<"LateFeeWaiver"> | number
+    amount?: DecimalFilter<"LateFeeWaiver"> | Decimal | DecimalJsLike | number | string
+    reason?: StringFilter<"LateFeeWaiver"> | string
+    waivedBy?: IntFilter<"LateFeeWaiver"> | number
+    waivedAt?: DateTimeFilter<"LateFeeWaiver"> | Date | string
+    createdAt?: DateTimeFilter<"LateFeeWaiver"> | Date | string
+    updatedAt?: DateTimeFilter<"LateFeeWaiver"> | Date | string
+    school?: XOR<SchoolScalarRelationFilter, SchoolWhereInput>
+    studentFee?: XOR<StudentFeeScalarRelationFilter, StudentFeeWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type LateFeeWaiverOrderByWithRelationInput = {
+    id?: SortOrder
+    schoolId?: SortOrder
+    studentFeeId?: SortOrder
+    amount?: SortOrder
+    reason?: SortOrder
+    waivedBy?: SortOrder
+    waivedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    school?: SchoolOrderByWithRelationInput
+    studentFee?: StudentFeeOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+    _relevance?: LateFeeWaiverOrderByRelevanceInput
+  }
+
+  export type LateFeeWaiverWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: LateFeeWaiverWhereInput | LateFeeWaiverWhereInput[]
+    OR?: LateFeeWaiverWhereInput[]
+    NOT?: LateFeeWaiverWhereInput | LateFeeWaiverWhereInput[]
+    schoolId?: IntFilter<"LateFeeWaiver"> | number
+    studentFeeId?: IntFilter<"LateFeeWaiver"> | number
+    amount?: DecimalFilter<"LateFeeWaiver"> | Decimal | DecimalJsLike | number | string
+    reason?: StringFilter<"LateFeeWaiver"> | string
+    waivedBy?: IntFilter<"LateFeeWaiver"> | number
+    waivedAt?: DateTimeFilter<"LateFeeWaiver"> | Date | string
+    createdAt?: DateTimeFilter<"LateFeeWaiver"> | Date | string
+    updatedAt?: DateTimeFilter<"LateFeeWaiver"> | Date | string
+    school?: XOR<SchoolScalarRelationFilter, SchoolWhereInput>
+    studentFee?: XOR<StudentFeeScalarRelationFilter, StudentFeeWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type LateFeeWaiverOrderByWithAggregationInput = {
+    id?: SortOrder
+    schoolId?: SortOrder
+    studentFeeId?: SortOrder
+    amount?: SortOrder
+    reason?: SortOrder
+    waivedBy?: SortOrder
+    waivedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: LateFeeWaiverCountOrderByAggregateInput
+    _avg?: LateFeeWaiverAvgOrderByAggregateInput
+    _max?: LateFeeWaiverMaxOrderByAggregateInput
+    _min?: LateFeeWaiverMinOrderByAggregateInput
+    _sum?: LateFeeWaiverSumOrderByAggregateInput
+  }
+
+  export type LateFeeWaiverScalarWhereWithAggregatesInput = {
+    AND?: LateFeeWaiverScalarWhereWithAggregatesInput | LateFeeWaiverScalarWhereWithAggregatesInput[]
+    OR?: LateFeeWaiverScalarWhereWithAggregatesInput[]
+    NOT?: LateFeeWaiverScalarWhereWithAggregatesInput | LateFeeWaiverScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"LateFeeWaiver"> | number
+    schoolId?: IntWithAggregatesFilter<"LateFeeWaiver"> | number
+    studentFeeId?: IntWithAggregatesFilter<"LateFeeWaiver"> | number
+    amount?: DecimalWithAggregatesFilter<"LateFeeWaiver"> | Decimal | DecimalJsLike | number | string
+    reason?: StringWithAggregatesFilter<"LateFeeWaiver"> | string
+    waivedBy?: IntWithAggregatesFilter<"LateFeeWaiver"> | number
+    waivedAt?: DateTimeWithAggregatesFilter<"LateFeeWaiver"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"LateFeeWaiver"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"LateFeeWaiver"> | Date | string
+  }
+
   export type PaymentWhereInput = {
     AND?: PaymentWhereInput | PaymentWhereInput[]
     OR?: PaymentWhereInput[]
@@ -71241,6 +72604,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordListRelationFilter
     studentAttendanceSessions?: StudentAttendanceSessionListRelationFilter
     employeeAttendances?: EmployeeAttendanceListRelationFilter
+    lateFeeWaivers?: LateFeeWaiverListRelationFilter
   }
 
   export type SchoolOrderByWithRelationInput = {
@@ -71280,6 +72644,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordOrderByRelationAggregateInput
     studentAttendanceSessions?: StudentAttendanceSessionOrderByRelationAggregateInput
     employeeAttendances?: EmployeeAttendanceOrderByRelationAggregateInput
+    lateFeeWaivers?: LateFeeWaiverOrderByRelationAggregateInput
     _relevance?: SchoolOrderByRelevanceInput
   }
 
@@ -71323,6 +72688,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordListRelationFilter
     studentAttendanceSessions?: StudentAttendanceSessionListRelationFilter
     employeeAttendances?: EmployeeAttendanceListRelationFilter
+    lateFeeWaivers?: LateFeeWaiverListRelationFilter
   }, "id" | "email">
 
   export type SchoolOrderByWithAggregationInput = {
@@ -73875,6 +75241,7 @@ export namespace Prisma {
     refundsProcessed?: RefundCreateNestedManyWithoutRefundedUserInput
     markedAttendances?: StudentAttendanceSessionCreateNestedManyWithoutMarkedByInput
     employeeAttendanceRecords?: EmployeeAttendanceCreateNestedManyWithoutEmployeeInput
+    lateFeeWaiversProcessed?: LateFeeWaiverCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -73900,6 +75267,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUncheckedCreateNestedManyWithoutRefundedUserInput
     markedAttendances?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutMarkedByInput
     employeeAttendanceRecords?: EmployeeAttendanceUncheckedCreateNestedManyWithoutEmployeeInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -73924,6 +75292,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUpdateManyWithoutRefundedUserNestedInput
     markedAttendances?: StudentAttendanceSessionUpdateManyWithoutMarkedByNestedInput
     employeeAttendanceRecords?: EmployeeAttendanceUpdateManyWithoutEmployeeNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -73949,6 +75318,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUncheckedUpdateManyWithoutRefundedUserNestedInput
     markedAttendances?: StudentAttendanceSessionUncheckedUpdateManyWithoutMarkedByNestedInput
     employeeAttendanceRecords?: EmployeeAttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -74830,12 +76200,13 @@ export namespace Prisma {
     totalAmount: Decimal | DecimalJsLike | number | string
     paidAmount?: Decimal | DecimalJsLike | number | string
     dueAmount: Decimal | DecimalJsLike | number | string
-    lateFee?: Decimal | DecimalJsLike | number | string
     discount?: Decimal | DecimalJsLike | number | string
     isAdmissionFee?: boolean
     status?: $Enums.FeeStatus
     dueDate: Date | string
     remarks?: string | null
+    lateFee?: Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     school: SchoolCreateNestedOneWithoutStudentFeesInput
@@ -74846,6 +76217,7 @@ export namespace Prisma {
     receipts?: PaymentReceiptCreateNestedManyWithoutStudentFeeInput
     refunds?: RefundCreateNestedManyWithoutStudentFeeInput
     feeRefunds?: FeeRefundCreateNestedManyWithoutStudentFeeInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutStudentFeeInput
   }
 
   export type StudentFeeUncheckedCreateInput = {
@@ -74859,12 +76231,13 @@ export namespace Prisma {
     totalAmount: Decimal | DecimalJsLike | number | string
     paidAmount?: Decimal | DecimalJsLike | number | string
     dueAmount: Decimal | DecimalJsLike | number | string
-    lateFee?: Decimal | DecimalJsLike | number | string
     discount?: Decimal | DecimalJsLike | number | string
     isAdmissionFee?: boolean
     status?: $Enums.FeeStatus
     dueDate: Date | string
     remarks?: string | null
+    lateFee?: Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     items?: StudentFeeItemUncheckedCreateNestedManyWithoutStudentFeeInput
@@ -74872,6 +76245,7 @@ export namespace Prisma {
     receipts?: PaymentReceiptUncheckedCreateNestedManyWithoutStudentFeeInput
     refunds?: RefundUncheckedCreateNestedManyWithoutStudentFeeInput
     feeRefunds?: FeeRefundUncheckedCreateNestedManyWithoutStudentFeeInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutStudentFeeInput
   }
 
   export type StudentFeeUpdateInput = {
@@ -74881,12 +76255,13 @@ export namespace Prisma {
     totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     discount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     school?: SchoolUpdateOneRequiredWithoutStudentFeesNestedInput
@@ -74897,6 +76272,7 @@ export namespace Prisma {
     receipts?: PaymentReceiptUpdateManyWithoutStudentFeeNestedInput
     refunds?: RefundUpdateManyWithoutStudentFeeNestedInput
     feeRefunds?: FeeRefundUpdateManyWithoutStudentFeeNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutStudentFeeNestedInput
   }
 
   export type StudentFeeUncheckedUpdateInput = {
@@ -74910,12 +76286,13 @@ export namespace Prisma {
     totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     discount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: StudentFeeItemUncheckedUpdateManyWithoutStudentFeeNestedInput
@@ -74923,6 +76300,7 @@ export namespace Prisma {
     receipts?: PaymentReceiptUncheckedUpdateManyWithoutStudentFeeNestedInput
     refunds?: RefundUncheckedUpdateManyWithoutStudentFeeNestedInput
     feeRefunds?: FeeRefundUncheckedUpdateManyWithoutStudentFeeNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutStudentFeeNestedInput
   }
 
   export type StudentFeeCreateManyInput = {
@@ -74936,12 +76314,13 @@ export namespace Prisma {
     totalAmount: Decimal | DecimalJsLike | number | string
     paidAmount?: Decimal | DecimalJsLike | number | string
     dueAmount: Decimal | DecimalJsLike | number | string
-    lateFee?: Decimal | DecimalJsLike | number | string
     discount?: Decimal | DecimalJsLike | number | string
     isAdmissionFee?: boolean
     status?: $Enums.FeeStatus
     dueDate: Date | string
     remarks?: string | null
+    lateFee?: Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -74953,12 +76332,13 @@ export namespace Prisma {
     totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     discount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -74974,12 +76354,13 @@ export namespace Prisma {
     totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     discount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -75618,6 +76999,84 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type LateFeeWaiverCreateInput = {
+    amount: Decimal | DecimalJsLike | number | string
+    reason: string
+    waivedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    school: SchoolCreateNestedOneWithoutLateFeeWaiversInput
+    studentFee: StudentFeeCreateNestedOneWithoutLateFeeWaiversInput
+    user: UserCreateNestedOneWithoutLateFeeWaiversProcessedInput
+  }
+
+  export type LateFeeWaiverUncheckedCreateInput = {
+    id?: number
+    schoolId: number
+    studentFeeId: number
+    amount: Decimal | DecimalJsLike | number | string
+    reason: string
+    waivedBy: number
+    waivedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LateFeeWaiverUpdateInput = {
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    reason?: StringFieldUpdateOperationsInput | string
+    waivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    school?: SchoolUpdateOneRequiredWithoutLateFeeWaiversNestedInput
+    studentFee?: StudentFeeUpdateOneRequiredWithoutLateFeeWaiversNestedInput
+    user?: UserUpdateOneRequiredWithoutLateFeeWaiversProcessedNestedInput
+  }
+
+  export type LateFeeWaiverUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    schoolId?: IntFieldUpdateOperationsInput | number
+    studentFeeId?: IntFieldUpdateOperationsInput | number
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    reason?: StringFieldUpdateOperationsInput | string
+    waivedBy?: IntFieldUpdateOperationsInput | number
+    waivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LateFeeWaiverCreateManyInput = {
+    id?: number
+    schoolId: number
+    studentFeeId: number
+    amount: Decimal | DecimalJsLike | number | string
+    reason: string
+    waivedBy: number
+    waivedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LateFeeWaiverUpdateManyMutationInput = {
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    reason?: StringFieldUpdateOperationsInput | string
+    waivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LateFeeWaiverUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    schoolId?: IntFieldUpdateOperationsInput | number
+    studentFeeId?: IntFieldUpdateOperationsInput | number
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    reason?: StringFieldUpdateOperationsInput | string
+    waivedBy?: IntFieldUpdateOperationsInput | number
+    waivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type PaymentCreateInput = {
     amount: Decimal | DecimalJsLike | number | string
     paymentMethod: $Enums.PaymentMethod
@@ -76010,6 +77469,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateInput = {
@@ -76049,6 +77509,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUpdateInput = {
@@ -76087,6 +77548,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateInput = {
@@ -76126,6 +77588,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolCreateManyInput = {
@@ -78894,6 +80357,12 @@ export namespace Prisma {
     none?: EmployeeAttendanceWhereInput
   }
 
+  export type LateFeeWaiverListRelationFilter = {
+    every?: LateFeeWaiverWhereInput
+    some?: LateFeeWaiverWhereInput
+    none?: LateFeeWaiverWhereInput
+  }
+
   export type UserRoleOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -78923,6 +80392,10 @@ export namespace Prisma {
   }
 
   export type EmployeeAttendanceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type LateFeeWaiverOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -79839,12 +81312,13 @@ export namespace Prisma {
     totalAmount?: SortOrder
     paidAmount?: SortOrder
     dueAmount?: SortOrder
-    lateFee?: SortOrder
     discount?: SortOrder
     isAdmissionFee?: SortOrder
     status?: SortOrder
     dueDate?: SortOrder
     remarks?: SortOrder
+    lateFee?: SortOrder
+    lateFeeWaived?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -79859,8 +81333,9 @@ export namespace Prisma {
     totalAmount?: SortOrder
     paidAmount?: SortOrder
     dueAmount?: SortOrder
-    lateFee?: SortOrder
     discount?: SortOrder
+    lateFee?: SortOrder
+    lateFeeWaived?: SortOrder
   }
 
   export type StudentFeeMaxOrderByAggregateInput = {
@@ -79874,12 +81349,13 @@ export namespace Prisma {
     totalAmount?: SortOrder
     paidAmount?: SortOrder
     dueAmount?: SortOrder
-    lateFee?: SortOrder
     discount?: SortOrder
     isAdmissionFee?: SortOrder
     status?: SortOrder
     dueDate?: SortOrder
     remarks?: SortOrder
+    lateFee?: SortOrder
+    lateFeeWaived?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -79895,12 +81371,13 @@ export namespace Prisma {
     totalAmount?: SortOrder
     paidAmount?: SortOrder
     dueAmount?: SortOrder
-    lateFee?: SortOrder
     discount?: SortOrder
     isAdmissionFee?: SortOrder
     status?: SortOrder
     dueDate?: SortOrder
     remarks?: SortOrder
+    lateFee?: SortOrder
+    lateFeeWaived?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -79915,8 +81392,9 @@ export namespace Prisma {
     totalAmount?: SortOrder
     paidAmount?: SortOrder
     dueAmount?: SortOrder
-    lateFee?: SortOrder
     discount?: SortOrder
+    lateFee?: SortOrder
+    lateFeeWaived?: SortOrder
   }
 
   export type EnumFeeStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -80456,6 +81934,64 @@ export namespace Prisma {
     studentFeeId?: SortOrder
     amount?: SortOrder
     createdBy?: SortOrder
+  }
+
+  export type LateFeeWaiverOrderByRelevanceInput = {
+    fields: LateFeeWaiverOrderByRelevanceFieldEnum | LateFeeWaiverOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type LateFeeWaiverCountOrderByAggregateInput = {
+    id?: SortOrder
+    schoolId?: SortOrder
+    studentFeeId?: SortOrder
+    amount?: SortOrder
+    reason?: SortOrder
+    waivedBy?: SortOrder
+    waivedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LateFeeWaiverAvgOrderByAggregateInput = {
+    id?: SortOrder
+    schoolId?: SortOrder
+    studentFeeId?: SortOrder
+    amount?: SortOrder
+    waivedBy?: SortOrder
+  }
+
+  export type LateFeeWaiverMaxOrderByAggregateInput = {
+    id?: SortOrder
+    schoolId?: SortOrder
+    studentFeeId?: SortOrder
+    amount?: SortOrder
+    reason?: SortOrder
+    waivedBy?: SortOrder
+    waivedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LateFeeWaiverMinOrderByAggregateInput = {
+    id?: SortOrder
+    schoolId?: SortOrder
+    studentFeeId?: SortOrder
+    amount?: SortOrder
+    reason?: SortOrder
+    waivedBy?: SortOrder
+    waivedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LateFeeWaiverSumOrderByAggregateInput = {
+    id?: SortOrder
+    schoolId?: SortOrder
+    studentFeeId?: SortOrder
+    amount?: SortOrder
+    waivedBy?: SortOrder
   }
 
   export type EnumPaymentMethodFilter<$PrismaModel = never> = {
@@ -83809,6 +85345,13 @@ export namespace Prisma {
     connect?: EmployeeAttendanceWhereUniqueInput | EmployeeAttendanceWhereUniqueInput[]
   }
 
+  export type LateFeeWaiverCreateNestedManyWithoutUserInput = {
+    create?: XOR<LateFeeWaiverCreateWithoutUserInput, LateFeeWaiverUncheckedCreateWithoutUserInput> | LateFeeWaiverCreateWithoutUserInput[] | LateFeeWaiverUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: LateFeeWaiverCreateOrConnectWithoutUserInput | LateFeeWaiverCreateOrConnectWithoutUserInput[]
+    createMany?: LateFeeWaiverCreateManyUserInputEnvelope
+    connect?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+  }
+
   export type TeacherUncheckedCreateNestedOneWithoutUserInput = {
     create?: XOR<TeacherCreateWithoutUserInput, TeacherUncheckedCreateWithoutUserInput>
     connectOrCreate?: TeacherCreateOrConnectWithoutUserInput
@@ -83888,6 +85431,13 @@ export namespace Prisma {
     connectOrCreate?: EmployeeAttendanceCreateOrConnectWithoutEmployeeInput | EmployeeAttendanceCreateOrConnectWithoutEmployeeInput[]
     createMany?: EmployeeAttendanceCreateManyEmployeeInputEnvelope
     connect?: EmployeeAttendanceWhereUniqueInput | EmployeeAttendanceWhereUniqueInput[]
+  }
+
+  export type LateFeeWaiverUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<LateFeeWaiverCreateWithoutUserInput, LateFeeWaiverUncheckedCreateWithoutUserInput> | LateFeeWaiverCreateWithoutUserInput[] | LateFeeWaiverUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: LateFeeWaiverCreateOrConnectWithoutUserInput | LateFeeWaiverCreateOrConnectWithoutUserInput[]
+    createMany?: LateFeeWaiverCreateManyUserInputEnvelope
+    connect?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
   }
 
   export type SchoolUpdateOneWithoutUsersNestedInput = {
@@ -84056,6 +85606,20 @@ export namespace Prisma {
     deleteMany?: EmployeeAttendanceScalarWhereInput | EmployeeAttendanceScalarWhereInput[]
   }
 
+  export type LateFeeWaiverUpdateManyWithoutUserNestedInput = {
+    create?: XOR<LateFeeWaiverCreateWithoutUserInput, LateFeeWaiverUncheckedCreateWithoutUserInput> | LateFeeWaiverCreateWithoutUserInput[] | LateFeeWaiverUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: LateFeeWaiverCreateOrConnectWithoutUserInput | LateFeeWaiverCreateOrConnectWithoutUserInput[]
+    upsert?: LateFeeWaiverUpsertWithWhereUniqueWithoutUserInput | LateFeeWaiverUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: LateFeeWaiverCreateManyUserInputEnvelope
+    set?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+    disconnect?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+    delete?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+    connect?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+    update?: LateFeeWaiverUpdateWithWhereUniqueWithoutUserInput | LateFeeWaiverUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: LateFeeWaiverUpdateManyWithWhereWithoutUserInput | LateFeeWaiverUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: LateFeeWaiverScalarWhereInput | LateFeeWaiverScalarWhereInput[]
+  }
+
   export type TeacherUncheckedUpdateOneWithoutUserNestedInput = {
     create?: XOR<TeacherCreateWithoutUserInput, TeacherUncheckedCreateWithoutUserInput>
     connectOrCreate?: TeacherCreateOrConnectWithoutUserInput
@@ -84210,6 +85774,20 @@ export namespace Prisma {
     update?: EmployeeAttendanceUpdateWithWhereUniqueWithoutEmployeeInput | EmployeeAttendanceUpdateWithWhereUniqueWithoutEmployeeInput[]
     updateMany?: EmployeeAttendanceUpdateManyWithWhereWithoutEmployeeInput | EmployeeAttendanceUpdateManyWithWhereWithoutEmployeeInput[]
     deleteMany?: EmployeeAttendanceScalarWhereInput | EmployeeAttendanceScalarWhereInput[]
+  }
+
+  export type LateFeeWaiverUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<LateFeeWaiverCreateWithoutUserInput, LateFeeWaiverUncheckedCreateWithoutUserInput> | LateFeeWaiverCreateWithoutUserInput[] | LateFeeWaiverUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: LateFeeWaiverCreateOrConnectWithoutUserInput | LateFeeWaiverCreateOrConnectWithoutUserInput[]
+    upsert?: LateFeeWaiverUpsertWithWhereUniqueWithoutUserInput | LateFeeWaiverUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: LateFeeWaiverCreateManyUserInputEnvelope
+    set?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+    disconnect?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+    delete?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+    connect?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+    update?: LateFeeWaiverUpdateWithWhereUniqueWithoutUserInput | LateFeeWaiverUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: LateFeeWaiverUpdateManyWithWhereWithoutUserInput | LateFeeWaiverUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: LateFeeWaiverScalarWhereInput | LateFeeWaiverScalarWhereInput[]
   }
 
   export type UserRoleCreateNestedManyWithoutRoleInput = {
@@ -85055,6 +86633,13 @@ export namespace Prisma {
     connect?: FeeRefundWhereUniqueInput | FeeRefundWhereUniqueInput[]
   }
 
+  export type LateFeeWaiverCreateNestedManyWithoutStudentFeeInput = {
+    create?: XOR<LateFeeWaiverCreateWithoutStudentFeeInput, LateFeeWaiverUncheckedCreateWithoutStudentFeeInput> | LateFeeWaiverCreateWithoutStudentFeeInput[] | LateFeeWaiverUncheckedCreateWithoutStudentFeeInput[]
+    connectOrCreate?: LateFeeWaiverCreateOrConnectWithoutStudentFeeInput | LateFeeWaiverCreateOrConnectWithoutStudentFeeInput[]
+    createMany?: LateFeeWaiverCreateManyStudentFeeInputEnvelope
+    connect?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+  }
+
   export type StudentFeeItemUncheckedCreateNestedManyWithoutStudentFeeInput = {
     create?: XOR<StudentFeeItemCreateWithoutStudentFeeInput, StudentFeeItemUncheckedCreateWithoutStudentFeeInput> | StudentFeeItemCreateWithoutStudentFeeInput[] | StudentFeeItemUncheckedCreateWithoutStudentFeeInput[]
     connectOrCreate?: StudentFeeItemCreateOrConnectWithoutStudentFeeInput | StudentFeeItemCreateOrConnectWithoutStudentFeeInput[]
@@ -85088,6 +86673,13 @@ export namespace Prisma {
     connectOrCreate?: FeeRefundCreateOrConnectWithoutStudentFeeInput | FeeRefundCreateOrConnectWithoutStudentFeeInput[]
     createMany?: FeeRefundCreateManyStudentFeeInputEnvelope
     connect?: FeeRefundWhereUniqueInput | FeeRefundWhereUniqueInput[]
+  }
+
+  export type LateFeeWaiverUncheckedCreateNestedManyWithoutStudentFeeInput = {
+    create?: XOR<LateFeeWaiverCreateWithoutStudentFeeInput, LateFeeWaiverUncheckedCreateWithoutStudentFeeInput> | LateFeeWaiverCreateWithoutStudentFeeInput[] | LateFeeWaiverUncheckedCreateWithoutStudentFeeInput[]
+    connectOrCreate?: LateFeeWaiverCreateOrConnectWithoutStudentFeeInput | LateFeeWaiverCreateOrConnectWithoutStudentFeeInput[]
+    createMany?: LateFeeWaiverCreateManyStudentFeeInputEnvelope
+    connect?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
   }
 
   export type EnumFeeStatusFieldUpdateOperationsInput = {
@@ -85188,6 +86780,20 @@ export namespace Prisma {
     deleteMany?: FeeRefundScalarWhereInput | FeeRefundScalarWhereInput[]
   }
 
+  export type LateFeeWaiverUpdateManyWithoutStudentFeeNestedInput = {
+    create?: XOR<LateFeeWaiverCreateWithoutStudentFeeInput, LateFeeWaiverUncheckedCreateWithoutStudentFeeInput> | LateFeeWaiverCreateWithoutStudentFeeInput[] | LateFeeWaiverUncheckedCreateWithoutStudentFeeInput[]
+    connectOrCreate?: LateFeeWaiverCreateOrConnectWithoutStudentFeeInput | LateFeeWaiverCreateOrConnectWithoutStudentFeeInput[]
+    upsert?: LateFeeWaiverUpsertWithWhereUniqueWithoutStudentFeeInput | LateFeeWaiverUpsertWithWhereUniqueWithoutStudentFeeInput[]
+    createMany?: LateFeeWaiverCreateManyStudentFeeInputEnvelope
+    set?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+    disconnect?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+    delete?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+    connect?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+    update?: LateFeeWaiverUpdateWithWhereUniqueWithoutStudentFeeInput | LateFeeWaiverUpdateWithWhereUniqueWithoutStudentFeeInput[]
+    updateMany?: LateFeeWaiverUpdateManyWithWhereWithoutStudentFeeInput | LateFeeWaiverUpdateManyWithWhereWithoutStudentFeeInput[]
+    deleteMany?: LateFeeWaiverScalarWhereInput | LateFeeWaiverScalarWhereInput[]
+  }
+
   export type StudentFeeItemUncheckedUpdateManyWithoutStudentFeeNestedInput = {
     create?: XOR<StudentFeeItemCreateWithoutStudentFeeInput, StudentFeeItemUncheckedCreateWithoutStudentFeeInput> | StudentFeeItemCreateWithoutStudentFeeInput[] | StudentFeeItemUncheckedCreateWithoutStudentFeeInput[]
     connectOrCreate?: StudentFeeItemCreateOrConnectWithoutStudentFeeInput | StudentFeeItemCreateOrConnectWithoutStudentFeeInput[]
@@ -85256,6 +86862,20 @@ export namespace Prisma {
     update?: FeeRefundUpdateWithWhereUniqueWithoutStudentFeeInput | FeeRefundUpdateWithWhereUniqueWithoutStudentFeeInput[]
     updateMany?: FeeRefundUpdateManyWithWhereWithoutStudentFeeInput | FeeRefundUpdateManyWithWhereWithoutStudentFeeInput[]
     deleteMany?: FeeRefundScalarWhereInput | FeeRefundScalarWhereInput[]
+  }
+
+  export type LateFeeWaiverUncheckedUpdateManyWithoutStudentFeeNestedInput = {
+    create?: XOR<LateFeeWaiverCreateWithoutStudentFeeInput, LateFeeWaiverUncheckedCreateWithoutStudentFeeInput> | LateFeeWaiverCreateWithoutStudentFeeInput[] | LateFeeWaiverUncheckedCreateWithoutStudentFeeInput[]
+    connectOrCreate?: LateFeeWaiverCreateOrConnectWithoutStudentFeeInput | LateFeeWaiverCreateOrConnectWithoutStudentFeeInput[]
+    upsert?: LateFeeWaiverUpsertWithWhereUniqueWithoutStudentFeeInput | LateFeeWaiverUpsertWithWhereUniqueWithoutStudentFeeInput[]
+    createMany?: LateFeeWaiverCreateManyStudentFeeInputEnvelope
+    set?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+    disconnect?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+    delete?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+    connect?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+    update?: LateFeeWaiverUpdateWithWhereUniqueWithoutStudentFeeInput | LateFeeWaiverUpdateWithWhereUniqueWithoutStudentFeeInput[]
+    updateMany?: LateFeeWaiverUpdateManyWithWhereWithoutStudentFeeInput | LateFeeWaiverUpdateManyWithWhereWithoutStudentFeeInput[]
+    deleteMany?: LateFeeWaiverScalarWhereInput | LateFeeWaiverScalarWhereInput[]
   }
 
   export type StudentFeeCreateNestedOneWithoutItemsInput = {
@@ -85562,6 +87182,48 @@ export namespace Prisma {
     upsert?: StudentFeeUpsertWithoutFeeRefundsInput
     connect?: StudentFeeWhereUniqueInput
     update?: XOR<XOR<StudentFeeUpdateToOneWithWhereWithoutFeeRefundsInput, StudentFeeUpdateWithoutFeeRefundsInput>, StudentFeeUncheckedUpdateWithoutFeeRefundsInput>
+  }
+
+  export type SchoolCreateNestedOneWithoutLateFeeWaiversInput = {
+    create?: XOR<SchoolCreateWithoutLateFeeWaiversInput, SchoolUncheckedCreateWithoutLateFeeWaiversInput>
+    connectOrCreate?: SchoolCreateOrConnectWithoutLateFeeWaiversInput
+    connect?: SchoolWhereUniqueInput
+  }
+
+  export type StudentFeeCreateNestedOneWithoutLateFeeWaiversInput = {
+    create?: XOR<StudentFeeCreateWithoutLateFeeWaiversInput, StudentFeeUncheckedCreateWithoutLateFeeWaiversInput>
+    connectOrCreate?: StudentFeeCreateOrConnectWithoutLateFeeWaiversInput
+    connect?: StudentFeeWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutLateFeeWaiversProcessedInput = {
+    create?: XOR<UserCreateWithoutLateFeeWaiversProcessedInput, UserUncheckedCreateWithoutLateFeeWaiversProcessedInput>
+    connectOrCreate?: UserCreateOrConnectWithoutLateFeeWaiversProcessedInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type SchoolUpdateOneRequiredWithoutLateFeeWaiversNestedInput = {
+    create?: XOR<SchoolCreateWithoutLateFeeWaiversInput, SchoolUncheckedCreateWithoutLateFeeWaiversInput>
+    connectOrCreate?: SchoolCreateOrConnectWithoutLateFeeWaiversInput
+    upsert?: SchoolUpsertWithoutLateFeeWaiversInput
+    connect?: SchoolWhereUniqueInput
+    update?: XOR<XOR<SchoolUpdateToOneWithWhereWithoutLateFeeWaiversInput, SchoolUpdateWithoutLateFeeWaiversInput>, SchoolUncheckedUpdateWithoutLateFeeWaiversInput>
+  }
+
+  export type StudentFeeUpdateOneRequiredWithoutLateFeeWaiversNestedInput = {
+    create?: XOR<StudentFeeCreateWithoutLateFeeWaiversInput, StudentFeeUncheckedCreateWithoutLateFeeWaiversInput>
+    connectOrCreate?: StudentFeeCreateOrConnectWithoutLateFeeWaiversInput
+    upsert?: StudentFeeUpsertWithoutLateFeeWaiversInput
+    connect?: StudentFeeWhereUniqueInput
+    update?: XOR<XOR<StudentFeeUpdateToOneWithWhereWithoutLateFeeWaiversInput, StudentFeeUpdateWithoutLateFeeWaiversInput>, StudentFeeUncheckedUpdateWithoutLateFeeWaiversInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutLateFeeWaiversProcessedNestedInput = {
+    create?: XOR<UserCreateWithoutLateFeeWaiversProcessedInput, UserUncheckedCreateWithoutLateFeeWaiversProcessedInput>
+    connectOrCreate?: UserCreateOrConnectWithoutLateFeeWaiversProcessedInput
+    upsert?: UserUpsertWithoutLateFeeWaiversProcessedInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutLateFeeWaiversProcessedInput, UserUpdateWithoutLateFeeWaiversProcessedInput>, UserUncheckedUpdateWithoutLateFeeWaiversProcessedInput>
   }
 
   export type SchoolCreateNestedOneWithoutPaymentsInput = {
@@ -86073,6 +87735,13 @@ export namespace Prisma {
     connect?: EmployeeAttendanceWhereUniqueInput | EmployeeAttendanceWhereUniqueInput[]
   }
 
+  export type LateFeeWaiverCreateNestedManyWithoutSchoolInput = {
+    create?: XOR<LateFeeWaiverCreateWithoutSchoolInput, LateFeeWaiverUncheckedCreateWithoutSchoolInput> | LateFeeWaiverCreateWithoutSchoolInput[] | LateFeeWaiverUncheckedCreateWithoutSchoolInput[]
+    connectOrCreate?: LateFeeWaiverCreateOrConnectWithoutSchoolInput | LateFeeWaiverCreateOrConnectWithoutSchoolInput[]
+    createMany?: LateFeeWaiverCreateManySchoolInputEnvelope
+    connect?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+  }
+
   export type UserUncheckedCreateNestedManyWithoutSchoolInput = {
     create?: XOR<UserCreateWithoutSchoolInput, UserUncheckedCreateWithoutSchoolInput> | UserCreateWithoutSchoolInput[] | UserUncheckedCreateWithoutSchoolInput[]
     connectOrCreate?: UserCreateOrConnectWithoutSchoolInput | UserCreateOrConnectWithoutSchoolInput[]
@@ -86274,6 +87943,13 @@ export namespace Prisma {
     connectOrCreate?: EmployeeAttendanceCreateOrConnectWithoutSchoolInput | EmployeeAttendanceCreateOrConnectWithoutSchoolInput[]
     createMany?: EmployeeAttendanceCreateManySchoolInputEnvelope
     connect?: EmployeeAttendanceWhereUniqueInput | EmployeeAttendanceWhereUniqueInput[]
+  }
+
+  export type LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput = {
+    create?: XOR<LateFeeWaiverCreateWithoutSchoolInput, LateFeeWaiverUncheckedCreateWithoutSchoolInput> | LateFeeWaiverCreateWithoutSchoolInput[] | LateFeeWaiverUncheckedCreateWithoutSchoolInput[]
+    connectOrCreate?: LateFeeWaiverCreateOrConnectWithoutSchoolInput | LateFeeWaiverCreateOrConnectWithoutSchoolInput[]
+    createMany?: LateFeeWaiverCreateManySchoolInputEnvelope
+    connect?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
   }
 
   export type EnumSchoolStatusFieldUpdateOperationsInput = {
@@ -86686,6 +88362,20 @@ export namespace Prisma {
     deleteMany?: EmployeeAttendanceScalarWhereInput | EmployeeAttendanceScalarWhereInput[]
   }
 
+  export type LateFeeWaiverUpdateManyWithoutSchoolNestedInput = {
+    create?: XOR<LateFeeWaiverCreateWithoutSchoolInput, LateFeeWaiverUncheckedCreateWithoutSchoolInput> | LateFeeWaiverCreateWithoutSchoolInput[] | LateFeeWaiverUncheckedCreateWithoutSchoolInput[]
+    connectOrCreate?: LateFeeWaiverCreateOrConnectWithoutSchoolInput | LateFeeWaiverCreateOrConnectWithoutSchoolInput[]
+    upsert?: LateFeeWaiverUpsertWithWhereUniqueWithoutSchoolInput | LateFeeWaiverUpsertWithWhereUniqueWithoutSchoolInput[]
+    createMany?: LateFeeWaiverCreateManySchoolInputEnvelope
+    set?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+    disconnect?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+    delete?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+    connect?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+    update?: LateFeeWaiverUpdateWithWhereUniqueWithoutSchoolInput | LateFeeWaiverUpdateWithWhereUniqueWithoutSchoolInput[]
+    updateMany?: LateFeeWaiverUpdateManyWithWhereWithoutSchoolInput | LateFeeWaiverUpdateManyWithWhereWithoutSchoolInput[]
+    deleteMany?: LateFeeWaiverScalarWhereInput | LateFeeWaiverScalarWhereInput[]
+  }
+
   export type UserUncheckedUpdateManyWithoutSchoolNestedInput = {
     create?: XOR<UserCreateWithoutSchoolInput, UserUncheckedCreateWithoutSchoolInput> | UserCreateWithoutSchoolInput[] | UserUncheckedCreateWithoutSchoolInput[]
     connectOrCreate?: UserCreateOrConnectWithoutSchoolInput | UserCreateOrConnectWithoutSchoolInput[]
@@ -87090,6 +88780,20 @@ export namespace Prisma {
     update?: EmployeeAttendanceUpdateWithWhereUniqueWithoutSchoolInput | EmployeeAttendanceUpdateWithWhereUniqueWithoutSchoolInput[]
     updateMany?: EmployeeAttendanceUpdateManyWithWhereWithoutSchoolInput | EmployeeAttendanceUpdateManyWithWhereWithoutSchoolInput[]
     deleteMany?: EmployeeAttendanceScalarWhereInput | EmployeeAttendanceScalarWhereInput[]
+  }
+
+  export type LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput = {
+    create?: XOR<LateFeeWaiverCreateWithoutSchoolInput, LateFeeWaiverUncheckedCreateWithoutSchoolInput> | LateFeeWaiverCreateWithoutSchoolInput[] | LateFeeWaiverUncheckedCreateWithoutSchoolInput[]
+    connectOrCreate?: LateFeeWaiverCreateOrConnectWithoutSchoolInput | LateFeeWaiverCreateOrConnectWithoutSchoolInput[]
+    upsert?: LateFeeWaiverUpsertWithWhereUniqueWithoutSchoolInput | LateFeeWaiverUpsertWithWhereUniqueWithoutSchoolInput[]
+    createMany?: LateFeeWaiverCreateManySchoolInputEnvelope
+    set?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+    disconnect?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+    delete?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+    connect?: LateFeeWaiverWhereUniqueInput | LateFeeWaiverWhereUniqueInput[]
+    update?: LateFeeWaiverUpdateWithWhereUniqueWithoutSchoolInput | LateFeeWaiverUpdateWithWhereUniqueWithoutSchoolInput[]
+    updateMany?: LateFeeWaiverUpdateManyWithWhereWithoutSchoolInput | LateFeeWaiverUpdateManyWithWhereWithoutSchoolInput[]
+    deleteMany?: LateFeeWaiverScalarWhereInput | LateFeeWaiverScalarWhereInput[]
   }
 
   export type SchoolSubscriptionCreateNestedManyWithoutPlanInput = {
@@ -88892,6 +90596,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutClassesInput = {
@@ -88930,6 +90635,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutClassesInput = {
@@ -89434,6 +91140,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutClassesInput = {
@@ -89472,6 +91179,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type SectionUpsertWithWhereUniqueWithoutClassInput = {
@@ -89941,6 +91649,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutSectionsInput = {
@@ -89979,6 +91688,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutSectionsInput = {
@@ -90381,6 +92091,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutSectionsInput = {
@@ -90419,6 +92130,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type StudentAttendanceSessionUpsertWithWhereUniqueWithoutSectionInput = {
@@ -91376,6 +93088,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutDaysInput = {
@@ -91414,6 +93127,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutDaysInput = {
@@ -91522,6 +93236,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutDaysInput = {
@@ -91560,6 +93275,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type PeriodUpsertWithWhereUniqueWithoutDayInput = {
@@ -91971,6 +93687,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutTimingsInput = {
@@ -92009,6 +93726,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutTimingsInput = {
@@ -92062,6 +93780,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutTimingsInput = {
@@ -92100,6 +93819,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolCreateWithoutPeriodsInput = {
@@ -92137,6 +93857,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutPeriodsInput = {
@@ -92175,6 +93896,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutPeriodsInput = {
@@ -92299,6 +94021,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutPeriodsInput = {
@@ -92337,6 +94060,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type DayUpsertWithoutPeriodsInput = {
@@ -92428,6 +94152,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutAcademicYearsInput = {
@@ -92466,6 +94191,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutAcademicYearsInput = {
@@ -92739,6 +94465,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutAcademicYearsInput = {
@@ -92777,6 +94504,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type AdmissionUpsertWithWhereUniqueWithoutAcademicYearInput = {
@@ -92878,6 +94606,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutTimetablesInput = {
@@ -92916,6 +94645,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutTimetablesInput = {
@@ -93193,6 +94923,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutTimetablesInput = {
@@ -93231,6 +94962,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type ClassUpsertWithoutTimetablesInput = {
@@ -93528,6 +95260,7 @@ export namespace Prisma {
     subscriptions?: SchoolSubscriptionCreateNestedManyWithoutSchoolInput
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutStudentAttendanceSessionsInput = {
@@ -93566,6 +95299,7 @@ export namespace Prisma {
     subscriptions?: SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutStudentAttendanceSessionsInput = {
@@ -93682,6 +95416,7 @@ export namespace Prisma {
     paymentsCollected?: PaymentCreateNestedManyWithoutCollectorInput
     refundsProcessed?: RefundCreateNestedManyWithoutRefundedUserInput
     employeeAttendanceRecords?: EmployeeAttendanceCreateNestedManyWithoutEmployeeInput
+    lateFeeWaiversProcessed?: LateFeeWaiverCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMarkedAttendancesInput = {
@@ -93706,6 +95441,7 @@ export namespace Prisma {
     paymentsCollected?: PaymentUncheckedCreateNestedManyWithoutCollectorInput
     refundsProcessed?: RefundUncheckedCreateNestedManyWithoutRefundedUserInput
     employeeAttendanceRecords?: EmployeeAttendanceUncheckedCreateNestedManyWithoutEmployeeInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMarkedAttendancesInput = {
@@ -93786,6 +95522,7 @@ export namespace Prisma {
     subscriptions?: SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutStudentAttendanceSessionsInput = {
@@ -93824,6 +95561,7 @@ export namespace Prisma {
     subscriptions?: SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type ClassUpsertWithoutStudentAttendanceSessionsInput = {
@@ -93958,6 +95696,7 @@ export namespace Prisma {
     paymentsCollected?: PaymentUpdateManyWithoutCollectorNestedInput
     refundsProcessed?: RefundUpdateManyWithoutRefundedUserNestedInput
     employeeAttendanceRecords?: EmployeeAttendanceUpdateManyWithoutEmployeeNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMarkedAttendancesInput = {
@@ -93982,6 +95721,7 @@ export namespace Prisma {
     paymentsCollected?: PaymentUncheckedUpdateManyWithoutCollectorNestedInput
     refundsProcessed?: RefundUncheckedUpdateManyWithoutRefundedUserNestedInput
     employeeAttendanceRecords?: EmployeeAttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type StudentAttendanceRecordUpsertWithWhereUniqueWithoutSessionInput = {
@@ -94232,6 +95972,7 @@ export namespace Prisma {
     subscriptions?: SchoolSubscriptionCreateNestedManyWithoutSchoolInput
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutEmployeeAttendancesInput = {
@@ -94270,6 +96011,7 @@ export namespace Prisma {
     subscriptions?: SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutEmployeeAttendancesInput = {
@@ -94298,6 +96040,7 @@ export namespace Prisma {
     paymentsCollected?: PaymentCreateNestedManyWithoutCollectorInput
     refundsProcessed?: RefundCreateNestedManyWithoutRefundedUserInput
     markedAttendances?: StudentAttendanceSessionCreateNestedManyWithoutMarkedByInput
+    lateFeeWaiversProcessed?: LateFeeWaiverCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutEmployeeAttendanceRecordsInput = {
@@ -94322,6 +96065,7 @@ export namespace Prisma {
     paymentsCollected?: PaymentUncheckedCreateNestedManyWithoutCollectorInput
     refundsProcessed?: RefundUncheckedCreateNestedManyWithoutRefundedUserInput
     markedAttendances?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutMarkedByInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutEmployeeAttendanceRecordsInput = {
@@ -94375,6 +96119,7 @@ export namespace Prisma {
     subscriptions?: SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutEmployeeAttendancesInput = {
@@ -94413,6 +96158,7 @@ export namespace Prisma {
     subscriptions?: SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type UserUpsertWithoutEmployeeAttendanceRecordsInput = {
@@ -94447,6 +96193,7 @@ export namespace Prisma {
     paymentsCollected?: PaymentUpdateManyWithoutCollectorNestedInput
     refundsProcessed?: RefundUpdateManyWithoutRefundedUserNestedInput
     markedAttendances?: StudentAttendanceSessionUpdateManyWithoutMarkedByNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutEmployeeAttendanceRecordsInput = {
@@ -94471,6 +96218,7 @@ export namespace Prisma {
     paymentsCollected?: PaymentUncheckedUpdateManyWithoutCollectorNestedInput
     refundsProcessed?: RefundUncheckedUpdateManyWithoutRefundedUserNestedInput
     markedAttendances?: StudentAttendanceSessionUncheckedUpdateManyWithoutMarkedByNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SchoolCreateWithoutUsersInput = {
@@ -94508,6 +96256,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutUsersInput = {
@@ -94546,6 +96295,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutUsersInput = {
@@ -94983,6 +96733,37 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type LateFeeWaiverCreateWithoutUserInput = {
+    amount: Decimal | DecimalJsLike | number | string
+    reason: string
+    waivedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    school: SchoolCreateNestedOneWithoutLateFeeWaiversInput
+    studentFee: StudentFeeCreateNestedOneWithoutLateFeeWaiversInput
+  }
+
+  export type LateFeeWaiverUncheckedCreateWithoutUserInput = {
+    id?: number
+    schoolId: number
+    studentFeeId: number
+    amount: Decimal | DecimalJsLike | number | string
+    reason: string
+    waivedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LateFeeWaiverCreateOrConnectWithoutUserInput = {
+    where: LateFeeWaiverWhereUniqueInput
+    create: XOR<LateFeeWaiverCreateWithoutUserInput, LateFeeWaiverUncheckedCreateWithoutUserInput>
+  }
+
+  export type LateFeeWaiverCreateManyUserInputEnvelope = {
+    data: LateFeeWaiverCreateManyUserInput | LateFeeWaiverCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type SchoolUpsertWithoutUsersInput = {
     update: XOR<SchoolUpdateWithoutUsersInput, SchoolUncheckedUpdateWithoutUsersInput>
     create: XOR<SchoolCreateWithoutUsersInput, SchoolUncheckedCreateWithoutUsersInput>
@@ -95029,6 +96810,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutUsersInput = {
@@ -95067,6 +96849,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type TeacherUpsertWithoutUserInput = {
@@ -95492,6 +97275,37 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"EmployeeAttendance"> | Date | string
   }
 
+  export type LateFeeWaiverUpsertWithWhereUniqueWithoutUserInput = {
+    where: LateFeeWaiverWhereUniqueInput
+    update: XOR<LateFeeWaiverUpdateWithoutUserInput, LateFeeWaiverUncheckedUpdateWithoutUserInput>
+    create: XOR<LateFeeWaiverCreateWithoutUserInput, LateFeeWaiverUncheckedCreateWithoutUserInput>
+  }
+
+  export type LateFeeWaiverUpdateWithWhereUniqueWithoutUserInput = {
+    where: LateFeeWaiverWhereUniqueInput
+    data: XOR<LateFeeWaiverUpdateWithoutUserInput, LateFeeWaiverUncheckedUpdateWithoutUserInput>
+  }
+
+  export type LateFeeWaiverUpdateManyWithWhereWithoutUserInput = {
+    where: LateFeeWaiverScalarWhereInput
+    data: XOR<LateFeeWaiverUpdateManyMutationInput, LateFeeWaiverUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type LateFeeWaiverScalarWhereInput = {
+    AND?: LateFeeWaiverScalarWhereInput | LateFeeWaiverScalarWhereInput[]
+    OR?: LateFeeWaiverScalarWhereInput[]
+    NOT?: LateFeeWaiverScalarWhereInput | LateFeeWaiverScalarWhereInput[]
+    id?: IntFilter<"LateFeeWaiver"> | number
+    schoolId?: IntFilter<"LateFeeWaiver"> | number
+    studentFeeId?: IntFilter<"LateFeeWaiver"> | number
+    amount?: DecimalFilter<"LateFeeWaiver"> | Decimal | DecimalJsLike | number | string
+    reason?: StringFilter<"LateFeeWaiver"> | string
+    waivedBy?: IntFilter<"LateFeeWaiver"> | number
+    waivedAt?: DateTimeFilter<"LateFeeWaiver"> | Date | string
+    createdAt?: DateTimeFilter<"LateFeeWaiver"> | Date | string
+    updatedAt?: DateTimeFilter<"LateFeeWaiver"> | Date | string
+  }
+
   export type UserRoleCreateWithoutRoleInput = {
     user: UserCreateNestedOneWithoutRolesInput
   }
@@ -95660,6 +97474,7 @@ export namespace Prisma {
     refundsProcessed?: RefundCreateNestedManyWithoutRefundedUserInput
     markedAttendances?: StudentAttendanceSessionCreateNestedManyWithoutMarkedByInput
     employeeAttendanceRecords?: EmployeeAttendanceCreateNestedManyWithoutEmployeeInput
+    lateFeeWaiversProcessed?: LateFeeWaiverCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRolesInput = {
@@ -95684,6 +97499,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUncheckedCreateNestedManyWithoutRefundedUserInput
     markedAttendances?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutMarkedByInput
     employeeAttendanceRecords?: EmployeeAttendanceUncheckedCreateNestedManyWithoutEmployeeInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRolesInput = {
@@ -95747,6 +97563,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUpdateManyWithoutRefundedUserNestedInput
     markedAttendances?: StudentAttendanceSessionUpdateManyWithoutMarkedByNestedInput
     employeeAttendanceRecords?: EmployeeAttendanceUpdateManyWithoutEmployeeNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRolesInput = {
@@ -95771,6 +97588,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUncheckedUpdateManyWithoutRefundedUserNestedInput
     markedAttendances?: StudentAttendanceSessionUncheckedUpdateManyWithoutMarkedByNestedInput
     employeeAttendanceRecords?: EmployeeAttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type RoleUpsertWithoutUsersInput = {
@@ -95824,6 +97642,7 @@ export namespace Prisma {
     refundsProcessed?: RefundCreateNestedManyWithoutRefundedUserInput
     markedAttendances?: StudentAttendanceSessionCreateNestedManyWithoutMarkedByInput
     employeeAttendanceRecords?: EmployeeAttendanceCreateNestedManyWithoutEmployeeInput
+    lateFeeWaiversProcessed?: LateFeeWaiverCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserPermissionsInput = {
@@ -95848,6 +97667,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUncheckedCreateNestedManyWithoutRefundedUserInput
     markedAttendances?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutMarkedByInput
     employeeAttendanceRecords?: EmployeeAttendanceUncheckedCreateNestedManyWithoutEmployeeInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserPermissionsInput = {
@@ -95909,6 +97729,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUpdateManyWithoutRefundedUserNestedInput
     markedAttendances?: StudentAttendanceSessionUpdateManyWithoutMarkedByNestedInput
     employeeAttendanceRecords?: EmployeeAttendanceUpdateManyWithoutEmployeeNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserPermissionsInput = {
@@ -95933,6 +97754,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUncheckedUpdateManyWithoutRefundedUserNestedInput
     markedAttendances?: StudentAttendanceSessionUncheckedUpdateManyWithoutMarkedByNestedInput
     employeeAttendanceRecords?: EmployeeAttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PermissionUpsertWithoutUserPermissionsInput = {
@@ -96088,6 +97910,7 @@ export namespace Prisma {
     refundsProcessed?: RefundCreateNestedManyWithoutRefundedUserInput
     markedAttendances?: StudentAttendanceSessionCreateNestedManyWithoutMarkedByInput
     employeeAttendanceRecords?: EmployeeAttendanceCreateNestedManyWithoutEmployeeInput
+    lateFeeWaiversProcessed?: LateFeeWaiverCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTokensInput = {
@@ -96112,6 +97935,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUncheckedCreateNestedManyWithoutRefundedUserInput
     markedAttendances?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutMarkedByInput
     employeeAttendanceRecords?: EmployeeAttendanceUncheckedCreateNestedManyWithoutEmployeeInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutTokensInput = {
@@ -96151,6 +97975,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUpdateManyWithoutRefundedUserNestedInput
     markedAttendances?: StudentAttendanceSessionUpdateManyWithoutMarkedByNestedInput
     employeeAttendanceRecords?: EmployeeAttendanceUpdateManyWithoutEmployeeNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTokensInput = {
@@ -96175,6 +98000,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUncheckedUpdateManyWithoutRefundedUserNestedInput
     markedAttendances?: StudentAttendanceSessionUncheckedUpdateManyWithoutMarkedByNestedInput
     employeeAttendanceRecords?: EmployeeAttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SchoolCreateWithoutExamsInput = {
@@ -96212,6 +98038,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutExamsInput = {
@@ -96250,6 +98077,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutExamsInput = {
@@ -96454,6 +98282,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutExamsInput = {
@@ -96492,6 +98321,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type AcademicYearUpsertWithoutExamsInput = {
@@ -97075,6 +98905,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutFeeHeadsInput = {
@@ -97113,6 +98944,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutFeeHeadsInput = {
@@ -97259,6 +99091,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutFeeHeadsInput = {
@@ -97297,6 +99130,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type FeeStructureItemUpsertWithWhereUniqueWithoutFeeHeadInput = {
@@ -97427,6 +99261,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutFeeStructuresInput = {
@@ -97465,6 +99300,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutFeeStructuresInput = {
@@ -97586,12 +99422,13 @@ export namespace Prisma {
     totalAmount: Decimal | DecimalJsLike | number | string
     paidAmount?: Decimal | DecimalJsLike | number | string
     dueAmount: Decimal | DecimalJsLike | number | string
-    lateFee?: Decimal | DecimalJsLike | number | string
     discount?: Decimal | DecimalJsLike | number | string
     isAdmissionFee?: boolean
     status?: $Enums.FeeStatus
     dueDate: Date | string
     remarks?: string | null
+    lateFee?: Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     school: SchoolCreateNestedOneWithoutStudentFeesInput
@@ -97601,6 +99438,7 @@ export namespace Prisma {
     receipts?: PaymentReceiptCreateNestedManyWithoutStudentFeeInput
     refunds?: RefundCreateNestedManyWithoutStudentFeeInput
     feeRefunds?: FeeRefundCreateNestedManyWithoutStudentFeeInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutStudentFeeInput
   }
 
   export type StudentFeeUncheckedCreateWithoutFeeStructureInput = {
@@ -97613,12 +99451,13 @@ export namespace Prisma {
     totalAmount: Decimal | DecimalJsLike | number | string
     paidAmount?: Decimal | DecimalJsLike | number | string
     dueAmount: Decimal | DecimalJsLike | number | string
-    lateFee?: Decimal | DecimalJsLike | number | string
     discount?: Decimal | DecimalJsLike | number | string
     isAdmissionFee?: boolean
     status?: $Enums.FeeStatus
     dueDate: Date | string
     remarks?: string | null
+    lateFee?: Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     items?: StudentFeeItemUncheckedCreateNestedManyWithoutStudentFeeInput
@@ -97626,6 +99465,7 @@ export namespace Prisma {
     receipts?: PaymentReceiptUncheckedCreateNestedManyWithoutStudentFeeInput
     refunds?: RefundUncheckedCreateNestedManyWithoutStudentFeeInput
     feeRefunds?: FeeRefundUncheckedCreateNestedManyWithoutStudentFeeInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutStudentFeeInput
   }
 
   export type StudentFeeCreateOrConnectWithoutFeeStructureInput = {
@@ -97684,6 +99524,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutFeeStructuresInput = {
@@ -97722,6 +99563,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type AcademicYearUpsertWithoutFeeStructuresInput = {
@@ -97862,12 +99704,13 @@ export namespace Prisma {
     totalAmount?: DecimalFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
     discount?: DecimalFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolFilter<"StudentFee"> | boolean
     status?: EnumFeeStatusFilter<"StudentFee"> | $Enums.FeeStatus
     dueDate?: DateTimeFilter<"StudentFee"> | Date | string
     remarks?: StringNullableFilter<"StudentFee"> | string | null
+    lateFee?: DecimalFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFilter<"StudentFee"> | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFilter<"StudentFee"> | Date | string
     updatedAt?: DateTimeFilter<"StudentFee"> | Date | string
   }
@@ -98055,6 +99898,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutStudentFeesInput = {
@@ -98093,6 +99937,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutStudentFeesInput = {
@@ -98389,6 +100234,37 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type LateFeeWaiverCreateWithoutStudentFeeInput = {
+    amount: Decimal | DecimalJsLike | number | string
+    reason: string
+    waivedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    school: SchoolCreateNestedOneWithoutLateFeeWaiversInput
+    user: UserCreateNestedOneWithoutLateFeeWaiversProcessedInput
+  }
+
+  export type LateFeeWaiverUncheckedCreateWithoutStudentFeeInput = {
+    id?: number
+    schoolId: number
+    amount: Decimal | DecimalJsLike | number | string
+    reason: string
+    waivedBy: number
+    waivedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LateFeeWaiverCreateOrConnectWithoutStudentFeeInput = {
+    where: LateFeeWaiverWhereUniqueInput
+    create: XOR<LateFeeWaiverCreateWithoutStudentFeeInput, LateFeeWaiverUncheckedCreateWithoutStudentFeeInput>
+  }
+
+  export type LateFeeWaiverCreateManyStudentFeeInputEnvelope = {
+    data: LateFeeWaiverCreateManyStudentFeeInput | LateFeeWaiverCreateManyStudentFeeInput[]
+    skipDuplicates?: boolean
+  }
+
   export type SchoolUpsertWithoutStudentFeesInput = {
     update: XOR<SchoolUpdateWithoutStudentFeesInput, SchoolUncheckedUpdateWithoutStudentFeesInput>
     create: XOR<SchoolCreateWithoutStudentFeesInput, SchoolUncheckedCreateWithoutStudentFeesInput>
@@ -98435,6 +100311,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutStudentFeesInput = {
@@ -98473,6 +100350,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type StudentUpsertWithoutStudentFeesInput = {
@@ -98681,6 +100559,22 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"FeeRefund"> | Date | string
   }
 
+  export type LateFeeWaiverUpsertWithWhereUniqueWithoutStudentFeeInput = {
+    where: LateFeeWaiverWhereUniqueInput
+    update: XOR<LateFeeWaiverUpdateWithoutStudentFeeInput, LateFeeWaiverUncheckedUpdateWithoutStudentFeeInput>
+    create: XOR<LateFeeWaiverCreateWithoutStudentFeeInput, LateFeeWaiverUncheckedCreateWithoutStudentFeeInput>
+  }
+
+  export type LateFeeWaiverUpdateWithWhereUniqueWithoutStudentFeeInput = {
+    where: LateFeeWaiverWhereUniqueInput
+    data: XOR<LateFeeWaiverUpdateWithoutStudentFeeInput, LateFeeWaiverUncheckedUpdateWithoutStudentFeeInput>
+  }
+
+  export type LateFeeWaiverUpdateManyWithWhereWithoutStudentFeeInput = {
+    where: LateFeeWaiverScalarWhereInput
+    data: XOR<LateFeeWaiverUpdateManyMutationInput, LateFeeWaiverUncheckedUpdateManyWithoutStudentFeeInput>
+  }
+
   export type StudentFeeCreateWithoutItemsInput = {
     invoiceNo?: string | null
     month?: number | null
@@ -98688,12 +100582,13 @@ export namespace Prisma {
     totalAmount: Decimal | DecimalJsLike | number | string
     paidAmount?: Decimal | DecimalJsLike | number | string
     dueAmount: Decimal | DecimalJsLike | number | string
-    lateFee?: Decimal | DecimalJsLike | number | string
     discount?: Decimal | DecimalJsLike | number | string
     isAdmissionFee?: boolean
     status?: $Enums.FeeStatus
     dueDate: Date | string
     remarks?: string | null
+    lateFee?: Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     school: SchoolCreateNestedOneWithoutStudentFeesInput
@@ -98703,6 +100598,7 @@ export namespace Prisma {
     receipts?: PaymentReceiptCreateNestedManyWithoutStudentFeeInput
     refunds?: RefundCreateNestedManyWithoutStudentFeeInput
     feeRefunds?: FeeRefundCreateNestedManyWithoutStudentFeeInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutStudentFeeInput
   }
 
   export type StudentFeeUncheckedCreateWithoutItemsInput = {
@@ -98716,18 +100612,20 @@ export namespace Prisma {
     totalAmount: Decimal | DecimalJsLike | number | string
     paidAmount?: Decimal | DecimalJsLike | number | string
     dueAmount: Decimal | DecimalJsLike | number | string
-    lateFee?: Decimal | DecimalJsLike | number | string
     discount?: Decimal | DecimalJsLike | number | string
     isAdmissionFee?: boolean
     status?: $Enums.FeeStatus
     dueDate: Date | string
     remarks?: string | null
+    lateFee?: Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     payments?: PaymentUncheckedCreateNestedManyWithoutStudentFeeInput
     receipts?: PaymentReceiptUncheckedCreateNestedManyWithoutStudentFeeInput
     refunds?: RefundUncheckedCreateNestedManyWithoutStudentFeeInput
     feeRefunds?: FeeRefundUncheckedCreateNestedManyWithoutStudentFeeInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutStudentFeeInput
   }
 
   export type StudentFeeCreateOrConnectWithoutItemsInput = {
@@ -98785,12 +100683,13 @@ export namespace Prisma {
     totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     discount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     school?: SchoolUpdateOneRequiredWithoutStudentFeesNestedInput
@@ -98800,6 +100699,7 @@ export namespace Prisma {
     receipts?: PaymentReceiptUpdateManyWithoutStudentFeeNestedInput
     refunds?: RefundUpdateManyWithoutStudentFeeNestedInput
     feeRefunds?: FeeRefundUpdateManyWithoutStudentFeeNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutStudentFeeNestedInput
   }
 
   export type StudentFeeUncheckedUpdateWithoutItemsInput = {
@@ -98813,18 +100713,20 @@ export namespace Prisma {
     totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     discount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     payments?: PaymentUncheckedUpdateManyWithoutStudentFeeNestedInput
     receipts?: PaymentReceiptUncheckedUpdateManyWithoutStudentFeeNestedInput
     refunds?: RefundUncheckedUpdateManyWithoutStudentFeeNestedInput
     feeRefunds?: FeeRefundUncheckedUpdateManyWithoutStudentFeeNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutStudentFeeNestedInput
   }
 
   export type FeeHeadUpsertWithoutStudentFeeItemsInput = {
@@ -98900,6 +100802,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutReportsInput = {
@@ -98938,6 +100841,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutReportsInput = {
@@ -98966,6 +100870,7 @@ export namespace Prisma {
     refundsProcessed?: RefundCreateNestedManyWithoutRefundedUserInput
     markedAttendances?: StudentAttendanceSessionCreateNestedManyWithoutMarkedByInput
     employeeAttendanceRecords?: EmployeeAttendanceCreateNestedManyWithoutEmployeeInput
+    lateFeeWaiversProcessed?: LateFeeWaiverCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReportsInput = {
@@ -98990,6 +100895,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUncheckedCreateNestedManyWithoutRefundedUserInput
     markedAttendances?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutMarkedByInput
     employeeAttendanceRecords?: EmployeeAttendanceUncheckedCreateNestedManyWithoutEmployeeInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReportsInput = {
@@ -99043,6 +100949,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutReportsInput = {
@@ -99081,6 +100988,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type UserUpsertWithoutReportsInput = {
@@ -99115,6 +101023,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUpdateManyWithoutRefundedUserNestedInput
     markedAttendances?: StudentAttendanceSessionUpdateManyWithoutMarkedByNestedInput
     employeeAttendanceRecords?: EmployeeAttendanceUpdateManyWithoutEmployeeNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReportsInput = {
@@ -99139,6 +101048,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUncheckedUpdateManyWithoutRefundedUserNestedInput
     markedAttendances?: StudentAttendanceSessionUncheckedUpdateManyWithoutMarkedByNestedInput
     employeeAttendanceRecords?: EmployeeAttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SchoolCreateWithoutScholarshipsInput = {
@@ -99176,6 +101086,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutScholarshipsInput = {
@@ -99214,6 +101125,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutScholarshipsInput = {
@@ -99294,6 +101206,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutScholarshipsInput = {
@@ -99332,6 +101245,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type StudentScholarshipUpsertWithWhereUniqueWithoutScholarshipInput = {
@@ -99398,6 +101312,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutStudentScholarshipsInput = {
@@ -99436,6 +101351,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutStudentScholarshipsInput = {
@@ -99577,6 +101493,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutStudentScholarshipsInput = {
@@ -99615,6 +101532,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type StudentUpsertWithoutStudentScholarshipsInput = {
@@ -99752,6 +101670,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutStudentDiscountsInput = {
@@ -99790,6 +101709,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutStudentDiscountsInput = {
@@ -99935,6 +101855,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutStudentDiscountsInput = {
@@ -99973,6 +101894,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type StudentUpsertWithoutStudentDiscountsInput = {
@@ -100114,6 +102036,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutTransportRoutesInput = {
@@ -100152,6 +102075,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutTransportRoutesInput = {
@@ -100248,6 +102172,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutTransportRoutesInput = {
@@ -100286,6 +102211,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type StudentAcademicRecordUpsertWithWhereUniqueWithoutTransportRouteInput = {
@@ -100339,6 +102265,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutBookPackagesInput = {
@@ -100377,6 +102304,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutBookPackagesInput = {
@@ -100478,6 +102406,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutBookPackagesInput = {
@@ -100516,6 +102445,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type ClassUpsertWithoutBookPackagesInput = {
@@ -100579,12 +102509,13 @@ export namespace Prisma {
     totalAmount: Decimal | DecimalJsLike | number | string
     paidAmount?: Decimal | DecimalJsLike | number | string
     dueAmount: Decimal | DecimalJsLike | number | string
-    lateFee?: Decimal | DecimalJsLike | number | string
     discount?: Decimal | DecimalJsLike | number | string
     isAdmissionFee?: boolean
     status?: $Enums.FeeStatus
     dueDate: Date | string
     remarks?: string | null
+    lateFee?: Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     school: SchoolCreateNestedOneWithoutStudentFeesInput
@@ -100594,6 +102525,7 @@ export namespace Prisma {
     payments?: PaymentCreateNestedManyWithoutStudentFeeInput
     receipts?: PaymentReceiptCreateNestedManyWithoutStudentFeeInput
     refunds?: RefundCreateNestedManyWithoutStudentFeeInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutStudentFeeInput
   }
 
   export type StudentFeeUncheckedCreateWithoutFeeRefundsInput = {
@@ -100607,18 +102539,20 @@ export namespace Prisma {
     totalAmount: Decimal | DecimalJsLike | number | string
     paidAmount?: Decimal | DecimalJsLike | number | string
     dueAmount: Decimal | DecimalJsLike | number | string
-    lateFee?: Decimal | DecimalJsLike | number | string
     discount?: Decimal | DecimalJsLike | number | string
     isAdmissionFee?: boolean
     status?: $Enums.FeeStatus
     dueDate: Date | string
     remarks?: string | null
+    lateFee?: Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     items?: StudentFeeItemUncheckedCreateNestedManyWithoutStudentFeeInput
     payments?: PaymentUncheckedCreateNestedManyWithoutStudentFeeInput
     receipts?: PaymentReceiptUncheckedCreateNestedManyWithoutStudentFeeInput
     refunds?: RefundUncheckedCreateNestedManyWithoutStudentFeeInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutStudentFeeInput
   }
 
   export type StudentFeeCreateOrConnectWithoutFeeRefundsInput = {
@@ -100644,12 +102578,13 @@ export namespace Prisma {
     totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     discount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     school?: SchoolUpdateOneRequiredWithoutStudentFeesNestedInput
@@ -100659,6 +102594,7 @@ export namespace Prisma {
     payments?: PaymentUpdateManyWithoutStudentFeeNestedInput
     receipts?: PaymentReceiptUpdateManyWithoutStudentFeeNestedInput
     refunds?: RefundUpdateManyWithoutStudentFeeNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutStudentFeeNestedInput
   }
 
   export type StudentFeeUncheckedUpdateWithoutFeeRefundsInput = {
@@ -100672,18 +102608,426 @@ export namespace Prisma {
     totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     discount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: StudentFeeItemUncheckedUpdateManyWithoutStudentFeeNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutStudentFeeNestedInput
     receipts?: PaymentReceiptUncheckedUpdateManyWithoutStudentFeeNestedInput
     refunds?: RefundUncheckedUpdateManyWithoutStudentFeeNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutStudentFeeNestedInput
+  }
+
+  export type SchoolCreateWithoutLateFeeWaiversInput = {
+    name: string
+    email: string
+    phone?: string | null
+    status?: $Enums.SchoolStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserCreateNestedManyWithoutSchoolInput
+    teachers?: TeacherCreateNestedManyWithoutSchoolInput
+    students?: StudentCreateNestedManyWithoutSchoolInput
+    parents?: ParentCreateNestedManyWithoutSchoolInput
+    classes?: ClassCreateNestedManyWithoutSchoolInput
+    sections?: SectionCreateNestedManyWithoutSchoolInput
+    academicYears?: AcademicYearCreateNestedManyWithoutSchoolInput
+    admissions?: AdmissionCreateNestedManyWithoutSchoolInput
+    periods?: PeriodCreateNestedManyWithoutSchoolInput
+    days?: DayCreateNestedManyWithoutSchoolInput
+    timings?: SchoolTimingCreateNestedManyWithoutSchoolInput
+    timetables?: TimetableCreateNestedManyWithoutSchoolInput
+    exams?: ExamCreateNestedManyWithoutSchoolInput
+    reports?: ReportCreateNestedManyWithoutSchoolInput
+    feeHeads?: FeeHeadCreateNestedManyWithoutSchoolInput
+    feeStructures?: FeeStructureCreateNestedManyWithoutSchoolInput
+    studentFees?: StudentFeeCreateNestedManyWithoutSchoolInput
+    payments?: PaymentCreateNestedManyWithoutSchoolInput
+    paymentReceipts?: PaymentReceiptCreateNestedManyWithoutSchoolInput
+    refunds?: RefundCreateNestedManyWithoutSchoolInput
+    scholarships?: ScholarshipCreateNestedManyWithoutSchoolInput
+    studentScholarships?: StudentScholarshipCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountCreateNestedManyWithoutSchoolInput
+    transportRoutes?: TransportRouteCreateNestedManyWithoutSchoolInput
+    bookPackages?: BookPackageCreateNestedManyWithoutSchoolInput
+    subscriptions?: SchoolSubscriptionCreateNestedManyWithoutSchoolInput
+    academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
+    studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
+    employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+  }
+
+  export type SchoolUncheckedCreateWithoutLateFeeWaiversInput = {
+    id?: number
+    name: string
+    email: string
+    phone?: string | null
+    status?: $Enums.SchoolStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserUncheckedCreateNestedManyWithoutSchoolInput
+    teachers?: TeacherUncheckedCreateNestedManyWithoutSchoolInput
+    students?: StudentUncheckedCreateNestedManyWithoutSchoolInput
+    parents?: ParentUncheckedCreateNestedManyWithoutSchoolInput
+    classes?: ClassUncheckedCreateNestedManyWithoutSchoolInput
+    sections?: SectionUncheckedCreateNestedManyWithoutSchoolInput
+    academicYears?: AcademicYearUncheckedCreateNestedManyWithoutSchoolInput
+    admissions?: AdmissionUncheckedCreateNestedManyWithoutSchoolInput
+    periods?: PeriodUncheckedCreateNestedManyWithoutSchoolInput
+    days?: DayUncheckedCreateNestedManyWithoutSchoolInput
+    timings?: SchoolTimingUncheckedCreateNestedManyWithoutSchoolInput
+    timetables?: TimetableUncheckedCreateNestedManyWithoutSchoolInput
+    exams?: ExamUncheckedCreateNestedManyWithoutSchoolInput
+    reports?: ReportUncheckedCreateNestedManyWithoutSchoolInput
+    feeHeads?: FeeHeadUncheckedCreateNestedManyWithoutSchoolInput
+    feeStructures?: FeeStructureUncheckedCreateNestedManyWithoutSchoolInput
+    studentFees?: StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutSchoolInput
+    paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutSchoolInput
+    refunds?: RefundUncheckedCreateNestedManyWithoutSchoolInput
+    scholarships?: ScholarshipUncheckedCreateNestedManyWithoutSchoolInput
+    studentScholarships?: StudentScholarshipUncheckedCreateNestedManyWithoutSchoolInput
+    studentDiscounts?: StudentDiscountUncheckedCreateNestedManyWithoutSchoolInput
+    transportRoutes?: TransportRouteUncheckedCreateNestedManyWithoutSchoolInput
+    bookPackages?: BookPackageUncheckedCreateNestedManyWithoutSchoolInput
+    subscriptions?: SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
+    academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
+    studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
+    employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+  }
+
+  export type SchoolCreateOrConnectWithoutLateFeeWaiversInput = {
+    where: SchoolWhereUniqueInput
+    create: XOR<SchoolCreateWithoutLateFeeWaiversInput, SchoolUncheckedCreateWithoutLateFeeWaiversInput>
+  }
+
+  export type StudentFeeCreateWithoutLateFeeWaiversInput = {
+    invoiceNo?: string | null
+    month?: number | null
+    year?: number | null
+    totalAmount: Decimal | DecimalJsLike | number | string
+    paidAmount?: Decimal | DecimalJsLike | number | string
+    dueAmount: Decimal | DecimalJsLike | number | string
+    discount?: Decimal | DecimalJsLike | number | string
+    isAdmissionFee?: boolean
+    status?: $Enums.FeeStatus
+    dueDate: Date | string
+    remarks?: string | null
+    lateFee?: Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    school: SchoolCreateNestedOneWithoutStudentFeesInput
+    student: StudentCreateNestedOneWithoutStudentFeesInput
+    feeStructure: FeeStructureCreateNestedOneWithoutStudentFeesInput
+    items?: StudentFeeItemCreateNestedManyWithoutStudentFeeInput
+    payments?: PaymentCreateNestedManyWithoutStudentFeeInput
+    receipts?: PaymentReceiptCreateNestedManyWithoutStudentFeeInput
+    refunds?: RefundCreateNestedManyWithoutStudentFeeInput
+    feeRefunds?: FeeRefundCreateNestedManyWithoutStudentFeeInput
+  }
+
+  export type StudentFeeUncheckedCreateWithoutLateFeeWaiversInput = {
+    id?: number
+    invoiceNo?: string | null
+    schoolId: number
+    studentId: number
+    feeStructureId: number
+    month?: number | null
+    year?: number | null
+    totalAmount: Decimal | DecimalJsLike | number | string
+    paidAmount?: Decimal | DecimalJsLike | number | string
+    dueAmount: Decimal | DecimalJsLike | number | string
+    discount?: Decimal | DecimalJsLike | number | string
+    isAdmissionFee?: boolean
+    status?: $Enums.FeeStatus
+    dueDate: Date | string
+    remarks?: string | null
+    lateFee?: Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: StudentFeeItemUncheckedCreateNestedManyWithoutStudentFeeInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutStudentFeeInput
+    receipts?: PaymentReceiptUncheckedCreateNestedManyWithoutStudentFeeInput
+    refunds?: RefundUncheckedCreateNestedManyWithoutStudentFeeInput
+    feeRefunds?: FeeRefundUncheckedCreateNestedManyWithoutStudentFeeInput
+  }
+
+  export type StudentFeeCreateOrConnectWithoutLateFeeWaiversInput = {
+    where: StudentFeeWhereUniqueInput
+    create: XOR<StudentFeeCreateWithoutLateFeeWaiversInput, StudentFeeUncheckedCreateWithoutLateFeeWaiversInput>
+  }
+
+  export type UserCreateWithoutLateFeeWaiversProcessedInput = {
+    name: string
+    email: string
+    password: string
+    isActive?: boolean
+    isDeleted?: boolean
+    emailVerified?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    school?: SchoolCreateNestedOneWithoutUsersInput
+    teacher?: TeacherCreateNestedOneWithoutUserInput
+    student?: StudentCreateNestedOneWithoutUserInput
+    parent?: ParentCreateNestedOneWithoutUserInput
+    roles?: UserRoleCreateNestedManyWithoutUserInput
+    tokens?: TokenCreateNestedManyWithoutUserInput
+    reports?: ReportCreateNestedManyWithoutUserInput
+    userPermissions?: UserPermissionCreateNestedManyWithoutUserInput
+    paymentReceipts?: PaymentReceiptCreateNestedManyWithoutReceivedByInput
+    paymentsCollected?: PaymentCreateNestedManyWithoutCollectorInput
+    refundsProcessed?: RefundCreateNestedManyWithoutRefundedUserInput
+    markedAttendances?: StudentAttendanceSessionCreateNestedManyWithoutMarkedByInput
+    employeeAttendanceRecords?: EmployeeAttendanceCreateNestedManyWithoutEmployeeInput
+  }
+
+  export type UserUncheckedCreateWithoutLateFeeWaiversProcessedInput = {
+    id?: number
+    name: string
+    email: string
+    password: string
+    isActive?: boolean
+    isDeleted?: boolean
+    emailVerified?: boolean
+    schoolId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    teacher?: TeacherUncheckedCreateNestedOneWithoutUserInput
+    student?: StudentUncheckedCreateNestedOneWithoutUserInput
+    parent?: ParentUncheckedCreateNestedOneWithoutUserInput
+    roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
+    tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
+    reports?: ReportUncheckedCreateNestedManyWithoutUserInput
+    userPermissions?: UserPermissionUncheckedCreateNestedManyWithoutUserInput
+    paymentReceipts?: PaymentReceiptUncheckedCreateNestedManyWithoutReceivedByInput
+    paymentsCollected?: PaymentUncheckedCreateNestedManyWithoutCollectorInput
+    refundsProcessed?: RefundUncheckedCreateNestedManyWithoutRefundedUserInput
+    markedAttendances?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutMarkedByInput
+    employeeAttendanceRecords?: EmployeeAttendanceUncheckedCreateNestedManyWithoutEmployeeInput
+  }
+
+  export type UserCreateOrConnectWithoutLateFeeWaiversProcessedInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutLateFeeWaiversProcessedInput, UserUncheckedCreateWithoutLateFeeWaiversProcessedInput>
+  }
+
+  export type SchoolUpsertWithoutLateFeeWaiversInput = {
+    update: XOR<SchoolUpdateWithoutLateFeeWaiversInput, SchoolUncheckedUpdateWithoutLateFeeWaiversInput>
+    create: XOR<SchoolCreateWithoutLateFeeWaiversInput, SchoolUncheckedCreateWithoutLateFeeWaiversInput>
+    where?: SchoolWhereInput
+  }
+
+  export type SchoolUpdateToOneWithWhereWithoutLateFeeWaiversInput = {
+    where?: SchoolWhereInput
+    data: XOR<SchoolUpdateWithoutLateFeeWaiversInput, SchoolUncheckedUpdateWithoutLateFeeWaiversInput>
+  }
+
+  export type SchoolUpdateWithoutLateFeeWaiversInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUpdateManyWithoutSchoolNestedInput
+    teachers?: TeacherUpdateManyWithoutSchoolNestedInput
+    students?: StudentUpdateManyWithoutSchoolNestedInput
+    parents?: ParentUpdateManyWithoutSchoolNestedInput
+    classes?: ClassUpdateManyWithoutSchoolNestedInput
+    sections?: SectionUpdateManyWithoutSchoolNestedInput
+    academicYears?: AcademicYearUpdateManyWithoutSchoolNestedInput
+    admissions?: AdmissionUpdateManyWithoutSchoolNestedInput
+    periods?: PeriodUpdateManyWithoutSchoolNestedInput
+    days?: DayUpdateManyWithoutSchoolNestedInput
+    timings?: SchoolTimingUpdateManyWithoutSchoolNestedInput
+    timetables?: TimetableUpdateManyWithoutSchoolNestedInput
+    exams?: ExamUpdateManyWithoutSchoolNestedInput
+    reports?: ReportUpdateManyWithoutSchoolNestedInput
+    feeHeads?: FeeHeadUpdateManyWithoutSchoolNestedInput
+    feeStructures?: FeeStructureUpdateManyWithoutSchoolNestedInput
+    studentFees?: StudentFeeUpdateManyWithoutSchoolNestedInput
+    payments?: PaymentUpdateManyWithoutSchoolNestedInput
+    paymentReceipts?: PaymentReceiptUpdateManyWithoutSchoolNestedInput
+    refunds?: RefundUpdateManyWithoutSchoolNestedInput
+    scholarships?: ScholarshipUpdateManyWithoutSchoolNestedInput
+    studentScholarships?: StudentScholarshipUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUpdateManyWithoutSchoolNestedInput
+    transportRoutes?: TransportRouteUpdateManyWithoutSchoolNestedInput
+    bookPackages?: BookPackageUpdateManyWithoutSchoolNestedInput
+    subscriptions?: SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
+    academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
+    studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
+    employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+  }
+
+  export type SchoolUncheckedUpdateWithoutLateFeeWaiversInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUncheckedUpdateManyWithoutSchoolNestedInput
+    teachers?: TeacherUncheckedUpdateManyWithoutSchoolNestedInput
+    students?: StudentUncheckedUpdateManyWithoutSchoolNestedInput
+    parents?: ParentUncheckedUpdateManyWithoutSchoolNestedInput
+    classes?: ClassUncheckedUpdateManyWithoutSchoolNestedInput
+    sections?: SectionUncheckedUpdateManyWithoutSchoolNestedInput
+    academicYears?: AcademicYearUncheckedUpdateManyWithoutSchoolNestedInput
+    admissions?: AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
+    periods?: PeriodUncheckedUpdateManyWithoutSchoolNestedInput
+    days?: DayUncheckedUpdateManyWithoutSchoolNestedInput
+    timings?: SchoolTimingUncheckedUpdateManyWithoutSchoolNestedInput
+    timetables?: TimetableUncheckedUpdateManyWithoutSchoolNestedInput
+    exams?: ExamUncheckedUpdateManyWithoutSchoolNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutSchoolNestedInput
+    feeHeads?: FeeHeadUncheckedUpdateManyWithoutSchoolNestedInput
+    feeStructures?: FeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
+    studentFees?: StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutSchoolNestedInput
+    paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutSchoolNestedInput
+    refunds?: RefundUncheckedUpdateManyWithoutSchoolNestedInput
+    scholarships?: ScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
+    studentScholarships?: StudentScholarshipUncheckedUpdateManyWithoutSchoolNestedInput
+    studentDiscounts?: StudentDiscountUncheckedUpdateManyWithoutSchoolNestedInput
+    transportRoutes?: TransportRouteUncheckedUpdateManyWithoutSchoolNestedInput
+    bookPackages?: BookPackageUncheckedUpdateManyWithoutSchoolNestedInput
+    subscriptions?: SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
+    academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
+    studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
+    employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+  }
+
+  export type StudentFeeUpsertWithoutLateFeeWaiversInput = {
+    update: XOR<StudentFeeUpdateWithoutLateFeeWaiversInput, StudentFeeUncheckedUpdateWithoutLateFeeWaiversInput>
+    create: XOR<StudentFeeCreateWithoutLateFeeWaiversInput, StudentFeeUncheckedCreateWithoutLateFeeWaiversInput>
+    where?: StudentFeeWhereInput
+  }
+
+  export type StudentFeeUpdateToOneWithWhereWithoutLateFeeWaiversInput = {
+    where?: StudentFeeWhereInput
+    data: XOR<StudentFeeUpdateWithoutLateFeeWaiversInput, StudentFeeUncheckedUpdateWithoutLateFeeWaiversInput>
+  }
+
+  export type StudentFeeUpdateWithoutLateFeeWaiversInput = {
+    invoiceNo?: NullableStringFieldUpdateOperationsInput | string | null
+    month?: NullableIntFieldUpdateOperationsInput | number | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    dueAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    discount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    isAdmissionFee?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
+    dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    school?: SchoolUpdateOneRequiredWithoutStudentFeesNestedInput
+    student?: StudentUpdateOneRequiredWithoutStudentFeesNestedInput
+    feeStructure?: FeeStructureUpdateOneRequiredWithoutStudentFeesNestedInput
+    items?: StudentFeeItemUpdateManyWithoutStudentFeeNestedInput
+    payments?: PaymentUpdateManyWithoutStudentFeeNestedInput
+    receipts?: PaymentReceiptUpdateManyWithoutStudentFeeNestedInput
+    refunds?: RefundUpdateManyWithoutStudentFeeNestedInput
+    feeRefunds?: FeeRefundUpdateManyWithoutStudentFeeNestedInput
+  }
+
+  export type StudentFeeUncheckedUpdateWithoutLateFeeWaiversInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    invoiceNo?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolId?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    feeStructureId?: IntFieldUpdateOperationsInput | number
+    month?: NullableIntFieldUpdateOperationsInput | number | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    dueAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    discount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    isAdmissionFee?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
+    dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: StudentFeeItemUncheckedUpdateManyWithoutStudentFeeNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutStudentFeeNestedInput
+    receipts?: PaymentReceiptUncheckedUpdateManyWithoutStudentFeeNestedInput
+    refunds?: RefundUncheckedUpdateManyWithoutStudentFeeNestedInput
+    feeRefunds?: FeeRefundUncheckedUpdateManyWithoutStudentFeeNestedInput
+  }
+
+  export type UserUpsertWithoutLateFeeWaiversProcessedInput = {
+    update: XOR<UserUpdateWithoutLateFeeWaiversProcessedInput, UserUncheckedUpdateWithoutLateFeeWaiversProcessedInput>
+    create: XOR<UserCreateWithoutLateFeeWaiversProcessedInput, UserUncheckedCreateWithoutLateFeeWaiversProcessedInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutLateFeeWaiversProcessedInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutLateFeeWaiversProcessedInput, UserUncheckedUpdateWithoutLateFeeWaiversProcessedInput>
+  }
+
+  export type UserUpdateWithoutLateFeeWaiversProcessedInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    school?: SchoolUpdateOneWithoutUsersNestedInput
+    teacher?: TeacherUpdateOneWithoutUserNestedInput
+    student?: StudentUpdateOneWithoutUserNestedInput
+    parent?: ParentUpdateOneWithoutUserNestedInput
+    roles?: UserRoleUpdateManyWithoutUserNestedInput
+    tokens?: TokenUpdateManyWithoutUserNestedInput
+    reports?: ReportUpdateManyWithoutUserNestedInput
+    userPermissions?: UserPermissionUpdateManyWithoutUserNestedInput
+    paymentReceipts?: PaymentReceiptUpdateManyWithoutReceivedByNestedInput
+    paymentsCollected?: PaymentUpdateManyWithoutCollectorNestedInput
+    refundsProcessed?: RefundUpdateManyWithoutRefundedUserNestedInput
+    markedAttendances?: StudentAttendanceSessionUpdateManyWithoutMarkedByNestedInput
+    employeeAttendanceRecords?: EmployeeAttendanceUpdateManyWithoutEmployeeNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutLateFeeWaiversProcessedInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    schoolId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    teacher?: TeacherUncheckedUpdateOneWithoutUserNestedInput
+    student?: StudentUncheckedUpdateOneWithoutUserNestedInput
+    parent?: ParentUncheckedUpdateOneWithoutUserNestedInput
+    roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
+    tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutUserNestedInput
+    userPermissions?: UserPermissionUncheckedUpdateManyWithoutUserNestedInput
+    paymentReceipts?: PaymentReceiptUncheckedUpdateManyWithoutReceivedByNestedInput
+    paymentsCollected?: PaymentUncheckedUpdateManyWithoutCollectorNestedInput
+    refundsProcessed?: RefundUncheckedUpdateManyWithoutRefundedUserNestedInput
+    markedAttendances?: StudentAttendanceSessionUncheckedUpdateManyWithoutMarkedByNestedInput
+    employeeAttendanceRecords?: EmployeeAttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
   }
 
   export type SchoolCreateWithoutPaymentsInput = {
@@ -100721,6 +103065,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutPaymentsInput = {
@@ -100759,6 +103104,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutPaymentsInput = {
@@ -100833,12 +103179,13 @@ export namespace Prisma {
     totalAmount: Decimal | DecimalJsLike | number | string
     paidAmount?: Decimal | DecimalJsLike | number | string
     dueAmount: Decimal | DecimalJsLike | number | string
-    lateFee?: Decimal | DecimalJsLike | number | string
     discount?: Decimal | DecimalJsLike | number | string
     isAdmissionFee?: boolean
     status?: $Enums.FeeStatus
     dueDate: Date | string
     remarks?: string | null
+    lateFee?: Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     school: SchoolCreateNestedOneWithoutStudentFeesInput
@@ -100848,6 +103195,7 @@ export namespace Prisma {
     receipts?: PaymentReceiptCreateNestedManyWithoutStudentFeeInput
     refunds?: RefundCreateNestedManyWithoutStudentFeeInput
     feeRefunds?: FeeRefundCreateNestedManyWithoutStudentFeeInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutStudentFeeInput
   }
 
   export type StudentFeeUncheckedCreateWithoutPaymentsInput = {
@@ -100861,18 +103209,20 @@ export namespace Prisma {
     totalAmount: Decimal | DecimalJsLike | number | string
     paidAmount?: Decimal | DecimalJsLike | number | string
     dueAmount: Decimal | DecimalJsLike | number | string
-    lateFee?: Decimal | DecimalJsLike | number | string
     discount?: Decimal | DecimalJsLike | number | string
     isAdmissionFee?: boolean
     status?: $Enums.FeeStatus
     dueDate: Date | string
     remarks?: string | null
+    lateFee?: Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     items?: StudentFeeItemUncheckedCreateNestedManyWithoutStudentFeeInput
     receipts?: PaymentReceiptUncheckedCreateNestedManyWithoutStudentFeeInput
     refunds?: RefundUncheckedCreateNestedManyWithoutStudentFeeInput
     feeRefunds?: FeeRefundUncheckedCreateNestedManyWithoutStudentFeeInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutStudentFeeInput
   }
 
   export type StudentFeeCreateOrConnectWithoutPaymentsInput = {
@@ -100901,6 +103251,7 @@ export namespace Prisma {
     refundsProcessed?: RefundCreateNestedManyWithoutRefundedUserInput
     markedAttendances?: StudentAttendanceSessionCreateNestedManyWithoutMarkedByInput
     employeeAttendanceRecords?: EmployeeAttendanceCreateNestedManyWithoutEmployeeInput
+    lateFeeWaiversProcessed?: LateFeeWaiverCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPaymentsCollectedInput = {
@@ -100925,6 +103276,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUncheckedCreateNestedManyWithoutRefundedUserInput
     markedAttendances?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutMarkedByInput
     employeeAttendanceRecords?: EmployeeAttendanceUncheckedCreateNestedManyWithoutEmployeeInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPaymentsCollectedInput = {
@@ -101064,6 +103416,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutPaymentsInput = {
@@ -101102,6 +103455,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type StudentUpsertWithoutPaymentsInput = {
@@ -101188,12 +103542,13 @@ export namespace Prisma {
     totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     discount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     school?: SchoolUpdateOneRequiredWithoutStudentFeesNestedInput
@@ -101203,6 +103558,7 @@ export namespace Prisma {
     receipts?: PaymentReceiptUpdateManyWithoutStudentFeeNestedInput
     refunds?: RefundUpdateManyWithoutStudentFeeNestedInput
     feeRefunds?: FeeRefundUpdateManyWithoutStudentFeeNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutStudentFeeNestedInput
   }
 
   export type StudentFeeUncheckedUpdateWithoutPaymentsInput = {
@@ -101216,18 +103572,20 @@ export namespace Prisma {
     totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     discount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: StudentFeeItemUncheckedUpdateManyWithoutStudentFeeNestedInput
     receipts?: PaymentReceiptUncheckedUpdateManyWithoutStudentFeeNestedInput
     refunds?: RefundUncheckedUpdateManyWithoutStudentFeeNestedInput
     feeRefunds?: FeeRefundUncheckedUpdateManyWithoutStudentFeeNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutStudentFeeNestedInput
   }
 
   export type UserUpsertWithoutPaymentsCollectedInput = {
@@ -101262,6 +103620,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUpdateManyWithoutRefundedUserNestedInput
     markedAttendances?: StudentAttendanceSessionUpdateManyWithoutMarkedByNestedInput
     employeeAttendanceRecords?: EmployeeAttendanceUpdateManyWithoutEmployeeNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPaymentsCollectedInput = {
@@ -101286,6 +103645,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUncheckedUpdateManyWithoutRefundedUserNestedInput
     markedAttendances?: StudentAttendanceSessionUncheckedUpdateManyWithoutMarkedByNestedInput
     employeeAttendanceRecords?: EmployeeAttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PaymentReceiptUpsertWithWhereUniqueWithoutPaymentInput = {
@@ -101355,6 +103715,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutPaymentReceiptsInput = {
@@ -101393,6 +103754,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutPaymentReceiptsInput = {
@@ -101467,12 +103829,13 @@ export namespace Prisma {
     totalAmount: Decimal | DecimalJsLike | number | string
     paidAmount?: Decimal | DecimalJsLike | number | string
     dueAmount: Decimal | DecimalJsLike | number | string
-    lateFee?: Decimal | DecimalJsLike | number | string
     discount?: Decimal | DecimalJsLike | number | string
     isAdmissionFee?: boolean
     status?: $Enums.FeeStatus
     dueDate: Date | string
     remarks?: string | null
+    lateFee?: Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     school: SchoolCreateNestedOneWithoutStudentFeesInput
@@ -101482,6 +103845,7 @@ export namespace Prisma {
     payments?: PaymentCreateNestedManyWithoutStudentFeeInput
     refunds?: RefundCreateNestedManyWithoutStudentFeeInput
     feeRefunds?: FeeRefundCreateNestedManyWithoutStudentFeeInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutStudentFeeInput
   }
 
   export type StudentFeeUncheckedCreateWithoutReceiptsInput = {
@@ -101495,18 +103859,20 @@ export namespace Prisma {
     totalAmount: Decimal | DecimalJsLike | number | string
     paidAmount?: Decimal | DecimalJsLike | number | string
     dueAmount: Decimal | DecimalJsLike | number | string
-    lateFee?: Decimal | DecimalJsLike | number | string
     discount?: Decimal | DecimalJsLike | number | string
     isAdmissionFee?: boolean
     status?: $Enums.FeeStatus
     dueDate: Date | string
     remarks?: string | null
+    lateFee?: Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     items?: StudentFeeItemUncheckedCreateNestedManyWithoutStudentFeeInput
     payments?: PaymentUncheckedCreateNestedManyWithoutStudentFeeInput
     refunds?: RefundUncheckedCreateNestedManyWithoutStudentFeeInput
     feeRefunds?: FeeRefundUncheckedCreateNestedManyWithoutStudentFeeInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutStudentFeeInput
   }
 
   export type StudentFeeCreateOrConnectWithoutReceiptsInput = {
@@ -101575,6 +103941,7 @@ export namespace Prisma {
     refundsProcessed?: RefundCreateNestedManyWithoutRefundedUserInput
     markedAttendances?: StudentAttendanceSessionCreateNestedManyWithoutMarkedByInput
     employeeAttendanceRecords?: EmployeeAttendanceCreateNestedManyWithoutEmployeeInput
+    lateFeeWaiversProcessed?: LateFeeWaiverCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPaymentReceiptsInput = {
@@ -101599,6 +103966,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUncheckedCreateNestedManyWithoutRefundedUserInput
     markedAttendances?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutMarkedByInput
     employeeAttendanceRecords?: EmployeeAttendanceUncheckedCreateNestedManyWithoutEmployeeInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPaymentReceiptsInput = {
@@ -101652,6 +104020,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutPaymentReceiptsInput = {
@@ -101690,6 +104059,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type StudentUpsertWithoutPaymentReceiptsInput = {
@@ -101776,12 +104146,13 @@ export namespace Prisma {
     totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     discount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     school?: SchoolUpdateOneRequiredWithoutStudentFeesNestedInput
@@ -101791,6 +104162,7 @@ export namespace Prisma {
     payments?: PaymentUpdateManyWithoutStudentFeeNestedInput
     refunds?: RefundUpdateManyWithoutStudentFeeNestedInput
     feeRefunds?: FeeRefundUpdateManyWithoutStudentFeeNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutStudentFeeNestedInput
   }
 
   export type StudentFeeUncheckedUpdateWithoutReceiptsInput = {
@@ -101804,18 +104176,20 @@ export namespace Prisma {
     totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     discount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: StudentFeeItemUncheckedUpdateManyWithoutStudentFeeNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutStudentFeeNestedInput
     refunds?: RefundUncheckedUpdateManyWithoutStudentFeeNestedInput
     feeRefunds?: FeeRefundUncheckedUpdateManyWithoutStudentFeeNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutStudentFeeNestedInput
   }
 
   export type PaymentUpsertWithoutReceiptsInput = {
@@ -101896,6 +104270,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUpdateManyWithoutRefundedUserNestedInput
     markedAttendances?: StudentAttendanceSessionUpdateManyWithoutMarkedByNestedInput
     employeeAttendanceRecords?: EmployeeAttendanceUpdateManyWithoutEmployeeNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPaymentReceiptsInput = {
@@ -101920,6 +104295,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUncheckedUpdateManyWithoutRefundedUserNestedInput
     markedAttendances?: StudentAttendanceSessionUncheckedUpdateManyWithoutMarkedByNestedInput
     employeeAttendanceRecords?: EmployeeAttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SchoolCreateWithoutRefundsInput = {
@@ -101957,6 +104333,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutRefundsInput = {
@@ -101995,6 +104372,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutRefundsInput = {
@@ -102069,12 +104447,13 @@ export namespace Prisma {
     totalAmount: Decimal | DecimalJsLike | number | string
     paidAmount?: Decimal | DecimalJsLike | number | string
     dueAmount: Decimal | DecimalJsLike | number | string
-    lateFee?: Decimal | DecimalJsLike | number | string
     discount?: Decimal | DecimalJsLike | number | string
     isAdmissionFee?: boolean
     status?: $Enums.FeeStatus
     dueDate: Date | string
     remarks?: string | null
+    lateFee?: Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     school: SchoolCreateNestedOneWithoutStudentFeesInput
@@ -102084,6 +104463,7 @@ export namespace Prisma {
     payments?: PaymentCreateNestedManyWithoutStudentFeeInput
     receipts?: PaymentReceiptCreateNestedManyWithoutStudentFeeInput
     feeRefunds?: FeeRefundCreateNestedManyWithoutStudentFeeInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutStudentFeeInput
   }
 
   export type StudentFeeUncheckedCreateWithoutRefundsInput = {
@@ -102097,18 +104477,20 @@ export namespace Prisma {
     totalAmount: Decimal | DecimalJsLike | number | string
     paidAmount?: Decimal | DecimalJsLike | number | string
     dueAmount: Decimal | DecimalJsLike | number | string
-    lateFee?: Decimal | DecimalJsLike | number | string
     discount?: Decimal | DecimalJsLike | number | string
     isAdmissionFee?: boolean
     status?: $Enums.FeeStatus
     dueDate: Date | string
     remarks?: string | null
+    lateFee?: Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     items?: StudentFeeItemUncheckedCreateNestedManyWithoutStudentFeeInput
     payments?: PaymentUncheckedCreateNestedManyWithoutStudentFeeInput
     receipts?: PaymentReceiptUncheckedCreateNestedManyWithoutStudentFeeInput
     feeRefunds?: FeeRefundUncheckedCreateNestedManyWithoutStudentFeeInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutStudentFeeInput
   }
 
   export type StudentFeeCreateOrConnectWithoutRefundsInput = {
@@ -102177,6 +104559,7 @@ export namespace Prisma {
     paymentsCollected?: PaymentCreateNestedManyWithoutCollectorInput
     markedAttendances?: StudentAttendanceSessionCreateNestedManyWithoutMarkedByInput
     employeeAttendanceRecords?: EmployeeAttendanceCreateNestedManyWithoutEmployeeInput
+    lateFeeWaiversProcessed?: LateFeeWaiverCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRefundsProcessedInput = {
@@ -102201,6 +104584,7 @@ export namespace Prisma {
     paymentsCollected?: PaymentUncheckedCreateNestedManyWithoutCollectorInput
     markedAttendances?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutMarkedByInput
     employeeAttendanceRecords?: EmployeeAttendanceUncheckedCreateNestedManyWithoutEmployeeInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRefundsProcessedInput = {
@@ -102254,6 +104638,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutRefundsInput = {
@@ -102292,6 +104677,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type StudentUpsertWithoutRefundsInput = {
@@ -102378,12 +104764,13 @@ export namespace Prisma {
     totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     discount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     school?: SchoolUpdateOneRequiredWithoutStudentFeesNestedInput
@@ -102393,6 +104780,7 @@ export namespace Prisma {
     payments?: PaymentUpdateManyWithoutStudentFeeNestedInput
     receipts?: PaymentReceiptUpdateManyWithoutStudentFeeNestedInput
     feeRefunds?: FeeRefundUpdateManyWithoutStudentFeeNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutStudentFeeNestedInput
   }
 
   export type StudentFeeUncheckedUpdateWithoutRefundsInput = {
@@ -102406,18 +104794,20 @@ export namespace Prisma {
     totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     discount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: StudentFeeItemUncheckedUpdateManyWithoutStudentFeeNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutStudentFeeNestedInput
     receipts?: PaymentReceiptUncheckedUpdateManyWithoutStudentFeeNestedInput
     feeRefunds?: FeeRefundUncheckedUpdateManyWithoutStudentFeeNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutStudentFeeNestedInput
   }
 
   export type PaymentUpsertWithoutRefundsInput = {
@@ -102498,6 +104888,7 @@ export namespace Prisma {
     paymentsCollected?: PaymentUpdateManyWithoutCollectorNestedInput
     markedAttendances?: StudentAttendanceSessionUpdateManyWithoutMarkedByNestedInput
     employeeAttendanceRecords?: EmployeeAttendanceUpdateManyWithoutEmployeeNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRefundsProcessedInput = {
@@ -102522,6 +104913,7 @@ export namespace Prisma {
     paymentsCollected?: PaymentUncheckedUpdateManyWithoutCollectorNestedInput
     markedAttendances?: StudentAttendanceSessionUncheckedUpdateManyWithoutMarkedByNestedInput
     employeeAttendanceRecords?: EmployeeAttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSchoolInput = {
@@ -102545,6 +104937,7 @@ export namespace Prisma {
     refundsProcessed?: RefundCreateNestedManyWithoutRefundedUserInput
     markedAttendances?: StudentAttendanceSessionCreateNestedManyWithoutMarkedByInput
     employeeAttendanceRecords?: EmployeeAttendanceCreateNestedManyWithoutEmployeeInput
+    lateFeeWaiversProcessed?: LateFeeWaiverCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSchoolInput = {
@@ -102569,6 +104962,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUncheckedCreateNestedManyWithoutRefundedUserInput
     markedAttendances?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutMarkedByInput
     employeeAttendanceRecords?: EmployeeAttendanceUncheckedCreateNestedManyWithoutEmployeeInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSchoolInput = {
@@ -103255,12 +105649,13 @@ export namespace Prisma {
     totalAmount: Decimal | DecimalJsLike | number | string
     paidAmount?: Decimal | DecimalJsLike | number | string
     dueAmount: Decimal | DecimalJsLike | number | string
-    lateFee?: Decimal | DecimalJsLike | number | string
     discount?: Decimal | DecimalJsLike | number | string
     isAdmissionFee?: boolean
     status?: $Enums.FeeStatus
     dueDate: Date | string
     remarks?: string | null
+    lateFee?: Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     student: StudentCreateNestedOneWithoutStudentFeesInput
@@ -103270,6 +105665,7 @@ export namespace Prisma {
     receipts?: PaymentReceiptCreateNestedManyWithoutStudentFeeInput
     refunds?: RefundCreateNestedManyWithoutStudentFeeInput
     feeRefunds?: FeeRefundCreateNestedManyWithoutStudentFeeInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutStudentFeeInput
   }
 
   export type StudentFeeUncheckedCreateWithoutSchoolInput = {
@@ -103282,12 +105678,13 @@ export namespace Prisma {
     totalAmount: Decimal | DecimalJsLike | number | string
     paidAmount?: Decimal | DecimalJsLike | number | string
     dueAmount: Decimal | DecimalJsLike | number | string
-    lateFee?: Decimal | DecimalJsLike | number | string
     discount?: Decimal | DecimalJsLike | number | string
     isAdmissionFee?: boolean
     status?: $Enums.FeeStatus
     dueDate: Date | string
     remarks?: string | null
+    lateFee?: Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     items?: StudentFeeItemUncheckedCreateNestedManyWithoutStudentFeeInput
@@ -103295,6 +105692,7 @@ export namespace Prisma {
     receipts?: PaymentReceiptUncheckedCreateNestedManyWithoutStudentFeeInput
     refunds?: RefundUncheckedCreateNestedManyWithoutStudentFeeInput
     feeRefunds?: FeeRefundUncheckedCreateNestedManyWithoutStudentFeeInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutStudentFeeInput
   }
 
   export type StudentFeeCreateOrConnectWithoutSchoolInput = {
@@ -103732,6 +106130,37 @@ export namespace Prisma {
 
   export type EmployeeAttendanceCreateManySchoolInputEnvelope = {
     data: EmployeeAttendanceCreateManySchoolInput | EmployeeAttendanceCreateManySchoolInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LateFeeWaiverCreateWithoutSchoolInput = {
+    amount: Decimal | DecimalJsLike | number | string
+    reason: string
+    waivedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    studentFee: StudentFeeCreateNestedOneWithoutLateFeeWaiversInput
+    user: UserCreateNestedOneWithoutLateFeeWaiversProcessedInput
+  }
+
+  export type LateFeeWaiverUncheckedCreateWithoutSchoolInput = {
+    id?: number
+    studentFeeId: number
+    amount: Decimal | DecimalJsLike | number | string
+    reason: string
+    waivedBy: number
+    waivedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LateFeeWaiverCreateOrConnectWithoutSchoolInput = {
+    where: LateFeeWaiverWhereUniqueInput
+    create: XOR<LateFeeWaiverCreateWithoutSchoolInput, LateFeeWaiverUncheckedCreateWithoutSchoolInput>
+  }
+
+  export type LateFeeWaiverCreateManySchoolInputEnvelope = {
+    data: LateFeeWaiverCreateManySchoolInput | LateFeeWaiverCreateManySchoolInput[]
     skipDuplicates?: boolean
   }
 
@@ -104389,6 +106818,22 @@ export namespace Prisma {
     data: XOR<EmployeeAttendanceUpdateManyMutationInput, EmployeeAttendanceUncheckedUpdateManyWithoutSchoolInput>
   }
 
+  export type LateFeeWaiverUpsertWithWhereUniqueWithoutSchoolInput = {
+    where: LateFeeWaiverWhereUniqueInput
+    update: XOR<LateFeeWaiverUpdateWithoutSchoolInput, LateFeeWaiverUncheckedUpdateWithoutSchoolInput>
+    create: XOR<LateFeeWaiverCreateWithoutSchoolInput, LateFeeWaiverUncheckedCreateWithoutSchoolInput>
+  }
+
+  export type LateFeeWaiverUpdateWithWhereUniqueWithoutSchoolInput = {
+    where: LateFeeWaiverWhereUniqueInput
+    data: XOR<LateFeeWaiverUpdateWithoutSchoolInput, LateFeeWaiverUncheckedUpdateWithoutSchoolInput>
+  }
+
+  export type LateFeeWaiverUpdateManyWithWhereWithoutSchoolInput = {
+    where: LateFeeWaiverScalarWhereInput
+    data: XOR<LateFeeWaiverUpdateManyMutationInput, LateFeeWaiverUncheckedUpdateManyWithoutSchoolInput>
+  }
+
   export type SchoolSubscriptionCreateWithoutPlanInput = {
     startDate: Date | string
     endDate: Date | string
@@ -104469,6 +106914,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutSubscriptionsInput = {
@@ -104507,6 +106953,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutSubscriptionsInput = {
@@ -104584,6 +107031,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutSubscriptionsInput = {
@@ -104622,6 +107070,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type PlanUpsertWithoutSubscriptionsInput = {
@@ -104689,6 +107138,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutStudentsInput = {
@@ -104727,6 +107177,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutStudentsInput = {
@@ -104755,6 +107206,7 @@ export namespace Prisma {
     refundsProcessed?: RefundCreateNestedManyWithoutRefundedUserInput
     markedAttendances?: StudentAttendanceSessionCreateNestedManyWithoutMarkedByInput
     employeeAttendanceRecords?: EmployeeAttendanceCreateNestedManyWithoutEmployeeInput
+    lateFeeWaiversProcessed?: LateFeeWaiverCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutStudentInput = {
@@ -104779,6 +107231,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUncheckedCreateNestedManyWithoutRefundedUserInput
     markedAttendances?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutMarkedByInput
     employeeAttendanceRecords?: EmployeeAttendanceUncheckedCreateNestedManyWithoutEmployeeInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutStudentInput = {
@@ -104987,12 +107440,13 @@ export namespace Prisma {
     totalAmount: Decimal | DecimalJsLike | number | string
     paidAmount?: Decimal | DecimalJsLike | number | string
     dueAmount: Decimal | DecimalJsLike | number | string
-    lateFee?: Decimal | DecimalJsLike | number | string
     discount?: Decimal | DecimalJsLike | number | string
     isAdmissionFee?: boolean
     status?: $Enums.FeeStatus
     dueDate: Date | string
     remarks?: string | null
+    lateFee?: Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     school: SchoolCreateNestedOneWithoutStudentFeesInput
@@ -105002,6 +107456,7 @@ export namespace Prisma {
     receipts?: PaymentReceiptCreateNestedManyWithoutStudentFeeInput
     refunds?: RefundCreateNestedManyWithoutStudentFeeInput
     feeRefunds?: FeeRefundCreateNestedManyWithoutStudentFeeInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutStudentFeeInput
   }
 
   export type StudentFeeUncheckedCreateWithoutStudentInput = {
@@ -105014,12 +107469,13 @@ export namespace Prisma {
     totalAmount: Decimal | DecimalJsLike | number | string
     paidAmount?: Decimal | DecimalJsLike | number | string
     dueAmount: Decimal | DecimalJsLike | number | string
-    lateFee?: Decimal | DecimalJsLike | number | string
     discount?: Decimal | DecimalJsLike | number | string
     isAdmissionFee?: boolean
     status?: $Enums.FeeStatus
     dueDate: Date | string
     remarks?: string | null
+    lateFee?: Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     items?: StudentFeeItemUncheckedCreateNestedManyWithoutStudentFeeInput
@@ -105027,6 +107483,7 @@ export namespace Prisma {
     receipts?: PaymentReceiptUncheckedCreateNestedManyWithoutStudentFeeInput
     refunds?: RefundUncheckedCreateNestedManyWithoutStudentFeeInput
     feeRefunds?: FeeRefundUncheckedCreateNestedManyWithoutStudentFeeInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutStudentFeeInput
   }
 
   export type StudentFeeCreateOrConnectWithoutStudentInput = {
@@ -105304,6 +107761,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutStudentsInput = {
@@ -105342,6 +107800,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type UserUpsertWithoutStudentInput = {
@@ -105376,6 +107835,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUpdateManyWithoutRefundedUserNestedInput
     markedAttendances?: StudentAttendanceSessionUpdateManyWithoutMarkedByNestedInput
     employeeAttendanceRecords?: EmployeeAttendanceUpdateManyWithoutEmployeeNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStudentInput = {
@@ -105400,6 +107860,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUncheckedUpdateManyWithoutRefundedUserNestedInput
     markedAttendances?: StudentAttendanceSessionUncheckedUpdateManyWithoutMarkedByNestedInput
     employeeAttendanceRecords?: EmployeeAttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AdmissionUpsertWithWhereUniqueWithoutStudentInput = {
@@ -105622,6 +108083,7 @@ export namespace Prisma {
     subscriptions?: SchoolSubscriptionCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutAcademicRecordsInput = {
@@ -105660,6 +108122,7 @@ export namespace Prisma {
     subscriptions?: SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutAcademicRecordsInput = {
@@ -106000,6 +108463,7 @@ export namespace Prisma {
     subscriptions?: SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutAcademicRecordsInput = {
@@ -106038,6 +108502,7 @@ export namespace Prisma {
     subscriptions?: SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type StudentUpsertWithoutAcademicRecordsInput = {
@@ -106371,6 +108836,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutAdmissionsInput = {
@@ -106409,6 +108875,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutAdmissionsInput = {
@@ -106642,6 +109109,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutAdmissionsInput = {
@@ -106680,6 +109148,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type StudentUpsertWithoutAdmissionsInput = {
@@ -107123,6 +109592,7 @@ export namespace Prisma {
     refundsProcessed?: RefundCreateNestedManyWithoutRefundedUserInput
     markedAttendances?: StudentAttendanceSessionCreateNestedManyWithoutMarkedByInput
     employeeAttendanceRecords?: EmployeeAttendanceCreateNestedManyWithoutEmployeeInput
+    lateFeeWaiversProcessed?: LateFeeWaiverCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutParentInput = {
@@ -107147,6 +109617,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUncheckedCreateNestedManyWithoutRefundedUserInput
     markedAttendances?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutMarkedByInput
     employeeAttendanceRecords?: EmployeeAttendanceUncheckedCreateNestedManyWithoutEmployeeInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutParentInput = {
@@ -107189,6 +109660,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutParentsInput = {
@@ -107227,6 +109699,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutParentsInput = {
@@ -107286,6 +109759,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUpdateManyWithoutRefundedUserNestedInput
     markedAttendances?: StudentAttendanceSessionUpdateManyWithoutMarkedByNestedInput
     employeeAttendanceRecords?: EmployeeAttendanceUpdateManyWithoutEmployeeNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutParentInput = {
@@ -107310,6 +109784,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUncheckedUpdateManyWithoutRefundedUserNestedInput
     markedAttendances?: StudentAttendanceSessionUncheckedUpdateManyWithoutMarkedByNestedInput
     employeeAttendanceRecords?: EmployeeAttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SchoolUpsertWithoutParentsInput = {
@@ -107358,6 +109833,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutParentsInput = {
@@ -107396,6 +109872,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type StudentParentUpsertWithWhereUniqueWithoutParentInput = {
@@ -107435,6 +109912,7 @@ export namespace Prisma {
     refundsProcessed?: RefundCreateNestedManyWithoutRefundedUserInput
     markedAttendances?: StudentAttendanceSessionCreateNestedManyWithoutMarkedByInput
     employeeAttendanceRecords?: EmployeeAttendanceCreateNestedManyWithoutEmployeeInput
+    lateFeeWaiversProcessed?: LateFeeWaiverCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTeacherInput = {
@@ -107459,6 +109937,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUncheckedCreateNestedManyWithoutRefundedUserInput
     markedAttendances?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutMarkedByInput
     employeeAttendanceRecords?: EmployeeAttendanceUncheckedCreateNestedManyWithoutEmployeeInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutTeacherInput = {
@@ -107501,6 +109980,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutTeachersInput = {
@@ -107539,6 +110019,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedCreateNestedManyWithoutSchoolInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedCreateNestedManyWithoutSchoolInput
     employeeAttendances?: EmployeeAttendanceUncheckedCreateNestedManyWithoutSchoolInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutTeachersInput = {
@@ -107663,6 +110144,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUpdateManyWithoutRefundedUserNestedInput
     markedAttendances?: StudentAttendanceSessionUpdateManyWithoutMarkedByNestedInput
     employeeAttendanceRecords?: EmployeeAttendanceUpdateManyWithoutEmployeeNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTeacherInput = {
@@ -107687,6 +110169,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUncheckedUpdateManyWithoutRefundedUserNestedInput
     markedAttendances?: StudentAttendanceSessionUncheckedUpdateManyWithoutMarkedByNestedInput
     employeeAttendanceRecords?: EmployeeAttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SchoolUpsertWithoutTeachersInput = {
@@ -107735,6 +110218,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutTeachersInput = {
@@ -107773,6 +110257,7 @@ export namespace Prisma {
     academicRecords?: StudentAcademicRecordUncheckedUpdateManyWithoutSchoolNestedInput
     studentAttendanceSessions?: StudentAttendanceSessionUncheckedUpdateManyWithoutSchoolNestedInput
     employeeAttendances?: EmployeeAttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type ClassTeacherUpsertWithWhereUniqueWithoutTeacherInput = {
@@ -109865,6 +112350,17 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type LateFeeWaiverCreateManyUserInput = {
+    id?: number
+    schoolId: number
+    studentFeeId: number
+    amount: Decimal | DecimalJsLike | number | string
+    reason: string
+    waivedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type UserRoleUpdateWithoutUserInput = {
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
   }
@@ -110172,6 +112668,38 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type LateFeeWaiverUpdateWithoutUserInput = {
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    reason?: StringFieldUpdateOperationsInput | string
+    waivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    school?: SchoolUpdateOneRequiredWithoutLateFeeWaiversNestedInput
+    studentFee?: StudentFeeUpdateOneRequiredWithoutLateFeeWaiversNestedInput
+  }
+
+  export type LateFeeWaiverUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    schoolId?: IntFieldUpdateOperationsInput | number
+    studentFeeId?: IntFieldUpdateOperationsInput | number
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    reason?: StringFieldUpdateOperationsInput | string
+    waivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LateFeeWaiverUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    schoolId?: IntFieldUpdateOperationsInput | number
+    studentFeeId?: IntFieldUpdateOperationsInput | number
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    reason?: StringFieldUpdateOperationsInput | string
+    waivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserRoleCreateManyRoleInput = {
     userId: number
   }
@@ -110467,12 +112995,13 @@ export namespace Prisma {
     totalAmount: Decimal | DecimalJsLike | number | string
     paidAmount?: Decimal | DecimalJsLike | number | string
     dueAmount: Decimal | DecimalJsLike | number | string
-    lateFee?: Decimal | DecimalJsLike | number | string
     discount?: Decimal | DecimalJsLike | number | string
     isAdmissionFee?: boolean
     status?: $Enums.FeeStatus
     dueDate: Date | string
     remarks?: string | null
+    lateFee?: Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -110510,12 +113039,13 @@ export namespace Prisma {
     totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     discount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     school?: SchoolUpdateOneRequiredWithoutStudentFeesNestedInput
@@ -110525,6 +113055,7 @@ export namespace Prisma {
     receipts?: PaymentReceiptUpdateManyWithoutStudentFeeNestedInput
     refunds?: RefundUpdateManyWithoutStudentFeeNestedInput
     feeRefunds?: FeeRefundUpdateManyWithoutStudentFeeNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutStudentFeeNestedInput
   }
 
   export type StudentFeeUncheckedUpdateWithoutFeeStructureInput = {
@@ -110537,12 +113068,13 @@ export namespace Prisma {
     totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     discount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: StudentFeeItemUncheckedUpdateManyWithoutStudentFeeNestedInput
@@ -110550,6 +113082,7 @@ export namespace Prisma {
     receipts?: PaymentReceiptUncheckedUpdateManyWithoutStudentFeeNestedInput
     refunds?: RefundUncheckedUpdateManyWithoutStudentFeeNestedInput
     feeRefunds?: FeeRefundUncheckedUpdateManyWithoutStudentFeeNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutStudentFeeNestedInput
   }
 
   export type StudentFeeUncheckedUpdateManyWithoutFeeStructureInput = {
@@ -110562,12 +113095,13 @@ export namespace Prisma {
     totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     discount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -110640,6 +113174,17 @@ export namespace Prisma {
     reason?: string | null
     status?: string
     createdBy?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LateFeeWaiverCreateManyStudentFeeInput = {
+    id?: number
+    schoolId: number
+    amount: Decimal | DecimalJsLike | number | string
+    reason: string
+    waivedBy: number
+    waivedAt?: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -110855,6 +113400,38 @@ export namespace Prisma {
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     createdBy?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LateFeeWaiverUpdateWithoutStudentFeeInput = {
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    reason?: StringFieldUpdateOperationsInput | string
+    waivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    school?: SchoolUpdateOneRequiredWithoutLateFeeWaiversNestedInput
+    user?: UserUpdateOneRequiredWithoutLateFeeWaiversProcessedNestedInput
+  }
+
+  export type LateFeeWaiverUncheckedUpdateWithoutStudentFeeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    schoolId?: IntFieldUpdateOperationsInput | number
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    reason?: StringFieldUpdateOperationsInput | string
+    waivedBy?: IntFieldUpdateOperationsInput | number
+    waivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LateFeeWaiverUncheckedUpdateManyWithoutStudentFeeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    schoolId?: IntFieldUpdateOperationsInput | number
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    reason?: StringFieldUpdateOperationsInput | string
+    waivedBy?: IntFieldUpdateOperationsInput | number
+    waivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -111335,12 +113912,13 @@ export namespace Prisma {
     totalAmount: Decimal | DecimalJsLike | number | string
     paidAmount?: Decimal | DecimalJsLike | number | string
     dueAmount: Decimal | DecimalJsLike | number | string
-    lateFee?: Decimal | DecimalJsLike | number | string
     discount?: Decimal | DecimalJsLike | number | string
     isAdmissionFee?: boolean
     status?: $Enums.FeeStatus
     dueDate: Date | string
     remarks?: string | null
+    lateFee?: Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -111499,6 +114077,17 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type LateFeeWaiverCreateManySchoolInput = {
+    id?: number
+    studentFeeId: number
+    amount: Decimal | DecimalJsLike | number | string
+    reason: string
+    waivedBy: number
+    waivedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type UserUpdateWithoutSchoolInput = {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
@@ -111520,6 +114109,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUpdateManyWithoutRefundedUserNestedInput
     markedAttendances?: StudentAttendanceSessionUpdateManyWithoutMarkedByNestedInput
     employeeAttendanceRecords?: EmployeeAttendanceUpdateManyWithoutEmployeeNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSchoolInput = {
@@ -111544,6 +114134,7 @@ export namespace Prisma {
     refundsProcessed?: RefundUncheckedUpdateManyWithoutRefundedUserNestedInput
     markedAttendances?: StudentAttendanceSessionUncheckedUpdateManyWithoutMarkedByNestedInput
     employeeAttendanceRecords?: EmployeeAttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
+    lateFeeWaiversProcessed?: LateFeeWaiverUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutSchoolInput = {
@@ -112302,12 +114893,13 @@ export namespace Prisma {
     totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     discount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     student?: StudentUpdateOneRequiredWithoutStudentFeesNestedInput
@@ -112317,6 +114909,7 @@ export namespace Prisma {
     receipts?: PaymentReceiptUpdateManyWithoutStudentFeeNestedInput
     refunds?: RefundUpdateManyWithoutStudentFeeNestedInput
     feeRefunds?: FeeRefundUpdateManyWithoutStudentFeeNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutStudentFeeNestedInput
   }
 
   export type StudentFeeUncheckedUpdateWithoutSchoolInput = {
@@ -112329,12 +114922,13 @@ export namespace Prisma {
     totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     discount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: StudentFeeItemUncheckedUpdateManyWithoutStudentFeeNestedInput
@@ -112342,6 +114936,7 @@ export namespace Prisma {
     receipts?: PaymentReceiptUncheckedUpdateManyWithoutStudentFeeNestedInput
     refunds?: RefundUncheckedUpdateManyWithoutStudentFeeNestedInput
     feeRefunds?: FeeRefundUncheckedUpdateManyWithoutStudentFeeNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutStudentFeeNestedInput
   }
 
   export type StudentFeeUncheckedUpdateManyWithoutSchoolInput = {
@@ -112354,12 +114949,13 @@ export namespace Prisma {
     totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     discount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -112826,6 +115422,38 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type LateFeeWaiverUpdateWithoutSchoolInput = {
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    reason?: StringFieldUpdateOperationsInput | string
+    waivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    studentFee?: StudentFeeUpdateOneRequiredWithoutLateFeeWaiversNestedInput
+    user?: UserUpdateOneRequiredWithoutLateFeeWaiversProcessedNestedInput
+  }
+
+  export type LateFeeWaiverUncheckedUpdateWithoutSchoolInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentFeeId?: IntFieldUpdateOperationsInput | number
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    reason?: StringFieldUpdateOperationsInput | string
+    waivedBy?: IntFieldUpdateOperationsInput | number
+    waivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LateFeeWaiverUncheckedUpdateManyWithoutSchoolInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentFeeId?: IntFieldUpdateOperationsInput | number
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    reason?: StringFieldUpdateOperationsInput | string
+    waivedBy?: IntFieldUpdateOperationsInput | number
+    waivedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type SchoolSubscriptionCreateManyPlanInput = {
     id?: number
     schoolId: number
@@ -112953,12 +115581,13 @@ export namespace Prisma {
     totalAmount: Decimal | DecimalJsLike | number | string
     paidAmount?: Decimal | DecimalJsLike | number | string
     dueAmount: Decimal | DecimalJsLike | number | string
-    lateFee?: Decimal | DecimalJsLike | number | string
     discount?: Decimal | DecimalJsLike | number | string
     isAdmissionFee?: boolean
     status?: $Enums.FeeStatus
     dueDate: Date | string
     remarks?: string | null
+    lateFee?: Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -113282,12 +115911,13 @@ export namespace Prisma {
     totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     discount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     school?: SchoolUpdateOneRequiredWithoutStudentFeesNestedInput
@@ -113297,6 +115927,7 @@ export namespace Prisma {
     receipts?: PaymentReceiptUpdateManyWithoutStudentFeeNestedInput
     refunds?: RefundUpdateManyWithoutStudentFeeNestedInput
     feeRefunds?: FeeRefundUpdateManyWithoutStudentFeeNestedInput
+    lateFeeWaivers?: LateFeeWaiverUpdateManyWithoutStudentFeeNestedInput
   }
 
   export type StudentFeeUncheckedUpdateWithoutStudentInput = {
@@ -113309,12 +115940,13 @@ export namespace Prisma {
     totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     discount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: StudentFeeItemUncheckedUpdateManyWithoutStudentFeeNestedInput
@@ -113322,6 +115954,7 @@ export namespace Prisma {
     receipts?: PaymentReceiptUncheckedUpdateManyWithoutStudentFeeNestedInput
     refunds?: RefundUncheckedUpdateManyWithoutStudentFeeNestedInput
     feeRefunds?: FeeRefundUncheckedUpdateManyWithoutStudentFeeNestedInput
+    lateFeeWaivers?: LateFeeWaiverUncheckedUpdateManyWithoutStudentFeeNestedInput
   }
 
   export type StudentFeeUncheckedUpdateManyWithoutStudentInput = {
@@ -113334,12 +115967,13 @@ export namespace Prisma {
     totalAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paidAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     dueAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     discount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isAdmissionFee?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    lateFee?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    lateFeeWaived?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
