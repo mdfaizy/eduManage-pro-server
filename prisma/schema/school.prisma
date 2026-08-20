@@ -70,7 +70,7 @@ model School {
   studentAttendanceSessions StudentAttendanceSession[] @relation("SchoolStudentAttendanceSessions")
 
   employeeAttendances EmployeeAttendance[] @relation("SchoolEmployeeAttendances")
-
+  lateFeeWaivers      LateFeeWaiver[]
   /////////////////////////////////////////////////////////////
 
   createdAt DateTime @default(now())

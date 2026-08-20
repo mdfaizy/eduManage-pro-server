@@ -44,6 +44,7 @@ model User {
 
   markedAttendances         StudentAttendanceSession[]
   employeeAttendanceRecords EmployeeAttendance[]
+  lateFeeWaiversProcessed   LateFeeWaiver[]
   /////////////////////////////////////////////////////////////
   createdAt                 DateTime                   @default(now())
   updatedAt                 DateTime                   @updatedAt

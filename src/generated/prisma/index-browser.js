@@ -548,6 +548,16 @@ exports.Prisma.FeeRefundScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.LateFeeWaiverScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  studentFeeId: 'studentFeeId',
+  amount: 'amount',
+  reason: 'reason',
+  waivedBy: 'waivedBy',
+  waivedAt: 'waivedAt'
+};
+
 exports.Prisma.PaymentScalarFieldEnum = {
   id: 'id',
   schoolId: 'schoolId',
@@ -666,6 +676,8 @@ exports.Prisma.StudentScalarFieldEnum = {
   email: 'email',
   isActive: 'isActive',
   isDeleted: 'isDeleted',
+  lateFee: 'lateFee',
+  lateFeeWaived: 'lateFeeWaived',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -942,6 +954,10 @@ exports.Prisma.FeeRefundOrderByRelevanceFieldEnum = {
   refundMethod: 'refundMethod',
   reason: 'reason',
   status: 'status'
+};
+
+exports.Prisma.LateFeeWaiverOrderByRelevanceFieldEnum = {
+  reason: 'reason'
 };
 
 exports.Prisma.PaymentOrderByRelevanceFieldEnum = {
@@ -1264,6 +1280,7 @@ exports.Prisma.ModelName = {
   TransportRoute: 'TransportRoute',
   BookPackage: 'BookPackage',
   FeeRefund: 'FeeRefund',
+  LateFeeWaiver: 'LateFeeWaiver',
   Payment: 'Payment',
   PaymentReceipt: 'PaymentReceipt',
   Refund: 'Refund',

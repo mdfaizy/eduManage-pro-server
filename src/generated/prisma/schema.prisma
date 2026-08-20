@@ -525,6 +525,7 @@ model User {
 
   markedAttendances         StudentAttendanceSession[]
   employeeAttendanceRecords EmployeeAttendance[]
+  lateFeeWaiversProcessed   LateFeeWaiver[]
   /////////////////////////////////////////////////////////////
   createdAt                 DateTime                   @default(now())
   updatedAt                 DateTime                   @updatedAt
@@ -1092,6 +1093,9 @@ model StudentFee {
   refunds  Refund[]         @relation("StudentFeeRefunds")
 
   feeRefunds FeeRefund[] @relation("StudentFeeFeeRefunds")
+
+  // feeRefunds FeeRefund[] @relation("StudentFeeFeeRefunds")
+  lateFeeWaivers LateFeeWaiver[]
   /////////////////////////////////////////////////////////////
 
   createdAt DateTime @default(now())
@@ -1424,6 +1428,20 @@ model FeeRefund {
   studentFee StudentFee @relation("StudentFeeFeeRefunds", fields: [studentFeeId], references: [id])
 }
 
+model LateFeeWaiver {
+  id           Int      @id @default(autoincrement())
+  schoolId     Int
+  studentFeeId Int
+  amount       Decimal  @db.Decimal(10, 2)
+  reason       String
+  waivedBy     Int
+  waivedAt     DateTime @default(now())
+
+  school     School     @relation(fields: [schoolId], references: [id])
+  studentFee StudentFee @relation(fields: [studentFeeId], references: [id])
+  user       User       @relation(fields: [waivedBy], references: [id])
+}
+
 // =====================================================
 // PAYMENT
 // =====================================================
@@ -1734,7 +1752,7 @@ model School {
   studentAttendanceSessions StudentAttendanceSession[] @relation("SchoolStudentAttendanceSessions")
 
   employeeAttendances EmployeeAttendance[] @relation("SchoolEmployeeAttendances")
-
+  lateFeeWaivers      LateFeeWaiver[]
   /////////////////////////////////////////////////////////////
 
   createdAt DateTime @default(now())
@@ -1925,6 +1943,10 @@ model Student {
 
   parents StudentParent[]
 
+  lateFee       Decimal @default(0) @db.Decimal(10, 2)
+  lateFeeWaived Decimal @default(0) @db.Decimal(10, 2)
+
+  // lateFeeWaivers LateFeeWaiver[]
   /////////////////////////////////////////////////////////////
 
   createdAt DateTime @default(now())

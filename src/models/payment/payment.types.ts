@@ -1,33 +1,3 @@
-// // payment.types.ts
-
-// import {
-//   PaymentMethod,
-//   PaymentTransactionStatus,
-// } from "@prisma/client";
-
-// export interface CreatePaymentDTO {
-//   schoolId: number;
-//   studentFeeId: number;
-//   amount: number;
-//   paymentMethod: PaymentMethod;
-//   transactionId?: string;
-//   remarks?: string;
-//   receivedById?: number;
-//   paymentDate?: Date;
-//   status?: PaymentTransactionStatus;
-// }
-
-// export interface UpdatePaymentDTO {
-//   amount?: number;
-//   paymentMethod?: PaymentMethod;
-//   transactionId?: string;
-//   remarks?: string;
-//   receivedById?: number;
-//   paymentDate?: Date;
-//   status?: PaymentTransactionStatus;
-// }
-
-
 import {
   PaymentMethod,
   PaymentTransactionStatus,
@@ -39,6 +9,7 @@ import {
 
 export interface CreatePaymentDTO {
   studentId: number;
+
   studentFeeId: number;
 
   amount: number;
@@ -46,6 +17,7 @@ export interface CreatePaymentDTO {
   paymentMethod: PaymentMethod;
 
   transactionId?: string;
+
   referenceNo?: string;
 
   paymentDate?: Date;
@@ -65,6 +37,7 @@ export interface UpdatePaymentDTO {
   paymentMethod?: PaymentMethod;
 
   transactionId?: string;
+
   referenceNo?: string;
 
   paymentDate?: Date;
@@ -72,12 +45,4 @@ export interface UpdatePaymentDTO {
   remarks?: string;
 
   status?: PaymentTransactionStatus;
-}
-
-
-export interface RefundPaymentDTO {
-  paymentId: number;
-  amount: number;
-  reason?: string;
-  referenceNo?: string;
 }
